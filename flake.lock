@@ -96,18 +96,16 @@
       },
       "locked": {
         "lastModified": 1717698429,
-        "narHash": "sha256-81gZr6hXEySxzdpqltnR4GOBHO+QFRxFHQK3fW3iTTE=",
-        "ref": "refs/heads/main",
+        "narHash": "sha256-nQp8QafvGgsdJu1+ZiPjkYaJr5hZFaXVrehHtYcs9D8=",
+        "owner": "hyprwm",
+        "repo": "Hyprland",
         "rev": "af5f24929d83cc7a97a77de516bc665e38acfa12",
-        "revCount": 4767,
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "type": "github"
       },
       "original": {
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "owner": "hyprwm",
+        "repo": "Hyprland",
+        "type": "github"
       }
     },
     "hyprland-protocols": {
@@ -273,21 +271,6 @@
         "type": "github"
       }
     },
-    "nur": {
-      "locked": {
-        "lastModified": 1717760779,
-        "narHash": "sha256-H+949Zq0DprPcLjLRtZlA4nylrY6aXliavb+SRuNBjg=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "3c49e3c77046d5a1491928814b5e29aa3d6f7750",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -295,8 +278,7 @@
         "hyprland": "hyprland",
         "nil": "nil",
         "nix-ld": "nix-ld",
-        "nixpkgs": "nixpkgs_2",
-        "nur": "nur"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "rust-overlay": {

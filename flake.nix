@@ -12,8 +12,8 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
-    
-    nur.url = "github:nix-community/NUR";
+    # 
+    # nur.url = "github:nix-community/NUR";
 
     nil = {
       url = "github:oxalica/nil";
@@ -33,8 +33,6 @@
         # 1. Add foo to inputs
         # 2. Add foo as a parameter to the outputs function
         # 3. Add here: foo.flakeModule
-        nix-ld.nixosModules.nix-ld
-
         ./nixos
         ./nixos/modules
       ];
@@ -45,10 +43,10 @@
         # system.
         formatter = pkgs.nixfmt-rfc-style;
       };
-      flake = {
-        # The usual flake attributes can be defined here, including system-
-        # agnostic ones like nixosModule and system-enumerating ones, although
-        # those are more easily expressed in perSystem.
-      };
+      # flake = {
+      #   # The usual flake attributes can be defined here, including system-
+      #   # agnostic ones like nixosModule and system-enumerating ones, although
+      #   # those are more easily expressed in perSystem.
+      # };
     };
 }

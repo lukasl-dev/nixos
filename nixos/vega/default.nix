@@ -1,4 +1,4 @@
-{ inputs, config, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   imports = [
@@ -49,5 +49,13 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.production;
+  };
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libGL
+      libglvnd
+    ];
   };
 }
