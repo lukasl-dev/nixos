@@ -28,7 +28,7 @@
     ags.url = "github:Aylur/ags";
   };
 
-  outputs = { nixpkgs, home-manager, catppuccin, ... }@inputs: {
+  outputs = { nixpkgs, nix-ld, home-manager, catppuccin, ... }@inputs: {
     nixosConfigurations = {
 
       vega = nixpkgs.lib.nixosSystem {
@@ -38,6 +38,7 @@
             ./hosts/vega
 
             catppuccin.nixosModules.catppuccin
+            nix-ld.nixosModules.nix-ld
 
             home-manager.nixosModules.home-manager
             {

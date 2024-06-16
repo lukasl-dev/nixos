@@ -24,6 +24,9 @@
   home.packages = with pkgs; [
     hyprshot
     rofi
+
+    xwaylandvideobridge
+    xdg-utils
   ];
 }
 

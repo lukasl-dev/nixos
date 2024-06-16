@@ -6,6 +6,7 @@
     ../../nixos/bluetooth
     ../../nixos/catppuccin
     ../../nixos/docker
+    ../../nixos/gnome
     ../../nixos/fonts
     ../../nixos/i18n
     ../../nixos/nix-ld
@@ -38,6 +39,25 @@
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
   # move to nix-ld
+  # environment.sessionVariables = {
+  #   WLR_NO_HARDWARE_CURSORS = "1";
+  #   NIXOS_OZONE_WL = "1";
+  #
+  #   XDG_CACHE_HOME = "$HOME/.cache";
+  #   XDG_CONFIG_HOME = "$HOME/.config";
+  #   XDG_DATA_HOME = "$HOME/.local/share";
+  #   XDG_STATE_HOME = "$HOME/.local/state";
+  # };
+  #
+  # environment.variables = {
+  #   LIBVA_DRIVER_NAME = "nvidia";
+  #   GBM_BACKEND = "nvidia-drm";
+  #   __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  #
+  #   MOZ_ENABLE_WAYLAND = "1";
+  #   XDG_SESSION_TYPE = "wayland";
+  #   GDK_BACKEND = "wayland";
+  # };
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
@@ -46,15 +66,19 @@
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
+
+    LD_LIBRARY_PATH = [ "/run/current-system/sw/share/nix-ld/lib:$NIX_LD_LIBRARY_PATH" ];
   };
 
   environment.variables = {
-    LIBVA_DRIVER_NAME="nvidia";
-    GBM_BACKEND = "nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-
     MOZ_ENABLE_WAYLAND = "1";
     XDG_SESSION_TYPE = "wayland";
     GDK_BACKEND = "wayland";
   };
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+  services.xserver.displayManager.startx.enable = true;
 }

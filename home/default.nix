@@ -48,5 +48,7 @@
     neovim
     vesktop
     obsidian
+
+    prismlauncher
   ];
 }
