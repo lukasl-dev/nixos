@@ -1,19 +1,15 @@
 {
-  description = "Description for the project";
+  description = "A very basic flake";
 
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    # 
-    # nur.url = "github:nix-community/NUR";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     nil = {
       url = "github:oxalica/nil";
@@ -24,29 +20,31 @@
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ags.url = "github:Aylur/ags";
   };
 
-  outputs = inputs@{ flake-parts, nix-ld, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        # To import a flake module
-        # 1. Add foo to inputs
-        # 2. Add foo as a parameter to the outputs function
-        # 3. Add here: foo.flakeModule
-        ./nixos
-        ./nixos/modules
-      ];
-      systems = [ "x86_64-linux" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
-        # Per-system attributes can be defined here. The self' and inputs'
-        # module parameters provide easy access to attributes of the same
-        # system.
-        formatter = pkgs.nixfmt-rfc-style;
-      };
-      # flake = {
-      #   # The usual flake attributes can be defined here, including system-
-      #   # agnostic ones like nixosModule and system-enumerating ones, although
-      #   # those are more easily expressed in perSystem.
-      # };
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+    nixosConfigurations = {
+
+      vega = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/vega
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users = {
+                lukas = import ./home;
+              };
+            }
+        ];
+      };  
+
     };
+  };
 }

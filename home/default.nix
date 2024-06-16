@@ -1,33 +1,30 @@
-{ inputs, outputs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
-    inputs.ags.homeManagerModules.default
-    inputs.hyprland.homeManagerModules.default
-
-    ./packages.nix
-
-    ./1password
+    ./ags
     ./alacritty
     ./chromium
-    ./nx-ld
-    ./nvim
-    ./shell
-    ./virtualisation
-    ./wayland
+    ./gtk
+    ./hyprland
+    ./nushell
+    ./xdg
   ];
 
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.local
-        inputs.nur.overlay
-        inputs.nixneovimplugins.overlays.default
-    ];
-  };
+  programs.home-manager.enable = true;
+  home.stateVersion = "24.05"; # Please read the comment before changing.
+  
+  home.username = "lukas";
+  home.homeDirectory = "/home/lukas";
 
-  home = {
-    username = "lukas";
-    homeDirectory = "/home/lukas";
-    stateVersion = "24.05";
-  };
+  home.packages = with pkgs; [
+    git
+    tree
+    wl-clipboard
+    ripgrep
+    zoxide
+
+    neovim
+    vesktop
+  ];
 }
