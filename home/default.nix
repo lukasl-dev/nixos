@@ -37,6 +37,7 @@
     nodejs
     go
     python3
+    zulu21
 
     texliveFull
     graphviz

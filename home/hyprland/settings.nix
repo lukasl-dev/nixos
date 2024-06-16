@@ -33,7 +33,7 @@
 
       layout = "dwindle";
 
-      allow_tearing = false;
+      allow_tearing = true;
     };
 
     decoration = {
