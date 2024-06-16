@@ -13,6 +13,7 @@
     exec-once = [
       "1password"
       "vesktop"
+      "ags"
     ];
 
     input = {
