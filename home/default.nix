@@ -11,7 +11,6 @@
     ./git
     ./gtk
     ./hyprland
-    ./looking-glass
     ./nushell
     ./xdg
   ];
