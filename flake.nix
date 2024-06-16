@@ -10,6 +10,8 @@
     };
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprlock.url = "github:hyprwm/Hyprlock";
+    hyprpaper.url = "github:hyprwm/Hyprpaper";
 
     nil = {
       url = "github:oxalica/nil";

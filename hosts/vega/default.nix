@@ -2,12 +2,14 @@
   imports = [ 
     ./hardware-configuration.nix
 
+    ../../nixos/1password
     ../../nixos/bluetooth
     ../../nixos/fonts
     ../../nixos/i18n
     ../../nixos/nix-ld
     ../../nixos/nvidia
     ../../nixos/pipewire
+    ../../nixos/polkit
     ../../nixos/users
     ../../nixos/xserver
   ];
