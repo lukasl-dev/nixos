@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   services.hyprpaper = {
     enable = true;
@@ -17,4 +19,8 @@
       ];
     };
   };
+
+  home.packages = with pkgs; [
+    hyprshot
+  ];
 }
