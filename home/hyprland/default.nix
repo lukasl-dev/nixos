@@ -23,7 +23,10 @@
 
   home.packages = with pkgs; [
     hyprshot
-    rofi
+    rofi-wayland
+
+    libnotify
+    dunst
 
     xwaylandvideobridge
     xdg-utils

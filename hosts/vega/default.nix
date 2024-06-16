@@ -7,6 +7,7 @@
     ../../nixos/catppuccin
     ../../nixos/docker
     ../../nixos/gnome
+    ../../nixos/hyprland
     ../../nixos/fonts
     ../../nixos/i18n
     ../../nixos/nix-ld
@@ -75,10 +76,4 @@
     XDG_SESSION_TYPE = "wayland";
     GDK_BACKEND = "wayland";
   };
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-  services.xserver.displayManager.startx.enable = true;
 }

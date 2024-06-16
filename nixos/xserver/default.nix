@@ -5,7 +5,14 @@
       layout = "us";
       variant = "";
     };
-  };
 
-  services.xserver.displayManager.lightdm.enable = false;
+    displayManager = {
+      lightdm = {
+        enable = false;
+      };
+      startx = {
+        enable = true;
+      };
+    };
+  };
 }

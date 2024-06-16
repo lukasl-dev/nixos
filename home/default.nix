@@ -7,6 +7,7 @@
     ./ags
     ./alacritty
     ./chromium
+    ./dunst
     ./git
     ./gtk
     ./hyprland
@@ -50,5 +51,7 @@
     obsidian
 
     prismlauncher
+    lutris
+    wineWowPackages.waylandFull
   ];
 }
