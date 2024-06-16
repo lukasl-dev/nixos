@@ -40,6 +40,8 @@
     python3
     zulu21
 
+    devenv
+
     texliveFull
     graphviz
 
