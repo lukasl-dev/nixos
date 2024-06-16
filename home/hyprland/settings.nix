@@ -10,6 +10,11 @@
       "DP-3,1920x1080@239.96Hz,0x0,1"
     ];
 
+    exec-once = [
+      "1password"
+      "vesktop"
+    ];
+
     input = {
       kb_layout = "us";
       kb_variant = ",qwerty";
