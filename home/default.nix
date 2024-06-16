@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -12,6 +12,7 @@
     ./gtk
     ./hyprland
     ./nushell
+    ./nvim
     ./xdg
   ];
 
@@ -48,7 +49,6 @@
     signal-desktop
     slack
 
-    neovim
     vesktop
     obsidian
 

@@ -1,0 +1,10 @@
+pynvim
+neovim
+jupyter_client
+cairosvg
+plotly
+kaleido
+pnglatex
+pyperclip
+nbformat
+jupyter
