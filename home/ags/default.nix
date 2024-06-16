@@ -10,8 +10,8 @@
     configDir = ../../dots/ags;
     extraPackages = with pkgs; [
       gtksourceview
-        webkitgtk
-        accountsservice
+      webkitgtk
+      accountsservice
     ];
   };
 }

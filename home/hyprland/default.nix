@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [
@@ -20,5 +20,10 @@
     xwayland.enable = true;
     plugins = [];
   };
+
+  home.packages = with pkgs; [
+    hyprshot
+    rofi
+  ];
 }
 
