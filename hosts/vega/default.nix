@@ -4,6 +4,7 @@
 
     ../../nixos/1password
     ../../nixos/bluetooth
+    ../../nixos/catppuccin
     ../../nixos/fonts
     ../../nixos/i18n
     ../../nixos/nix-ld

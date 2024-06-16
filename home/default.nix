@@ -1,7 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [
+    inputs.catppuccin.homeManagerModules.catppuccin
+
     ./ags
     ./alacritty
     ./chromium

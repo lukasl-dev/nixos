@@ -13,6 +13,8 @@
     hyprlock.url = "github:hyprwm/Hyprlock";
     hyprpaper.url = "github:hyprwm/Hyprpaper";
 
+    catppuccin.url = "github:catppuccin/nix";
+
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,14 +28,16 @@
     ags.url = "github:Aylur/ags";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, catppuccin, ... }@inputs: {
     nixosConfigurations = {
 
       vega = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/vega
+            ./hosts/vega
+
+            catppuccin.nixosModules.catppuccin
 
             home-manager.nixosModules.home-manager
             {
