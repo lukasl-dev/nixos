@@ -7,7 +7,14 @@
     ];
 
     monitor = [
-      "DP-3,1920x1080@239.96Hz,0x0,1"
+      "DP-3,1920x1080@240,0x0,1"
+      "HDMI-A-1,1920x1080@75,1920x0,1"
+      "Unknown-1,disable"
+    ];
+
+    workspace = [
+      "1,monitor:DP-3,gapsout:50"
+      "2,monitor:HDMI-A-1"
     ];
 
     exec-once = [
