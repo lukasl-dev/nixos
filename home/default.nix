@@ -6,6 +6,7 @@
 
     ./ags
     ./alacritty
+    ./btop
     ./chromium
     ./dunst
     ./git
@@ -30,7 +31,6 @@
     ripgrep
     zoxide
     fastfetch
-    btop
     speedtest-cli
     yt-dlp
 
