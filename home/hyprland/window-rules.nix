@@ -6,6 +6,7 @@
       "float,title:(Picture-in-picture)"
       "float,class:(Rofi)"
       "float,class:(1Password)"
+      "float,title:(Save File)"
     ];
   };
 }

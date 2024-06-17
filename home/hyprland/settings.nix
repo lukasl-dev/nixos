@@ -12,11 +12,6 @@
       "Unknown-1,disable"
     ];
 
-    workspace = [
-      "1,monitor:DP-3,gapsout:50"
-      "2,monitor:HDMI-A-1"
-    ];
-
     exec-once = [
       "1password"
       "vesktop"
