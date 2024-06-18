@@ -7,8 +7,7 @@
       "float,class:(Rofi)"
       "float,class:(1Password)"
       "float,title:(Save File)"
-      "float,title:(Open File)"
-      "float,initialTitle:(discord popout)"
+      "float,initialTitle:(Discord Popout)"
     ];
   };
 }

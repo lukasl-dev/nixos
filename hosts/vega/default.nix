@@ -14,6 +14,7 @@
     ../../nixos/nvidia
     ../../nixos/pipewire
     ../../nixos/polkit
+    ../../nixos/steam
     ../../nixos/users
     ../../nixos/xserver
   ];
