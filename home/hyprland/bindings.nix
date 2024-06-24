@@ -7,13 +7,14 @@ in
 
     bind = [
       "${mainMod}, Space, exec, rofi -show drun -show-icons"
+      "${mainMod}, E, exec, bemoji"
       "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
       "${mainMod}, P, exec, vesktop"
       "${mainMod}, T, exec, alacritty"
       "${mainMod}, B, exec, brave"
       "${mainMod}, Q, killactive,"
       # "${mainMod}, M, exit,"
-      "${mainMod}, E, exec, dolphin"
+      # "${mainMod}, E, exec, dolphin"
       "${mainMod}, V, togglefloating,"
       "${mainMod}, R, exec, wofi --show drun"
       # "${mainMod}, P, pseudo, # dwindle"

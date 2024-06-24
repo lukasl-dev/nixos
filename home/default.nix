@@ -7,6 +7,7 @@
     ./ags
     ./alacritty
     ./btop
+    ./bun
     ./chromium
     ./dunst
     ./git
@@ -35,7 +36,6 @@
     yt-dlp
 
     zig
-    bun
     nodejs
     go
     python3
@@ -51,6 +51,9 @@
 
     vesktop
     obsidian
+    termius
+    
+    bemoji
 
     prismlauncher
     lutris
