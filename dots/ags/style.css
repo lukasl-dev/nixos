@@ -1,6 +1,10 @@
 window.bar {
     background-color: #1e1e2e;
-    color: #cba6f7;
+    color: white;
+    font-family: "JetBrainsMono", sans-serif;
     font-weight: bold;
 }
 
+window {
+  padding: 50px;
+}
