@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 
 let
-browser = [ "brave.desktop" ];
+  browser = [ "brave.desktop" ];
 in
 {
   xdg = {
@@ -22,7 +22,7 @@ in
         common.default = [ "gtk" ];
         hyprland.default = [
           "gtk"
-            "hyprland"
+          "hyprland"
         ];
       };
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
