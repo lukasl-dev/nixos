@@ -15,6 +15,7 @@
     ./hyprland
     ./nushell
     ./nvim
+    ./rofi
     ./xdg
   ];
 

@@ -23,7 +23,6 @@
 
   home.packages = with pkgs; [
     hyprshot
-    rofi-wayland
 
     libnotify
     dunst
