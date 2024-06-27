@@ -14,6 +14,8 @@
       gca = "git commit --amend";
       gs = "git switch";
       gd = "git diff";
+      gl = "git log";
+      gg = "git graph";
     };
   };
 }
