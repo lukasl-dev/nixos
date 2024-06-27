@@ -41,6 +41,7 @@
     go
     python3
     zulu21
+    gleam
 
     devenv
 
