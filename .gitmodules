@@ -1,0 +1,3 @@
+[submodule "up/catppuccin/hyprland"]
+	path = up/catppuccin/hyprland
+	url = https://github.com/catppuccin/hyprland
