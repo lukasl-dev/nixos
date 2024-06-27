@@ -16,6 +16,7 @@
       gd = "git diff";
       gl = "git log";
       gg = "git graph";
+      gp = "git push";
     };
   };
 }
