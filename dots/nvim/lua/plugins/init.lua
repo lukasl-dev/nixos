@@ -111,9 +111,9 @@ return {
   {
     "github/copilot.vim",
     event = "BufWinEnter",
-    -- config = function()
-    --   require "configs.copilot"
-    -- end,
+    config = function()
+      vim.g.copilot_no_tab_map = true
+    end,
   },
 
   {
