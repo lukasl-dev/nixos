@@ -16,6 +16,7 @@
     ./nushell
     ./nvim
     ./rofi
+    ./sioyek
     ./xdg
   ];
 

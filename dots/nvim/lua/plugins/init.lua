@@ -219,6 +219,8 @@ return {
           "-interaction=nonstopmode",
         },
       }
+
+      vim.g.vimtex_view_method = "sioyek"
     end,
   },
 }
