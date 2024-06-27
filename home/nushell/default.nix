@@ -4,5 +4,16 @@
 
     configFile.source = ../../dots/nushell/config.nu;
     envFile.source = ../../dots/nushell/env.nu;
+
+    shellAliases = {
+      # git
+      g = "git status";
+      ga = "git add";
+      gb = "git branch";
+      gc = "git commit";
+      gca = "git commit --amend";
+      gs = "git switch";
+      gd = "git diff";
+    };
   };
 }
