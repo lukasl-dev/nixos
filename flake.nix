@@ -36,6 +36,9 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+            # "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            # https://nixos.wiki/wiki/Creating_a_NixOS_live_CD
+
             ./hosts/vega
 
             catppuccin.nixosModules.catppuccin
