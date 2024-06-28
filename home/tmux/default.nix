@@ -1,5 +1,5 @@
 {
-  services.dunst = {
+  programs.tmux = {
     enable = true;
   };
 }

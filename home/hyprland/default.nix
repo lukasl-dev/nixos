@@ -8,6 +8,7 @@
     ./bindings.nix
     ./hyprpaper.nix
     ./settings.nix
+    # ./swww.nix
     ./window-rules.nix
   ];
 
@@ -23,6 +24,7 @@
 
   home.packages = with pkgs; [
     hyprshot
+    hyprcursor
 
     libnotify
     dunst

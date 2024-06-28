@@ -27,6 +27,8 @@
     };
 
     ags.url = "github:Aylur/ags";
+
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
 
   outputs = { nixpkgs, nix-ld, home-manager, catppuccin, ... }@inputs: {

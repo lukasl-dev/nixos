@@ -6,7 +6,7 @@
     package = pkgs.brave;
     extensions = [
       "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
-      "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # 1Password
+      "khgocmkkpikpnmmkgmdnfckapcdkgfaf" # 1Password
       "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
       "gppongmhjkpfnbhagpmjfkannfbllamg" # Wappalyzer
       "hkgfoiooedgoejojocmhlaklaeopbecg" # Picture-in-Picture
@@ -14,6 +14,7 @@
       "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
       "hlgbcneanomplepojfcnclggenpcoldo" # Perplexity - AI Companion
       "oldceeleldhonbafppcapldpdifcinji" # LanguageTool
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
     ];  
   };
 }

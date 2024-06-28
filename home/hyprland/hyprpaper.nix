@@ -9,11 +9,11 @@
       splash_offset = 2.0;
 
       preload = [
-        "~/nixos/wallpaper.png"
+        "~/nixos/wallpapers/1.png"
       ];
 
       wallpaper = [
-        ",~/nixos/wallpaper.png"
+        ",~/nixos/wallpapers/1.png"
       ];
     };
   };

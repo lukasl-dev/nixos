@@ -8,6 +8,7 @@
     ./alacritty
     ./btop
     ./bun
+    ./catppuccin
     ./chromium
     ./dunst
     ./git
@@ -17,6 +18,7 @@
     ./nvim
     ./rofi
     ./sioyek
+    ./tmux
     ./xdg
   ];
 
