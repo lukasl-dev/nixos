@@ -16,8 +16,8 @@
       gd = "git diff";
       gl = "git log";
       gg = "git graph";
-      gpu = "git pull";
-      gpl = "git push";
+      gpl = "git pull";
+      gpu = "git push";
 
       # ranger
       r = "ranger";
