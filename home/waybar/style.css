@@ -10,6 +10,7 @@
   margin: 5px 5px;
 }
 
+#temperature,
 #memory,
 #cpu,
 #custom-music,
@@ -21,6 +22,12 @@
   margin: 5px 0;
 }
 
+#temperature {
+  color: @blue;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-left: 1rem;
+}
+
 #cpu {
   color: @maroon;
   border-radius: 1rem 1rem 1rem 1rem;
@@ -28,7 +35,7 @@
 }
 
 #memory {
-  color: @maroon;
+  color: @lavender;
   border-radius: 1rem 1rem 1rem 1rem;
   margin-left: 1rem;
 }

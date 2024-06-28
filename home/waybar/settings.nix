@@ -4,7 +4,7 @@
       layer = "top";
       position = "top";
 
-      modules-left = [ "memory" "cpu" ];
+      modules-left = [ "temperature" "memory" "cpu" ];
       modules-center = [ "custom/music" ];
       modules-right = [ "wireplumber" "clock" "tray" ];
 
@@ -25,6 +25,11 @@
 
       cpu = {
         format = "    {}%";
+        interval = 1;
+      };
+
+      temperature = {
+        format = "    {temperatureC} °C";
         interval = 1;
       };
 
