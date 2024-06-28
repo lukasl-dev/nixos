@@ -49,3 +49,6 @@ $env.PROMPT_INDICATOR = {|| (ansi "#eba0ac") + "> " + (ansi reset) }
 $env.PROMPT_INDICATOR_VI_NORMAL = {|| (ansi "#eba0ac") + "> " + (ansi reset) }
 $env.PROMPT_INDICATOR_VI_INSERT = {|| ": " }
 $env.PROMPT_MULTILINE_INDICATOR = {|| "::: " }
+
+
+zoxide init nushell --cmd cd | save -f ~/.zoxide.nu

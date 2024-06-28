@@ -11,6 +11,7 @@
     ./catppuccin
     ./chromium
     ./dunst
+    ./fzf
     ./git
     ./gtk
     ./hyprland
