@@ -4,7 +4,7 @@
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
 
-    ./ags
+    # ./ags
     ./alacritty
     ./btop
     ./bun
@@ -21,6 +21,7 @@
     ./rofi
     ./sioyek
     ./tmux
+    ./waybar
     ./xdg
   ];
 
@@ -40,6 +41,9 @@
     fastfetch
     speedtest-cli
     yt-dlp
+
+    playerctl
+    ffmpeg
 
     zig
     nodejs

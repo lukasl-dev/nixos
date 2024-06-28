@@ -3,13 +3,12 @@
 {
   imports = [
     inputs.hyprland.homeManagerModules.default
-    # inputs.hyprlock.homeManagerModules.hyprlock
 
     ./bindings.nix
-    ./hyprpaper.nix
     ./settings.nix
-    # ./swww.nix
     ./window-rules.nix
+
+    ./hyprpaper.nix
   ];
 
   wayland.windowManager.hyprland = {

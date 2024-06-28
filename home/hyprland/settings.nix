@@ -17,19 +17,16 @@
     exec-once = [
       "1password"
       "vesktop"
-      "ags"
+      "waybar"
     ];
 
     input = {
       kb_layout = "us";
       kb_variant = ",qwerty";
-
       follow_mouse = 1;
-
       touchpad = {
         natural_scroll = "no";
       };
-
       sensitivity = 0;
     };
 

@@ -1,0 +1,56 @@
+* {
+  font-family: JetBrainsMono;
+  font-size: 17px;
+  min-height: 0;
+}
+
+#waybar {
+  background: transparent;
+  color: @text;
+  margin: 5px 5px;
+}
+
+#memory,
+#cpu,
+#custom-music,
+#tray,
+#clock,
+#wireplumber {
+  background-color: @surface0;
+  padding: 0.5rem 1rem;
+  margin: 5px 0;
+}
+
+#cpu {
+  color: @maroon;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-left: 1rem;
+}
+
+#memory {
+  color: @maroon;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-left: 1rem;
+}
+
+#clock {
+  color: @blue;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-right: 1rem;
+}
+
+#wireplumber {
+  color: @maroon;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-right: 1rem;
+}
+
+#custom-music {
+  color: @mauve;
+  border-radius: 1rem;
+}
+
+#tray {
+  margin-right: 1rem;
+  border-radius: 1rem;
+}
