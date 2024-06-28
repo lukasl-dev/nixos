@@ -14,7 +14,7 @@
       };
 
       "custom/music" = {
-        format = "     {}";
+        format = "   {}";
         escape = true;
         interval = 5;
         tooltip = false;
