@@ -16,6 +16,7 @@
     ./hyprland
     ./nushell
     ./nvim
+    ./ranger
     ./rofi
     ./sioyek
     ./tmux

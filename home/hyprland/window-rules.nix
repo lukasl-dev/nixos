@@ -15,6 +15,8 @@
       "noinitialfocus,class:^(xwaylandvideobridge)$"
       "maxsize 1 1,class:^(xwaylandvideobridge)$"
       "noblur,class:^(xwaylandvideobridge)$"
+
+      "move 50% 100%,title:(is sharing your screen.)$"
     ];
   };
 }

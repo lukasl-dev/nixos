@@ -8,6 +8,7 @@ in
     bind = [
       "${mainMod}, Space, exec, rofi -show drun -show-icons"
       "${mainMod}, E, exec, bemoji"
+      "${mainMod}, F, exec, alacritty -e ranger"
 
       "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
 
