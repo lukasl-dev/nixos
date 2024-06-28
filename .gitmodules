@@ -1,9 +1,0 @@
-[submodule "up/catppuccin/hyprland"]
-	path = up/catppuccin/hyprland
-	url = https://github.com/catppuccin/hyprland
-[submodule "up/catppuccin/btop"]
-	path = up/catppuccin/btop
-	url = https://github.com/catppuccin/btop
-[submodule "up/catppuccin/rofi"]
-	path = up/catppuccin/rofi
-	url = https://github.com/catppuccin/rofi
