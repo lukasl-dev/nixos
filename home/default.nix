@@ -58,8 +58,6 @@
     obsidian
     termius
     
-    bemoji
-
     prismlauncher
     lutris
     wineWowPackages.waylandFull
