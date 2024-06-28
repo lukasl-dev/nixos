@@ -16,7 +16,11 @@
       gd = "git diff";
       gl = "git log";
       gg = "git graph";
-      gp = "git push";
+      gpu = "git pull";
+      gpl = "git push";
+
+      # ranger
+      r = "ranger";
     };
   };
 }
