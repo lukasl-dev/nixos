@@ -24,7 +24,7 @@
       };
 
       cpu = {
-        format = "    {}%";
+        format = "    {usage}%";
         interval = 1;
         on-click = "alacritty -e btop";
       };
