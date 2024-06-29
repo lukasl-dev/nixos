@@ -10,6 +10,7 @@
   margin: 5px 5px;
 }
 
+#custom-nvidia,
 #temperature,
 #memory,
 #cpu,
@@ -30,6 +31,12 @@
 
 #cpu {
   color: @maroon;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-left: 1rem;
+}
+
+#custom-nvidia {
+  color: @lavender;
   border-radius: 1rem 1rem 1rem 1rem;
   margin-left: 1rem;
 }

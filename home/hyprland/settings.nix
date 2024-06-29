@@ -15,9 +15,9 @@
     ];
 
     exec-once = [
+      "waybar"
       "1password"
       "vesktop"
-      "waybar"
     ];
 
     input = {

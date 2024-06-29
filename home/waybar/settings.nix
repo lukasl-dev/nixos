@@ -4,7 +4,7 @@
       layer = "top";
       position = "top";
 
-      modules-left = [ "temperature" "memory" "cpu" ];
+      modules-left = [ "temperature" "memory" "cpu" "custom/nvidia" ];
       modules-center = [ "custom/music" ];
       modules-right = [ "wireplumber" "clock" "tray" ];
 
@@ -14,7 +14,7 @@
       };
 
       "custom/music" = {
-        format = "   {}";
+        format = "   {}";
         escape = true;
         interval = 1;
         tooltip = false;
@@ -24,30 +24,40 @@
       };
 
       cpu = {
-        format = "    {usage}%";
+        format = "   {usage}%";
         interval = 1;
         on-click = "alacritty -e btop";
       };
 
+      "custom/nvidia" = {
+        format = "  {}%";
+        escape = true;
+        interval = 1;
+        tooltip = false;
+        exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
+        on-click = "alacritty -e btop";
+        max-length = 50;
+      };
+
       temperature = {
-        format = "    {temperatureC} °C";
+        format = "  {temperatureC} °C";
         interval = 1;
         on-click = "alacritty -e btop";
       };
 
       memory = {
-        format = "    {}%";
+        format = "   {}%";
         interval = 1;
         on-click = "alacritty -e btop";
       };  
       
       wireplumber = {
-        format = " {icon}   {volume}%";
-        format-muted = "  ";
+        format = "{icon}   {volume}%";
+        format-muted = " ";
         format-icons = {
           default = ["" "" " "];
         };
-        on-click = "wpctl";
+        on-click = "alacritty -c 'wpctl status'";
       };
 
       clock = {
