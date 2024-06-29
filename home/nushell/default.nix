@@ -23,4 +23,11 @@
       r = "ranger";
     };
   };
+
+
+  home.file.".config/nushell/themes" = {
+    enable = true;
+    source = ../../dots/nushell/themes;
+    target = ".config/nushell/themes";
+  };
 }
