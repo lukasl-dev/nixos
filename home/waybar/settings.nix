@@ -16,7 +16,7 @@
       "custom/music" = {
         format = "   {}";
         escape = true;
-        interval = 5;
+        interval = 1;
         tooltip = false;
         exec = "playerctl metadata --format='{{ title }}'";
         on-click = "playerctl play-pause";
@@ -26,16 +26,19 @@
       cpu = {
         format = "    {}%";
         interval = 1;
+        on-click = "alacritty -e btop";
       };
 
       temperature = {
         format = "    {temperatureC} °C";
         interval = 1;
+        on-click = "alacritty -e btop";
       };
 
       memory = {
         format = "    {}%";
         interval = 1;
+        on-click = "alacritty -e btop";
       };  
       
       wireplumber = {
