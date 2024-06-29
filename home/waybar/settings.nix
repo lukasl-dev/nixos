@@ -6,7 +6,7 @@
 
       modules-left = [ "temperature" "memory" "cpu" "custom/nvidia" ];
       modules-center = [ "custom/music" ];
-      modules-right = [ "wireplumber" "clock" "tray" ];
+      modules-right = [ "custom/mic" "wireplumber" "clock" "tray" ];
 
       tray = {
         icon-size = 21;
@@ -50,6 +50,18 @@
         interval = 1;
         on-click = "alacritty -e btop";
       };  
+
+      "custom/mic" = {
+        format = "{}";
+        escape = true;
+        interval = 1;
+        tooltip = false;
+        exec = ''
+          wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{print ($NF == "[MUTED]") ? " " : "  " int($2*100)"%"}'
+        '';
+        on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+        max-length = 50;
+      };
       
       wireplumber = {
         format = "{icon}   {volume}%";
@@ -57,7 +69,7 @@
         format-icons = {
           default = ["" "" " "];
         };
-        on-click = "alacritty -c 'wpctl status'";
+        on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
       };
 
       clock = {

@@ -1,6 +1,7 @@
 let
   browser = [ "brave.desktop" ];
   sioyek = [ "sioyek.desktop" ];
+  ranger = [ "ranger.desktop" ];
 in
 {
   xdg.mimeApps = {
@@ -13,7 +14,6 @@ in
         "application/x-extension-xhtml" = browser;
         "application/xhtml+xml" = browser;
         "application/json" = browser;
-        "application/pdf" = sioyek;
         "text/html" = browser;
         "x-scheme-handler/about" = browser;
         "x-scheme-handler/chrome" = browser;
@@ -21,6 +21,10 @@ in
         "x-scheme-handler/http" = browser;
         "x-scheme-handler/https" = browser;
         "x-scheme-handler/unknown" = browser;
+
+        "application/pdf" = sioyek;
+
+        "inode/directory" = ranger;
       };
     };
 }
