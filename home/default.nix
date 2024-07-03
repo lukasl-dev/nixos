@@ -57,6 +57,7 @@
 
     devenv
     just
+    hyperfine
 
     texliveFull
     graphviz
