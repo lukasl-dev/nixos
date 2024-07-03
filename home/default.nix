@@ -68,6 +68,7 @@
     vesktop
     obsidian
     termius
+    localsend
     
     prismlauncher
     lutris
