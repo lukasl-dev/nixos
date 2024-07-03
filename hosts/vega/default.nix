@@ -12,6 +12,7 @@
     ../../nixos/i18n
     ../../nixos/nix-ld
     ../../nixos/nvidia
+    ../../nixos/ollama
     ../../nixos/pipewire
     ../../nixos/polkit
     ../../nixos/steam
