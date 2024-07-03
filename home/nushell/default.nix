@@ -21,6 +21,9 @@
 
       # ranger
       r = "ranger";
+      
+      # bat
+      cat = "bat";
     };
   };
 

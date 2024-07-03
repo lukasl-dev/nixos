@@ -6,6 +6,7 @@
 
     # ./ags
     ./alacritty
+    ./bat
     ./btop
     ./bun
     ./catppuccin
@@ -48,11 +49,14 @@
     zig
     nodejs
     go
-    python3
     zulu21
     gleam
 
+    python3
+    uv
+
     devenv
+    just
 
     texliveFull
     graphviz
