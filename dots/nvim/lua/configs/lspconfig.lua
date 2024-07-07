@@ -14,6 +14,7 @@ local servers = {
   java_language_server = {},
   docker_compose_language_service = {},
   nil_ls = {},
+  gleam = {},
 
   pyright = {
     settings = {
