@@ -10,6 +10,7 @@ in
       core.editor = "nvim";
       github.user = username;
       push.autoSetupRemote = true;
+      pull.rebase = true;
     };
 
     userEmail = "git@lukasl.dev";
