@@ -51,6 +51,8 @@
     go
     zulu21
     gleam
+    erlang
+    elixir
 
     python3
     uv
