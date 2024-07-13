@@ -12,6 +12,7 @@
     ./catppuccin
     ./chromium
     ./dunst
+    ./fish
     ./fzf
     ./git
     ./gtk
