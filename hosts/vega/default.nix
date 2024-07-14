@@ -10,6 +10,7 @@
     ../../nixos/hyprland
     ../../nixos/fonts
     ../../nixos/i18n
+    ../../nixos/networking
     ../../nixos/nix-ld
     ../../nixos/nvidia
     ../../nixos/ollama
@@ -43,8 +44,6 @@
   nixpkgs.config.allowUnfree = true;
   
   networking.hostName = "vega";
-  networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
   # move to nix-ld
   # environment.sessionVariables = {
@@ -86,5 +85,11 @@
     MOZ_ENABLE_WAYLAND = "1";
     XDG_SESSION_TYPE = "wayland";
     GDK_BACKEND = "wayland";
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 53317 ];
+    allowedUDPPorts = [ 53317 ];
   };
 }
