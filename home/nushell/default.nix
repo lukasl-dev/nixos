@@ -19,6 +19,9 @@
       gpl = "git pull";
       gpu = "git push";
 
+      # pass
+      p = "pass";
+
       # ranger
       r = "ranger";
       
