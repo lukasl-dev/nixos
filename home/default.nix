@@ -15,10 +15,12 @@
     ./fish
     ./fzf
     ./git
+    ./gpg
     ./gtk
     ./hyprland
     ./nushell
     ./nvim
+    ./pass
     ./ranger
     ./rofi
     ./sioyek
