@@ -45,31 +45,10 @@ map("i", "<C-j>", "copilot#Accept('\\<CR>')", {
 })
 
 -- ====================================================================
--- trouble
--- ====================================================================
-
-map("n", "<leader>xx", function()
-  require("trouble").toggle()
-end, { desc = "trouble toggle" })
-map("n", "<leader>xw", function()
-  require("trouble").toggle "workspace_diagnostics"
-end, { desc = "trouble workspace diagnostics" })
-map("n", "<leader>xd", function()
-  require("trouble").toggle "document_diagnostics"
-end, { desc = "trouble document diagnostics" })
-map("n", "<leader>xq", function()
-  require("trouble").toggle "quickfix"
-end, { desc = "trouble quickfix" })
-map("n", "<leader>xl", function()
-  require("trouble").toggle "loclist"
-end, { desc = "trouble loclist" })
-map("n", "gR", function()
-  require("trouble").toggle "lsp_references"
-end, { desc = "trouble lsp references" })
-
--- ====================================================================
 -- molten
 -- ====================================================================
+
+-- TODO: fix this for linux
 
 map("n", "<localleader>mi", function()
   local venv = os.getenv "VIRTUAL_ENV"
