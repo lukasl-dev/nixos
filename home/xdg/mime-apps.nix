@@ -21,6 +21,7 @@ in
         "x-scheme-handler/http" = browser;
         "x-scheme-handler/https" = browser;
         "x-scheme-handler/unknown" = browser;
+        "image/svg+xml" = browser;
 
         "application/pdf" = sioyek;
 
