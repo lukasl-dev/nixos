@@ -18,6 +18,7 @@
       "waybar"
       "1password"
       "vesktop"
+      "wl-paste --type text --watch cliphist store"
     ];
 
     input = {
@@ -28,6 +29,8 @@
         natural_scroll = "no";
       };
       sensitivity = 0;
+      # repeat_rate = 25;
+      # repeat_delay = 0;
     };
 
     general = {
