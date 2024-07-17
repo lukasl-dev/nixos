@@ -19,7 +19,7 @@
         flavor = "mocha";
         font  = "Noto Sans";
         fontSize = "9";
-        background = "${../../wallpapers/1.png}";
+        background = "${../../wallpapers/9.png}";
         loginBackground = true;
     })
   ];
