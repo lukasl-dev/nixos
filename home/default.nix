@@ -11,6 +11,7 @@
     ./bun
     ./catppuccin
     ./chromium
+    ./dir-env
     ./dunst
     ./fish
     ./fzf
@@ -48,6 +49,7 @@
 
     playerctl
     ffmpeg
+    cliphist
 
     zig
     nodejs
