@@ -3,6 +3,8 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local unmap = vim.keymap.del
 
+unmap("n", '<leader>h')
+
 -- ====================================================================
 -- general purpose
 -- ====================================================================
@@ -43,6 +45,27 @@ map("i", "<C-j>", "copilot#Accept('\\<CR>')", {
   replace_keycodes = false,
   silent = true,
 })
+
+-- ====================================================================
+-- gitsigns
+-- ====================================================================
+
+map("n", "<leader>gD", ":Gitsigns toggle_deleted<CR>", { silent = true, desc = "toggle deleted" })
+
+map("n", "<leader>hp", ":Gitsigns preview_hunk<CR>", { silent = true, desc = "preview hunk" })
+map("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", { silent = true, desc = "reset hunk" })
+map("n", "<leader>hs", ":Gitsigns stage_hunk<CR>", { silent = true, desc = "stage hunk" })
+map("n", "<leader>hS", ":Gitsigns undo_stage_hunk<CR>", { silent = true, desc = "undo stage hunk" })
+map("n", "[h", ":Gitsigns prev_hunk<CR>", { silent = true, desc = "previous hunk" })
+map("n", "]h", ":Gitsigns next_hunk<CR>", { silent = true, desc = "next hunk" })
+
+-- ====================================================================
+-- diffview
+-- ====================================================================
+
+map("n", "<leader>gdo", ":DiffviewOpen<CR>", { silent = true, desc = "open diffview" })
+map("n", "<leader>gdx", ":DiffviewClose<CR>", { silent = true, desc = "close diffview" })
+map("n", "<leader>gdf", ":DiffviewFileHistory<CR>", { silent = true, desc = "open file history" })
 
 -- ====================================================================
 -- molten

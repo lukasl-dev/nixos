@@ -227,5 +227,21 @@ return {
   {
     "rafcamlet/nvim-luapad",
     cmd = "Luapad",
-  }
+  },
+
+  {
+    "sindrets/diffview.nvim",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewFileHistory"
+    },
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = "BufWinEnter",
+    opts = {},
+  },
 }
