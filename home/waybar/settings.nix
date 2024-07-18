@@ -13,15 +13,15 @@
         spacing = 10;
       };
 
-      "custom/music" = {
-        format = "   {}";
-        escape = true;
-        interval = 1;
-        tooltip = false;
-        exec = "playerctl metadata --format='{{ title }}'";
-        on-click = "playerctl play-pause";
-        max-length = 50;
-      };
+      # "custom/music" = {
+      #   format = "   {}";
+      #   escape = true;
+      #   interval = 1;
+      #   tooltip = false;
+      #   exec = "playerctl metadata --format='{{ title }}'";
+      #   on-click = "playerctl play-pause";
+      #   max-length = 50;
+      # };
 
       cpu = {
         format = "   {usage}%";
