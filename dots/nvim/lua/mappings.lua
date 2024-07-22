@@ -4,6 +4,7 @@ local map = vim.keymap.set
 local unmap = vim.keymap.del
 
 unmap("n", '<leader>h')
+unmap("n", '<leader>v')
 
 -- ====================================================================
 -- general purpose
@@ -65,7 +66,7 @@ map("n", "]h", ":Gitsigns next_hunk<CR>", { silent = true, desc = "next hunk" })
 
 map("n", "<leader>gdo", ":DiffviewOpen<CR>", { silent = true, desc = "open diffview" })
 map("n", "<leader>gdx", ":DiffviewClose<CR>", { silent = true, desc = "close diffview" })
-map("n", "<leader>gdf", ":DiffviewFileHistory<CR>", { silent = true, desc = "open file history" })
+map("n", "<leader>gdf", ":DiffviewFileHistory %<CR>", { silent = true, desc = "open file history" })
 
 -- ====================================================================
 -- molten

@@ -7,6 +7,7 @@
     ./bindings.nix
     ./settings.nix
     ./window-rules.nix
+    ./workspaces.nix
 
     ./hyprpaper.nix
   ];

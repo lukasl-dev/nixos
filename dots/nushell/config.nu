@@ -9,29 +9,14 @@ let fish_completer = {|spans|
 }
 
 let zoxide_completer = {|spans|
-    let query = ($spans | skip 1 | str join " ")
-    let local_items = if ($query | is-empty) { 
-        [] 
-    } else { 
-        ls -a 
-        | where name != '.' and name != '..' 
-        | get name 
-        | where { |item| $item | str contains $query }
-    }
-    let zoxide_results = if ($query | is-empty) {
-        zoxide query -l | lines
-    } else {
-        $spans | skip 1 | zoxide query -l ...$in | lines
-    }
-    let filtered_zoxide = $zoxide_results | where {|x| $x != $env.PWD and ($x | str contains $query) }
-    let combined_results = ($local_items | append $filtered_zoxide | uniq)
-    $combined_results
+    $spans | skip 1 | zoxide query -l ...$in | lines | where {|x| $x != $env.PWD}
 }
 
 let external_completer = {|spans|
     let expanded_alias = scope aliases
     | where name == $spans.0
     | get -i 0.expansion
+
     let spans = if $expanded_alias != null {
         $spans
         | skip 1
@@ -39,11 +24,12 @@ let external_completer = {|spans|
     } else {
         $spans
     }
+
     match $spans.0 {
         # fish completes commits and branch names in a nicer way
         git => $fish_completer
         __zoxide_z | __zoxide_zi => $zoxide_completer
-        * => $carapace_completer
+        _ => $carapace_completer
     } | do $in $spans
 }
 

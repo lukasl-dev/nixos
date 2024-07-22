@@ -207,7 +207,7 @@ return {
 
   {
     "lervag/vimtex",
-    lazy = false, -- we don't want to lazy load VimTeX
+    lazy = false, -- we don"t want to lazy load VimTeX
     config = function()
       -- Use LuaLateX for vimtex
       vim.g.vimtex_compiler_latexmk = {
@@ -244,4 +244,11 @@ return {
     event = "BufWinEnter",
     opts = {},
   },
+
+  {
+    "MeanderingProgrammer/markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    ft = { "markdown" },
+    opts = {},
+  }
 }

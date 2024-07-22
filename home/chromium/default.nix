@@ -15,6 +15,7 @@
       "hlgbcneanomplepojfcnclggenpcoldo" # Perplexity - AI Companion
       "oldceeleldhonbafppcapldpdifcinji" # LanguageTool
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+      "dbepggeogbaibhgnhhndojpepiihcmeb" # Vimium
     ];  
   };
 }
