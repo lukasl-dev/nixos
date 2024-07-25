@@ -13,6 +13,7 @@
     ./chromium
     ./dir-env
     ./dunst
+    ./easyeffects
     ./fish
     ./fzf
     ./git
@@ -47,6 +48,7 @@
     speedtest-cli
     yt-dlp
 
+    # easyeffects
     playerctl
     ffmpeg
     cliphist
