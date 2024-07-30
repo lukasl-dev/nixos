@@ -17,6 +17,7 @@
     ./fish
     ./fzf
     ./git
+    ./go
     ./gpg
     ./gtk
     ./hyprland
@@ -38,7 +39,6 @@
   home.homeDirectory = "/home/lukas";
 
   home.packages = with pkgs; [
-    git
     gh
     tree
     wl-clipboard
@@ -55,7 +55,6 @@
 
     zig
     nodejs
-    go
     zulu21
     gleam
     erlang

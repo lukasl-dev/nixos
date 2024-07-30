@@ -250,5 +250,20 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ft = { "markdown" },
     opts = {},
-  }
+  },
+
+  {
+    "IndianBoy42/tree-sitter-just",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {},
+    config = function(opts)
+      require('tree-sitter-just').setup(opts)
+      vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+        pattern = { "justfile" },
+        callback = function()
+          vim.bo.filetype = "just"
+        end
+      })
+    end
+  },
 }
