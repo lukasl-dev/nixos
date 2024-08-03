@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs-unstable, ... }:
 
 {
   programs.chromium = {
     enable = true;
-    package = pkgs.brave;
+    package = pkgs-unstable.brave;
     extensions = [
       "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
       "khgocmkkpikpnmmkgmdnfckapcdkgfaf" # 1Password

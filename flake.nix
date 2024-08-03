@@ -1,6 +1,5 @@
 {
   description = "A very basic flake";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -26,18 +25,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # ags.url = "github:Aylur/ags";
-
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
-
-  outputs = { nixpkgs, nix-ld, home-manager, catppuccin, ... }@inputs: {
-    nixosConfigurations = {
-
-      vega = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-ld, home-manager, catppuccin, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations = {
+        vega = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs pkgs-unstable; };
+          modules = [
             # "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
             # https://nixos.wiki/wiki/Creating_a_NixOS_live_CD
 
@@ -48,16 +51,15 @@
 
             home-manager.nixosModules.home-manager
             {
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.extraSpecialArgs = { inherit inputs pkgs-unstable; };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users = {
                 lukas = import ./home;
               };
             }
-        ];
-      };  
-
+          ];
+        };  
+      };
     };
-  };
 }
