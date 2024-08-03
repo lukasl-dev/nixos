@@ -109,11 +109,12 @@ return {
   },
 
   {
-    "github/copilot.vim",
+    "supermaven-inc/supermaven-nvim",
     event = "BufWinEnter",
-    config = function()
-      vim.g.copilot_no_tab_map = true
-    end,
+    opts = {
+      log_level = "off",
+      disable_keymaps = true,
+    },
   },
 
   {

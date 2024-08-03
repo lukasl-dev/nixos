@@ -38,14 +38,15 @@ map("n", "gr", ":Telescope lsp_references<CR>", { silent = true })
 map("n", "gl", ":Telescope diagnostics<CR>", { silent = true })
 
 -- ====================================================================
--- copilot
+-- supermaven
 -- ====================================================================
 
-map("i", "<C-j>", "copilot#Accept('\\<CR>')", {
-  expr = true,
-  replace_keycodes = false,
-  silent = true,
-})
+map("i", "<C-j>", function()
+  local suggestion = require('supermaven-nvim.completion_preview')
+  if suggestion.has_suggestion() then
+    suggestion.on_accept_suggestion()
+  end
+end, { silent = true, desc = "accept suggestion" })
 
 -- ====================================================================
 -- gitsigns

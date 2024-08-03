@@ -9,6 +9,7 @@
       # git
       g = "git status";
       gf = "git fetch";
+      gfp = "git fetch --prune";
       ga = "git add";
       gb = "git branch";
       gc = "git commit";
