@@ -8,6 +8,7 @@
     shellAliases = {
       # git
       g = "git status";
+      gf = "git fetch";
       ga = "git add";
       gb = "git branch";
       gc = "git commit";
