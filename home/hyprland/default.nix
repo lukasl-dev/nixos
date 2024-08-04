@@ -9,6 +9,7 @@
     ./window-rules.nix
     ./workspaces.nix
 
+    ./hyprcursor.nix
     ./hyprpaper.nix
   ];
 
@@ -24,7 +25,6 @@
 
   home.packages = with pkgs; [
     hyprshot
-    hyprcursor
 
     libnotify
     dunst
