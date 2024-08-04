@@ -27,7 +27,7 @@
 
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-ld, home-manager, catppuccin, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, nix-ld, home-manager, catppuccin, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs-unstable = import nixpkgs-unstable {
