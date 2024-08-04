@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   themeDir = "${pkgs.catppuccin-cursors.mochaLight}/share/icons/";
@@ -21,6 +21,5 @@ in
   home.packages = with pkgs; [
     hyprcursor
     catppuccin-cursors.mochaMauve
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
   ];
 }

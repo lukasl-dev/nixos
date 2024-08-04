@@ -24,8 +24,6 @@
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
   outputs = { nixpkgs, nixpkgs-unstable, nix-ld, home-manager, catppuccin, ... }@inputs:
     let
