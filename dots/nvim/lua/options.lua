@@ -38,6 +38,7 @@ end
 vim.filetype.add({
   extension = {
     ebnf = "ebnf",
+    mdx = "markdown",
   },
   filename = {
     justfile = "just",
