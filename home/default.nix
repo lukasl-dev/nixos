@@ -53,6 +53,9 @@
     ffmpeg
     cliphist
 
+    zip
+    unzip
+
     zig
     nodejs
     zulu21
