@@ -5,23 +5,13 @@
       position = "top";
 
       modules-left = [ "temperature" "memory" "cpu" "custom/nvidia" ];
-      modules-center = [ "custom/music" ];
+      modules-center = [ "hyprland/workspaces" ];
       modules-right = [ "custom/mic" "wireplumber" "clock" "tray" ];
 
       tray = {
         icon-size = 21;
         spacing = 10;
       };
-
-      # "custom/music" = {
-      #   format = "   {}";
-      #   escape = true;
-      #   interval = 1;
-      #   tooltip = false;
-      #   exec = "playerctl metadata --format='{{ title }}'";
-      #   on-click = "playerctl play-pause";
-      #   max-length = 50;
-      # };
 
       cpu = {
         format = "   {usage}%";
@@ -50,6 +40,12 @@
         interval = 1;
         on-click = "alacritty -e btop";
       };  
+
+      "hyprland/workspaces" = {
+        format = "{icon}";
+        on-click = "activate";
+        sort-by-number = true;
+      };
 
       "custom/mic" = {
         format = "{}";

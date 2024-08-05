@@ -14,7 +14,6 @@
 #temperature,
 #memory,
 #cpu,
-#custom-music,
 #custom-mic,
 #tray,
 #clock,
@@ -26,49 +25,48 @@
 
 #temperature {
   color: @blue;
-  border-radius: 1rem 1rem 1rem 1rem;
   margin-left: 1rem;
+  border-radius: 1rem 0 0 1rem;
 }
 
 #cpu {
   color: @maroon;
-  border-radius: 1rem 1rem 1rem 1rem;
-  margin-left: 1rem;
-}
-
-#custom-nvidia {
-  color: @lavender;
-  border-radius: 1rem 1rem 1rem 1rem;
-  margin-left: 1rem;
+  border-radius: 0;
 }
 
 #memory {
   color: @lavender;
-  border-radius: 1rem 1rem 1rem 1rem;
-  margin-left: 1rem;
+  border-radius: 0;
+}
+
+#custom-nvidia {
+  color: @lavender;
+  border-radius: 0 1rem 1rem 0;
+}
+
+#workspaces button {
+  color: @surface2;
+}
+
+#workspaces button.active {
+  color: @lavender;
+}
+
+#custom-mic {
+  color: @maroon;
+  border-radius: 1rem 0 0 1rem;
+}
+
+#wireplumber {
+  color: @lavender;
+  border-radius: 0 1rem 1rem 0;
+  margin-right: 1rem;
 }
 
 #clock {
   color: @blue;
   border-radius: 1rem 1rem 1rem 1rem;
   margin-right: 1rem;
-}
-
-#custom-mic {
-  color: @maroon;
-  border-radius: 1rem 1rem 1rem 1rem;
-  margin-right: 1rem;
-}
-
-#wireplumber {
-  color: @lavender;
-  border-radius: 1rem 1rem 1rem 1rem;
-  margin-right: 1rem;
-}
-
-#custom-music {
-  color: @mauve;
-  border-radius: 1rem;
 }
 
 #tray {

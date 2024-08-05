@@ -15,10 +15,10 @@
     ];
 
     exec-once = [
-      "waybar"
       "1password"
       "vesktop"
       "wl-paste --type text --watch cliphist store"
+      "waybar"
     ];
 
     input = {
