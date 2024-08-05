@@ -14,8 +14,10 @@
     ./dir-env
     ./dunst
     ./easyeffects
+    ./fastfetch
     ./fish
     ./fzf
+    #./gh
     ./git
     ./go
     ./gpg
@@ -25,11 +27,16 @@
     ./nvim
     ./pass
     ./ranger
+    ./ripgrep
     ./rofi
     ./sioyek
+    ./texlive
     ./tmux
+    ./udiskie
     ./waybar
     ./xdg
+    ./yt-dlp
+    ./zoxide
   ];
 
   programs.home-manager.enable = true;
@@ -42,13 +49,8 @@
     gh
     tree
     wl-clipboard
-    ripgrep
-    zoxide
-    fastfetch
     speedtest-cli
-    yt-dlp
 
-    # easyeffects
     playerctl
     ffmpeg
     cliphist
@@ -69,9 +71,6 @@
     devenv
     just
     hyperfine
-
-    texliveFull
-    graphviz
 
     signal-desktop
     slack
