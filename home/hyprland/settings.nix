@@ -2,7 +2,6 @@
   wayland.windowManager.hyprland.sourceFirst = true;
   wayland.windowManager.hyprland.settings = {
     env = [
-      "XCURSOR_SIZE,24"
       "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
       "QT_QPA_PLATFORM,wayland"
       "NVD_BACKEND,direct"
