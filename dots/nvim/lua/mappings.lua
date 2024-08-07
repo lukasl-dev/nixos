@@ -3,8 +3,8 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local unmap = vim.keymap.del
 
-unmap("n", '<leader>h')
-unmap("n", '<leader>v')
+unmap("n", "<leader>h")
+unmap("n", "<leader>v")
 
 -- ====================================================================
 -- general purpose
@@ -15,6 +15,13 @@ map("i", "jk", "<ESC>")
 
 -- allow to switch from terminal input mode to terminal normal mode
 map("t", "<Esc>", [[<C-\><C-n>]], { desc = "escape terminal mode" })
+
+-- ====================================================================
+-- LSP
+-- ====================================================================
+
+map("n", "[d", vim.diagnostic.goto_prev, { desc = "previous diagnostic", silent = true })
+map("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic", silent = true })
 
 -- ====================================================================
 -- nvim-tree
@@ -42,7 +49,7 @@ map("n", "gl", ":Telescope diagnostics<CR>", { silent = true })
 -- ====================================================================
 
 map("i", "<C-j>", function()
-  local suggestion = require('supermaven-nvim.completion_preview')
+  local suggestion = require("supermaven-nvim.completion_preview")
   if suggestion.has_suggestion() then
     suggestion.on_accept_suggestion()
   end
