@@ -16,7 +16,6 @@ in
       "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
 
       "${mainMod}, T, exec, alacritty"
-      "${mainMod}, P, exec, vesktop"
       "${mainMod}, B, exec, brave"
 
       "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
@@ -26,8 +25,13 @@ in
       "${mainMod} SHIFT, Q, movetoworkspace, special"
       
       "${mainMod}, V, togglefloating,"
+      "${mainMod}, V, centerwindow,"
+
+      "${mainMod}, N, swapnext,"
       "${mainMod}, W, killactive,"
-      "${mainMod}, M, fullscreen,"
+
+      "${mainMod}, M, fullscreen, 1"
+      "${mainMod} SHIFT, M, fullscreen,"
 
       "${mainMod}, h, movefocus, l"
       "${mainMod}, l, movefocus, r"
