@@ -41,6 +41,9 @@ def create_right_prompt [] {
 }
 
 
+$env.PATH = ($env.PATH | split row (char esep) | append $"($env.HOME)/go/bin")
+
+
 $env.PROMPT_COMMAND = {|| create_left_prompt }
 $env.PROMPT_COMMAND_RIGHT = {|| create_right_prompt }
 

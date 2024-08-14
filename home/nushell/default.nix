@@ -29,6 +29,8 @@
       
       # bat
       cat = "bat";
+
+      "bye" = "shutdown -h now";
     };
   };
 

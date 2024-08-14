@@ -7,6 +7,7 @@ in
 
     bind = [
       "${mainMod}, Space, exec, rofi -show drun -show-icons"
+      "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
       "${mainMod}, E, exec, bemoji"
       "${mainMod}, P, exec, rofi-pass"
       "${mainMod}, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"

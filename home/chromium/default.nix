@@ -12,10 +12,11 @@
       "hkgfoiooedgoejojocmhlaklaeopbecg" # Picture-in-Picture
       "egnjhciaieeiiohknchakcodbpgjnchh" # Tab Wrangler
       "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
-      "hlgbcneanomplepojfcnclggenpcoldo" # Perplexity - AI Companion
       "oldceeleldhonbafppcapldpdifcinji" # LanguageTool
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
       "dbepggeogbaibhgnhhndojpepiihcmeb" # Vimium
+      "iiikidmnimlpahbeknmkeonmemajpccj" # Button Stealer
+      "cimpffimgeipdhnhjohpbehjkcdpjolg" # Watch2Gether
     ];  
   };
 }

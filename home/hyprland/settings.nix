@@ -5,7 +5,13 @@
       "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
       "QT_QPA_PLATFORM,wayland"
       "NVD_BACKEND,direct"
+
       "XDG_CURRENT_DESKTOP,Hyprland"
+      "XDG_SESSION_TYPE,wayland"
+
+      "LIBVA_DRIVER_NAME,nvidia"
+      "GBM_BACKEND,nvidia-drm"
+      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
     ];
 
     monitor = [
@@ -15,9 +21,12 @@
     ];
 
     exec-once = [
-      "1password"
-      "vesktop"
       "wl-paste --type text --watch cliphist store"
+
+      "vesktop"
+      "1password"
+      "localsend_app"
+
       "waybar"
     ];
 
@@ -42,8 +51,6 @@
       "col.inactive_border" = "rgba(595959aa)";
 
       layout = "dwindle";
-
-      allow_tearing = true;
     };
 
     decoration = {
@@ -87,6 +94,7 @@
 
     misc = {
       force_default_wallpaper = 0;
+      vrr = 2;
     };
   };
 }

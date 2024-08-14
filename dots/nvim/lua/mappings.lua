@@ -5,6 +5,8 @@ local unmap = vim.keymap.del
 
 unmap("n", "<leader>h")
 unmap("n", "<leader>v")
+unmap("n", "<Tab>")
+unmap("n", "<S-Tab>")
 
 -- ====================================================================
 -- general purpose
@@ -105,3 +107,42 @@ map("n", "<localleader>rr", ":MoltenReevaluateCell<CR>", { silent = true, desc =
 map("v", "<localleader>r", ":<C-u>MoltenEvaluateVisual<CR>gv", { silent = true, desc = "evaluate visual selection" })
 map("n", "<localleader>p", ":MoltenImagePopup<CR>", { silent = true, desc = "open image popup" })
 map("n", "<localleader>i", ":MoltenInterrupt<CR>", { silent = true, desc = "interrupt cell" })
+
+-- ====================================================================
+-- harpoon
+-- ====================================================================
+
+local harpoon = require("harpoon")
+
+map("n", "<leader>a", function() harpoon:list():add() end, {
+  silent = true,
+  desc = "harpoon: add"
+})
+map("n", "<leader>o", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, {
+  silent = true,
+  desc = "harpoon: toggle quick menu"
+})
+map("n", "<leader>j1", function() harpoon:list():select(1) end, {
+  silent = true,
+  desc = "harpoon: select 1"
+})
+map("n", "<leader>j2", function() harpoon:list():select(2) end, {
+  silent = true,
+  desc = "harpoon: select 2"
+})
+map("n", "<leader>j3", function() harpoon:list():select(3) end, {
+  silent = true,
+  desc = "harpoon: select 3"
+})
+map("n", "<leader>j4", function() harpoon:list():select(4) end, {
+  silent = true,
+  desc = "harpoon: select 4"
+})
+map("n", "<leader>p", function() harpoon:list():prev() end, {
+  silent = true,
+  desc = "harpoon: previous"
+})
+map("n", "<leader>n", function() harpoon:list():next() end, {
+  silent = true,
+  desc = "harpoon: next"
+})

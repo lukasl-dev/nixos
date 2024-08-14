@@ -44,3 +44,4 @@ vim.filetype.add({
     justfile = "just",
   }
 })
+

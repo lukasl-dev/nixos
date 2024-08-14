@@ -7,6 +7,7 @@
 
   environment.systemPackages = with pkgs; [
     gnome.gnome-keyring
+    gnome.nautilus
   ];
 
   programs.seahorse.enable = true;

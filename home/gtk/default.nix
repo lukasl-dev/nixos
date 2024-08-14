@@ -1,6 +1,12 @@
+{ pkgs, ... }:
+
 {
   gtk = {
     enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome.adwaita-icon-theme;
+    };
 
     gtk3.extraConfig = {
       Settings = ''

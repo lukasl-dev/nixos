@@ -10,7 +10,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require("nvchad.configs.lspconfig").defaults()
+      -- require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
   },
@@ -39,6 +39,9 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nushell/tree-sitter-nu",
+    },
     opts = {
       ensure_installed = {
         "vim",
@@ -78,17 +81,17 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    opts = function()
-      local conf = require "nvchad.configs.telescope"
+    -- opts = function()
+    --   local conf = require "nvchad.configs.telescope"
 
-      conf.defaults.mappings.i = {
-        ["<C-j>"] = require("telescope.actions").move_selection_next,
-        ["<C-k>"] = require("telescope.actions").move_selection_previous,
-        ["<Esc>"] = require("telescope.actions").close,
-      }
+    --   conf.defaults.mappings.i = {
+    --     ["<C-j>"] = require("telescope.actions").move_selection_next,
+    --     ["<C-k>"] = require("telescope.actions").move_selection_previous,
+    --     ["<Esc>"] = require("telescope.actions").close,
+    --   }
 
-      return conf
-    end,
+    --   return conf
+    -- end,
   },
 
   {
@@ -266,5 +269,17 @@ return {
         end
       })
     end
+  },
+
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("harpoon").setup({})
+    end,
   },
 }

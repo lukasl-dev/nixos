@@ -9,8 +9,10 @@
     ./bat
     ./btop
     ./bun
+    ./carapace
     ./catppuccin
     ./chromium
+    ./dconf
     ./dir-env
     ./dunst
     ./easyeffects
@@ -23,6 +25,7 @@
     ./gpg
     ./gtk
     ./hyprland
+    ./mpv
     ./nushell
     ./nvim
     ./pass
@@ -54,6 +57,7 @@
     playerctl
     ffmpeg
     cliphist
+    d2
 
     zip
     unzip
@@ -67,6 +71,8 @@
 
     python3
     uv
+
+    newsflash
 
     devenv
     just

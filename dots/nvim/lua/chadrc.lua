@@ -8,7 +8,7 @@ M.ui = {
   theme = "catppuccin",
 
   tabufline = {
-    enabled = true,
+    enabled = false,
     order = { "treeOffset", "buffers", "tabs" },
     modules = {
       blank = function()
