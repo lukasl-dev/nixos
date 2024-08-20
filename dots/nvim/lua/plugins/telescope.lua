@@ -24,9 +24,4 @@ return {
       },
     },
   },
-
-  config = function(opts)
-    local telescope = require "telescope"
-    telescope.setup(opts)
-  end,
 }

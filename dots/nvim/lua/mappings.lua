@@ -12,6 +12,13 @@ map("n", "[d", vim.diagnostic.goto_prev, { silent = true })
 map("n", "]d", vim.diagnostic.goto_next, { silent = true })
 
 -- ====================================================================
+-- lspsaga
+-- ====================================================================
+
+map("n", "<leader>lr", ":Lspsaga rename ++project<CR>", { silent = true })
+map("n", "gf", ":Lspsaga finder def+ref+imp<CR>", { silent = true })
+
+-- ====================================================================
 -- oil
 -- ====================================================================
 

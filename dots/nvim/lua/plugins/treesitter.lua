@@ -1,19 +1,33 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = { "nushell/tree-sitter-nu" },
 
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 
     opts = {
-      ensure_installed = { "vim", "lua", "vimdoc" },
+      ensure_installed = { "lua", "luadoc", "printf", "vim", "vimdoc" },
+
+      highlight = {
+        enable = true,
+        use_languagetree = true,
+      },
+
+      indent = {
+        enable = true,
+      },
     },
   },
 
   {
     "IndianBoy42/tree-sitter-just",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+
     opts = {},
+  },
+
+  {
+    "nushell/tree-sitter-nu",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
 }
