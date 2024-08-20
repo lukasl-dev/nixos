@@ -15,6 +15,8 @@
 
     catppuccin.url = "github:catppuccin/nix";
 
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";

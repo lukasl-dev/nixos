@@ -1,47 +1,41 @@
-require "nvchad.options"
+local opt = vim.opt
+local o = vim.opt
 
-local nvim_dir = vim.fn.stdpath "config"
-
-local o = vim.o
-local g = vim.g
-
--- o.cursorlineopt = "both" -- to enable cursorline!
-
--- Python provider
-g.python3_host_prog = vim.fn.expand(nvim_dir .. "/python/.venv/Scripts/python")
-g.loaded_python3_provider = 1
-
--- Show a colum at colum 80
 o.colorcolumn = "80"
 
--- Relative line numbers
 o.number = true
 o.relativenumber = true
+o.numberwidth = 2
+o.ruler = false
 
--- Use system clipboard
+o.expandtab = true
+o.shiftwidth = 2
+o.smartindent = true
+o.tabstop = 2
+o.softtabstop = 2
+
+o.signcolumn = "yes"
+o.splitbelow = true
+o.splitright = true
+o.timeoutlen = 400
+o.undofile = true
+
 o.clipboard = "unnamedplus"
+o.cursorline = true
+o.cursorlineopt = "number"
 
--- Support "(" and ")" in filenames
-vim.opt.isfname:append { "(", ")" }
+opt.isfname:append { "(", ")" }
+opt.fillchars = { eob = " " }
+opt.shortmess:append "sI"
 
--- Enable providers
--- https://github.com/NvChad/NvChad/issues/1417#issuecomment-1203490842
-local enable_providers = {
-  "python3_provider",
-}
-for _, plugin in pairs(enable_providers) do
-  vim.g["loaded_" .. plugin] = nil
-  vim.cmd("runtime " .. plugin)
+-- Add the mason binary path to the PATH variable, so that plugins, such as
+-- conform, can use the mason binaries.
+local function configure_mason_path()
+  local is_windows = vim.fn.has "win32" ~= 0
+  local sep = is_windows and "\\" or "/"
+  local delim = is_windows and ";" or ":"
+  vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep)
+    .. delim
+    .. vim.env.PATH
 end
-
--- filetypes
-vim.filetype.add({
-  extension = {
-    ebnf = "ebnf",
-    mdx = "markdown",
-  },
-  filename = {
-    justfile = "just",
-  }
-})
-
+configure_mason_path()

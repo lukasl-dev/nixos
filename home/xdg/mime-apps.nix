@@ -1,7 +1,7 @@
 let
   browser = [ "brave.desktop" ];
   sioyek = [ "sioyek.desktop" ];
-  ranger = [ "ranger.desktop" ];
+  # ranger = [ "ranger.desktop" ];
 in
 {
   xdg.mimeApps = {
@@ -25,7 +25,7 @@ in
 
         "application/pdf" = sioyek;
 
-        "inode/directory" = ranger;
+        # "inode/directory" = ranger;
       };
     };
 }

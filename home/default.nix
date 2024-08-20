@@ -88,6 +88,7 @@
     
     prismlauncher
     lutris
+    protonup-qt
     wineWowPackages.waylandFull
   ];
 }
