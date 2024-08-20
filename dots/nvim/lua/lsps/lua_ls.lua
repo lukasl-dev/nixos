@@ -11,6 +11,7 @@ return {
           vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
           vim.fn.stdpath "data" .. "/lazy/indent-blankline.nvim/lua/ibl",
           vim.fn.stdpath "data" .. "/lazy/nvim-cmp/lua/cmp",
+          vim.fn.stdpath "data" .. "/lazy/catppuccin/lua/catppuccin",
         },
         maxPreload = 100000,
         preloadFileSize = 10000,

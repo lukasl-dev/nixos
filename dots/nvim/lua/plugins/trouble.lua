@@ -3,4 +3,5 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
 
   event = "BufWinEnter",
+  cmd = { "Trouble" },
 }
