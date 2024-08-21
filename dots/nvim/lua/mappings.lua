@@ -58,14 +58,44 @@ end, { silent = true })
 -- gitsigns
 -- ====================================================================
 
-map("n", "<leader>gD", ":Gitsigns toggle_deleted<CR>", { silent = true })
+local gitsigns = require "gitsigns"
 
-map("n", "<leader>hp", ":Gitsigns preview_hunk<CR>", { silent = true })
-map("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", { silent = true })
-map("n", "<leader>hs", ":Gitsigns stage_hunk<CR>", { silent = true })
-map("n", "<leader>hS", ":Gitsigns undo_stage_hunk<CR>", { silent = true })
-map("n", "[h", ":Gitsigns prev_hunk<CR>", { silent = true })
-map("n", "]h", ":Gitsigns next_hunk<CR>", { silent = true })
+map("n", "]h", function()
+  if vim.wo.diff then
+    vim.cmd.normal { "]c", bang = true }
+  else
+    gitsigns.nav_hunk "next"
+  end
+end)
+map("n", "[h", function()
+  if vim.wo.diff then
+    vim.cmd.normal { "[c", bang = true }
+  else
+    gitsigns.nav_hunk "prev"
+  end
+end)
+
+map("n", "<leader>gb", function()
+  gitsigns.blame_line { full = true }
+end)
+map("n", "<leader>gD", gitsigns.toggle_deleted)
+
+map("n", "<leader>hs", gitsigns.stage_hunk)
+map("v", "<leader>hs", function()
+  gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
+end)
+map("n", "<leader>hS", gitsigns.undo_stage_hunk)
+map("v", "<leader>hr", function()
+  gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
+end)
+map("n", "<leader>hp", gitsigns.preview_hunk)
+map("n", "<leader>hd", gitsigns.diffthis)
+map("n", "<leader>hD", function()
+  gitsigns.diffthis "~"
+end)
+
+map("n", "<leader>bs", gitsigns.stage_buffer)
+map("n", "<leader>bs", gitsigns.reset_buffer)
 
 -- ====================================================================
 -- diffview

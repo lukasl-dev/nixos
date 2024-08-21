@@ -1,3 +1,4 @@
+-- TODO: sign_define() is deprecated
 vim.fn.sign_define(
   "DiagnosticSignError",
   { text = "", texthl = "DiagnosticSignError" }
