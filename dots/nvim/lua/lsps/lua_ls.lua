@@ -13,6 +13,7 @@ return {
           vim.fn.stdpath "data" .. "/lazy/nvim-cmp/lua/cmp",
           vim.fn.stdpath "data" .. "/lazy/catppuccin/lua/catppuccin",
           vim.fn.stdpath "data" .. "/lazy/gitsigns.nvim/lua/gitsigns",
+          vim.fn.stdpath "data" .. "/lazy/telescope.nvim/lua/telescope",
         },
         maxPreload = 100000,
         preloadFileSize = 10000,
