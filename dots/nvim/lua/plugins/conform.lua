@@ -6,7 +6,7 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
-      go = { "gofmt" },
+      go = { "gofumpt", "gofmt" },
       markdown = { "mdformat" },
       python = { { "ruff_format" }, { "isort", "black" } },
       typescript = { { "biome" }, { "prettier", "eslint" } },
