@@ -2,6 +2,5 @@ return {
   "folke/trouble.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
 
-  event = "BufWinEnter",
-  cmd = { "Trouble" },
+  cmd = "Trouble",
 }

@@ -4,8 +4,6 @@ return {
 
   priority = 1000,
 
-  --@module "catppuccin"
-  ---@return catppuccin.ConfigSchemu
   opts = {
     flavour = "mocha",
     integrations = {
