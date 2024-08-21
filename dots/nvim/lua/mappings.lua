@@ -8,8 +8,15 @@ map("n", "gD", vim.lsp.buf.declaration, { silent = true })
 map("n", "gd", vim.lsp.buf.definition, { silent = true })
 map("n", "gi", vim.lsp.buf.implementation, { silent = true })
 map("n", "gs", vim.lsp.buf.signature_help, { silent = true })
+
+-- ====================================================================
+-- diagnostic
+-- ====================================================================
+
 map("n", "[d", vim.diagnostic.goto_prev, { silent = true })
 map("n", "]d", vim.diagnostic.goto_next, { silent = true })
+map("n", "gef", vim.diagnostic.open_float, { silent = true })
+map("n", "geq", vim.diagnostic.setqflist, { silent = true })
 
 -- ====================================================================
 -- lspsaga
