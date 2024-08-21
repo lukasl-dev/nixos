@@ -46,4 +46,10 @@
   pkgs.lutris
   pkgs.protonup-qt
   pkgs.wineWowPackages.waylandFull
+
+  pkgs.pass
+  pkgs.passExtensions.pass-otp
+
+  pkgs.graphviz
+  pkgs.texliveFull
 ]
