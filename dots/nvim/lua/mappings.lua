@@ -23,6 +23,7 @@ map("n", "geq", vim.diagnostic.setqflist, { silent = true })
 -- ====================================================================
 
 map("n", "<leader>lr", ":Lspsaga rename ++project<CR>", { silent = true })
+map("n", "<leader>la", ":Lspsaga code_action<CR>", { silent = true })
 
 -- ====================================================================
 -- oil

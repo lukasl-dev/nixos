@@ -25,5 +25,9 @@ o.cursorline = true
 o.cursorlineopt = "number"
 
 opt.isfname:append { "(", ")" }
-opt.fillchars = { eob = " " }
 opt.shortmess:append "sI"
+opt.fillchars = {
+  -- stl = "─",
+  -- stlnc = "─",
+  eob = " ",
+}
