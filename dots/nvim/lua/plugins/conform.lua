@@ -15,6 +15,7 @@ return {
       javascriptreact = { { "biome" }, { "prettier", "eslint" } },
       zig = { "zigfmt" },
       nix = { "nixfmt" },
+      just = { "just" },
     },
 
     format_on_save = {

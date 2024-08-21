@@ -17,6 +17,7 @@
       "dbepggeogbaibhgnhhndojpepiihcmeb" # Vimium
       "iiikidmnimlpahbeknmkeonmemajpccj" # Button Stealer
       "cimpffimgeipdhnhjohpbehjkcdpjolg" # Watch2Gether
-    ];  
+      "pljfkbaipkidhmaljaaakibigbcmmpnc" # Atom Material Icons
+    ];
   };
 }

@@ -26,14 +26,13 @@
 
       # ranger
       r = "ranger";
-      
+
       # bat
       cat = "bat";
 
       "bye" = "shutdown -h now";
     };
   };
-
 
   home.file.".config/nushell/themes" = {
     enable = true;

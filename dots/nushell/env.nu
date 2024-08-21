@@ -13,7 +13,6 @@ def create_left_prompt [] {
 }
 
 def create_right_prompt [] {
-    # create a right prompt with git branch in magenta and green separators
     let git_branch = (do {
         git rev-parse --abbrev-ref HEAD
     } | complete)
@@ -28,7 +27,7 @@ def create_right_prompt [] {
             ")"
         ] | str join | str replace --regex --all "([/-])" $"(ansi green)${1}(ansi magenta)")
     } else {
-        "" # Display nothing when not in a git repository
+        "" 
     }
 
     let last_exit_code = if ($env.LAST_EXIT_CODE != 0) {([

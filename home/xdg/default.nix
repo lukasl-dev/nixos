@@ -13,7 +13,8 @@
     configHome = config.home.homeDirectory + "/.config";
 
     userDirs = {
-      enable = true; createDirectories = true;
+      enable = true;
+      createDirectories = true;
     };
 
     portal = {
@@ -28,5 +29,5 @@
       };
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
-  };  
+  };
 }

@@ -21,10 +21,10 @@ in
 
       "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      
+
       "${mainMod}, Q, togglespecialworkspace,"
       "${mainMod} SHIFT, Q, movetoworkspace, special"
-      
+
       "${mainMod}, V, togglefloating,"
       "${mainMod}, V, centerwindow,"
 

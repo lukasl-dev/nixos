@@ -20,7 +20,7 @@
       variables = [ "--all" ];
     };
     xwayland.enable = true;
-    plugins = [];
+    plugins = [ ];
   };
 
   home.packages = with pkgs; [
@@ -33,4 +33,3 @@
     xdg-utils
   ];
 }
-

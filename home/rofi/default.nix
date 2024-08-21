@@ -8,8 +8,5 @@
     pass.enable = true;
   };
 
-  home.packages = with pkgs; [
-    bemoji
-  ];
+  home.packages = with pkgs; [ bemoji ];
 }
-
