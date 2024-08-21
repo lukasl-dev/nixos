@@ -6,7 +6,7 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
-      go = { "gofumpt", "gofmt" },
+      go = { { "goimports", "gofumpt" }, { "goimports", "gofmt" } },
       markdown = { "mdformat" },
       python = { { "ruff_format" }, { "isort", "black" } },
       typescript = { { "biome" }, { "prettier", "eslint" } },
@@ -14,6 +14,7 @@ return {
       javascript = { { "biome" }, { "prettier", "eslint" } },
       javascriptreact = { { "biome" }, { "prettier", "eslint" } },
       zig = { "zigfmt" },
+      nix = { "nixfmt" },
     },
 
     format_on_save = {

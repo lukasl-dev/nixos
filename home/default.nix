@@ -68,6 +68,7 @@
     gleam
     erlang
     elixir
+    nixfmt-rfc-style
 
     python3
     uv
