@@ -1,5 +1,6 @@
 {
-  description = "A very basic flake";
+  description = "lukasl-dev";
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -29,12 +30,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
   outputs =
     {
       nixpkgs,
       nixpkgs-unstable,
-      nix-ld,
       home-manager,
+      nix-ld,
       catppuccin,
       ...
     }@inputs:

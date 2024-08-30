@@ -2,6 +2,7 @@ local opt = vim.opt
 local o = vim.opt
 
 o.colorcolumn = "80"
+o.showmode = false
 
 o.number = true
 o.relativenumber = true
