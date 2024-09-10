@@ -10,11 +10,6 @@
     inputs.catppuccin.homeManagerModules.catppuccin
 
     # ./ags
-    ./alacritty
-    ./bat
-    ./btop
-    ./bun
-    ./carapace
     ./catppuccin
     ./chromium
     ./dconf
@@ -31,25 +26,34 @@
     ./hyprland
     ./mpv
     ./nushell
-    ./nvim
     ./pass
     ./ranger
-    ./ripgrep
-    ./rofi
     ./sioyek
     ./texlive
     ./tmux
-    ./udiskie
     ./waybar
     ./xdg
-    ./yt-dlp
-    ./zoxide
+
+    ./alacritty.nix
+    ./bat.nix
+    ./btop.nix
+    ./bun.nix
+    ./carapace.nix
+    ./nvim.nix
+    ./ripgrep.nix
+    ./rofi.nix
+    ./udiskie.nix
+    ./yt-dlp.nix
+    ./zoxide.nix
   ];
 
   programs.home-manager.enable = true;
-  home.stateVersion = "24.05";
 
-  home.username = "lukas";
-  home.homeDirectory = "/home/lukas";
-  home.packages = import ./packages.nix { inherit pkgs pkgs-unstable; };
+  home = {
+    stateVersion = "24.05";
+
+    username = "lukas";
+    homeDirectory = "/home/lukas";
+    packages = import ./packages.nix { inherit pkgs pkgs-unstable; };
+  };
 }

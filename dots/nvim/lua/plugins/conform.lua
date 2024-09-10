@@ -40,6 +40,7 @@ return {
       zig = { "zigfmt" },
       nix = { "nixfmt" },
       just = { "just" },
+      rust = { "rustfmt", lsp_format = "fallback" },
     },
 
     format_on_save = {

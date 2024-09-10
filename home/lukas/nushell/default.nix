@@ -2,8 +2,8 @@
   programs.nushell = {
     enable = true;
 
-    configFile.source = ../../dots/nushell/config.nu;
-    envFile.source = ../../dots/nushell/env.nu;
+    configFile.source = ../../../dots/nushell/config.nu;
+    envFile.source = ../../../dots/nushell/env.nu;
 
     shellAliases = {
       # git
@@ -36,7 +36,7 @@
 
   home.file.".config/nushell/themes" = {
     enable = true;
-    source = ../../dots/nushell/themes;
+    source = ../../../dots/nushell/themes;
     target = ".config/nushell/themes";
   };
 }

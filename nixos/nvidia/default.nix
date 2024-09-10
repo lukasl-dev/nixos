@@ -14,15 +14,15 @@
     powerManagement.enable = false;
     powerManagement.finegrained = false;
 
-    open = false;
-    nvidiaSettings = true;
+    open = true;
+    nvidiaSettings = false;
 
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "555.58";
-      sha256_64bit = "sha256-bXvcXkg2kQZuCNKRZM5QoTaTjF4l2TtrsKUvyicj5ew=";
+      version = "560.35.03";
+      sha256_64bit = "sha256-8pMskvrdQ8WyNBvkU/xPc/CtcYXCa7ekP73oGuKfH+M=";
+      openSha256 = "sha256-/32Zf0dKrofTmPZ3Ratw4vDM7B+OgpC4p7s+RHUjCrg=";
+      settingsSha256 = "sha256-kQsvDgnxis9ANFmwIwB7HX5MkIAcpEEAHc8IBOLdXvk=";
       sha256_aarch64 = lib.fakeSha256;
-      openSha256 = lib.fakeSha256;
-      settingsSha256 = "sha256-vWnrXlBCb3K5uVkDFmJDVq51wrCoqgPF03lSjZOuU8M=";
       persistencedSha256 = lib.fakeSha256;
     };
   };

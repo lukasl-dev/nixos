@@ -22,6 +22,10 @@
   pkgs.gleam
   pkgs.erlang
   pkgs.elixir
+  pkgs.rustc
+  pkgs.clippy
+  pkgs.cargo
+  pkgs.rustfmt
 
   pkgs.nixfmt-rfc-style
 

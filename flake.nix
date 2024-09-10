@@ -46,6 +46,18 @@
         inherit system;
         config.allowUnfree = true;
       };
+      home-manager-config = {
+        home-manager = {
+          extraSpecialArgs = {
+            inherit inputs pkgs-unstable;
+          };
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users = {
+            lukas = import ./home/lukas;
+          };
+        };
+      };
     in
     {
       nixosConfigurations = {
@@ -55,25 +67,13 @@
             inherit inputs pkgs-unstable;
           };
           modules = [
-            # "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            # https://nixos.wiki/wiki/Creating_a_NixOS_live_CD
-
             ./hosts/vega
 
             catppuccin.nixosModules.catppuccin
             nix-ld.nixosModules.nix-ld
 
             home-manager.nixosModules.home-manager
-            {
-              home-manager.extraSpecialArgs = {
-                inherit inputs pkgs-unstable;
-              };
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users = {
-                lukas = import ./home;
-              };
-            }
+            home-manager-config
           ];
         };
       };
