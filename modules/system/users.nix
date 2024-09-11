@@ -5,7 +5,11 @@
     lukas = {
       isNormalUser = true;
       description = "Lukas Leeb";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "docker"
+      ];
       shell = pkgs.nushell;
     };
   };

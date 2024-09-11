@@ -27,8 +27,6 @@
     };
   };
 
-  hardware.nvidia-container-toolkit.enable = true;
-
   hardware.opengl = {
     enable = true;
     driSupport = true;

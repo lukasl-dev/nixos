@@ -3,8 +3,6 @@
 {
   security = {
     polkit.enable = true;
-    # pam.services.ags = {};
-    pam.services.hyprlock = {};
   };
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
@@ -21,4 +19,3 @@
     };
   };
 }
-

@@ -2,6 +2,7 @@
 
 [
   pkgs.nixd
+  pkgs.nixfmt-rfc-style
 
   pkgs.wl-clipboard
 
@@ -9,8 +10,6 @@
   pkgs.ffmpeg
   pkgs.cliphist
   pkgs.d2
-
-  pkgs.nixfmt-rfc-style
 
   pkgs.signal-desktop
   pkgs.slack

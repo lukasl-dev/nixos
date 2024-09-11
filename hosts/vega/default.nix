@@ -1,31 +1,34 @@
 {
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
 
-    ../../nixos/1password
-    ../../nixos/bluetooth
-    ../../nixos/boot
-    ../../nixos/catppuccin
-    ../../nixos/dconf
-    ../../nixos/docker
-    ../../nixos/gnome
-    ../../nixos/hyprland
-    ../../nixos/fonts
-    ../../nixos/i18n
-    ../../nixos/networking
-    ../../nixos/nix
-    ../../nixos/nix-ld
-    ../../nixos/nvidia
-    ../../nixos/ollama
-    ../../nixos/pipewire
-    ../../nixos/polkit
-    ../../nixos/qt
-    ../../nixos/steam
-    ../../nixos/users
-    ../../nixos/xserver
+    ../../modules/system/hardware/bluetooth.nix
+    ../../modules/catppuccin.nix
+    ../../modules/programs/dconf.nix
+    ../../modules/system/virtualisation/docker.nix
+    ../../modules/system/virtualisation/nvidia-containers.nix
+    ../../modules/programs/gnome.nix
+    ../../modules/system/desktop/hyprland.nix
+    ../../modules/system/i18n.nix
+    ../../modules/system/networking/dns.nix
+    ../../modules/system/networking/firewall.nix
+    ../../modules/system/hardware/graphics/nvidia.nix
+    ../../modules/programs/ollama.nix
+    ../../modules/system/sound.nix
+    ../../modules/system/security/polkit.nix
+    ../../modules/qt.nix
+    ../../modules/gaming/steam.nix
+    ../../modules/system/users.nix
+    ../../modules/system/xserver.nix
   ];
-  
+
   networking.hostName = "vega";
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = {
+    ntfs = true;
+  };
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";

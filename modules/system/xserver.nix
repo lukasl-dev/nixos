@@ -16,11 +16,11 @@
 
   environment.systemPackages = with pkgs; [
     (catppuccin-sddm.override {
-        flavor = "mocha";
-        font  = "Noto Sans";
-        fontSize = "9";
-        background = "${../../wallpapers/9.png}";
-        loginBackground = true;
+      flavor = "mocha";
+      font = "Noto Sans";
+      fontSize = "9";
+      background = "${../../wallpapers/9.png}";
+      loginBackground = true;
     })
   ];
 

@@ -1,5 +1,6 @@
 {
   time.timeZone = "Europe/Vienna";
+
   i18n = {
     defaultLocale = "en_GB.UTF-8";
     extraLocaleSettings = {
