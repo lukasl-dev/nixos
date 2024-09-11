@@ -67,6 +67,7 @@
             inherit inputs pkgs-unstable;
           };
           modules = [
+            ./hosts/unspecific
             ./hosts/vega
 
             catppuccin.nixosModules.catppuccin
