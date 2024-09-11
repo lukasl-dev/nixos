@@ -15,7 +15,7 @@
     ./development/zig.nix
 
     ./gaming/lutris.nix
-    ./gaming/prism-launcher.nix
+    ./gaming/minecraft.nix
     ./gaming/proton-ge.nix
     ./gaming/wine.nix
 

@@ -123,7 +123,7 @@ end)
 map("n", "<leader>n", function()
   harpoon:list():next()
 end)
-for i = 1, 4 do
+for i = 1, 9 do
   map("n", string.format("<leader>%d", i), function()
     harpoon:list():select(i)
   end)

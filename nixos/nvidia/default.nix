@@ -14,7 +14,7 @@
     powerManagement.enable = false;
     powerManagement.finegrained = false;
 
-    open = true;
+    open = false;
     nvidiaSettings = false;
 
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
@@ -27,6 +27,8 @@
     };
   };
 
+  hardware.nvidia-container-toolkit.enable = true;
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -38,17 +40,6 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    nvtopPackages.full
-    (writeShellScriptBin "nvidia-offload" ''
-      export __NV_PRIME_RENDER_OFFLOAD=1
-      export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-      export __GLX_VENDOR_LIBRARY_NAME=nvidia
-      export __VK_LAYER_NV_optimus=NVIDIA_only
-      exec -a "$0" "$@"
-    '')
-  ];
-
   environment.sessionVariables = {
     "LIBVA_DRIVER_NAME" = "nvidia";
     "GBM_BACKEND" = "nvidia-drm";
@@ -56,9 +47,8 @@
     "WLR_NO_HARDWARE_CURSORS" = "1";
   };
 
-  services.xserver.screenSection = ''
-    Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-    Option "AllowIndirectGLXProtocol" "off"
-    Option "TripleBuffer" "on"
-  '';
+  environment.systemPackages = with pkgs; [
+    egl-wayland
+    nvidia-vaapi-driver
+  ];
 }
