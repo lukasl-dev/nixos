@@ -3,7 +3,6 @@
     ./hardware-configuration.nix
 
     ../../modules/system/hardware/bluetooth.nix
-    ../../modules/catppuccin.nix
     ../../modules/programs/dconf.nix
     ../../modules/system/virtualisation/nvidia-containers.nix
     ../../modules/programs/gnome.nix

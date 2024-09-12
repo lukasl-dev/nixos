@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../../modules/catppuccin.nix
     ../../modules/nix.nix
     ../../modules/nix-ld.nix
 
