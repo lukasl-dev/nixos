@@ -16,6 +16,8 @@
     ../../modules/system/security/polkit.nix
     ../../modules/qt.nix
     ../../modules/gaming/steam.nix
+    ../../modules/gaming/gamemode.nix
+    ../../modules/gaming/gamescope.nix
     ../../modules/system/xserver.nix
   ];
 
@@ -29,7 +31,6 @@
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
-    NIXOS_OZONE_WL = "1";
 
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
@@ -39,7 +40,6 @@
 
   environment.variables = {
     WLR_NO_HARDWARE_CURSORS = "1";
-    NIXOS_OZONE_WL = "1";
 
     MOZ_ENABLE_WAYLAND = "1";
     XDG_SESSION_TYPE = "wayland";
