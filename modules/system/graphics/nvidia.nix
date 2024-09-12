@@ -27,17 +27,6 @@
     };
   };
 
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [
-      libva
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
-
   environment.sessionVariables = {
     "LIBVA_DRIVER_NAME" = "nvidia";
     "GBM_BACKEND" = "nvidia-drm";

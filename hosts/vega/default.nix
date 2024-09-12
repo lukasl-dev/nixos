@@ -5,20 +5,18 @@
     ../../modules/system/hardware/bluetooth.nix
     ../../modules/catppuccin.nix
     ../../modules/programs/dconf.nix
-    ../../modules/system/virtualisation/docker.nix
     ../../modules/system/virtualisation/nvidia-containers.nix
     ../../modules/programs/gnome.nix
     ../../modules/system/desktop/hyprland.nix
-    ../../modules/system/i18n.nix
     ../../modules/system/networking/dns.nix
     ../../modules/system/networking/firewall.nix
-    ../../modules/system/hardware/graphics/nvidia.nix
+    ../../modules/system/graphics/nvidia.nix
+    ../../modules/system/graphics/opengl.nix
     ../../modules/programs/ollama.nix
     ../../modules/system/sound.nix
     ../../modules/system/security/polkit.nix
     ../../modules/qt.nix
     ../../modules/gaming/steam.nix
-    ../../modules/system/users.nix
     ../../modules/system/xserver.nix
   ];
 
