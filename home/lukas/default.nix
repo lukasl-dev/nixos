@@ -19,8 +19,9 @@
     ./gaming/proton-ge.nix
     ./gaming/wine.nix
 
+    ./programs/browsers/chromium.nix
+    ./programs/browsers/firefox.nix
     ./programs/easyeffects
-    ./programs/chromium.nix
     ./programs/gpg.nix
     ./programs/newsflash.nix
     ./programs/sioyek.nix
