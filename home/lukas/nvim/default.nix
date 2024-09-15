@@ -10,16 +10,9 @@
     vimAlias = true;
   };
 
-  # TODO: python 3 via NixOS
-
   home.file.".config/nvim" = {
     enable = true;
     source = ./nvim;
     target = ".config/nvim";
   };
-
-  # home.sessionVariables = {
-  #   EDITOR = "nvim";
-  #   VISUAL = "nvim";
-  # };
 }

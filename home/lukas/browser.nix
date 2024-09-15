@@ -1,4 +1,9 @@
-{ pkgs-unstable, ... }:
+{
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
   programs.chromium = {
@@ -20,4 +25,6 @@
       "pljfkbaipkidhmaljaaakibigbcmmpnc" # Atom Material Icons
     ];
   };
+
+  home.packages = [ inputs.zen-browser.packages."${pkgs.system}".default ];
 }
