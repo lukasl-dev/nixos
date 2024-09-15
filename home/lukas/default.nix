@@ -1,35 +1,31 @@
-{ pkgs, pkgs-unstable, ... }:
+{ inputs, ... }:
 
 {
   imports = [
-    ./nvim
-
-    ./apps.nix
-    ./browser.nix
-    ./catppuccin.nix
+    ./app.nix
+    ./dconf.nix
     ./development.nix
+    ./editors.nix
     ./gaming.nix
+    ./gtk.nix
+    ./hyprland.nix
     ./shell.nix
     ./terminal.nix
+    ./xdg.nix
 
-    ./system/desktop/hyprland
-    ./system/desktop/waybar
-    ./system/desktop/dconf.nix
-    ./system/desktop/dunst.nix
-    ./system/desktop/gtk.nix
-    ./system/desktop/rofi.nix
-
-    ./system/utils/xdg
-    ./system/utils/udiskie.nix
+    inputs.catppuccin.homeManagerModules.catppuccin
   ];
 
   programs.home-manager.enable = true;
-
   home = {
     stateVersion = "24.05";
-
     username = "lukas";
     homeDirectory = "/home/lukas";
-    packages = import ./packages.nix { inherit pkgs pkgs-unstable; };
+  };
+
+  catppuccin = {
+    enable = true;
+
+    flavor = "mocha";
   };
 }

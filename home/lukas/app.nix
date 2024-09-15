@@ -1,11 +1,21 @@
 {
-  inputs,
   pkgs,
   pkgs-unstable,
+  inputs,
   ...
 }:
 
 {
+  # pdf viewer
+  programs.sioyek.enable = true;
+
+  # gpg key manager
+  programs.gpg.enable = true;
+
+  # audio effects
+  services.easyeffects.enable = true;
+
+  # brave browser
   programs.chromium = {
     enable = true;
     package = pkgs-unstable.brave;
@@ -26,5 +36,22 @@
     ];
   };
 
-  home.packages = [ inputs.zen-browser.packages."${pkgs.system}".default ];
+  programs.firefox = {
+    enable = true;
+    package = pkgs-unstable.firefox;
+
+    profiles.default = {
+      isDefault = true;
+    };
+  };
+
+  home.packages = [
+    # zen browser
+    inputs.zen-browser.packages."${pkgs.system}".default
+
+    pkgs.signal-desktop
+    pkgs.slack
+    pkgs.vesktop
+    pkgs.obsidian
+  ];
 }

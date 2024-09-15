@@ -10,28 +10,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    hyprlock.url = "github:hyprwm/Hyprlock";
-    hyprpaper.url = "github:hyprwm/Hyprpaper";
-
-    catppuccin.url = "github:catppuccin/nix";
-
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # nixd.url = "github:nix-community/nixd";
-
     nix-ld = {
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nixos-cli.url = "github:water-sucks/nixos";
 
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    catppuccin.url = "github:catppuccin/nix";
+
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
@@ -63,11 +55,11 @@
             ./hosts/unspecific
             ./hosts/vega
 
+            home-manager.nixosModules.home-manager
+
             catppuccin.nixosModules.catppuccin
             nix-ld.nixosModules.nix-ld
             nixos-cli.nixosModules.nixos-cli
-
-            home-manager.nixosModules.home-manager
           ];
         };
       };

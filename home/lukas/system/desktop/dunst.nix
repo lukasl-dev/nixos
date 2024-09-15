@@ -1,5 +1,0 @@
-{
-  services.dunst = {
-    enable = true;
-  };
-}

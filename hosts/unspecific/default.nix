@@ -26,16 +26,19 @@
       "lukas"
     ];
   };
+
   nixpkgs.config = {
     allowUnfree = true;
   };
 
   catppuccin = {
     enable = true;
+
     flavor = "mocha";
   };
 
   environment.systemPackages = with pkgs; [
+    # nix language server
     nixd
     nixfmt-rfc-style
   ];

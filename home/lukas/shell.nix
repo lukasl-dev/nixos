@@ -1,11 +1,37 @@
 { pkgs, ... }:
 
+let
+  shellAliases = {
+    g = "git status";
+    gf = "git fetch";
+    gfp = "git fetch --prune";
+    ga = "git add";
+    gb = "git branch";
+    gc = "git commit";
+    gca = "git commit --amend";
+    gs = "git switch";
+    gd = "git diff";
+    gl = "git log";
+    gg = "git graph";
+    gpl = "git pull";
+    gpu = "git push";
+
+    r = "ranger";
+
+    cat = "bat";
+
+    bye = "shutdown -h now";
+    cya = "reboot";
+  };
+in
 {
+  # zsh
   programs.zsh = {
     enable = true;
 
-    enableCompletion = true;
+    shellAliases = shellAliases;
 
+    enableCompletion = true;
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
 
@@ -13,36 +39,35 @@
       source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
       bindkey "''${key[Up]}" up-line-or-search
     '';
-
-    shellAliases = {
-      g = "git status";
-      gf = "git fetch";
-      gfp = "git fetch --prune";
-      ga = "git add";
-      gb = "git branch";
-      gc = "git commit";
-      gca = "git commit --amend";
-      gs = "git switch";
-      gd = "git diff";
-      gl = "git log";
-      gg = "git graph";
-      gpl = "git pull";
-      gpu = "git push";
-
-      r = "ranger";
-
-      cat = "bat";
-
-      bye = "shutdown -h now";
-      cya = "reboot";
-    };
   };
+
+  # nushell
+  programs.nushell = {
+    enable = true;
+
+    configFile.source = ../../dots/nushell/config.nu;
+    envFile.source = ../../dots/nushell/env.nu;
+
+    shellAliases = shellAliases;
+  };
+
+  # nushell themes
+  home.file.".config/nushell/themes" = {
+    enable = true;
+    source = ./../../dots/nushell/themes;
+    target = ".config/nushell/themes";
+  };
+
+  # fish shell
+  programs.fish.enable = true;
 
   programs.oh-my-posh = {
     enable = true;
 
     useTheme = "catppuccin_mocha";
+
     enableZshIntegration = true;
+    enableNushellIntegration = true;
   };
 
   programs.zellij = {
@@ -55,9 +80,11 @@
   programs.git = {
     enable = true;
 
-    delta = {
-      enable = true;
-    };
+    userEmail = "git@lukasl.dev";
+    userName = "lukasl-dev";
+
+    # fancier git diff
+    delta.enable = true;
 
     extraConfig = {
       color.ui = true;
@@ -66,9 +93,6 @@
       push.autoSetupRemote = true;
       pull.rebase = true;
     };
-
-    userEmail = "git@lukasl.dev";
-    userName = "lukasl-dev";
 
     aliases = {
       graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
@@ -108,5 +132,8 @@
     pkgs.unzip
     pkgs.speedtest-cli
     pkgs.hyperfine
+    pkgs.playerctl
+    pkgs.ffmpeg
+    pkgs.imagemagick
   ];
 }

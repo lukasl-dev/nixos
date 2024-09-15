@@ -27,15 +27,20 @@
 
   networking.hostName = "vega";
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = {
-    ntfs = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    supportedFilesystems = {
+      ntfs = true;
+    };
   };
 
   home-manager.users = {
     lukas = import ../../home/lukas {
       inherit inputs pkgs pkgs-unstable;
+
       host = {
         # TODO: add config options for home manager modules
       };

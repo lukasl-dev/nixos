@@ -15,7 +15,7 @@
         "wheel"
         "docker"
       ];
-      shell = pkgs.zsh;
+      shell = pkgs.nushell;
     };
   };
 

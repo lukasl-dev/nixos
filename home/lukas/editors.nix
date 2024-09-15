@@ -1,6 +1,7 @@
-{ pkgs, inputs, ... }:
+{ inputs, pkgs, ... }:
 
 {
+  # neovim
   programs.neovim = {
     enable = true;
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
@@ -10,9 +11,10 @@
     vimAlias = true;
   };
 
+  # nvim config directory
   home.file.".config/nvim" = {
     enable = true;
-    source = ./nvim;
+    source = ./../../dots/nvim;
     target = ".config/nvim";
   };
 }
