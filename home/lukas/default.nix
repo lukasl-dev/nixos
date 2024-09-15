@@ -19,8 +19,6 @@
     ./system/desktop/gtk.nix
     ./system/desktop/rofi.nix
 
-    ./system/tools/git.nix
-
     ./system/utils/xdg
     ./system/utils/udiskie.nix
   ];

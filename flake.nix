@@ -30,6 +30,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-cli.url = "github:water-sucks/nixos";
+
     zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
@@ -40,6 +42,7 @@
       home-manager,
       nix-ld,
       catppuccin,
+      nixos-cli,
       ...
     }@inputs:
     let
@@ -62,6 +65,7 @@
 
             catppuccin.nixosModules.catppuccin
             nix-ld.nixosModules.nix-ld
+            nixos-cli.nixosModules.nixos-cli
 
             home-manager.nixosModules.home-manager
           ];

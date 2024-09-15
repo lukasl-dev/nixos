@@ -52,6 +52,29 @@
     };
   };
 
+  programs.git = {
+    enable = true;
+
+    delta = {
+      enable = true;
+    };
+
+    extraConfig = {
+      color.ui = true;
+      core.editor = "nvim";
+      github.user = "lukasl-dev";
+      push.autoSetupRemote = true;
+      pull.rebase = true;
+    };
+
+    userEmail = "git@lukasl.dev";
+    userName = "lukasl-dev";
+
+    aliases = {
+      graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
+    };
+  };
+
   programs.zoxide = {
     enable = true;
 
