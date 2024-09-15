@@ -9,9 +9,5 @@
     ];
   };
 
-  environment.sessionVariables.LD_LIBRARY_PATH = [
-    "/run/current-system/sw/share/nix-ld/lib"
-    "/run/opengl-driver/lib/"
-    "${pkgs.wayland}/lib"
-  ];
+  environment.sessionVariables.LD_LIBRARY_PATH = [ "/run/current-system/sw/share/nix-ld/lib" ];
 }

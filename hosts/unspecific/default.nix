@@ -2,18 +2,38 @@
 
 {
   imports = [
-    ../../modules/catppuccin.nix
-    ../../modules/nix.nix
+    ./fonts.nix
+    ./i18n.nix
+    ./users.nix
+    ./shell.nix
+
+    ../../modules/bluetooth.nix
+    ../../modules/cloudflare_dns.nix
+    ../../modules/docker.nix
     ../../modules/nix-ld.nix
-
-    ../../modules/programs/onepassword.nix
-
-    ../../modules/system/fonts.nix
-    ../../modules/system/i18n.nix
-    ../../modules/system/users.nix
-
-    ../../modules/system/virtualisation/docker.nix
+    ../../modules/onepassword.nix
   ];
+
+  system.stateVersion = "24.05";
+
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "lukas"
+    ];
+  };
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+  };
 
   environment.systemPackages = with pkgs; [
     nixd

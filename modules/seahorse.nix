@@ -1,5 +1,5 @@
 {
-  programs.gamemode = {
+  programs.seahorse = {
     enable = true;
   };
 }

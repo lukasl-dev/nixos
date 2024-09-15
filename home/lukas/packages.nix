@@ -17,7 +17,6 @@ with pkgs;
 
   vesktop
   obsidian
-  localsend
 
   imagemagick
 ]

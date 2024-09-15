@@ -1,4 +1,8 @@
+{ pkgs, ... }:
+
 {
+  environment.systemPackages = with pkgs; [ localsend ];
+
   networking.firewall = {
     enable = true;
 

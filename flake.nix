@@ -48,18 +48,6 @@
         inherit system;
         config.allowUnfree = true;
       };
-      home-manager-config = {
-        home-manager = {
-          extraSpecialArgs = {
-            inherit inputs pkgs-unstable;
-          };
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users = {
-            lukas = import ./home/lukas;
-          };
-        };
-      };
     in
     {
       nixosConfigurations = {
@@ -76,7 +64,6 @@
             nix-ld.nixosModules.nix-ld
 
             home-manager.nixosModules.home-manager
-            home-manager-config
           ];
         };
       };

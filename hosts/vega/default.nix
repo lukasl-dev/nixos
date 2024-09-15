@@ -1,24 +1,28 @@
 {
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
+
+{
   imports = [
     ./hardware-configuration.nix
 
-    ../../modules/system/hardware/bluetooth.nix
-    ../../modules/programs/dconf.nix
-    ../../modules/system/virtualisation/nvidia-containers.nix
-    ../../modules/programs/gnome.nix
-    ../../modules/system/desktop/hyprland.nix
-    ../../modules/system/networking/dns.nix
-    ../../modules/system/networking/firewall.nix
-    ../../modules/system/graphics/nvidia.nix
-    ../../modules/system/graphics/opengl.nix
-    ../../modules/programs/ollama.nix
-    ../../modules/system/sound.nix
-    ../../modules/system/security/polkit.nix
+    ../../modules/nvidia-containers.nix
+    ../../modules/gnome-keyring.nix
+    ../../modules/seahorse.nix
+    ../../modules/nautilus.nix
+    ../../modules/hyprland.nix
+    ../../modules/nvidia.nix
+    ../../modules/opengl.nix
+    ../../modules/ollama.nix
+    ../../modules/pipewire.nix
+    ../../modules/polkit.nix
     ../../modules/qt.nix
-    ../../modules/gaming/steam.nix
-    ../../modules/gaming/gamemode.nix
-    ../../modules/gaming/gamescope.nix
-    ../../modules/system/xserver.nix
+    ../../modules/steam.nix
+    ../../modules/xserver.nix
+    ../../modules/sddm.nix
   ];
 
   networking.hostName = "vega";
@@ -27,6 +31,15 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = {
     ntfs = true;
+  };
+
+  home-manager.users = {
+    lukas = import ../../home/lukas {
+      inherit inputs pkgs pkgs-unstable;
+      host = {
+        # TODO: add config options for home manager modules
+      };
+    };
   };
 
   environment.sessionVariables = {
