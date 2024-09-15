@@ -1,3 +1,5 @@
+# { pkgs, ... }:
+
 {
   programs.alacritty = {
     enable = true;
@@ -8,6 +10,13 @@
           y = 8;
         };
       };
+      # shell = {
+      #   program = "${pkgs.nushell}/bin/nu";
+      #   args = [
+      #     "-e"
+      #     "${pkgs.zellij}/bin/zellij"
+      #   ];
+      # };
     };
   };
 }

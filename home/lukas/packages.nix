@@ -1,20 +1,23 @@
 { pkgs, ... }:
 
+with pkgs;
 [
-  pkgs.nixd
-  pkgs.nixfmt-rfc-style
+  nixd
+  nixfmt-rfc-style
 
-  pkgs.wl-clipboard
+  wl-clipboard
 
-  pkgs.playerctl
-  pkgs.ffmpeg
-  pkgs.cliphist
-  pkgs.d2
+  playerctl
+  ffmpeg
+  cliphist
+  d2
 
-  pkgs.signal-desktop
-  pkgs.slack
+  signal-desktop
+  slack
 
-  pkgs.vesktop
-  pkgs.obsidian
-  pkgs.localsend
+  vesktop
+  obsidian
+  localsend
+
+  imagemagick
 ]

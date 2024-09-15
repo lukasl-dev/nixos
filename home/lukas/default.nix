@@ -37,6 +37,8 @@
 
     ./system/shells/nushell
     ./system/shells/zsh
+    ./system/shells/oh-my-posh.nix
+    ./system/shells/zellij.nix
 
     ./system/terminals/alacritty.nix
 

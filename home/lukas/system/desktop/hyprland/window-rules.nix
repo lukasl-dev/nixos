@@ -4,6 +4,7 @@
 
     windowrulev2 = [
       "float,title:(Picture-in-picture)"
+      "float,title:(Picture-in-Picture)"
       "float,class:(Rofi)"
       "float,class:(1Password)"
       "float,title:(Save File)"
