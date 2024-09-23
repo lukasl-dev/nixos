@@ -34,6 +34,10 @@
       "cimpffimgeipdhnhjohpbehjkcdpjolg" # Watch2Gether
       "pljfkbaipkidhmaljaaakibigbcmmpnc" # Atom Material Icons
     ];
+    # commandLineArgs = [
+    #   "--enable-features=UseOzonePlatform"
+    #   "--ozone-platform=x11"
+    # ];
   };
 
   programs.firefox = {
@@ -49,9 +53,13 @@
     # zen browser
     inputs.zen-browser.packages."${pkgs.system}".default
 
+    # discord
+    pkgs-unstable.vesktop
+    pkgs-unstable.discord
+    pkgs-unstable.discordo
+
     pkgs.signal-desktop
     pkgs.slack
-    pkgs.vesktop
-    pkgs.obsidian
+    pkgs-unstable.obsidian
   ];
 }

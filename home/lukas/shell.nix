@@ -61,6 +61,7 @@ in
   # fish shell
   programs.fish.enable = true;
 
+  # oh-my-posh
   programs.oh-my-posh = {
     enable = true;
 
@@ -120,6 +121,7 @@ in
   programs.btop.enable = true;
   programs.fastfetch.enable = true;
   programs.fzf.enable = true;
+  programs.carapace.enable = true;
   programs.ripgrep.enable = true;
   programs.mpv.enable = true;
   programs.yt-dlp.enable = true;

@@ -59,7 +59,9 @@ in
         "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
 
         "${mainMod}, T, exec, alacritty"
-        "${mainMod}, B, exec, brave"
+
+        # "${mainMod}, B, exec, brave"
+        "${mainMod}, B, exec, zen-bin"
 
         "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -212,96 +214,111 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
+  services.hyprpaper = {
+    enable = true;
+
+    settings = {
+      ipc = "on";
+      splash = false;
+      splash_offset = 2.0;
+
+      preload = [ "~/nixos/wallpapers/9.png" ];
+      wallpaper = [ ",~/nixos/wallpapers/9.png" ];
+    };
+  };
+
   # waybar
-  programs.waybar.settings = {
+  programs.waybar = {
     enable = true;
     style = builtins.readFile ./../../dots/waybar/style.css;
 
-    mainBar = {
-      layer = "top";
-      position = "top";
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
 
-      modules-left = [
-        "temperature"
-        "memory"
-        "cpu"
-        "custom/nvidia"
-      ];
-      modules-center = [ "hyprland/workspaces" ];
-      modules-right = [
-        "custom/mic"
-        "wireplumber"
-        "clock"
-        "tray"
-      ];
+        modules-left = [
+          "temperature"
+          "memory"
+          "cpu"
+          "custom/nvidia"
+        ];
+        modules-center = [ "hyprland/workspaces" ];
+        modules-right = [
+          "custom/mic"
+          "wireplumber"
+          "clock"
+          "tray"
+        ];
 
-      tray = {
-        icon-size = 21;
-        spacing = 10;
-      };
-
-      cpu = {
-        format = "   {usage}%";
-        interval = 1;
-        on-click = "alacritty -e btop";
-      };
-
-      "custom/nvidia" = {
-        format = "  {}%";
-        escape = true;
-        interval = 1;
-        tooltip = false;
-        exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
-        on-click = "alacritty -e btop";
-        max-length = 50;
-      };
-
-      temperature = {
-        format = "  {temperatureC} °C";
-        interval = 1;
-        on-click = "alacritty -e btop";
-      };
-
-      memory = {
-        format = "   {}%";
-        interval = 1;
-        on-click = "alacritty -e btop";
-      };
-
-      "hyprland/workspaces" = {
-        format = "{icon}";
-        on-click = "activate";
-        sort-by-number = true;
-      };
-
-      "custom/mic" = {
-        format = "{}";
-        escape = true;
-        interval = 1;
-        tooltip = false;
-        exec = ''
-          wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{print ($NF == "[MUTED]") ? " " : "  " int($2*100)"%"}'
-        '';
-        on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-        max-length = 50;
-      };
-
-      wireplumber = {
-        format = "{icon}   {volume}%";
-        format-muted = " ";
-        format-icons = {
-          default = [
-            ""
-            ""
-            " "
-          ];
+        tray = {
+          icon-size = 21;
+          spacing = 10;
         };
-        on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-      };
 
-      clock = {
-        timezone = "Europe/Vienna";
-        format = " {:%d/%m/%Y %H:%M}";
+        cpu = {
+          format = "   {usage}%";
+          interval = 1;
+          on-click = "alacritty -e btop";
+        };
+
+        "custom/nvidia" = {
+          format = "  {}%";
+          escape = true;
+          interval = 1;
+          tooltip = false;
+          exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
+          on-click = "alacritty -e btop";
+          max-length = 50;
+        };
+
+        temperature = {
+          format = "  {temperatureC} °C";
+          interval = 1;
+          on-click = "alacritty -e btop";
+        };
+
+        memory = {
+          format = "   {}%";
+          interval = 1;
+          on-click = "alacritty -e btop";
+        };
+
+        "hyprland/workspaces" = {
+          format = "{icon}";
+          on-click = "activate";
+          sort-by-number = true;
+        };
+
+        "custom/mic" = {
+          format = "{}";
+          escape = true;
+          interval = 1;
+          tooltip = false;
+          exec = ''
+            wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{print ($NF == "[MUTED]") ? " " : "  " int($2*100)"%"}'
+          '';
+          on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+          max-length = 50;
+        };
+
+        wireplumber = {
+          format = "{icon}   {volume}%";
+          format-muted = " ";
+          format-icons = {
+            default = [
+              ""
+              ""
+              " "
+            ];
+          };
+          on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        };
+
+        clock = {
+          timezone = "Europe/Vienna";
+          format = " {:%d/%m/%Y %H:%M}";
+        };
       };
     };
   };
@@ -329,6 +346,9 @@ in
   home.packages = [
     # emoji quick access
     pkgs.bemoji
+
+    # waybar
+    pkgs.waybar
 
     # notifications
     pkgs.libnotify

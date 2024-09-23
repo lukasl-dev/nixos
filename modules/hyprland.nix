@@ -16,6 +16,6 @@
   };
 
   environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL = "0"; # TODO: should be 1
   };
 }

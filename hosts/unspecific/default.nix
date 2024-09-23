@@ -12,6 +12,7 @@
     ../../modules/docker.nix
     ../../modules/nix-ld.nix
     ../../modules/onepassword.nix
+    ../../modules/localsend.nix
   ];
 
   system.stateVersion = "24.05";

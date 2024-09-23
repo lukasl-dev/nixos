@@ -18,7 +18,7 @@
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-cli.url = "github:water-sucks/nixos";
+    # nixos-cli.url = "github:water-sucks/nixos";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     catppuccin.url = "github:catppuccin/nix";
@@ -34,7 +34,7 @@
       home-manager,
       nix-ld,
       catppuccin,
-      nixos-cli,
+      # nixos-cli,
       ...
     }@inputs:
     let
@@ -59,7 +59,7 @@
 
             catppuccin.nixosModules.catppuccin
             nix-ld.nixosModules.nix-ld
-            nixos-cli.nixosModules.nixos-cli
+            # nixos-cli.nixosModules.nixos-cli
           ];
         };
       };

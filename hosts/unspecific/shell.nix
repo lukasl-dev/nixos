@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+# { inputs, pkgs, ... }:
 
 {
   programs.zsh = {
@@ -7,8 +7,8 @@
 
   environment.pathsToLink = [ "/share/zsh" ];
 
-  services.nixos-cli = {
-    enable = true;
-    package = inputs.nixos-cli.packages.${pkgs.system}.nixosLegacy;
-  };
+  # services.nixos-cli = {
+  #   enable = true;
+  #   package = inputs.nixos-cli.packages.${pkgs.system}.nixosLegacy;
+  # };
 }

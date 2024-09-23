@@ -15,6 +15,9 @@
     pkgs.nixd
     pkgs.nixfmt-rfc-style
 
+    # go-related
+    pkgs.delve
+
     # erlang-related
     pkgs.erlang
     pkgs.elixir

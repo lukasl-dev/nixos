@@ -58,3 +58,9 @@ $env.config = ($env.config | merge {color_config: (catppuccin_mocha)})
 
 # zoxide
 source ~/.zoxide.nu
+
+
+def from-env [] {
+  str trim | split row "\n" | split column "=" "key" "value"
+}
+
