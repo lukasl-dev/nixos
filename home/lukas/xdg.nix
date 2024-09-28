@@ -23,7 +23,7 @@
 
     mimeApps =
       let
-        browser = [ "brave.desktop" ];
+        browser = [ "zen-browser.desktop" ]; # TODO: make zen default
         sioyek = [ "sioyek.desktop" ];
       in
       {

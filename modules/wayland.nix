@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ egl-wayland ];
+  environment.systemPackages = with pkgs; [
+    wayland
+    egl-wayland
+  ];
 }

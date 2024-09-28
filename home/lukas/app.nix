@@ -61,5 +61,7 @@
     pkgs.signal-desktop
     pkgs.slack
     pkgs-unstable.obsidian
+    pkgs-unstable.zoom
+    pkgs-unstable.anki
   ];
 }

@@ -4,12 +4,15 @@ let
   shellAliases = {
     g = "git status";
     gf = "git fetch";
+    gfa = "git fetch --all";
     gfp = "git fetch --prune";
     ga = "git add";
     gb = "git branch";
     gc = "git commit";
     gca = "git commit --amend";
     gs = "git switch";
+    gst = "git stash";
+    gstp = "git stash pop";
     gd = "git diff";
     gl = "git log";
     gg = "git graph";

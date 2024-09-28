@@ -46,6 +46,9 @@
     # zig-related
     pkgs-unstable.zig
 
+    # elm-related
+    pkgs-unstable.elmPackages.elm
+
     # miscellaneous
     pkgs.d2
   ];

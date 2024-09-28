@@ -205,13 +205,18 @@ in
 
   # xdg
   xdg.portal = {
+    enable = true;
     config = {
       hyprland.default = [
         "gtk"
         "hyprland"
       ];
     };
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ];
+    xdgOpenUsePortal = true;
   };
 
   services.hyprpaper = {
