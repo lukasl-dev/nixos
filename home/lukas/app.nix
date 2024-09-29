@@ -63,5 +63,8 @@
     pkgs-unstable.obsidian
     pkgs-unstable.zoom
     pkgs-unstable.anki
+
+    # jetbrains
+    pkgs-unstable.jetbrains.idea-ultimate
   ];
 }
