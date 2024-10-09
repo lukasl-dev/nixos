@@ -13,6 +13,7 @@
     ../../modules/nix-ld.nix
     ../../modules/onepassword.nix
     ../../modules/localsend.nix
+    ../../modules/udiskie.nix
   ];
 
   system.stateVersion = "24.05";
