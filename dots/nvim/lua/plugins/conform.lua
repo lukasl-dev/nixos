@@ -1,3 +1,14 @@
+local function is_available(bufnr, formatter)
+  return require("conform").get_formatter_info(formatter, bufnr).available
+end
+
+local function javascript(bufnr)
+  if is_available(bufnr, "biome") then
+    return { "biome" }
+  end
+  return { "prettier", "eslint" }
+end
+
 return {
   "stevearc/conform.nvim",
 
@@ -6,37 +17,23 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
-      go = {
-        { "goimports", "gofumpt" },
-        { "goimports", "gofmt" },
-        stop_after_first = true,
-      },
+      go = function(bufnr)
+        if is_available(bufnr, "gofumpt") then
+          return { "goimports", "gofumpt" }
+        end
+        return { "goimports", "gofmt" }
+      end,
       markdown = { "mdformat" },
-      python = {
-        { "ruff_format" },
-        { "isort", "black" },
-        stop_after_first = true,
-      },
-      typescript = {
-        { "biome" },
-        { "prettier", "eslint" },
-        stop_after_first = true,
-      },
-      typescriptreact = {
-        { "biome" },
-        { "prettier", "eslint" },
-        stop_after_first = true,
-      },
-      javascript = {
-        { "biome" },
-        { "prettier", "eslint" },
-        stop_after_first = true,
-      },
-      javascriptreact = {
-        { "biome" },
-        { "prettier", "eslint" },
-        stop_after_first = true,
-      },
+      python = function(bufnr)
+        if is_available(bufnr, "ruff_format") then
+          return { "ruff_format" }
+        end
+        return { "isort", "black" }
+      end,
+      typescript = javascript,
+      typescriptreact = javascript,
+      javascript = javascript,
+      javascriptreact = javascript,
       zig = { "zigfmt" },
       nix = { "nixfmt" },
       just = { "just" },
