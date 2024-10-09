@@ -10,6 +10,13 @@
     package = pkgs-unstable.go_1_23;
   };
 
+  # ocaml package manager
+  programs.opam = {
+    enable = true;
+
+    enableZshIntegration = true;
+  };
+
   home.packages = [
     # nix-related
     pkgs.nixd
@@ -17,6 +24,7 @@
 
     # go-related
     pkgs.delve
+    pkgs.gopls
 
     # erlang-related
     pkgs.erlang
@@ -32,6 +40,7 @@
     # python-related
     pkgs.python3
     pkgs.uv
+    pkgs.python312Packages.grip
 
     # rust-related
     pkgs.rustc
@@ -48,6 +57,13 @@
 
     # elm-related
     pkgs-unstable.elmPackages.elm
+
+    # haskell-related
+    pkgs.ghc
+    pkgs.haskell-language-server
+
+    # ocaml-related
+    pkgs-unstable.ocaml
 
     # miscellaneous
     pkgs.d2
