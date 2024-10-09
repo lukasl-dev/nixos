@@ -7,5 +7,8 @@ return {
         unusedparams = true,
       },
     },
+    env = {
+      GOEXPERIMENT = "rangefunc",
+    },
   },
 }
