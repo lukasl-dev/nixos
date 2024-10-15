@@ -15,6 +15,7 @@
 #memory,
 #cpu,
 #custom-mic,
+#custom-rpiplay,
 #custom-notification,
 #tray,
 #clock,
@@ -43,6 +44,7 @@
 #custom-nvidia {
   color: @lavender;
   border-radius: 0 1rem 1rem 0;
+  margin-right: 1rem;
 }
 
 #workspaces button {
@@ -79,4 +81,10 @@
 #tray {
   margin-right: 1rem;
   border-radius: 0 1rem 1rem 0;
+}
+
+#custom-rpiplay {
+  color: @blue;
+  border-radius: 1rem 1rem 1rem 1rem;
+  margin-right: 1rem;
 }

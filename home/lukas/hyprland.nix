@@ -237,8 +237,8 @@ in
   # waybar
   programs.waybar = {
     enable = true;
-    style = builtins.readFile ../../dots/waybar/style.css;
 
+    style = builtins.readFile ../../dots/waybar/style.css;
     settings = {
       mainBar = {
         layer = "top";
@@ -249,6 +249,7 @@ in
           "memory"
           "cpu"
           "custom/nvidia"
+          "custom/rpiplay"
         ];
         modules-center = [ "hyprland/workspaces" ];
         modules-right = [
@@ -278,6 +279,14 @@ in
           exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
           on-click = "alacritty -e btop";
           max-length = 50;
+        };
+
+        "custom/rpiplay" = {
+          format = "{}";
+          exec = "if pgrep rpiplay > /dev/null; then echo ''; else echo ''; fi";
+          interval = 1;
+          on-click = "if pgrep rpiplay > /dev/null; then pkill -f rpiplay; else rpiplay -n vega -l; fi
+";
         };
 
         temperature = {
@@ -384,7 +393,6 @@ in
 
     # notifications
     pkgs.libnotify
-    pkgs.dunst
 
     # screenshot
     pkgs.grim
