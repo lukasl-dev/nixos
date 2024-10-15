@@ -15,7 +15,7 @@
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "0"; # TODO: should be 1
+  environment.variables = {
+    NIXOS_OZONE_WL = "1";
   };
 }

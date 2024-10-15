@@ -34,6 +34,12 @@
     # java-related
     pkgs.zulu21
 
+    # scala-related
+    pkgs-unstable.scala
+    pkgs-unstable.sbt
+    pkgs-unstable.metals
+    pkgs-unstable.coursier
+
     # nodejs-related
     pkgs.nodejs
 

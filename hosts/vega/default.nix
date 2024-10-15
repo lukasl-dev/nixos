@@ -21,6 +21,7 @@
     ../../modules/polkit.nix
     ../../modules/qt.nix
     ../../modules/steam.nix
+    ../../modules/looking-glass.nix
     ../../modules/xserver.nix
     ../../modules/sddm.nix
   ];

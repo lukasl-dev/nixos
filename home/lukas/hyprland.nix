@@ -56,6 +56,8 @@ in
         "${mainMod}, E, exec, bemoji"
         "${mainMod}, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
 
+        "${mainMod}, p, exec, swaync-client -t"
+
         "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
 
         "${mainMod}, T, exec, alacritty"
@@ -235,7 +237,7 @@ in
   # waybar
   programs.waybar = {
     enable = true;
-    style = builtins.readFile ./../../dots/waybar/style.css;
+    style = builtins.readFile ../../dots/waybar/style.css;
 
     settings = {
       mainBar = {
@@ -253,6 +255,7 @@ in
           "custom/mic"
           "wireplumber"
           "clock"
+          "custom/notification"
           "tray"
         ];
 
@@ -307,6 +310,27 @@ in
           max-length = 50;
         };
 
+        "custom/notification" = {
+          tooltip = false;
+          format = "{icon}";
+          format-icons = {
+            notification = "<span foreground='red'><sup></sup></span>";
+            none = "";
+            dnd-notification = "<span foreground='red'><sup></sup></span>";
+            dnd-none = "";
+            inhibited-notification = "<span foreground='red'><sup></sup></span>";
+            inhibited-none = "";
+            dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+            dnd-inhibited-none = "";
+          };
+          return-type = "json";
+          exec-if = "which swaync-client";
+          exec = "swaync-client -swb";
+          on-click = "swaync-client -t -sw";
+          on-click-right = "swaync-client -d -sw";
+          escape = true;
+        };
+
         wireplumber = {
           format = "{icon}   {volume}%";
           format-muted = " ";
@@ -335,7 +359,10 @@ in
   };
 
   # notifications
-  services.dunst.enable = true;
+  services.swaync = {
+    enable = true;
+    style = builtins.readFile ../../dots/swaync/theme.css;
+  };
 
   # auto mount removable drives
   services.udiskie.enable = true;

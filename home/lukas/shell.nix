@@ -25,6 +25,9 @@ let
 
     bye = "shutdown -h now";
     cya = "reboot";
+
+    woman = "man";
+    emacs = "vi";
   };
 in
 {
