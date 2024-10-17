@@ -33,6 +33,8 @@
     allowUnfree = true;
   };
 
+  networking.firewall.enable = true;
+
   catppuccin = {
     enable = true;
 

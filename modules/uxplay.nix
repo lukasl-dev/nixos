@@ -1,22 +1,23 @@
-{ pkgs-unstable, lib, ... }:
+{ pkgs-unstable, ... }:
 
 {
-  environment.systemPackages = [ pkgs-unstable.rpiplay ];
+  environment.systemPackages = [ pkgs-unstable.uxplay ];
 
   networking.firewall = {
-    enable = lib.mkDefault true;
-
     allowedTCPPorts = [
-      # RPIPlay
       7000
       7100
+
+      4000
+      4001
     ];
 
     allowedUDPPorts = [
-      # RPIPlay
       6000
       6001
       7011
+
+      5353
     ];
   };
 

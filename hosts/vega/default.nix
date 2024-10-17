@@ -24,7 +24,7 @@
     ../../modules/looking-glass.nix
     ../../modules/xserver.nix
     ../../modules/sddm.nix
-    ../../modules/rpiplay.nix
+    ../../modules/uxplay.nix
   ];
 
   networking.hostName = "vega";

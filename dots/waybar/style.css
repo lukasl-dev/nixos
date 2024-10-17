@@ -15,7 +15,7 @@
 #memory,
 #cpu,
 #custom-mic,
-#custom-rpiplay,
+#custom-uxplay,
 #custom-notification,
 #tray,
 #clock,
@@ -83,7 +83,7 @@
   border-radius: 0 1rem 1rem 0;
 }
 
-#custom-rpiplay {
+#custom-uxplay {
   color: @blue;
   border-radius: 1rem 1rem 1rem 1rem;
   margin-right: 1rem;

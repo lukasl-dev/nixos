@@ -249,7 +249,7 @@ in
           "memory"
           "cpu"
           "custom/nvidia"
-          "custom/rpiplay"
+          "custom/uxplay"
         ];
         modules-center = [ "hyprland/workspaces" ];
         modules-right = [
@@ -281,12 +281,11 @@ in
           max-length = 50;
         };
 
-        "custom/rpiplay" = {
+        "custom/uxplay" = {
           format = "{}";
-          exec = "if pgrep rpiplay > /dev/null; then echo ''; else echo ''; fi";
+          exec = "if pgrep uxplay > /dev/null; then echo ''; else echo ''; fi";
           interval = 1;
-          on-click = "if pgrep rpiplay > /dev/null; then pkill -f rpiplay; else rpiplay -n vega -l; fi
-";
+          on-click = "if pgrep uxplay > /dev/null; then pkill -f uxplay; else uxplay -p tcp 4000 -p udp 5000; fi";
         };
 
         temperature = {
