@@ -229,8 +229,8 @@ in
       splash = false;
       splash_offset = 2.0;
 
-      preload = [ "~/nixos/wallpapers/9.png" ];
-      wallpaper = [ ",~/nixos/wallpapers/9.png" ];
+      preload = [ "~/nixos/wallpapers/10.png" ];
+      wallpaper = [ ",~/nixos/wallpapers/10.png" ];
     };
   };
 
