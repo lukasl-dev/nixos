@@ -17,3 +17,20 @@ vega-iso:
 
 vega-switch:
     nixos-rebuild switch --flake .#vega
+
+sirius-vm-clean:
+    rm -rf ./nixos.qcow2
+
+sirius-vm-build:
+    nixos-rebuild build-vm --flake .#sirius
+
+sirius-vm-run:
+    ./result/bin/run-nixos-vm
+
+sirius-vm: sirius-vm-clean sirius-vm-build sirius-vm-run
+
+sirius-iso:
+    nix build .#nixosConfigurations.sirius.config.system.build.isoImage
+
+sirius-switch:
+    nixos-rebuild switch --flake .#sirius

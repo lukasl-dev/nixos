@@ -62,6 +62,22 @@
             # nixos-cli.nixosModules.nixos-cli
           ];
         };
+
+        sirius = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs pkgs-unstable;
+          };
+          modules = [
+            ./hosts/unspecific
+            ./hosts/sirius
+
+            home-manager.nixosModules.home-manager
+
+            catppuccin.nixosModules.catppuccin
+            nix-ld.nixosModules.nix-ld
+          ];
+        };
       };
     };
 }

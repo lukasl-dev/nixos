@@ -9,6 +9,11 @@
   imports = [
     ./hardware-configuration.nix
 
+    ../../modules/bluetooth.nix
+    ../../modules/cloudflare_dns.nix
+    ../../modules/onepassword.nix
+    ../../modules/localsend.nix
+    ../../modules/udiskie.nix
     ../../modules/nvidia-containers.nix
     ../../modules/gnome-keyring.nix
     ../../modules/seahorse.nix
