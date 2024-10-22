@@ -5,7 +5,7 @@
   zramSwap.enable = true;
 
   networking = {
-    hostname = "vmi628694";
+    hostName = "sirius";
     domain = "contaboserver.net";
   };
 
