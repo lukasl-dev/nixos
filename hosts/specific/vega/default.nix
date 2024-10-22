@@ -8,28 +8,29 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../base/desktop
 
-    ../../modules/bluetooth.nix
-    ../../modules/cloudflare_dns.nix
-    ../../modules/onepassword.nix
-    ../../modules/localsend.nix
-    ../../modules/udiskie.nix
-    ../../modules/nvidia-containers.nix
-    ../../modules/gnome-keyring.nix
-    ../../modules/seahorse.nix
-    ../../modules/nautilus.nix
-    ../../modules/hyprland.nix
-    ../../modules/nvidia.nix
-    ../../modules/opengl.nix
-    ../../modules/ollama.nix
-    ../../modules/pipewire.nix
-    ../../modules/polkit.nix
-    ../../modules/qt.nix
-    ../../modules/steam.nix
-    ../../modules/looking-glass.nix
-    ../../modules/xserver.nix
-    ../../modules/sddm.nix
-    ../../modules/uxplay.nix
+    ../../../modules/bluetooth.nix
+    ../../../modules/cloudflare_dns.nix
+    ../../../modules/onepassword.nix
+    ../../../modules/localsend.nix
+    ../../../modules/udiskie.nix
+    ../../../modules/nvidia-containers.nix
+    ../../../modules/gnome-keyring.nix
+    ../../../modules/seahorse.nix
+    ../../../modules/nautilus.nix
+    ../../../modules/hyprland.nix
+    ../../../modules/nvidia.nix
+    ../../../modules/opengl.nix
+    ../../../modules/ollama.nix
+    ../../../modules/pipewire.nix
+    ../../../modules/polkit.nix
+    ../../../modules/qt.nix
+    ../../../modules/steam.nix
+    ../../../modules/looking-glass.nix
+    ../../../modules/xserver.nix
+    ../../../modules/sddm.nix
+    ../../../modules/uxplay.nix
   ];
 
   networking.hostName = "vega";
@@ -45,7 +46,7 @@
   };
 
   home-manager.users = {
-    lukas = import ../../home/lukas {
+    lukas = import ../../../home/lukas {
       inherit inputs pkgs pkgs-unstable;
 
       host = {
