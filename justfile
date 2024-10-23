@@ -8,7 +8,7 @@ vega-vm-build:
     nixos-rebuild build-vm --flake .#vega
 
 vega-vm-run:
-    ./result/bin/run-nixos-vm
+    ./result/bin/run-vega-vm
 
 vega-vm: vega-vm-clean vega-vm-build vega-vm-run
 
@@ -25,7 +25,7 @@ sirius-vm-build:
     nixos-rebuild build-vm --flake .#sirius
 
 sirius-vm-run:
-    ./result/bin/run-nixos-vm
+    ./result/bin/run-sirius-vm
 
 sirius-vm: sirius-vm-clean sirius-vm-build sirius-vm-run
 

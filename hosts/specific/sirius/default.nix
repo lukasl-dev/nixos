@@ -1,3 +1,5 @@
+{ pkgs, lib, ... }:
+
 {
   imports = [
     ./hardware-configuration.nix
@@ -15,5 +17,14 @@
   networking = {
     hostName = "sirius";
     domain = "lukasl.dev";
+  };
+
+  virtualisation.oci-containers = {
+    backend = "docker";
+  };
+
+  users.users = {
+    root.shell = lib.mkForce pkgs.zsh;
+    lukas.shell = lib.mkForce pkgs.zsh;
   };
 }

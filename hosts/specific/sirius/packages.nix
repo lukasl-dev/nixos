@@ -7,6 +7,7 @@
     wget
     curl
     just
+    zig
   ];
 
   programs.neovim = {
@@ -17,7 +18,4 @@
     viAlias = true;
     vimAlias = true;
   };
-
-  environment.etc."xdg/nvim".source = ../../../dots/nvim;
-  environment.variables.XDG_CONFIG_DIRS = [ "/etc/xdg" ];
 }
