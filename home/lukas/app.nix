@@ -53,6 +53,8 @@
     # zen browser
     inputs.zen-browser.packages."${pkgs.system}".default
 
+    pkgs.nyxt
+
     # discord
     pkgs-unstable.vesktop
     pkgs-unstable.discord
@@ -67,4 +69,10 @@
     # jetbrains
     pkgs-unstable.jetbrains.idea-ultimate
   ];
+
+  home.file.".config/nyxt" = {
+    enable = true;
+    source = ../../dots/nyxt;
+    target = ".config/nyxt";
+  };
 }
