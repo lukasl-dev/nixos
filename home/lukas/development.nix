@@ -22,6 +22,9 @@
     pkgs.nixd
     pkgs.nixfmt-rfc-style
 
+    pkgs-unstable.gnumake
+    pkgs-unstable.gcc
+
     # go-related
     pkgs.delve
     pkgs.gopls
@@ -70,6 +73,10 @@
 
     # ocaml-related
     pkgs-unstable.ocaml
+    pkgs-unstable.ocamlPackages.lsp
+    pkgs-unstable.ocamlPackages.ocamlformat
+    pkgs-unstable.ocamlPackages.utop
+    pkgs-unstable.ocamlPackages.dune
 
     # miscellaneous
     pkgs.d2

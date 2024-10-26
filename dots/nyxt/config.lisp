@@ -73,8 +73,8 @@
 (define-configuration (web-buffer)
   ((default-modes (pushnew 'nyxt/mode/style:dark-mode %slot-value%))))
 
-(define-configuration (web-buffer)
-  ((default-modes (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
+; (define-configuration (web-buffer)
+;   ((default-modes (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
 
 (define-configuration (input-buffer)
   ((default-modes (pushnew 'nyxt/mode/vi:vi-normal-mode %slot-value%))))
