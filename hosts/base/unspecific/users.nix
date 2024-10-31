@@ -3,6 +3,7 @@
 {
   users.users = {
     root = {
+      shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [ (builtins.readFile ../../../dots/ssh/id_ed25519.pub) ];
     };
 
@@ -15,7 +16,7 @@
         "wheel"
         "docker"
       ];
-      shell = pkgs.nushell;
+      shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [ (builtins.readFile ../../../dots/ssh/id_ed25519.pub) ];
     };
   };

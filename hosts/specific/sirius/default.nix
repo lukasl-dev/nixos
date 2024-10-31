@@ -22,9 +22,4 @@
   virtualisation.oci-containers = {
     backend = "docker";
   };
-
-  users.users = {
-    root.shell = lib.mkForce pkgs.zsh;
-    lukas.shell = lib.mkForce pkgs.zsh;
-  };
 }
