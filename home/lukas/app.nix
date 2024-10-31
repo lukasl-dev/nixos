@@ -54,6 +54,7 @@
     inputs.zen-browser.packages."${pkgs.system}".default
 
     pkgs.nyxt
+    pkgs.zapzap
 
     # discord
     pkgs-unstable.vesktop

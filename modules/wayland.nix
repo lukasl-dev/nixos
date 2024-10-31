@@ -4,5 +4,7 @@
   environment.systemPackages = with pkgs; [
     wayland
     egl-wayland
+
+    ueberzugpp
   ];
 }

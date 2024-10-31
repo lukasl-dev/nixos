@@ -43,6 +43,7 @@ in
       exec-once = [
         "wl-paste --type text --watch cliphist store"
 
+        "zapzap"
         "vesktop"
         "1password"
         "localsend_app"
@@ -60,7 +61,7 @@ in
 
         "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
 
-        "${mainMod}, T, exec, alacritty"
+        ''${mainMod}, T, exec, kitty --hold zsh -c "tmux attach-session || tmux new-session"''
 
         # "${mainMod}, B, exec, brave"
         "${mainMod}, B, exec, zen-bin"
@@ -268,7 +269,7 @@ in
         cpu = {
           format = "   {usage}%";
           interval = 1;
-          on-click = "alacritty -e btop";
+          on-click = "kitty -e btop";
         };
 
         "custom/nvidia" = {
@@ -277,7 +278,7 @@ in
           interval = 1;
           tooltip = false;
           exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
-          on-click = "alacritty -e btop";
+          on-click = "kitty -e btop";
           max-length = 50;
         };
 
@@ -291,13 +292,13 @@ in
         temperature = {
           format = "  {temperatureC} °C";
           interval = 1;
-          on-click = "alacritty -e btop";
+          on-click = "kitty -e btop";
         };
 
         memory = {
           format = "   {}%";
           interval = 1;
-          on-click = "alacritty -e btop";
+          on-click = "kitty -e btop";
         };
 
         "hyprland/workspaces" = {

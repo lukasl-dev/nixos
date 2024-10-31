@@ -28,6 +28,9 @@ let
 
     woman = "man";
     emacs = "vi";
+
+    files = "yazi";
+    f = "yazi";
   };
 in
 {

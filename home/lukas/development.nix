@@ -17,14 +17,6 @@
     enableZshIntegration = true;
   };
 
-  programs.tmux = {
-    enable = true;
-    extraConfig = ''
-      set -g default-terminal "alacritty" 
-      set-option -sa terminal-overrides ",alacritty*:Tc" 
-    '';
-  };
-
   home.packages = [
     # nix-related
     pkgs.nixd
