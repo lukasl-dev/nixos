@@ -4,8 +4,14 @@
   programs.tmux = {
     enable = true;
     extraConfig = ''
+      set-option -g prefix C-a
+      set-window-option -g mode-keys vi
+
+      set -g mode-keys vi
+
       set -g default-terminal "alacritty" 
       set-option -sa terminal-overrides ",alacritty*:Tc" 
+      set -s escape-time 0
 
       set -g base-index 1
       set -g pane-base-index 1
@@ -40,8 +46,8 @@
 
   programs.kitty = {
     enable = true;
-    font.name = "JetBrainsMono";
-    font.size = 11;
+    font.name = "SpaceMono";
+    font.size = 12;
     extraConfig = ''
       window_padding_width 8
       confirm_os_window_close 0
