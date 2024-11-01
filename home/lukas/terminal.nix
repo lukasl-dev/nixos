@@ -5,13 +5,16 @@
     enable = true;
     extraConfig = ''
       set-option -g prefix C-a
-      set-window-option -g mode-keys vi
 
+      set -s escape-time 0
+      set-window-option -g mode-keys vi
       set -g mode-keys vi
+
+      bind -T copy-mode-vi v send-keys -X begin-selection
+      bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'wl-copy'
 
       set -g default-terminal "alacritty" 
       set-option -sa terminal-overrides ",alacritty*:Tc" 
-      set -s escape-time 0
 
       set -g base-index 1
       set -g pane-base-index 1
