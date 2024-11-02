@@ -13,6 +13,11 @@
       bind -T copy-mode-vi v send-keys -X begin-selection
       bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'wl-copy'
 
+      bind -r h select-pane -L
+      bind -r j select-pane -D
+      bind -r k select-pane -U
+      bind -r l select-pane -R
+
       set -g default-terminal "alacritty" 
       set-option -sa terminal-overrides ",alacritty*:Tc" 
 
