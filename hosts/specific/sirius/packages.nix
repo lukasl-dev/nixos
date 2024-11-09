@@ -8,7 +8,7 @@
     curl
     just
     zig
-    python3
+    python312
     uv
   ];
 
