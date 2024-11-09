@@ -8,6 +8,8 @@
     curl
     just
     zig
+    python3
+    uv
   ];
 
   programs.neovim = {

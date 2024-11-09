@@ -36,6 +36,10 @@
   networking.hostName = "vega";
 
   boot = {
+    kernelModules = [
+      "nct6775"
+      "coretemp"
+    ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -71,4 +75,11 @@
     XDG_SESSION_TYPE = "wayland";
     GDK_BACKEND = "wayland";
   };
+
+  # hardware.fancontrol = {
+  #   enable = true;
+  #   config = '''';
+  # };
+
+  environment.systemPackages = with pkgs; [ lm_sensors ];
 }

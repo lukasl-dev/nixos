@@ -59,6 +59,7 @@
     # discord
     pkgs-unstable.vesktop
     pkgs-unstable.discord
+    pkgs-unstable.legcord
     pkgs-unstable.discordo
 
     pkgs.signal-desktop

@@ -71,14 +71,18 @@ in
   programs.fish.enable = true;
 
   # oh-my-posh
-  programs.oh-my-posh = {
-    enable = true;
+  programs.oh-my-posh =
+    let
+      settings = builtins.fromJSON (builtins.readFile ../../dots/oh-my-posh/settings.json);
+    in
+    {
+      enable = true;
 
-    useTheme = "catppuccin_mocha";
+      enableZshIntegration = true;
+      enableNushellIntegration = true;
 
-    enableZshIntegration = true;
-    enableNushellIntegration = true;
-  };
+      settings = settings;
+    };
 
   programs.zellij = {
     enable = true;

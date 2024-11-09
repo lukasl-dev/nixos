@@ -8,5 +8,9 @@
 
     prismlauncher
     glfw-wayland-minecraft
+
+    gamemode
+    gamescope
+    gamescope-wsi
   ];
 }
