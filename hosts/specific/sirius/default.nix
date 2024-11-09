@@ -20,4 +20,6 @@
   virtualisation.oci-containers = {
     backend = "docker";
   };
+
+  networking.firewall.allowedTCPPorts = [ 6379 ];
 }
