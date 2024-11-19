@@ -8,7 +8,6 @@
     ./shell.nix
 
     ../../../modules/docker.nix
-    ../../../modules/nix-ld.nix
   ];
 
   system.stateVersion = "24.05";

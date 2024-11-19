@@ -120,23 +120,28 @@ in
       windowrule = [ ];
 
       windowrulev2 = [
-        "float,title:(Picture-in-picture)"
-        "float,title:(Picture-in-Picture)"
-        "float,class:(Rofi)"
-        "float,class:(1Password)"
-        "float,title:(Save File)"
-        "float,title:(Open File)"
+        # "float,title:(Save File)"
+        # "float,title:(Open File)"
         # "float,initialTitle:(discord popout)"
 
         # "workspace 1,initialClass:(vesktop)"
 
-        "workspace 1,initialTitle:(YouTube Music)"
-        "noanim,initialClass:^(Minecraft\*\s1\.20\.6)$"
-        "noblur,initialClass:^(Minecraft\*\s1\.20\.6)$"
+        # "workspace 1,initialTitle:(YouTube Music)"
 
         # "pin,title:(.*)is sharing your screen(.*)"
         # "move 100%-w-35% 0%,title:(.*)is sharing your screen(.*)"
         # "bordersize 0,title:(.*)is sharing your screen(.*)"
+
+        # 1Password
+        "float,class:(1Password)"
+
+        # Picture-in-Picture
+        # "float,title:(Picture-in-picture)"
+        # "float,title:(Picture-in-Picture)"
+
+        # Minecraft
+        "noanim,initialClass:^(Minecraft\*\s1\.20\.6)$"
+        "noblur,initialClass:^(Minecraft\*\s1\.20\.6)$"
       ];
 
       input = {

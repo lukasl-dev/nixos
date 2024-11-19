@@ -25,6 +25,9 @@
       sha256_aarch64 = lib.fakeSha256;
       persistencedSha256 = lib.fakeSha256;
     };
+
+    # TODO: test newer version 565.57.01
+    # https://www.nvidia.com/en-us/drivers/details/233008/
   };
 
   environment.sessionVariables = {
