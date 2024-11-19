@@ -68,6 +68,9 @@
     pkgs-unstable.zoom
     pkgs-unstable.anki
 
+    # office
+    pkgs-unstable.freeoffice
+
     # jetbrains
     pkgs-unstable.jetbrains.idea-ultimate
   ];

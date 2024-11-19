@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   pkgs,
   pkgs-unstable,
   ...
@@ -81,5 +82,20 @@
   #   config = '''';
   # };
 
-  environment.systemPackages = with pkgs; [ lm_sensors ];
+  environment.systemPackages = with pkgs; [
+    lm_sensors
+    libthai
+  ];
+
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
+  networking.firewall.enable = lib.mkForce false;
+
+  # networking.firewall.allowedTCPPorts = [
+  #   # ray
+  #   6379
+  # ];
 }

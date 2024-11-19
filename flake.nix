@@ -59,6 +59,8 @@
             catppuccin.nixosModules.catppuccin
             nix-ld.nixosModules.nix-ld
             # nixos-cli.nixosModules.nixos-cli
+
+            { programs.nix-ld.dev.enable = true; }
           ];
         };
 

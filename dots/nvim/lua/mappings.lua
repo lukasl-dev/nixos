@@ -95,7 +95,7 @@ map("n", "<leader>hD", function()
 end)
 
 map("n", "<leader>bs", gitsigns.stage_buffer)
-map("n", "<leader>bs", gitsigns.reset_buffer)
+map("n", "<leader>br", gitsigns.reset_buffer)
 
 -- ====================================================================
 -- diffview
