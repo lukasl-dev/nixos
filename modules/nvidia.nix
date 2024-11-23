@@ -18,16 +18,14 @@
     nvidiaSettings = false;
 
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "560.35.03";
-      sha256_64bit = "sha256-8pMskvrdQ8WyNBvkU/xPc/CtcYXCa7ekP73oGuKfH+M=";
-      openSha256 = "sha256-/32Zf0dKrofTmPZ3Ratw4vDM7B+OgpC4p7s+RHUjCrg=";
-      settingsSha256 = "sha256-kQsvDgnxis9ANFmwIwB7HX5MkIAcpEEAHc8IBOLdXvk=";
+      version = "565.57.01";
+      sha256_64bit = "sha256-buvpTlheOF6IBPWnQVLfQUiHv4GcwhvZW3Ks0PsYLHo=";
+      openSha256 = lib.fakeSha256;
+      settingsSha256 = lib.fakeSha256;
+      # settingsSha256 = "sha256-H7uEe34LdmUFcMcS6bz7sbpYhg9zPCb/5AmZZFTx1QA=";
       sha256_aarch64 = lib.fakeSha256;
       persistencedSha256 = lib.fakeSha256;
     };
-
-    # TODO: test newer version 565.57.01
-    # https://www.nvidia.com/en-us/drivers/details/233008/
   };
 
   environment.sessionVariables = {
@@ -35,6 +33,9 @@
     "GBM_BACKEND" = "nvidia-drm";
     "__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
     "WLR_NO_HARDWARE_CURSORS" = "1";
+    "__GL_GSYNC_ALLOWED" = "1";
+    "__GL_VRR_ALLOWED" = "1";
+    "__VK_LAYER_NV_optimus" = "NVIDIA_only";
   };
 
   environment.systemPackages = with pkgs; [ nvidia-vaapi-driver ];

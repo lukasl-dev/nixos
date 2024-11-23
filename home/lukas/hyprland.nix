@@ -201,7 +201,8 @@ in
 
       misc = {
         force_default_wallpaper = 0;
-        vrr = 2;
+        mouse_move_enables_dpms = false;
+        vrr = 1;
       };
     };
   };
