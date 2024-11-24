@@ -23,6 +23,7 @@ in
       monitor = [
         "DP-3,1920x1080@240,0x0,1"
         "HDMI-A-1,1920x1080@75,1920x0,1"
+        # "HDMI-A-1,disable"
         "Unknown-1,disable"
       ];
 
@@ -34,6 +35,8 @@ in
 
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
+
+        "ELECTRON_OZONE_PLATFORM_HINT,auto"
 
         # hyprcursor
         "HYPRCURSOR_SIZE,26"
@@ -50,6 +53,10 @@ in
 
         "waybar"
       ];
+
+      cursor = {
+        no_hardware_cursors = true;
+      };
 
       bind = [
         "${mainMod}, Space, exec, rofi -show drun -show-icons"
@@ -135,6 +142,9 @@ in
         # 1Password
         "float,class:(1Password)"
 
+        # Brave
+        "float,class:(brave-browser)"
+
         # Picture-in-Picture
         # "float,title:(Picture-in-picture)"
         # "float,title:(Picture-in-Picture)"
@@ -163,6 +173,8 @@ in
         "col.inactive_border" = "rgba(595959aa)";
 
         layout = "dwindle";
+
+        allow_tearing = false;
       };
 
       decoration = {
