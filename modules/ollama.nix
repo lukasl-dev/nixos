@@ -1,6 +1,10 @@
+{ pkgs-unstable, ... }:
+
 {
   services.ollama = {
     enable = false;
-    acceleration = "cuda"; # TODO: use false if nvidia is disabled
+    package = pkgs-unstable.ollama;
+
+    acceleration = "cuda";
   };
 }

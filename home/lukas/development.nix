@@ -60,6 +60,7 @@
     # tex-related
     pkgs.texliveFull
     pkgs.graphviz
+    pkgs.inkscape
 
     # zig-related
     pkgs-unstable.zig

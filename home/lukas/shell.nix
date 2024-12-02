@@ -50,6 +50,12 @@ in
     '';
   };
 
+  programs.bash = {
+    enable = true;
+
+    shellAliases = shellAliases;
+  };
+
   # nushell
   programs.nushell = {
     enable = true;
@@ -80,6 +86,7 @@ in
 
       enableZshIntegration = true;
       enableNushellIntegration = true;
+      enableBashIntegration = true;
 
       settings = settings;
     };

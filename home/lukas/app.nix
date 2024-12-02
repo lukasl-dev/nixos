@@ -34,10 +34,6 @@
       "cimpffimgeipdhnhjohpbehjkcdpjolg" # Watch2Gether
       "pljfkbaipkidhmaljaaakibigbcmmpnc" # Atom Material Icons
     ];
-    # commandLineArgs = [
-    #   "--enable-features=UseOzonePlatform"
-    #   "--ozone-platform=x11"
-    # ];
   };
 
   programs.firefox = {
@@ -67,6 +63,10 @@
     pkgs-unstable.obsidian
     pkgs-unstable.zoom
     pkgs-unstable.anki
+
+    # slicers
+    pkgs-unstable.bambu-studio
+    # pkgs-unstable.orca-slicer
 
     # office
     pkgs-unstable.freeoffice

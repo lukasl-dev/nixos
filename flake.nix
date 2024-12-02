@@ -18,6 +18,7 @@
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixgl.url = "github:nix-community/nixGL";
     # nixos-cli.url = "github:water-sucks/nixos";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
@@ -34,7 +35,7 @@
       home-manager,
       nix-ld,
       catppuccin,
-      # nixos-cli,
+      nixgl,
       ...
     }@inputs:
     let
@@ -42,6 +43,7 @@
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
+        overlays = [ nixgl.overlay ];
       };
     in
     {

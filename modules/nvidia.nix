@@ -21,7 +21,7 @@
       version = "565.57.01";
       sha256_64bit = "sha256-buvpTlheOF6IBPWnQVLfQUiHv4GcwhvZW3Ks0PsYLHo=";
       openSha256 = lib.fakeSha256;
-      settingsSha256 = lib.fakeSha256;
+      settingsSha256 = "sha256-H7uEe34LdmUFcMcS6bz7sbpYhg9zPCb/5AmZZFTx1QA=";
       # settingsSha256 = "sha256-H7uEe34LdmUFcMcS6bz7sbpYhg9zPCb/5AmZZFTx1QA=";
       sha256_aarch64 = lib.fakeSha256;
       persistencedSha256 = lib.fakeSha256;

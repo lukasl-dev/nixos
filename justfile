@@ -1,6 +1,9 @@
 default:
     @just --list
 
+flake-update:
+    nix flake update
+
 vega-vm-clean:
     rm -rf ./nixos.qcow2
 

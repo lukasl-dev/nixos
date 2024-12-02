@@ -32,6 +32,7 @@
     ../../../modules/xserver.nix
     ../../../modules/sddm.nix
     ../../../modules/uxplay.nix
+    ../../../modules/wayland.nix
   ];
 
   networking.hostName = "vega";

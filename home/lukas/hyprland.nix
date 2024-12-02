@@ -143,7 +143,7 @@ in
         "float,class:(1Password)"
 
         # Brave
-        "float,class:(brave-browser)"
+        # "float,class:(brave-browser)"
 
         # Picture-in-Picture
         # "float,title:(Picture-in-picture)"

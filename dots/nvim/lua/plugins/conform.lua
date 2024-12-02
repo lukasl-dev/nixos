@@ -38,6 +38,7 @@ return {
       nix = { "nixfmt" },
       just = { "just" },
       rust = { "rustfmt", lsp_format = "fallback" },
+      ocaml = { "ocamlformat", lsp_format = "fallback" },
     },
 
     format_on_save = {
