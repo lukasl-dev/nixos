@@ -71,7 +71,7 @@ in
         github.user = username;
         push.autoSetupRemote = true;
         pull.rebase = true;
-
+        safe.directory = "/nixos";
         url = {
           "ssh://git@github.com/" = {
             insteadOf = "https://github.com/";
