@@ -54,7 +54,7 @@
             inherit inputs pkgs-unstable;
           };
           modules = [
-            ./hosts/specific/vega
+            ./desktops/hosts/specific/vega
 
             home-manager.nixosModules.home-manager
 
@@ -72,7 +72,7 @@
             inherit inputs pkgs-unstable;
           };
           modules = [
-            ./hosts/specific/sirius
+            ./desktops/hosts/specific/sirius
 
             nix-ld.nixosModules.nix-ld
           ];
