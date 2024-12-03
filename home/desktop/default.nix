@@ -8,7 +8,6 @@
     ./dconf.nix
     ./desktop.nix
     ./development.nix
-    ./editor.nix
     ./gaming.nix
     ./gtk.nix
     ./shell.nix

@@ -14,7 +14,7 @@
   # nvim config directory
   home.file.".config/nvim" = {
     enable = true;
-    source = ../../dots/nvim;
+    source = ../dots/nvim;
     target = ".config/nvim";
   };
 }

@@ -80,6 +80,8 @@
 
     # bitwarden
     pkgs-unstable.bitwarden
+
+    pkgs-unstable.wireshark
   ];
 
   # nyxt config directory

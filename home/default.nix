@@ -1,5 +1,8 @@
 {
-  imports = [ ./shell.nix ];
+  imports = [
+    ./editor.nix
+    ./shell.nix
+  ];
 
   programs.home-manager.enable = true;
   home = {
