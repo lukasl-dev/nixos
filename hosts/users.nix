@@ -11,7 +11,6 @@
       lukas = {
         isNormalUser = true;
         description = "Lukas Leeb";
-        initialPassword = "lukas";
         extraGroups = [
           "networkmanager"
           "wheel"
