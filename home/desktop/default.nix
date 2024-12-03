@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 
 {
   imports = [
@@ -12,12 +12,5 @@
     ./gtk.nix
     ./shell.nix
     ./xdg.nix
-
-    inputs.catppuccin.homeManagerModules.catppuccin
   ];
-
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-  };
 }
