@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   users = {
@@ -18,6 +18,7 @@
           "docker"
           "wireshark"
         ];
+        hashedPasswordFile = config.sops.secrets."user/password".path;
         openssh.authorizedKeys.keys = [ (builtins.readFile ../dots/ssh/id_ed25519.pub) ];
       };
     };
