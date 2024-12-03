@@ -2,6 +2,7 @@
   imports = [
     ./i18n.nix
     ./firewall.nix
+    ./fonts.nix
     ./shell.nix
     ./sops.nix
     ./users.nix
