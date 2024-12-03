@@ -5,5 +5,5 @@
     ./ssh.nix
   ];
 
-  networking.domain = "lukasl.dev";
+  networking.domain = "nodes.lukasl.dev";
 }
