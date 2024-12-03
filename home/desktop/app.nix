@@ -77,6 +77,9 @@
 
     # slicers
     pkgs-unstable.bambu-studio
+
+    # bitwarden
+    pkgs-unstable.bitwarden
   ];
 
   # nyxt config directory

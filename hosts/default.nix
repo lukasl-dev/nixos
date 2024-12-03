@@ -3,6 +3,7 @@
     ./i18n.nix
     ./firewall.nix
     ./shell.nix
+    ./sops.nix
     ./users.nix
 
     ../modules/dns/cloudflare.nix
