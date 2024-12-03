@@ -19,7 +19,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixgl.url = "github:nix-community/nixGL";
-    # nixos-cli.url = "github:water-sucks/nixos";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     catppuccin.url = "github:catppuccin/nix";
@@ -32,9 +31,6 @@
     {
       nixpkgs,
       nixpkgs-unstable,
-      home-manager,
-      nix-ld,
-      catppuccin,
       nixgl,
       ...
     }@inputs:
@@ -53,29 +49,15 @@
           specialArgs = {
             inherit inputs pkgs-unstable;
           };
-          modules = [
-            ./desktops/hosts/specific/vega
-
-            home-manager.nixosModules.home-manager
-
-            catppuccin.nixosModules.catppuccin
-            nix-ld.nixosModules.nix-ld
-            # nixos-cli.nixosModules.nixos-cli
-
-            { programs.nix-ld.dev.enable = true; }
-          ];
+          modules = [ ./hosts/desktops/vega ];
         };
 
-        sirius = nixpkgs.lib.nixosSystem {
+        lyra = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs pkgs-unstable;
           };
-          modules = [
-            ./desktops/hosts/specific/sirius
-
-            nix-ld.nixosModules.nix-ld
-          ];
+          modules = [ ./hosts/desktops/lyra ];
         };
       };
     };
