@@ -2,7 +2,7 @@
 
 {
   imports = [
-    inputs.catppuccin.homeManagerModules.catppuccin
+    ../default.nix
 
     ./app.nix
     ./dconf.nix
@@ -11,7 +11,10 @@
     ./editor.nix
     ./gaming.nix
     ./gtk.nix
+    ./shell.nix
     ./xdg.nix
+
+    inputs.catppuccin.homeManagerModules.catppuccin
   ];
 
   catppuccin = {

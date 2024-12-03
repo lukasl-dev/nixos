@@ -1,5 +1,7 @@
 { inputs, pkgs, ... }:
 
+# TODO: split this into smaller files
+
 let
   mainMod = "SUPER";
 in
@@ -223,8 +225,8 @@ in
       splash = false;
       splash_offset = 2.0;
 
-      preload = [ "~/nixos/wallpapers/10.png" ];
-      wallpaper = [ ",~/nixos/wallpapers/10.png" ];
+      preload = [ "${../../wallpapers/10.png}" ];
+      wallpaper = [ ",${../../wallpapers/10.png}" ];
     };
   };
 

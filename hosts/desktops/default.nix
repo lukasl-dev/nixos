@@ -1,1 +1,37 @@
-{ import = [ ../default.nix ]; }
+{
+  lib,
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
+
+{
+  imports = [
+    ../default.nix
+
+    ../../modules/apps/localsend.nix
+    ../../modules/apps/nautilus.nix
+    ../../modules/apps/onepassword.nix
+    ../../modules/apps/seahorse.nix
+    ../../modules/apps/steam.nix
+    ../../modules/apps/uxplay.nix
+
+    ../../modules/desktop/hyprland.nix
+    ../../modules/desktop/xserver.nix
+    ../../modules/desktop/sddm.nix
+
+    ../../modules/graphics/nvidia.nix
+    ../../modules/graphics/opengl.nix
+    ../../modules/graphics/qt.nix
+
+    ../../modules/sound/pipewire.nix
+
+    ../../modules/bluetooth.nix
+    ../../modules/udiskie.nix
+  ];
+
+  home-manager.users.lukas = lib.mkDefault (
+    import ../../home/desktop { inherit inputs pkgs pkgs-unstable; }
+  );
+}

@@ -52,12 +52,20 @@
           modules = [ ./hosts/desktops/vega ];
         };
 
-        lyra = nixpkgs.lib.nixosSystem {
+        # orion = nixpkgs.lib.nixosSystem {
+        #   inherit system;
+        #   specialArgs = {
+        #     inherit inputs pkgs-unstable;
+        #   };
+        #   modules = [ ./hosts/desktops/orion ];
+        # };
+
+        sirius = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs pkgs-unstable;
           };
-          modules = [ ./hosts/desktops/lyra ];
+          modules = [ ./hosts/servers/sirius ];
         };
       };
     };

@@ -117,4 +117,40 @@ in
       set -ga update-environment TERM_PROGRAM
     '';
   };
+
+  programs.zoxide = {
+    enable = true;
+
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    options = [ "--cmd cd" ];
+  };
+
+  programs.direnv = {
+    enable = true;
+
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+
+  programs.bat.enable = true;
+  programs.btop.enable = true;
+  programs.fastfetch.enable = true;
+  programs.fzf.enable = true;
+  programs.carapace.enable = true;
+  programs.ripgrep.enable = true;
+  programs.yazi.enable = true;
+
+  home.packages = [
+    pkgs.gh
+    pkgs.just
+    pkgs.tree
+    pkgs.zip
+    pkgs.unzip
+    pkgs.speedtest-cli
+    pkgs.hyperfine
+    pkgs.ffmpeg
+    pkgs.imagemagick
+  ];
 }
