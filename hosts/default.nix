@@ -23,5 +23,6 @@
     glibc
     cargo
     rustc
+    nil
   ];
 }

@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 # TODO: split this into smaller files
 
@@ -376,6 +381,12 @@ in
     enable = true;
     source = "${pkgs.catppuccin-cursors.mochaLight}/share/icons/";
     target = ".icons";
+  };
+
+  # hyprlock
+  programs.hyprlock = {
+    enable = true;
+    package = pkgs-unstable.hyprlock;
   };
 
   home.packages = [
