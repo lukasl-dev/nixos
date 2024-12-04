@@ -8,7 +8,7 @@
     role = "server";
     tokenFile = config.sops.secrets."k8s/token".path;
 
-    extraFlags = [ "--disable local-storage" ];
+    extraFlags = toString [ "--disable local-storage" ];
   };
 
   networking.firewall = {
