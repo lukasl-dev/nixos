@@ -146,7 +146,7 @@ in
         kb_variant = ",qwerty";
         follow_mouse = 1;
         touchpad = {
-          natural_scroll = "no";
+          natural_scroll = "yes";
         };
         sensitivity = 0;
       };
