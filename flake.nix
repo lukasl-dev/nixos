@@ -54,13 +54,13 @@
           modules = [ ./hosts/desktops/vega ];
         };
 
-        # orion = nixpkgs.lib.nixosSystem {
-        #   inherit system;
-        #   specialArgs = {
-        #     inherit inputs pkgs-unstable;
-        #   };
-        #   modules = [ ./hosts/desktops/orion ];
-        # };
+        orion = nixpkgs.lib.nixosSystem {
+          inherit system;
+         specialArgs = {
+            inherit inputs pkgs-unstable;
+          };
+          modules = [ ./hosts/desktops/orion ];
+        };
 
         sirius = nixpkgs.lib.nixosSystem {
           inherit system;
