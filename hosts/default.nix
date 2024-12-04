@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ./i18n.nix
@@ -13,5 +15,11 @@
     ../modules/catppuccin.nix
     ../modules/docker.nix
     ../modules/sops.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    gcc
+    glib
+    glibc
   ];
 }
