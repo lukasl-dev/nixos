@@ -2,6 +2,8 @@
   imports = [
     ../default.nix
     ./hardware-configuration.nix
+
+    ../../../modules/ollama.nix
   ];
 
   networking.hostName = "vega";

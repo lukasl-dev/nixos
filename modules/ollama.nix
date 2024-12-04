@@ -1,10 +1,13 @@
-{ pkgs-unstable, ... }:
+{ config, pkgs-unstable, ... }:
 
+let
+  nvidiaEnabled = config.hardware.nvidia.modesetting.enable;
+in
 {
   services.ollama = {
     enable = false;
     package = pkgs-unstable.ollama;
 
-    acceleration = "cuda"; # TODO: only enable if nvidia is enabled
+    acceleration = if nvidiaEnabled then "cuda" else false;
   };
 }
