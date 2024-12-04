@@ -7,5 +7,6 @@
     "user/password" = {
       neededForUsers = true;
     };
+    "k8s/token" = { };
   };
 }
