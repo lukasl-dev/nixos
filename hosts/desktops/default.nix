@@ -31,6 +31,8 @@
     ../../modules/udiskie.nix
   ];
 
+  networking.domain = "hosts.lukasl.dev";
+
   home-manager.users.lukas = lib.mkDefault (
     import ../../home/desktop { inherit inputs pkgs pkgs-unstable; }
   );
