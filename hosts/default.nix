@@ -21,5 +21,7 @@
     gcc
     glib
     glibc
+    cargo
+    rustc
   ];
 }
