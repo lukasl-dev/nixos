@@ -1,9 +1,4 @@
-{
-  inputs,
-  pkgs,
-  pkgs-unstable,
-  ...
-}:
+{ inputs, pkgs, ... }:
 
 # TODO: split this into smaller files
 
@@ -384,9 +379,21 @@ in
   };
 
   # hyprlock
-  programs.hyprlock = {
+  # programs.hyprlock = {
+  #   enable = true;
+  #   package = pkgs-unstable.hyprlock;
+  # };
+
+  # sunset
+  services.wlsunset = {
     enable = true;
-    package = pkgs-unstable.hyprlock;
+    sunrise = "06:00";
+    sunset = "17:00";
+
+    temperature = {
+      day = 6500;
+      night = 4500;
+    };
   };
 
   home.packages = [
@@ -414,5 +421,8 @@ in
     # miscellaneous
     pkgs.xwaylandvideobridge
     pkgs.xdg-utils
+
+    # wlsunset
+    pkgs.wlsunset
   ];
 }
