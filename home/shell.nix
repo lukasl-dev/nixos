@@ -140,6 +140,16 @@ in
     enableBashIntegration = true;
   };
 
+  programs.eza = {
+    enable = true;
+
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+
+    git = true;
+    icons = true;
+  };
+
   programs.bat.enable = true;
   programs.btop.enable = true;
   programs.fastfetch.enable = true;
