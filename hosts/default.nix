@@ -24,5 +24,6 @@
     cargo
     rustc
     nil
+    file
   ];
 }

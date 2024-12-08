@@ -82,6 +82,9 @@
     pkgs-unstable.bitwarden
 
     pkgs-unstable.wireshark
+
+    pkgs-unstable.calcure
+    pkgs-unstable.calcurse
   ];
 
   # nyxt config directory
