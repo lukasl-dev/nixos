@@ -51,6 +51,7 @@
     pkgs.python3
     pkgs.uv
     pkgs.python312Packages.grip
+    pkgs.python312Packages.pylatexenc
 
     # rust-related
     pkgs.rustc
@@ -78,6 +79,9 @@
     pkgs-unstable.ocamlPackages.lsp
     pkgs-unstable.ocamlPackages.ocamlformat
     pkgs-unstable.ocamlPackages.utop
+
+    # git-related
+    pkgs.git-lfs
 
     # miscellaneous
     pkgs.d2

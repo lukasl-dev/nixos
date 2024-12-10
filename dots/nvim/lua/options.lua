@@ -32,3 +32,5 @@ opt.fillchars = {
   -- stlnc = "─",
   eob = " ",
 }
+
+o.conceallevel = 2
