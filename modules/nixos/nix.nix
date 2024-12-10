@@ -20,7 +20,10 @@
     allowUnfree = true;
   };
 
-  programs.nix-ld.dev.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    dev.enable = false;
+  };
 
   environment.systemPackages = with pkgs; [
     # nix language server
