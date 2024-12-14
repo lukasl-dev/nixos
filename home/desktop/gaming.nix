@@ -19,4 +19,8 @@
     gamescope
     gamescope-wsi
   ];
+
+  # prismlauncher settings:
+  # __GL_THREADED_OPTIMIZATIONS=0
+  # use glfw
 }

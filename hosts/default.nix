@@ -15,6 +15,7 @@
     ../modules/catppuccin.nix
     ../modules/docker.nix
     ../modules/sops.nix
+    ../modules/restic.nix
   ];
 
   environment.systemPackages = with pkgs; [
