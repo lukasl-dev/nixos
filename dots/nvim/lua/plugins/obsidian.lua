@@ -14,8 +14,11 @@ return {
     workspaces = {
       {
         name = "notes",
-        path = "~/notes",
+        path = "~/notes/content",
       },
     },
+    wiki_link_func = function(opts)
+      return require("obsidian.util").wiki_link_path_prefix(opts)
+    end,
   },
 }
