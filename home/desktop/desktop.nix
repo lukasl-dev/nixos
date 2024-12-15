@@ -23,9 +23,8 @@ in
     settings = {
       # TODO: should depend on the host
       monitor = [
-        "DP-3,1920x1080@240,0x0,1"
-        "HDMI-A-1,1920x1080@75,1920x0,1"
-        # "HDMI-A-1,disable"
+        #"HDMI-A-1,1920x1080@75,1920x0,1"
+	"HDMI-A-1,1920x1080@239.96, 0x0, 1"
         "Unknown-1,disable"
       ];
 
