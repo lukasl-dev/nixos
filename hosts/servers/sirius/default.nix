@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
 
     ./harmonia.nix
+    ./traefik.nix
   ];
 
   networking.hostName = "sirius";
