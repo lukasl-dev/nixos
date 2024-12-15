@@ -8,5 +8,6 @@
       neededForUsers = true;
     };
     "k8s/token" = { };
+    "harmonia/secret" = { };
   };
 }

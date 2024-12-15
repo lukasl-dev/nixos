@@ -3,7 +3,7 @@
     ../default.nix
     ./hardware-configuration.nix
 
-    ./kubernetes.nix
+    ./harmonia.nix
   ];
 
   networking.hostName = "sirius";
