@@ -14,6 +14,10 @@
       "root"
       "lukas"
     ];
+
+    # binary cache
+    # substituters = [ "https://nix.lukasl.dev" ];
+    # trusted-public-keys = [ "nix.lukasl.dev:muXuAB7gj7FGUYeQ1Ntle/0PMGY1vP49ng5msxJZiqo=" ];
   };
 
   nixpkgs.config = {
