@@ -24,7 +24,7 @@ in
       # TODO: should depend on the host
       monitor = [
         #"HDMI-A-1,1920x1080@75,1920x0,1"
-	"HDMI-A-1,1920x1080@239.96, 0x0, 1"
+        "HDMI-A-1,1920x1080@239.96, 0x0, 1"
         "Unknown-1,disable"
       ];
 
@@ -133,6 +133,9 @@ in
         # Minecraft
         "noanim,initialClass:^(Minecraft\*\s1\.20\.6)$"
         "noblur,initialClass:^(Minecraft\*\s1\.20\.6)$"
+
+        # Picture-in-picture
+        "float,initialTitle:(Picture-in-picture)"
       ];
 
       input = {
