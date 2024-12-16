@@ -15,7 +15,6 @@
     lunar-client
 
     # performance
-    gamemode
     gamescope
     gamescope-wsi
   ];

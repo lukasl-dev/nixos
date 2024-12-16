@@ -38,5 +38,9 @@
     "__VK_LAYER_NV_optimus" = "NVIDIA_only";
   };
 
-  environment.systemPackages = with pkgs; [ nvidia-vaapi-driver ];
+  environment.systemPackages = with pkgs; [
+    nvidia-vaapi-driver
+    vulkan-headers
+    dxvk
+  ];
 }
