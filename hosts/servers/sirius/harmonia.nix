@@ -12,9 +12,9 @@
 
   services.traefik.dynamicConfigOptions.http = {
     routers.harmonia = {
+      rule = "Host(`nix.lukasl.dev`)";
       entryPoints = [ "websecure" ];
       service = "harmonia";
-      rule = "Host(`nix.lukasl.dev`)";
       tls.certResolver = "letsencrypt";
     };
     services.harmonia = {

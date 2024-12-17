@@ -1,15 +1,10 @@
 { config, ... }:
 
-let
-  httpPort = 80;
-  httpsPort = 443;
-  dashboardPort = 8080;
-in
 {
   networking.firewall.allowedTCPPorts = [
-    httpPort
-    dashboardPort
-    httpsPort
+    80
+    443
+    8080
   ];
 
   services.traefik = {
@@ -18,41 +13,48 @@ in
     staticConfigOptions = {
       entryPoints = {
         web = {
-          address = ":${toString httpPort}";
-          asDefault = true;
-          http.redirections.entrypoint = {
-            to = "websecure";
-            scheme = "https";
-          };
+          address = ":80";
+          # http.redirections.entrypoint = {
+          #   to = "websecure";
+          #   scheme = "https";
+          # };
         };
 
         websecure = {
-          address = ":${toString httpsPort}";
-          asDefault = true;
+          address = ":443";
           http.tls.certResolver = "letsencrypt";
         };
       };
 
-      certificatesResolvers.letsencrypt.acme = {
-        email = "acme@lukasl.dev";
-        storage = "${config.services.traefik.dataDir}/acme.json";
-        tlsChallenge = true;
-        httpChallenge.entryPoint = "web";
+      log = {
+        level = "INFO";
+        filePath = "${config.services.traefik.dataDir}/traefik.log";
+        format = "json";
       };
 
-      api.dashboard = true;
-      api.insecure = true;
+      certificatesResolvers.letsencrypt.acme = {
+        email = "contact@lukasl.dev";
+        storage = "${config.services.traefik.dataDir}/acme.json";
+        httpChallenge = {
+          entryPoint = "web";
+        };
+      };
+
+      # api.dashboard = true;
+      # api.insecure = true;
     };
 
-    dynamicConfigOptions.http = {
-      routers.dashboard = {
-        entryPoints = [ "websecure" ];
-        service = "api@internal";
-        rule = "Host(`sirius.nodes.lukasl.dev`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))";
-        tls.certResolver = "letsencrypt";
-      };
-      services.dashboard = {
-        loadBalancer.servers = [ { url = "http://localhost:${toString dashboardPort}"; } ];
+    dynamicConfigOptions = {
+      http = {
+        # routers = {
+        #   dashboard = {
+        #     rule = "Host(`sirius.nodes.lukasl.dev`)";
+        #     entryPoints = [ "websecure" ];
+        #     service = "api@internal";
+        #     tls.certResolver = "letsencrypt";
+        #   };
+        # };
+        # services = { };
       };
     };
   };
