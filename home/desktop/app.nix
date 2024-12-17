@@ -85,6 +85,10 @@
 
     pkgs-unstable.calcure
     pkgs-unstable.calcurse
+
+    # youtube music
+    pkgs-unstable.youtube-music
+    pkgs-unstable.youtube-tui
   ];
 
   # nyxt config directory
