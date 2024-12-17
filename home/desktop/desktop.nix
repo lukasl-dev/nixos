@@ -131,10 +131,11 @@ in
         "float,class:(1Password)"
         "center,class:(1Password)"
         "opacity 0.8,class:(1Password)"
+        "size 1309 783,class:(1Password)"
 
-        # vesktop
+        # Vesktop
         "workspace 1,initialClass:(vesktop)"
-        # vesktop file download
+        # Vesktop file download
         "float,initialTitle:(https://discord.com/*)"
         "pin,initialTitle:(https://discord.com/*)"
         "opacity 0.8,initialTitle:(https://discord.com/*)"
