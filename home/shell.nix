@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ meta, pkgs, ... }:
 
 let
   shellAliases = {
@@ -55,12 +55,12 @@ in
 
   programs.git =
     let
-      username = "lukasl-dev";
+      username = meta.git.username;
     in
     {
       enable = true;
 
-      userEmail = "git@lukasl.dev";
+      userEmail = "git@${meta.domain}";
       userName = username;
 
       delta.enable = true;

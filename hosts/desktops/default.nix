@@ -1,4 +1,5 @@
 {
+  meta,
   lib,
   inputs,
   pkgs,
@@ -33,9 +34,9 @@
     ../../modules/udiskie.nix
   ];
 
-  networking.domain = "hosts.lukasl.dev";
+  networking.domain = "hosts.${meta.domain}";
 
-  home-manager.users.lukas = lib.mkDefault (
+  home-manager.users.${meta.user.name} = lib.mkDefault (
     import ../../home/desktop { inherit inputs pkgs pkgs-unstable; }
   );
 }

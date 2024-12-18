@@ -1,8 +1,10 @@
+{ meta, ... }:
+
 {
   sops.secrets = {
     "ssh/private_key" = {
-      owner = "lukas";
-      path = "/home/lukas/.ssh/id_ed25519";
+      owner = meta.user.name;
+      path = "/home/${meta.user.name}/.ssh/id_ed25519";
     };
 
     "user/password" = {
@@ -18,7 +20,7 @@
     "harmonia/public_key" = { };
 
     "vaultwarden/key" = {
-      owner = "lukas";
+      owner = meta.user.name;
       path = "/var/lib/bitwarden_rs/rsa_key.pem";
     };
   };

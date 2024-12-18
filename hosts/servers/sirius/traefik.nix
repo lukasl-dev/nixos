@@ -1,4 +1,4 @@
-{ config, ... }:
+{ meta, config, ... }:
 
 {
   networking.firewall.allowedTCPPorts = [
@@ -34,15 +34,10 @@
           http.tls = {
             certResolver = "cloudflare";
             domains = [
-              (
-                let
-                  domain = "lukasl.dev";
-                in
-                {
-                  main = "${domain}";
-                  sans = [ "*.${domain}" ];
-                }
-              )
+              {
+                main = "${meta.domain}";
+                sans = [ "*.${meta.domain}" ];
+              }
             ];
           };
         };
@@ -55,7 +50,7 @@
       certificatesResolvers = {
         cloudflare = {
           acme = {
-            email = "contact@lukasl.dev";
+            email = "contact@${meta.domain}";
             storage = "${config.services.traefik.dataDir}/acme.json";
             dnsChallenge = {
               provider = "cloudflare";
@@ -73,7 +68,7 @@
     dynamicConfigOptions = {
       http.routers = {
         dashboard = {
-          rule = "Host(`proxy.lukasl.dev`)";
+          rule = "Host(`proxy.${meta.domain}`)";
           entryPoints = [ "websecure" ];
           service = "api@internal";
         };

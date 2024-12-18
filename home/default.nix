@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ meta, inputs, ... }:
 
 {
   imports = [
@@ -12,8 +12,8 @@
   home = {
     stateVersion = "24.05"; # TODO: upgrade
 
-    username = "lukas";
-    homeDirectory = "/home/lukas";
+    username = meta.user.name;
+    homeDirectory = "/home/${meta.user.name}";
   };
 
   catppuccin = {

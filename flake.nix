@@ -45,30 +45,35 @@
         config.allowUnfree = true;
         overlays = [ nixgl.overlay ];
       };
+      specialArgs = {
+        inherit inputs pkgs-unstable meta;
+      };
+
+      meta = {
+        user = {
+          name = "lukas";
+          fullName = "Lukas";
+        };
+        git = {
+          username = "lukasl-dev";
+        };
+        domain = "lukasl.dev";
+      };
     in
     {
       nixosConfigurations = {
         vega = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs pkgs-unstable;
-          };
+          inherit system specialArgs;
           modules = [ ./hosts/desktops/vega ];
         };
 
         orion = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs pkgs-unstable;
-          };
+          inherit system specialArgs;
           modules = [ ./hosts/desktops/orion ];
         };
 
         sirius = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs pkgs-unstable;
-          };
+          inherit system specialArgs;
           modules = [ ./hosts/servers/sirius ];
         };
       };

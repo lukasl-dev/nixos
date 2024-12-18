@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  meta,
+  inputs,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ inputs.nix-ld.nixosModules.nix-ld ];
@@ -12,7 +17,7 @@
     ];
     trusted-users = [
       "root"
-      "lukas"
+      (meta.user.name)
     ];
 
     # binary cache

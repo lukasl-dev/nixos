@@ -1,4 +1,4 @@
-{ config, ... }:
+{ meta, config, ... }:
 
 {
   services.harmonia = {
@@ -12,7 +12,7 @@
 
   services.traefik.dynamicConfigOptions.http = {
     routers.harmonia = {
-      rule = "Host(`nix.lukasl.dev`)";
+      rule = "Host(`nix.${meta.domain}`)";
       entryPoints = [ "websecure" ];
       service = "harmonia";
     };

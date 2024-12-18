@@ -1,4 +1,5 @@
 {
+  meta,
   lib,
   inputs,
   pkgs,
@@ -13,9 +14,9 @@
     ./ssh.nix
   ];
 
-  networking.domain = "nodes.lukasl.dev";
+  networking.domain = "nodes.${meta.domain}";
 
-  home-manager.users.lukas = lib.mkDefault (
+  home-manager.users.${meta.user.name} = lib.mkDefault (
     import ../../home/headless { inherit inputs pkgs pkgs-unstable; }
   );
 

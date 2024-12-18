@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  meta,
+  pkgs,
+  config,
+  ...
+}:
 
 {
   users = {
@@ -8,9 +13,9 @@
         openssh.authorizedKeys.keys = [ (builtins.readFile ../dots/ssh/id_ed25519.pub) ];
       };
 
-      lukas = {
+      ${meta.user.name} = {
         isNormalUser = true;
-        description = "Lukas Leeb";
+        description = meta.user.fullName;
         extraGroups = [
           "networkmanager"
           "wheel"

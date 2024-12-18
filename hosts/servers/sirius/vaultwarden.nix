@@ -1,4 +1,4 @@
-{ config, ... }:
+{ meta, config, ... }:
 
 {
   services.vaultwarden = {
@@ -8,14 +8,14 @@
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;
 
-      DOMAIN = "https://vault.lukasl.dev";
+      DOMAIN = "https://vault.${meta.domain}";
       SIGNUPS_ALLOWED = false;
     };
   };
 
   services.traefik.dynamicConfigOptions.http = {
     routers.vaultwarden = {
-      rule = "Host(`vault.lukasl.dev`)";
+      rule = "Host(`vault.${meta.domain}`)";
       entryPoints = [ "websecure" ];
       service = "vaultwarden";
     };
