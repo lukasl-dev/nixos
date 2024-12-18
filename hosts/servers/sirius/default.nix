@@ -5,6 +5,7 @@
 
     ./harmonia.nix
     ./traefik.nix
+    ./vaultwarden.nix
   ];
 
   networking.hostName = "sirius";

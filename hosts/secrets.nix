@@ -8,6 +8,11 @@
       neededForUsers = true;
     };
     "k8s/token" = { };
+
+    "cloudflare/email" = { };
+    "cloudflare/global_api_key" = { };
+
     "harmonia/secret" = { };
+    "harmonia/public_key" = { };
   };
 }

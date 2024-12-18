@@ -15,7 +15,6 @@
       rule = "Host(`nix.lukasl.dev`)";
       entryPoints = [ "websecure" ];
       service = "harmonia";
-      tls.certResolver = "letsencrypt";
     };
     services.harmonia = {
       loadBalancer.servers = [ { url = "http://${config.services.harmonia.settings.bind}"; } ];
