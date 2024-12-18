@@ -1,17 +1,25 @@
-# { inputs, config, ... }:
+# {
+#   meta,
+#   inputs,
+#   config,
+#   ...
+# }:
 
 {
   # imports = [ inputs.mailserver.nixosModule ];
   #
   # mailserver = {
   #   enable = true;
-  #   fqdn = "mail.lukasl.dev";
-  #   domains = [ "lukasl.dev" ];
+  #   fqdn = "mail.${meta.domain}";
+  #   domains = [ meta.domain ];
   #
   #   loginAccounts = {
-  #     "me@lukasl.dev" = {
+  #     "me@${meta.domain}" = {
   #       hashedPasswordFile = config.sops.secrets."user/password".path;
-  #       aliases = [ "contact@lukasl.dev" ];
+  #       aliases = [
+  #         "contact@${meta.domain}"
+  #         "git@${meta.domain}"
+  #       ];
   #     };
   #   };
   # };

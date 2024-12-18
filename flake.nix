@@ -52,7 +52,7 @@
       meta = {
         user = {
           name = "lukas";
-          fullName = "Lukas";
+          fullName = "Lukas Leeb";
         };
         git = {
           username = "lukasl-dev";
