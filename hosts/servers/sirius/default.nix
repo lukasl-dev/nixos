@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
 
     ./harmonia.nix
+    # ./mail.nix
     ./traefik.nix
     ./vaultwarden.nix
   ];

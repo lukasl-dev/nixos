@@ -27,6 +27,8 @@
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
+
+    mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
   };
 
   outputs =
@@ -56,7 +58,7 @@
 
         orion = nixpkgs.lib.nixosSystem {
           inherit system;
-         specialArgs = {
+          specialArgs = {
             inherit inputs pkgs-unstable;
           };
           modules = [ ./hosts/desktops/orion ];
