@@ -4,9 +4,11 @@
       owner = "lukas";
       path = "/home/lukas/.ssh/id_ed25519";
     };
+
     "user/password" = {
       neededForUsers = true;
     };
+
     "k8s/token" = { };
 
     "cloudflare/email" = { };
@@ -14,5 +16,10 @@
 
     "harmonia/secret" = { };
     "harmonia/public_key" = { };
+
+    "vaultwarden/key" = {
+      owner = "lukas";
+      path = "/var/lib/bitwarden_rs/rsa_key.pem";
+    };
   };
 }
