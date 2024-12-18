@@ -54,10 +54,10 @@
           name = "lukas";
           fullName = "Lukas Leeb";
         };
+        domain = "lukasl.dev";
         git = {
           username = "lukasl-dev";
         };
-        domain = "lukasl.dev";
       };
     in
     {
