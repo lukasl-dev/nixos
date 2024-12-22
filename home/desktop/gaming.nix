@@ -17,6 +17,8 @@
     # performance
     gamescope
     gamescope-wsi
+
+    furmark
   ];
 
   # prismlauncher settings:

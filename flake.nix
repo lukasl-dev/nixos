@@ -48,7 +48,7 @@
         ];
       };
       specialArgs = {
-        inherit inputs pkgs-unstable meta;
+        inherit inputs pkgs-unstable;
       };
 
       meta = {
@@ -65,17 +65,33 @@
     {
       nixosConfigurations = {
         vega = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
+          inherit system;
+          specialArgs = specialArgs // {
+            meta = meta // {
+              hypr = {
+                monitors = [
+                  "HDMI-A-1, 1920x1080@239.96, 0x0, 1"
+                ];
+              };
+            };
+          };
           modules = [ ./hosts/desktops/vega ];
         };
 
         orion = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
+          inherit system;
+          specialArgs = specialArgs // {
+            inherit meta;
+            # TODO: add monitor explicitly
+          };
           modules = [ ./hosts/desktops/orion ];
         };
 
         sirius = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
+          inherit system;
+          specialArgs = specialArgs // {
+            inherit meta;
+          };
           modules = [ ./hosts/servers/sirius ];
         };
       };

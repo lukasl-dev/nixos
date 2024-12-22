@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  meta,
+  inputs,
+  pkgs,
+  ...
+}:
 
 # TODO: split this into smaller files
 
@@ -18,13 +23,8 @@ in
       variables = [ "--all" ];
     };
 
-    # sourceFirst = true;
-
     settings = {
-      # TODO: should depend on the host
-      monitor = [
-        #"HDMI-A-1,1920x1080@75,1920x0,1"
-        "HDMI-A-1,1920x1080@239.96, 0x0, 1"
+      monitor = meta.hypr.monitors ++ [
         "Unknown-1,disable"
       ];
 
