@@ -15,7 +15,7 @@
     powerManagement.finegrained = false;
 
     open = false;
-    nvidiaSettings = false;
+    nvidiaSettings = true;
 
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
       version = "565.57.01";

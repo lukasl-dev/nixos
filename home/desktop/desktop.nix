@@ -18,7 +18,7 @@ in
       variables = [ "--all" ];
     };
 
-    sourceFirst = true;
+    # sourceFirst = true;
 
     settings = {
       # TODO: should depend on the host
@@ -50,6 +50,7 @@ in
         "zapzap"
         "vesktop"
         "1password"
+        "bitwarden"
         "localsend_app"
 
         "waybar"
@@ -132,6 +133,11 @@ in
         "center,class:(1Password)"
         "opacity 0.8,class:(1Password)"
         "size 1309 783,class:(1Password)"
+
+        # Bitwarden
+        "float,title:(Bitwarden)"
+        "center,title:(Bitwarden)"
+        "size 1309 783,title:(Bitwarden)"
 
         # Vesktop
         "workspace 1,initialClass:(vesktop)"

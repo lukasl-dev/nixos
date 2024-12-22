@@ -2,7 +2,7 @@
   description = "lukasl-dev";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -43,7 +43,29 @@
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
-        overlays = [ nixgl.overlay ];
+        overlays = [
+          nixgl.overlay
+          nvidia-settings-overlay
+        ];
+      };
+      nvidia-settings-overlay = self: super: {
+        nvidia-settings = super.nvidia-settings.overrideAttrs (oldAttrs: {
+          buildInputs = oldAttrs.buildInputs or [ ] ++ [
+            self.vulkan-headers
+            self.vulkan
+            self.vulkan-tools
+          ];
+
+          # preBuild = ''
+          #   export LD_LIBRARY_PATH=${self.vulkan}/lib:${self.vulkan-headers}/lib:${self.vulkan-tools}/lib
+          #   ${oldAttrs.preBuild or ""}
+          # '';
+          #
+          # buildPhase = ''
+          #   export LD_LIBRARY_PATH=${self.vulkan}/lib:${self.vulkan-headers}/lib:${self.vulkan-tools}/lib
+          #   ${oldAttrs.buildPhase}
+          # '';
+        });
       };
       specialArgs = {
         inherit inputs pkgs-unstable meta;

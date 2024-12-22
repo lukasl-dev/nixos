@@ -14,7 +14,7 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
-  environment.systemPackages = with pkgs; [ gnome.gnome-keyring ];
+  environment.systemPackages = with pkgs; [ gnome-keyring ];
 
   security = {
     polkit.enable = true;

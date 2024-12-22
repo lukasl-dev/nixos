@@ -1,4 +1,4 @@
 { pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [ gnome.nautilus ];
+  environment.systemPackages = with pkgs; [ nautilus ];
 }
