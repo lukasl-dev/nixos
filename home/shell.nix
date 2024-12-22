@@ -147,7 +147,7 @@ in
     enableBashIntegration = true;
 
     git = true;
-    icons = true;
+    icons = "auto";
   };
 
   programs.bat.enable = true;
