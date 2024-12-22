@@ -45,27 +45,7 @@
         config.allowUnfree = true;
         overlays = [
           nixgl.overlay
-          nvidia-settings-overlay
         ];
-      };
-      nvidia-settings-overlay = self: super: {
-        nvidia-settings = super.nvidia-settings.overrideAttrs (oldAttrs: {
-          buildInputs = oldAttrs.buildInputs or [ ] ++ [
-            self.vulkan-headers
-            self.vulkan
-            self.vulkan-tools
-          ];
-
-          # preBuild = ''
-          #   export LD_LIBRARY_PATH=${self.vulkan}/lib:${self.vulkan-headers}/lib:${self.vulkan-tools}/lib
-          #   ${oldAttrs.preBuild or ""}
-          # '';
-          #
-          # buildPhase = ''
-          #   export LD_LIBRARY_PATH=${self.vulkan}/lib:${self.vulkan-headers}/lib:${self.vulkan-tools}/lib
-          #   ${oldAttrs.buildPhase}
-          # '';
-        });
       };
       specialArgs = {
         inherit inputs pkgs-unstable meta;

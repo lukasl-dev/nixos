@@ -165,6 +165,13 @@ in
         "opacity 0.8,initialClass:(xdg-desktop-portal-gtk)"
         "center 1,initialClass:(xdg-desktop-portal-gtk)"
         "size 934 489,initialClass:(xdg-desktop-portal-gtk)"
+
+        # Steam
+        # initialClass: steam
+        # initialTitle: Friends List
+        "float,initialClass:(steam),initialTitle:(Friends List)"
+        "center,initialClass:(steam),initialTitle:(Friends List)"
+        "size 524 706,initialClass:(steam),initialTitle:(Friends List)"
       ];
 
       input = {
