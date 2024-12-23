@@ -11,7 +11,7 @@
   };
 
   home.packages = with pkgs; [
-    pkgs.dconf-editor
+    dconf-editor
     adw-gtk3
   ];
 }

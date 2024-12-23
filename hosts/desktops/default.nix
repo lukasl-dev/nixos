@@ -24,8 +24,8 @@
     ../../modules/gaming/gamemode.nix
     ../../modules/gaming/steam.nix
 
+    ../../modules/graphics/graphics.nix
     ../../modules/graphics/nvidia.nix
-    ../../modules/graphics/opengl.nix
     ../../modules/graphics/qt.nix
 
     ../../modules/sound/pipewire.nix

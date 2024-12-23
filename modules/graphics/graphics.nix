@@ -6,6 +6,7 @@ in
 {
   hardware.graphics = {
     package = pkgs-unstable.mesa.drivers;
+
     enable32Bit = true;
     package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
   };

@@ -15,42 +15,45 @@
     viAlias = true;
     vimAlias = true;
 
-    # extraPackages = with pkgs-unstable; [
-    #   # Tools
-    #   sqlite
-    #   gcc
-    #   gnumake
-    #   ripgrep
-    #
-    #   # Nix
-    #   nixd
-    #   nixfmt-rfc-style
-    #
-    #   # Python
-    #   pyright
-    #   ruff
-    #   uv
-    #   python312Packages.grip
-    #   python312Packages.pylatexenc
-    #
-    #   # Rust
-    #   rustc
-    #   clippy
-    #   cargo
-    #   rustfmt
-    #
-    #   # Go
-    #   delve
-    #   gopls
-    #
-    #   # Lua
-    #   lua-language-server
-    #
-    #   # JavaScript / TypeScript
-    #   nodejs
-    #   nodePackages.typescript-language-server
-    #   tailwindcss-language-server
-    # ];
+    extraPackages = with pkgs-unstable; [
+      # Tools
+      sqlite
+      gcc
+      gnumake
+      ripgrep
+
+      # Nix
+      nixd
+      nixfmt-rfc-style
+
+      # Python
+      pyright
+      ruff
+      uv
+      python312Packages.grip
+      python312Packages.pylatexenc
+
+      # Rust
+      rustc
+      clippy
+      cargo
+      rustfmt
+
+      # Go
+      delve
+      gopls
+
+      # Lua
+      lua-language-server
+
+      # JavaScript / TypeScript
+      nodejs
+      nodePackages.typescript-language-server
+      tailwindcss-language-server
+
+      # YAML
+      yaml-language-server
+    ];
   };
 
   # nvim config directory
