@@ -44,5 +44,8 @@
     # nix language server
     nixd
     nixfmt-rfc-style
+
+    # nix-alien
+    inputs.nix-alien.packages.${system}.nix-alien
   ];
 }
