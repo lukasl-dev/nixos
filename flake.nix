@@ -30,6 +30,8 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
 
+    ghostty.url = "github:ghostty-org/ghostty";
+
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
   };
 

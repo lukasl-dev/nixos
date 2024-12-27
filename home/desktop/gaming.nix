@@ -1,24 +1,28 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
+  home.packages = [
     # wine
-    lutris
-    protonup-qt
-    bottles
-    wineWowPackages.waylandFull
-    winetricks
-
-    # minecraft
-    prismlauncher
-    glfw-wayland-minecraft
-    lunar-client
+    pkgs.lutris
+    pkgs.protonup-qt
+    pkgs.bottles
+    pkgs.wineWowPackages.waylandFull
+    pkgs.winetricks
 
     # performance
-    gamescope
-    gamescope-wsi
+    pkgs.gamescope
+    pkgs.gamescope-wsi
 
-    furmark
+    # minecraft
+    pkgs-unstable.prismlauncher
+    pkgs-unstable.glfw-wayland-minecraft
+    pkgs-unstable.lunar-client
+
+    pkgs.furmark
   ];
 
   # prismlauncher settings:

@@ -1,7 +1,7 @@
 {
+  inputs,
   pkgs,
   pkgs-unstable,
-  inputs,
   ...
 }:
 
@@ -21,6 +21,13 @@
       confirm_os_window_close 0
       enable_audio_bell no
     '';
+  };
+
+  # ghostty
+  home.file.".config/ghostty" = {
+    enable = true;
+    source = ../../dots/ghostty;
+    target = ".config/ghostty";
   };
 
   programs.sioyek.enable = true;
@@ -92,6 +99,9 @@
     # youtube music
     pkgs-unstable.youtube-music
     pkgs-unstable.youtube-tui
+
+    # ghostty
+    inputs.ghostty.packages.x86_64-linux.default
   ];
 
   # nyxt config directory

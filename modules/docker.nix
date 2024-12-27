@@ -7,4 +7,8 @@
       setSocketVariable = true;
     };
   };
+
+  virtualisation.oci-containers = {
+    backend = "docker";
+  };
 }
