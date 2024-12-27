@@ -121,8 +121,13 @@ in
       ];
 
       bindm = [
+        # for right-hand usage
         "${mainMod}, mouse:272, movewindow"
         "${mainMod}, mouse:273, resizewindow"
+
+        # for left-hand usage
+        "ALT, mouse:272, movewindow"
+        "ALT, mouse:273, resizewindow"
       ];
 
       windowrule = [ ];
