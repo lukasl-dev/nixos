@@ -5,6 +5,7 @@ on:
     branches: [ master, main ]
 
 name: Nix
+runs-on: self-hosted
 
 jobs:
   deadcode:
