@@ -2,7 +2,7 @@
 
 {
   services.vaultwarden = {
-    enable = false;
+    enable = true;
 
     config = {
       ROCKET_ADDRESS = "127.0.0.1";
