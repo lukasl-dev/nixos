@@ -27,5 +27,7 @@
       owner = meta.user.name;
       path = "/var/lib/bitwarden_rs/rsa_key.pem";
     };
+
+    "github-runners/lukasl/nixos" = { };
   };
 }

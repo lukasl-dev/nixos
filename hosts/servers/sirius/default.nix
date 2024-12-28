@@ -3,6 +3,7 @@
     ../default.nix
     ./hardware-configuration.nix
 
+    ./github-runners.nix
     ./harmonia.nix
     # ./mail.nix
     ./traefik.nix

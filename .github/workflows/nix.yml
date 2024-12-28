@@ -9,7 +9,7 @@ name: Nix
 jobs:
   deadcode:
     name: Dead code analysis
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v25
