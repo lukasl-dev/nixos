@@ -11,6 +11,7 @@
         ];
       })
       helvetica-neue-lt-std
+      geist-font
     ];
   };
 }

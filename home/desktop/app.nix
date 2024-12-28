@@ -85,7 +85,7 @@
     pkgs-unstable.anki
 
     # slicers
-    pkgs-unstable.bambu-studio
+    # pkgs-unstable.bambu-studio
 
     # bitwarden
     pkgs-unstable.bitwarden

@@ -70,7 +70,7 @@ in
 
         "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
 
-        ''${mainMod}, T, exec, kitty --hold zsh -c "tmux attach-session || tmux new-session"''
+        "${mainMod}, T, exec, ghostty"
 
         "${mainMod}, B, exec, brave"
 
