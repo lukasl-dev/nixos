@@ -29,6 +29,8 @@ let
 
     files = "yazi";
     f = "yazi";
+
+    nmtui = "unset COLORTERM; TERM=xterm-old ${pkgs.networkmanager}/bin/nmtui";
   };
 in
 {

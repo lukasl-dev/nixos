@@ -11,6 +11,10 @@
       neededForUsers = true;
     };
 
+    "calcurse/client_id" = { };
+    "calcurse/client_secret" = { };
+    "calcurse/gmail" = { };
+
     "k8s/token" = { };
 
     "cloudflare/email" = { };

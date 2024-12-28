@@ -3,9 +3,9 @@
 {
   imports = [
     ./i18n.nix
+    ./secrets.nix
     ./firewall.nix
     ./fonts.nix
-    ./secrets.nix
     ./shell.nix
     ./users.nix
 

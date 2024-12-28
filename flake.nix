@@ -64,6 +64,9 @@
         git = {
           username = "lukasl-dev";
         };
+        time = {
+          zone = "Europe/Vienna";
+        };
       };
     in
     {

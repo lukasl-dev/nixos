@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ meta, pkgs, ... }:
 
 {
   programs.waybar = {
@@ -96,7 +96,7 @@
         };
 
         clock = {
-          timezone = "Europe/Vienna";
+          timezone = meta.time.zone;
           format = "{:%d/%m/%Y %H:%M}";
         };
 

@@ -1,5 +1,7 @@
+{ meta, ... }:
+
 {
-  time.timeZone = "Europe/Vienna";
+  time.timeZone = meta.time.zone;
 
   i18n = {
     defaultLocale = "en_GB.UTF-8";

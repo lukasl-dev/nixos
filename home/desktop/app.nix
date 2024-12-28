@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   pkgs,
   pkgs-unstable,
@@ -95,7 +96,6 @@
     pkgs-unstable.wireshark
 
     pkgs-unstable.calcure
-    pkgs-unstable.calcurse
 
     # youtube music
     pkgs-unstable.youtube-music
