@@ -42,6 +42,7 @@
     extensions = [
       "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
       "khgocmkkpikpnmmkgmdnfckapcdkgfaf" # 1Password
+      "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
       "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
       "gppongmhjkpfnbhagpmjfkannfbllamg" # Wappalyzer
       "hkgfoiooedgoejojocmhlaklaeopbecg" # Picture-in-Picture
