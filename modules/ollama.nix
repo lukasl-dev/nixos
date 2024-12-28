@@ -5,7 +5,7 @@ let
 in
 {
   services.ollama = {
-    enable = false;
+    enable = true;
     package = pkgs-unstable.ollama;
 
     acceleration = if nvidiaEnabled then "cuda" else false;
