@@ -5,12 +5,11 @@ on:
     branches: [ master, main ]
 
 name: Nix
-runs-on: self-hosted
 
 jobs:
   deadcode:
     name: Dead code analysis
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v25
