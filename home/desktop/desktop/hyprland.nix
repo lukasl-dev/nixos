@@ -130,47 +130,80 @@ in
       windowrule = [ ];
 
       windowrulev2 = [
+        # ========= ========= ========= ========= ========= =========
         # 1Password
+        # ========= ========= ========= ========= ========= =========
+
         "float,class:(1Password)"
         "center,class:(1Password)"
         "opacity 0.8,class:(1Password)"
         "size 1309 783,class:(1Password)"
 
+        # ========= ========= ========= ========= ========= =========
         # Bitwarden
+        # ========= ========= ========= ========= ========= =========
+
+        # Desktop App
         "float,title:(Bitwarden)"
         "center,title:(Bitwarden)"
+        "opacity 0.8,title:(Bitwarden)"
         "size 1309 783,title:(Bitwarden)"
 
+        # Bitwarden Brave Popups
+        "float,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
+        "center,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
+        "opacity 0.8,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
+        "size 581 783,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
+
+        # ========= ========= ========= ========= ========= =========
         # Vesktop
+        # ========= ========= ========= ========= ========= =========
+
+        # Desktop App
         "workspace 1,initialClass:(vesktop)"
-        # Vesktop file download
+
+        # File Download
         "float,initialTitle:(https://discord.com/*)"
         "pin,initialTitle:(https://discord.com/*)"
         "opacity 0.8,initialTitle:(https://discord.com/*)"
         "center 1,initialTitle:(https://discord.com/*)"
         "size 934 489,initialTitle:(https://discord.com/*)"
 
+        # ========= ========= ========= ========= ========= =========
         # Minecraft
+        # ========= ========= ========= ========= ========= =========
+
         "noanim,initialClass:^(Minecraft\*\s1\.20\.6)$"
         "noblur,initialClass:^(Minecraft\*\s1\.20\.6)$"
 
-        # Picture-in-picture
+        # ========= ========= ========= ========= ========= =========
+        # Picture-in-picture (PiP)
+        # ========= ========= ========= ========= ========= =========
+
         "float,initialTitle:(Picture-in-picture)"
         "pin,initialTitle:(Picture-in-picture)"
 
+        # ========= ========= ========= ========= ========= =========
         # YouTube Music
+        # ========= ========= ========= ========= ========= =========
+
         "workspace 1,initialClass:(YouTube.Music)"
 
-        # file download
+        # ========= ========= ========= ========= ========= =========
+        # XDG Desktop Portal
+        # ========= ========= ========= ========= ========= =========
+
         "float,initialClass:(xdg-desktop-portal-gtk)"
         "pin,initialClass:(xdg-desktop-portal-gtk)"
         "opacity 0.8,initialClass:(xdg-desktop-portal-gtk)"
         "center 1,initialClass:(xdg-desktop-portal-gtk)"
         "size 934 489,initialClass:(xdg-desktop-portal-gtk)"
 
+        # ========= ========= ========= ========= ========= =========
         # Steam
-        # initialClass: steam
-        # initialTitle: Friends List
+        # ========= ========= ========= ========= ========= =========
+
+        # Friend List
         "float,initialClass:(steam),initialTitle:(Friends List)"
         "center,initialClass:(steam),initialTitle:(Friends List)"
         "size 524 706,initialClass:(steam),initialTitle:(Friends List)"
