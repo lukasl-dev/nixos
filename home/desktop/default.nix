@@ -4,9 +4,10 @@
   imports = [
     ../default.nix
 
+    ./desktop
+
     ./app.nix
     ./dconf.nix
-    ./desktop.nix
     ./development.nix
     ./gaming.nix
     ./gtk.nix

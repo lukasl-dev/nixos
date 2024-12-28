@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   xdg = {
@@ -12,18 +12,9 @@
       createDirectories = true;
     };
 
-    portal = {
-      enable = true;
-
-      xdgOpenUsePortal = true;
-      config = {
-        common.default = [ "gtk" ];
-      };
-    };
-
     mimeApps =
       let
-        browser = [ "zen-browser.desktop" ]; # TODO: make zen default
+        browser = [ "brave.desktop" ];
         sioyek = [ "sioyek.desktop" ];
       in
       {
@@ -49,5 +40,21 @@
           "application/pdf" = sioyek;
         };
       };
+
+    portal = {
+      enable = true;
+      config = {
+        common.default = [ "gtk" ];
+        hyprland.default = [
+          "gtk"
+          "hyprland"
+        ];
+      };
+      extraPortals = [
+        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      xdgOpenUsePortal = true;
+    };
   };
 }

@@ -1,90 +1,122 @@
 * {
-  font-family: JetBrainsMono;
-  font-size: 17px;
-  min-height: 0;
+  font-family: GeistMono Semibold;
+  font-size: 13px;
+  border-radius: 17px;
 }
 
-#waybar {
-  background: transparent;
-  color: @text;
-  margin: 5px 5px;
-}
-
-#custom-nvidia,
-#temperature,
-#memory,
-#cpu,
-#custom-mic,
-#custom-uxplay,
-#custom-notification,
-#tray,
 #clock,
-#wireplumber {
+#memory,
+#disk,
+#network,
+#bluetooth,
+#battery,
+#custom-mic,
+#custom-notification,
+#custom-uxplay,
+#wireplumber,
+#window,
+#tray {
+  padding: 5 15px;
+  border-radius: 12px;
+  background: @surface0;
+  color: @mauve;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 2px;
+  margin-left: 2px;
+  transition: all 0.3s ease;
+}
+
+#window {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+window#waybar {
+  background-color: transparent;
+  border-radius: 17px;
+}
+
+window * {
+  background-color: transparent;
+  border-radius: 0px;
+}
+
+#workspaces button label {
+  color: @mauve;
+}
+
+#workspaces button.active label {
+  color: @mauve;
+  font-weight: bolder;
+}
+
+#workspaces button:hover {
+  box-shadow: @lavender 0 0 0 1.5px;
   background-color: @surface0;
-  padding: 0.5rem 1rem;
-  margin: 5px 0;
+  min-width: 50px;
 }
 
-#temperature {
-  color: @blue;
-  margin-left: 1rem;
-  border-radius: 1rem 0 0 1rem;
-}
-
-#cpu {
-  color: @maroon;
-  border-radius: 0;
-}
-
-#memory {
-  color: @lavender;
-  border-radius: 0;
-}
-
-#custom-nvidia {
-  color: @lavender;
-  border-radius: 0 1rem 1rem 0;
-  margin-right: 1rem;
+#workspaces {
+  background-color: transparent;
+  border-radius: 17px;
+  padding: 5 0px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 #workspaces button {
-  color: @surface2;
+  background-color: @surface0;
+  border-radius: 12px;
+  margin-left: 10px;
+
+  transition: all 0.3s ease;
 }
 
 #workspaces button.active {
-  color: @lavender;
+  min-width: 50px;
+  /* box-shadow: @mauve 1 1 1 1px; */
+  background-color: @surface0;
+  background-size: 400% 400%;
+  transition: all 0.3s ease;
+  background: linear-gradient(
+    58deg,
+    @surface0,
+    @surface1,
+    @surface2
+  );
+  background-size: 300% 300%;
+  animation: colored-gradient 20s ease infinite;
 }
 
-#custom-mic {
-  color: @maroon;
-  border-radius: 1rem 0 0 1rem;
+@keyframes colored-gradient {
+  0% {
+    background-position: 71% 0%;
+  }
+  50% {
+    background-position: 30% 100%;
+  }
+  100% {
+    background-position: 71% 0%;
+  }
 }
 
-#wireplumber {
-  color: @lavender;
-  border-radius: 0 1rem 1rem 0;
-  margin-right: 1rem;
+@keyframes grey-gradient {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: -33% 50%;
+  }
 }
 
-#clock {
-  color: @blue;
-  border-radius: 1rem 1rem 1rem 1rem;
-  margin-right: 1rem;
+#tray menu {
+  background-color: @surface0;
+  opacity: 0.8;
 }
 
-#custom-notification {
-  color: @lavender;
-  border-radius: 1rem 0rem 0rem 1rem;
-  padding-right: 1rem;
-}
-
-#tray {
-  margin-right: 1rem;
-  border-radius: 0 1rem 1rem 0;
-}
-
-#custom-uxplay {
-  color: @blue;
-  border-radius: 1rem 1rem 1rem 1rem;
-  margin-right: 1rem;
-}
+/* #wireplumber.muted { */
+/*   color: @red; */
+/*   padding-right: 16px; */
+/* } */
+/**/
