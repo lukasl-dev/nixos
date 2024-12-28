@@ -6,22 +6,22 @@
 }:
 
 {
-  programs.kitty = {
-    enable = true;
-
-    package = pkgs-unstable.kitty;
-
-    font = {
-      name = "SpaceMono";
-      size = 12;
-    };
-
-    extraConfig = ''
-      window_padding_width 8
-      confirm_os_window_close 0
-      enable_audio_bell no
-    '';
-  };
+  # programs.kitty = {
+  #   enable = true;
+  #
+  #   package = pkgs-unstable.kitty;
+  #
+  #   font = {
+  #     name = "SpaceMono";
+  #     size = 12;
+  #   };
+  #
+  #   extraConfig = ''
+  #     window_padding_width 8
+  #     confirm_os_window_close 0
+  #     enable_audio_bell no
+  #   '';
+  # };
 
   # ghostty
   home.file.".config/ghostty" = {
