@@ -92,8 +92,6 @@
     pkgs-unstable.bitwarden
     pkgs-unstable.bitwarden-cli
 
-    pkgs-unstable.wireshark
-
     pkgs-unstable.calcure
 
     # youtube music

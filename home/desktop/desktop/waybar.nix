@@ -16,12 +16,11 @@
         height = 32;
 
         modules-left = [
+          "clock"
           "hyprland/workspaces"
         ];
 
-        modules-center = [
-          "clock"
-        ];
+        modules-center = [ ];
 
         modules-right = [
           "tray"

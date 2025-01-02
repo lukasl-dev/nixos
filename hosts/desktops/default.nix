@@ -17,6 +17,7 @@
     ../../modules/apps/onepassword.nix
     ../../modules/apps/seahorse.nix
     ../../modules/apps/uxplay.nix
+    ../../modules/apps/wireshark.nix
 
     ../../modules/desktop/hyprland.nix
     ../../modules/desktop/xserver.nix
