@@ -1,7 +1,6 @@
 {
   meta,
   inputs,
-  pkgs,
   ...
 }:
 
