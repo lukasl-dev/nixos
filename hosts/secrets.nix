@@ -24,10 +24,9 @@
     "harmonia/public_key" = { };
 
     "vaultwarden/key" = {
-      owner = meta.user.name;
+      owner = "vaultwarden";
       path = "/var/lib/bitwarden_rs/rsa_key.pem";
     };
-    "vaultwarden/email" = { };
 
     "github-runners/lukasl/nixos" = { };
   };
