@@ -98,6 +98,8 @@
     pkgs-unstable.youtube-music
     pkgs-unstable.youtube-tui
 
+    pkgs-unstable.pinta
+
     # ghostty
     inputs.ghostty.packages.x86_64-linux.default
   ];

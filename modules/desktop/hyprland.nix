@@ -26,5 +26,7 @@
     egl-wayland
 
     ueberzugpp
+
+    hyprsunset
   ];
 }

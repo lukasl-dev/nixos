@@ -1,6 +1,7 @@
 {
   meta,
   inputs,
+  pkgs,
   ...
 }:
 
@@ -42,6 +43,7 @@ in
       ];
 
       exec-once = [
+        "systemctl --user start hyprpolkitagent"
         "wl-paste --type text --watch cliphist store"
 
         "zapzap"

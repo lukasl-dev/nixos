@@ -33,6 +33,7 @@
     ../../modules/sound/pipewire.nix
 
     ../../modules/bluetooth.nix
+    ../../modules/polkit.nix
     ../../modules/udiskie.nix
   ];
 

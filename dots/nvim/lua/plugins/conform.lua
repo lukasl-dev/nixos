@@ -23,7 +23,7 @@ return {
         end
         return { "goimports", "gofmt" }
       end,
-      markdown = { "mdformat" },
+      markdown = { "prettier" },
       python = function(bufnr)
         if is_available(bufnr, "ruff_format") then
           return { "ruff_format" }
