@@ -1,6 +1,5 @@
 {
   meta,
-  config,
   inputs,
   pkgs,
   ...

@@ -1,6 +1,4 @@
 {
-  meta,
-  config,
   pkgs,
   pkgs-unstable,
   ...
