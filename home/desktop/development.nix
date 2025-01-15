@@ -1,4 +1,10 @@
-{ pkgs, pkgs-unstable, ... }:
+{
+  meta,
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
   programs.bun = {

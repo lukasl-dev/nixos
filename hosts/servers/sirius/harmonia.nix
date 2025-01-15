@@ -10,6 +10,11 @@
 
   nix.settings.allowed-users = [ "harmonia" ];
 
+  sops.secrets = {
+    "harmonia/secret" = { };
+    "harmonia/public_key" = { };
+  };
+
   services.traefik.dynamicConfigOptions.http = {
     routers.harmonia = {
       rule = "Host(`nix.${meta.domain}`)";

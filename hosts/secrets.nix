@@ -1,4 +1,4 @@
-{ meta, ... }:
+{ meta, config, ... }:
 
 {
   sops.secrets = {
@@ -15,19 +15,29 @@
     "calcurse/client_secret" = { };
     "calcurse/gmail" = { };
 
-    "k8s/token" = { };
+    "pypi/password" = { };
+    "pypi/token" = { };
+  };
 
-    "cloudflare/email" = { };
-    "cloudflare/global_api_key" = { };
+  # pypyrc
+  sops.templates.".pypirc" = {
+    path = "/home/${meta.user.name}/.pypirc";
+    owner = meta.user.name;
+    content = ''
+      [pypi]
+      username = __token__
+      password = ${config.sops.placeholder."pypi/token"}
 
-    "harmonia/secret" = { };
-    "harmonia/public_key" = { };
+      [distutils]
+      index-servers =
+          pypi
+          testpypi
 
-    "vaultwarden/key" = {
-      owner = "vaultwarden";
-      path = "/var/lib/bitwarden_rs/rsa_key.pem";
-    };
+      [pypi]
+      repository = https://upload.pypi.org/legacy/
 
-    "github-runners/lukasl/nixos" = { };
+      [testpypi]
+      repository = https://test.pypi.org/legacy/
+    '';
   };
 }

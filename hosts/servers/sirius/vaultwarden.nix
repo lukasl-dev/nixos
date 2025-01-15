@@ -13,6 +13,13 @@
     };
   };
 
+  sops.secrets = {
+    "vaultwarden/key" = {
+      owner = "vaultwarden";
+      path = "/var/lib/bitwarden_rs/rsa_key.pem";
+    };
+  };
+
   services.traefik.dynamicConfigOptions.http = {
     routers.vaultwarden = {
       rule = "Host(`vault.${meta.domain}`)";

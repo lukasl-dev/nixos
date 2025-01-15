@@ -1,17 +1,6 @@
 { meta, config, ... }:
 
 {
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-    8080
-  ];
-
-  sops.templates."traefik/env".content = ''
-    CF_API_EMAIL=${config.sops.placeholder."cloudflare/email"}
-    CF_API_KEY=${config.sops.placeholder."cloudflare/global_api_key"}
-  '';
-
   services.traefik = {
     enable = true;
 
@@ -75,4 +64,20 @@
       };
     };
   };
+
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    8080
+  ];
+
+  sops.secrets = {
+    "cloudflare/email" = { };
+    "cloudflare/global_api_key" = { };
+  };
+
+  sops.templates."traefik/env".content = ''
+    CF_API_EMAIL=${config.sops.placeholder."cloudflare/email"}
+    CF_API_KEY=${config.sops.placeholder."cloudflare/global_api_key"}
+  '';
 }

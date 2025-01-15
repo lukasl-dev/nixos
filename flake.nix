@@ -85,14 +85,14 @@
           modules = [ ./hosts/desktops/vega ];
         };
 
-        orion = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = specialArgs // {
-            inherit meta;
-            # TODO: add monitor explicitly
-          };
-          modules = [ ./hosts/desktops/orion ];
-        };
+        # orion = nixpkgs.lib.nixosSystem {
+        #   inherit system;
+        #   specialArgs = specialArgs // {
+        #     inherit meta;
+        #     # TODO: add monitor explicitly
+        #   };
+        #   modules = [ ./hosts/desktops/orion ];
+        # };
 
         sirius = nixpkgs.lib.nixosSystem {
           inherit system;
