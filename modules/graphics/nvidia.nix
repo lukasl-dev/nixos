@@ -23,7 +23,7 @@
       version = "565.77";
       sha256_64bit = "sha256-CnqnQsRrzzTXZpgkAtF7PbH9s7wbiTRNcM0SPByzFHw=";
       openSha256 = lib.fakeSha256;
-      settingsSha256 = "sha256-H7uEe34LdmUFcMcS6bz7sbpYhg9zPCb/5AmZZFTx1QA=";
+      settingsSha256 = "sha256-VUetj3LlOSz/LB+DDfMCN34uA4bNTTpjDrb6C6Iwukk=";
       sha256_aarch64 = lib.fakeSha256;
       persistencedSha256 = lib.fakeSha256;
     };
