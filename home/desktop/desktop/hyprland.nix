@@ -47,7 +47,6 @@ in
 
         "zapzap"
         "vesktop"
-        "1password"
         "bitwarden"
         "localsend_app"
 
