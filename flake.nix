@@ -47,9 +47,7 @@
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
-        overlays = [
-          nixgl.overlay
-        ];
+        overlays = [ nixgl.overlay ];
       };
       specialArgs = {
         inherit inputs pkgs-unstable;
@@ -76,23 +74,24 @@
           specialArgs = specialArgs // {
             meta = meta // {
               hypr = {
-                monitors = [
-                  "HDMI-A-1, 1920x1080@239.96, 0x0, 1"
-                ];
+                monitors = [ "HDMI-A-1, 1920x1080@239.96, 0x0, 1" ];
               };
             };
           };
           modules = [ ./hosts/desktops/vega ];
         };
 
-        # orion = nixpkgs.lib.nixosSystem {
-        #   inherit system;
-        #   specialArgs = specialArgs // {
-        #     inherit meta;
-        #     # TODO: add monitor explicitly
-        #   };
-        #   modules = [ ./hosts/desktops/orion ];
-        # };
+        orion = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = specialArgs // {
+            meta = meta // {
+              hypr = {
+                monitors = [ "eDP-1, 1920x1080@144.02800, 0x0, 1" ];
+              };
+            };
+          };
+          modules = [ ./hosts/desktops/orion ];
+        };
 
         sirius = nixpkgs.lib.nixosSystem {
           inherit system;
