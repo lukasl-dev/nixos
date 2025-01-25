@@ -28,7 +28,7 @@
     catppuccin.url = "github:catppuccin/nix";
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     ghostty.url = "github:ghostty-org/ghostty";
 
@@ -74,7 +74,10 @@
           specialArgs = specialArgs // {
             meta = meta // {
               hypr = {
-                monitors = [ "HDMI-A-1, 1920x1080@239.96, 0x0, 1" ];
+                monitors = [
+                  "DP-2, 1920x1080@239.96, 0x0, 1"
+                  "HDMI-A-1, 1920x1080@74.973, 1920x0, 1"
+                ];
               };
             };
           };

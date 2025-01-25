@@ -70,6 +70,9 @@
     # zen browser
     inputs.zen-browser.packages."${pkgs.system}".default
 
+    # vivaldi
+    pkgs-unstable.vivaldi
+
     # nyxt browser
     pkgs.nyxt
 
@@ -110,4 +113,15 @@
     source = ../../dots/nyxt;
     target = ".config/nyxt";
   };
+
+  # thunderbird
+  programs.thunderbird = {
+    enable = true;
+
+    profiles.default = {
+      isDefault = true;
+    };
+  };
+
+  programs.cava.enable = true;
 }
