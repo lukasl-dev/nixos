@@ -48,4 +48,10 @@
     pkgs.sof-firmware
     pkgs.alsa-ucm-conf
   ];
+
+  # TODO: move to separate module for all desktops
+  programs.coolercontrol = {
+    enable = true;
+    nvidiaSupport = true;
+  };
 }
