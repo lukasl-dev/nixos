@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ../default.nix
@@ -40,4 +42,10 @@
     XDG_SESSION_TYPE = "wayland";
     GDK_BACKEND = "wayland";
   };
+
+  # https://forum.manjaro.org/t/pipewire-doesnt-detect-headphones-hp-laptop/92838
+  environment.systemPackages = [
+    pkgs.sof-firmware
+    pkgs.alsa-ucm-conf
+  ];
 }
