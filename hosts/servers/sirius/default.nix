@@ -5,6 +5,7 @@
 
     # ./github-runners.nix
     ./harmonia.nix
+    ./koodo-reader.nix
     # ./mail.nix
     ./traefik.nix
     ./vaultwarden.nix
