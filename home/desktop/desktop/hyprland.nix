@@ -69,7 +69,7 @@ in
 
         "${mainMod}, T, exec, ghostty"
 
-        "${mainMod}, B, exec, brave"
+        "${mainMod}, B, exec, zen"
 
         "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -80,7 +80,10 @@ in
         "${mainMod}, V, togglefloating,"
         "${mainMod}, V, centerwindow,"
 
-        "${mainMod}, N, swapnext,"
+        "${mainMod}, R, togglesplit"
+        "${mainMod}, N, swapsplit"
+        "${mainMod}, F, pseudo"
+
         "${mainMod}, W, killactive,"
 
         "${mainMod}, M, fullscreen, 1"
@@ -182,6 +185,9 @@ in
 
         "float,initialTitle:(Picture-in-picture)"
         "pin,initialTitle:(Picture-in-picture)"
+
+        "float,initialTitle:(Picture-in-Picture)"
+        "pin,initialTitle:(Picture-in-Picture)"
 
         # ========= ========= ========= ========= ========= =========
         # YouTube Music
