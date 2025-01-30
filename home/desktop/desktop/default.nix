@@ -1,5 +1,7 @@
 {
+  inputs,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -10,12 +12,18 @@
     ./hyprland.nix
     ./hyprpaper.nix
     ./waybar.nix
+
+    inputs.walker.homeManagerModules.default
   ];
 
   # quick access
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
+  };
+
+  programs.walker = {
+    enable = true;
   };
 
   # notifications
@@ -69,7 +77,7 @@
     pkgs.xwaylandvideobridge
     pkgs.xdg-utils
 
-    # wlsunset
     pkgs.wlsunset
+    # pkgs-unstable.walker
   ];
 }
