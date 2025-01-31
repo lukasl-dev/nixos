@@ -69,7 +69,7 @@ in
 
         "${mainMod}, T, exec, ghostty"
 
-        "${mainMod}, B, exec, zen"
+        "${mainMod}, B, exec, vivaldi"
 
         "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -158,6 +158,12 @@ in
         "opacity 0.8,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
         "size 581 783,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
 
+        # Bitwarden Vivaldi Popups
+        "float,initialTitle:(Bitwarden - Vivaldi)"
+        "center,initialTitle:(Bitwarden - Vivaldi)"
+        "opacity 0.8,initialTitle:(Bitwarden - Vivaldi)"
+        "size 581 783,initialTitle:(Bitwarden - Vivaldi)"
+
         # ========= ========= ========= ========= ========= =========
         # Vesktop
         # ========= ========= ========= ========= ========= =========
@@ -188,6 +194,9 @@ in
 
         "float,initialTitle:(Picture-in-Picture)"
         "pin,initialTitle:(Picture-in-Picture)"
+
+        "float,initialTitle:(Picture in picture)"
+        "pin,initialTitle:(Picture in picture)"
 
         # ========= ========= ========= ========= ========= =========
         # YouTube Music
