@@ -9,7 +9,7 @@
 {
   imports = [
     ./hyprland.nix
-    ./hyprpaper.nix
+    ./wallpaper.nix
     ./waybar.nix
 
     inputs.walker.homeManagerModules.default
