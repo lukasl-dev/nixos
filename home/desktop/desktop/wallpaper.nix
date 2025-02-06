@@ -10,6 +10,7 @@
       };
       any = {
         path = ../../../wallpapers;
+        group = "shared";
       };
     };
   };
