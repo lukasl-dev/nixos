@@ -54,6 +54,7 @@
       };
 
       meta = {
+        dir = "/home/lukas/nixos";
         user = {
           name = "lukas";
           fullName = "Lukas Leeb";

@@ -36,6 +36,7 @@ map("n", "-", "<CMD>Oil<CR>", { silent = true })
 -- ====================================================================
 
 map("n", "<leader>ff", ":Telescope find_files<CR>", { silent = true })
+map("n", "<leader>fh", ":Telescope find_files find_command=rg,--ignore,--hidden,--files<CR>", { silent = true })
 map("n", "<leader>fw", ":Telescope live_grep<CR>", { silent = true })
 map("n", "<leader>fb", ":Telescope buffers<CR>", { silent = true })
 map("n", "gi", ":Telescope lsp_implementations<CR>", { silent = true })

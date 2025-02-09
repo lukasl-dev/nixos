@@ -1,5 +1,7 @@
 {
+  meta,
   inputs,
+  config,
   pkgs,
   pkgs-unstable,
   ...
@@ -62,4 +64,6 @@
     source = ../dots/nvim;
     target = ".config/nvim";
   };
+  # home.file.".config/nvim/lazy-lock.json".source =
+  #   config.lib.file.mkOutOfStoreSymlink "${meta.dir}/dots/nvim/lazy-lock.json";
 }

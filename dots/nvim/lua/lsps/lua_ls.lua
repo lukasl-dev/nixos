@@ -14,7 +14,8 @@ return {
   settings = {
     Lua = {
       diagnostics = {
-        globals = { "vim" },
+        runtime = { version = "Lua 5.1" },
+        globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
       },
       workspace = {
         library = library_paths,

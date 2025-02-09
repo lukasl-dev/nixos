@@ -14,16 +14,16 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require "options"
+require("options")
 
-require("lazy").setup("plugins", require "lazy")
+require("lazy").setup("plugins", require("laziness"))
 
 vim.schedule(function()
-  vim.filetype.add(require "filetypes")
-  require "mappings"
+  vim.filetype.add(require("filetypes"))
+  require("mappings")
 end)
 
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme("catppuccin")
 
 -- Add the mason binary path to the PATH variable, so that plugins, such as
 -- conform, can use the mason binaries.
@@ -32,7 +32,7 @@ local function configure_mason_path()
   local sep = is_windows and "\\" or "/"
   local delim = is_windows and ";" or ":"
   vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep)
-    .. delim
-    .. vim.env.PATH
+      .. delim
+      .. vim.env.PATH
 end
 configure_mason_path()

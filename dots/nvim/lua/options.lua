@@ -1,7 +1,7 @@
-local opt = vim.opt
 local o = vim.opt
 
 o.colorcolumn = "80"
+o.termguicolors = true
 o.showmode = false
 
 o.number = true
@@ -25,9 +25,9 @@ o.clipboard = "unnamedplus"
 o.cursorline = true
 o.cursorlineopt = "number"
 
-opt.isfname:append { "(", ")" }
-opt.shortmess:append "sI"
-opt.fillchars = {
+o.isfname:append { "(", ")" }
+o.shortmess:append "sI"
+o.fillchars = {
   -- stl = "─",
   -- stlnc = "─",
   eob = " ",
