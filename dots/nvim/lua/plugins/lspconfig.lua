@@ -51,6 +51,8 @@ end
 return {
   "neovim/nvim-lspconfig",
 
+  event = "BufWinEnter",
+
   config = function()
     local lsp_files = vim.api.nvim_get_runtime_file("lua/lsps/*.lua", true)
     for _, file in ipairs(lsp_files) do
