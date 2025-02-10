@@ -1,7 +1,5 @@
 {
-  meta,
   inputs,
-  config,
   pkgs,
   pkgs-unstable,
   ...
