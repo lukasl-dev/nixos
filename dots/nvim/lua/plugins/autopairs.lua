@@ -1,5 +1,6 @@
 return {
   "windwp/nvim-autopairs",
+  event = "BufWinEnter",
   opts = {
     fast_wrap = {},
     disable_filetype = { "TelescopePrompt", "vim" },
