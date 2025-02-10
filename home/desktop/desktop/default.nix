@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   ...
 }:
@@ -11,18 +10,12 @@
     ./hyprland.nix
     ./wallpaper.nix
     ./waybar.nix
-
-    inputs.walker.homeManagerModules.default
   ];
 
   # quick access
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
-  };
-
-  programs.walker = {
-    enable = true;
   };
 
   # notifications

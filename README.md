@@ -1,4 +1,4 @@
-# nixos
+# My NixOS Flake
 
 <div align="center">
     <img src="https://img.shields.io/badge/Uses-Flake-4c72bb?style=for-the-badge&logo=nixos" alt="Nix" />
