@@ -1,10 +1,10 @@
 local dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "rcarriga/nvim-dap-ui" }
 
---- @type table<string, string>
+--- @type table<integer, table<string, string>>
 local tensor_shapes = {}
 
 --- @param shape string
-local function format_shape(shape)
+local function format_tensor_shape(shape)
   --- starts with torch.Size([
   local torch = "torch.Size(["
   if shape:sub(1, torch:len()) == torch then
@@ -21,12 +21,17 @@ end
 --- @param options nvim_dap_virtual_text_options
 --- @return string|nil
 local function display_tensor(variable, buf, stackframe, node, options)
-  if tensor_shapes[variable.name] then
+  if not tensor_shapes[stackframe.line] then
+    tensor_shapes[stackframe.line] = {}
+  end
+
+  if tensor_shapes[stackframe.line][variable.name] then
     -- Return the cached shape if available
+    local value = tensor_shapes[stackframe.line][variable.name]
     if options.virt_text_pos == 'inline' then
-      return " : " .. tensor_shapes[variable.name]:gsub("%s+", " ")
+      return " : " .. value:gsub("%s+", " ")
     else
-      return variable.name .. " : " .. tensor_shapes[variable.name]:gsub("%s+", " ")
+      return variable.name .. " : " .. value:gsub("%s+", " ")
     end
   end
 
@@ -47,7 +52,7 @@ local function display_tensor(variable, buf, stackframe, node, options)
       --- @type dap.Variable
       child = child
       if child.name == "shape" then
-        tensor_shapes[variable.name] = format_shape(child.value)
+        tensor_shapes[stackframe.line][variable.name] = format_tensor_shape(child.value)
       end
     end
   end)
@@ -78,19 +83,17 @@ return {
     event = "BufWinEnter",
 
     opts = {
-      --- A callback that determines how a variable is displayed or whether it should be omitted
-      --- @param variable dap.Variable https://microsoft.github.io/debug-adapter-protocol/specification#Types_Variable
+      --- @param variable dap.Variable
       --- @param buf number
-      --- @param stackframe dap.StackFrame https://microsoft.github.io/debug-adapter-protocol/specification#Types_StackFrame
-      --- @param node userdata tree-sitter node identified as variable definition of reference (see `:h tsnode`)
-      --- @param options nvim_dap_virtual_text_options Current options for nvim-dap-virtual-text
-      --- @return string|nil A text how the virtual text should be displayed or nil, if this variable shouldn't be displayed
+      --- @param stackframe dap.StackFrame
+      --- @param node userdata
+      --- @param options nvim_dap_virtual_text_options
+      --- @return string|nil
       display_callback = function(variable, buf, stackframe, node, options)
         if variable.type == "Tensor" then
           return display_tensor(variable, buf, stackframe, node, options)
         end
 
-        -- Fallback for non-tensor variables
         if options.virt_text_pos == 'inline' then
           return " = " .. variable.value:gsub("%s+", " ")
         else
