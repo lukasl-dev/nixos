@@ -56,6 +56,7 @@
     pkgs.uv
     pkgs.python312Packages.grip
     pkgs.python312Packages.pylatexenc
+    pkgs.python312Packages.debugpy
 
     # rust-related
     pkgs.rustc
@@ -86,6 +87,9 @@
 
     # git-related
     pkgs.git-lfs
+
+    # obsidian
+    pkgs-unstable.markdown-oxide
 
     # miscellaneous
     pkgs.d2

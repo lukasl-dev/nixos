@@ -61,7 +61,14 @@ return {
           end, { "i", "s" }),
         },
         sources = {
-          { name = "nvim_lsp" },
+          {
+            name = "nvim_lsp",
+            option = {
+              markdown_oxide = {
+                keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+              }
+            }
+          },
           { name = "luasnip" },
           { name = "buffer" },
           { name = "nvim_lua" },

@@ -3,6 +3,7 @@ local o = vim.opt
 o.colorcolumn = "80"
 o.termguicolors = true
 o.showmode = false
+o.cursorline = true
 
 o.number = true
 o.relativenumber = true

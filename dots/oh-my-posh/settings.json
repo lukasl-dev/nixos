@@ -58,7 +58,14 @@
           "foreground": "blue",
           "background": "transparent",
           "template": "(nix-{{ .Type }})"
-        },
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
         {
           "style": "plain",
           "foreground": "p:closer",

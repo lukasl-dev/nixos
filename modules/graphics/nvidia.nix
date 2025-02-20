@@ -43,5 +43,7 @@
     nvidia-vaapi-driver
     vulkan-headers
     dxvk
+
+    nvtopPackages.nvidia
   ];
 }

@@ -1,8 +1,9 @@
 return {
   "epwalsh/obsidian.nvim",
+  disable = true,
   version = "*",
-  lazy = true,
-  ft = "markdown",
+  -- lazy = true,
+  -- ft = "markdown",
   -- event = {
   --   "BufReadPre" .. vim.fn.expand "~" .. "/notes/*.md",
   --   "BufNewFile" .. vim.fn.expand "~" .. "/notes/*.md",

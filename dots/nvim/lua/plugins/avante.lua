@@ -4,7 +4,24 @@ return {
   lazy = false,
   version = false, -- set this if you want to always pull the latest change
   opts = {
-    provider = "copilot",
+    -- provider = "copilot",
+    -- provider = "openai",
+    -- openai = {
+    --   endpoint = "http://localhost:11434/v1",
+    --   model = "deepseek-r1:8b",
+    --   timeout = 30000,
+    --   temperature = 0,
+    --   max_tokens = 4096,
+    -- },
+    provider = "ollama",
+    vendors = {
+      ollama = {
+        __inherited_from = "openai",
+        api_key_name = "",
+        endpoint = "http://127.0.0.1:11434/v1",
+        model = "qwen2.5-coder:7b",
+      },
+    },
   },
 
   build = "make",
