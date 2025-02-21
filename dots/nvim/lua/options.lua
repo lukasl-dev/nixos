@@ -35,3 +35,13 @@ o.fillchars = {
 }
 
 o.conceallevel = 2
+
+-- dap icons
+vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "#f38ba8", })
+vim.fn.sign_define("DapBreakpoint", {
+  text = "󰑊",
+  texthl = "DapBreakpoint",
+})
+
+vim.api.nvim_set_hl(0, "DapStopped", { fg = "#a6e3a1" })
+vim.fn.sign_define("DapStopped", { text = "", texthl = "DapStopped" })

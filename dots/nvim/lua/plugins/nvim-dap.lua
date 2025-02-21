@@ -1,4 +1,6 @@
-local dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "rcarriga/nvim-dap-ui" }
+local dependencies = {
+  "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "rcarriga/nvim-dap-ui",
+}
 
 --- @type table<integer, table<string, string>>
 local tensor_shapes = {}
@@ -26,7 +28,6 @@ local function display_tensor(variable, buf, stackframe, node, options)
   end
 
   if tensor_shapes[stackframe.line][variable.name] then
-    -- Return the cached shape if available
     local value = tensor_shapes[stackframe.line][variable.name]
     if options.virt_text_pos == 'inline' then
       return " : " .. value:gsub("%s+", " ")
