@@ -23,6 +23,8 @@ end
 --- @param options nvim_dap_virtual_text_options
 --- @return string|nil
 local function display_tensor(variable, buf, stackframe, node, options)
+  -- TODO: support tensor lists, tuples, dicts, ...
+
   if not tensor_shapes[stackframe.line] then
     tensor_shapes[stackframe.line] = {}
   end

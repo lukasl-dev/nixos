@@ -22,12 +22,10 @@ map("n", "geq", vim.diagnostic.setqflist, { silent = true })
 -- dap
 -- ====================================================================
 
--- Toggle breakpoint
 map("n", "<leader>db", function()
   require("dap").toggle_breakpoint()
 end)
 
--- Continue / Start
 map("n", "<leader>dc", function()
   require("dap").continue()
 end)
@@ -36,29 +34,24 @@ map("n", "<leader>de", function()
   require("dapui").eval()
 end)
 
-map("n", "<leader>dr", ":DapToggleRepl")
+map("n", "<leader>dr", ":DapToggleRepl<CR>")
 
--- Step Over
 map("n", "<leader>do", function()
   require("dap").step_over()
 end)
 
--- Step Into
 map("n", "<leader>di", function()
   require("dap").step_into()
 end)
 
--- Step Out
 map("n", "<leader>dO", function()
   require("dap").step_out()
 end)
 
--- Keymap to terminate debugging
 map("n", "<leader>dq", function()
   require("dap").terminate()
 end)
 
--- Toggle DAP UI
 map("n", "<leader>du", function()
   require("dapui").toggle()
 end)
