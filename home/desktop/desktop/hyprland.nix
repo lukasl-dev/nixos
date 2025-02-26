@@ -13,11 +13,14 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
 
+    sourceFirst = true;
+
     xwayland.enable = true;
 
     systemd = {
       enable = true;
       variables = [ "--all" ];
+      enableXdgAutostart = true;
     };
 
     settings = {
