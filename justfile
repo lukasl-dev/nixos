@@ -12,3 +12,6 @@ orion-switch:
 
 sirius-switch:
     nixos-rebuild switch --flake .#sirius
+
+pollux-switch:
+    nixos-rebuild switch --flake .#pollux
