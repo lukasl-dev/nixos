@@ -39,6 +39,7 @@ return {
       just = { "just" },
       rust = { "rustfmt", lsp_format = "fallback" },
       ocaml = { "ocamlformat", lsp_format = "fallback" },
+      html = { "prettier" },
     },
 
     format_on_save = {

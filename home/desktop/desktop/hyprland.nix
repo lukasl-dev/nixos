@@ -6,6 +6,12 @@
 
 let
   mainMod = "SUPER";
+
+  # window bindings should be triggerable with main mod and alt respectively
+  windowBinding = s: [
+    "${mainMod} ${s}"
+    "ALT ${s}"
+  ];
 in
 {
   imports = [ inputs.hyprland.homeManagerModules.default ];
@@ -61,77 +67,74 @@ in
         no_hardware_cursors = true;
       };
 
-      bind = [
-        "${mainMod}, Space, exec, rofi -show drun -show-icons"
-        "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
-        "${mainMod}, E, exec, bemoji"
-        "${mainMod}, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+      bind = builtins.concatLists [
+        [
+          "${mainMod}, Space, exec, rofi -show drun -show-icons"
+          "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
+          "${mainMod}, E, exec, bemoji"
+          "${mainMod}, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
 
-        "${mainMod}, p, exec, swaync-client -t"
+          "${mainMod}, p, exec, swaync-client -t"
 
-        "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
+          "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
 
-        "${mainMod}, T, exec, ghostty"
+          "${mainMod}, T, exec, ghostty"
 
-        "${mainMod}, B, exec, brave"
+          "${mainMod}, B, exec, brave"
 
-        "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+          "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
-        "${mainMod}, Q, togglespecialworkspace,"
-        "${mainMod} SHIFT, Q, movetoworkspace, special"
+          "${mainMod}, Q, togglespecialworkspace,"
+          "${mainMod} SHIFT, Q, movetoworkspace, special"
 
-        "${mainMod}, V, togglefloating,"
-        "${mainMod}, V, centerwindow,"
+          "${mainMod}, V, togglefloating,"
+          "${mainMod}, V, centerwindow,"
 
-        "${mainMod}, R, togglesplit"
-        "${mainMod}, N, swapsplit"
-        "${mainMod}, F, pseudo"
+          "${mainMod}, R, togglesplit"
+          "${mainMod}, N, swapsplit"
+          "${mainMod}, F, pseudo"
 
-        "${mainMod}, W, killactive,"
+          "${mainMod}, W, killactive,"
 
-        "${mainMod}, M, fullscreen, 1"
-        "${mainMod} SHIFT, M, fullscreen,"
+          "${mainMod}, M, fullscreen, 1"
+          "${mainMod} SHIFT, M, fullscreen,"
+        ]
 
-        "${mainMod}, h, movefocus, l"
-        "${mainMod}, l, movefocus, r"
-        "${mainMod}, k, movefocus, u"
-        "${mainMod}, j, movefocus, d"
+        (windowBinding ", h, movefocus, l")
+        (windowBinding ", l, movefocus, r")
+        (windowBinding ", k, movefocus, u")
+        (windowBinding ", j, movefocus, d")
 
-        "${mainMod}, 1, workspace, 1"
-        "${mainMod}, 2, workspace, 2"
-        "${mainMod}, 3, workspace, 3"
-        "${mainMod}, 4, workspace, 4"
-        "${mainMod}, 5, workspace, 5"
-        "${mainMod}, 6, workspace, 6"
-        "${mainMod}, 7, workspace, 7"
-        "${mainMod}, 8, workspace, 8"
-        "${mainMod}, 9, workspace, 9"
-        "${mainMod}, 0, workspace, 10"
+        (windowBinding ", 1, workspace, 1")
+        (windowBinding ", 2, workspace, 2")
+        (windowBinding ", 3, workspace, 3")
+        (windowBinding ", 4, workspace, 4")
+        (windowBinding ", 5, workspace, 5")
+        (windowBinding ", 6, workspace, 6")
+        (windowBinding ", 7, workspace, 7")
+        (windowBinding ", 8, workspace, 8")
+        (windowBinding ", 9, workspace, 9")
+        (windowBinding ", 0, workspace, 10")
 
-        "${mainMod} SHIFT, 1, movetoworkspace, 1"
-        "${mainMod} SHIFT, 2, movetoworkspace, 2"
-        "${mainMod} SHIFT, 3, movetoworkspace, 3"
-        "${mainMod} SHIFT, 4, movetoworkspace, 4"
-        "${mainMod} SHIFT, 5, movetoworkspace, 5"
-        "${mainMod} SHIFT, 6, movetoworkspace, 6"
-        "${mainMod} SHIFT, 7, movetoworkspace, 7"
-        "${mainMod} SHIFT, 8, movetoworkspace, 8"
-        "${mainMod} SHIFT, 9, movetoworkspace, 9"
-        "${mainMod} SHIFT, 0, movetoworkspace, 10"
+        (windowBinding "SHIFT, 1, movetoworkspace, 1")
+        (windowBinding "SHIFT, 2, movetoworkspace, 2")
+        (windowBinding "SHIFT, 3, movetoworkspace, 3")
+        (windowBinding "SHIFT, 4, movetoworkspace, 4")
+        (windowBinding "SHIFT, 5, movetoworkspace, 5")
+        (windowBinding "SHIFT, 6, movetoworkspace, 6")
+        (windowBinding "SHIFT, 7, movetoworkspace, 7")
+        (windowBinding "SHIFT, 8, movetoworkspace, 8")
+        (windowBinding "SHIFT, 9, movetoworkspace, 9")
+        (windowBinding "SHIFT, 0, movetoworkspace, 10")
 
-        "${mainMod}, mouse_down, workspace, e+1"
-        "${mainMod}, mouse_up, workspace, e-1"
+        (windowBinding ", mouse_down, workspace, e+1")
+        (windowBinding ", mouse_up, workspace, e-1")
       ];
 
-      bindm = [
-        # for right-hand usage
-        "${mainMod}, mouse:272, movewindow"
-        "${mainMod}, mouse:273, resizewindow"
-
-        # for left-hand usage
-        "ALT, mouse:272, movewindow"
-        "ALT, mouse:273, resizewindow"
+      bindm = builtins.concatLists [
+        (windowBinding ", mouse:272, movewindow")
+        (windowBinding ", mouse:273, resizewindow")
       ];
 
       windowrule = [ ];
@@ -236,6 +239,9 @@ in
           natural_scroll = "yes";
         };
         sensitivity = 0;
+
+        repeat_rate = 25;
+        repeat_delay = 500;
       };
 
       general = {

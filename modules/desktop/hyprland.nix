@@ -18,18 +18,20 @@
     withUWSM = true;
   };
 
-  environment.variables = {
-    NIXOS_OZONE_WL = "1";
+  environment = {
+    variables = {
+      NIXOS_OZONE_WL = "1";
+    };
+
+    systemPackages = with pkgs; [
+      wayland
+      wayland-protocols
+
+      egl-wayland
+
+      ueberzugpp
+
+      hyprsunset
+    ];
   };
-
-  environment.systemPackages = with pkgs; [
-    wayland
-    wayland-protocols
-
-    egl-wayland
-
-    ueberzugpp
-
-    hyprsunset
-  ];
 }

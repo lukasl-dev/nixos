@@ -13,4 +13,5 @@
   };
 
   services.libinput.enable = true;
+  # services.jack.jackd.enable = true;
 }

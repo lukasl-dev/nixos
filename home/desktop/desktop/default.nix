@@ -66,7 +66,7 @@
     pkgs.catppuccin-cursors.mochaMauve
 
     # miscellaneous
-    pkgs.xwaylandvideobridge
+    # pkgs.xwaylandvideobridge
     pkgs.xdg-utils
 
     pkgs.wlsunset
