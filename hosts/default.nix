@@ -26,5 +26,6 @@
     rustc
     nil
     file
+    cron
   ];
 }

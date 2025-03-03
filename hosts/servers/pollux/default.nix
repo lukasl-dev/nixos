@@ -2,9 +2,13 @@
   imports = [
     ../default.nix
     ./hardware-configuration.nix
-  ];
 
-  networking.hostName = "pollux";
+    ./harmonia.nix
+    ./nextcloud.nix
+    ./restic.nix
+    ./traefik.nix
+    ./vaultwarden.nix
+  ];
 
   boot = {
     loader.grub.device = "/dev/sda";
@@ -13,6 +17,8 @@
   zramSwap.enable = true;
 
   networking = {
+    hostName = "pollux";
+
     defaultGateway = {
       address = "185.245.61.1";
       interface = "ens18";
@@ -33,7 +39,7 @@
           {
             address = "0.0.0.0";
             prefixLength = 0;
-            via = "185.245.61.227";
+            via = "185.245.61.1";
           }
         ];
       };

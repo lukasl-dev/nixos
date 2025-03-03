@@ -17,6 +17,8 @@
 
     "pypi/password" = { };
     "pypi/token" = { };
+
+    "restic/secret" = { };
   };
 
   # pypyrc
