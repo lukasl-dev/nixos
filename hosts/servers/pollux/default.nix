@@ -19,13 +19,21 @@
     };
 
     interfaces.ens18 = {
-      useDHCP = true;
+      useDHCP = false;
 
       ipv4 = {
         addresses = [
           {
             address = "185.245.61.227";
             prefixLength = 24;
+          }
+        ];
+
+        routes = [
+          {
+            address = "0.0.0.0";
+            prefixLength = 0;
+            via = "185.245.61.227";
           }
         ];
       };
