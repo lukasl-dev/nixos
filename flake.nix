@@ -107,6 +107,14 @@
           };
           modules = [ ./hosts/servers/sirius ];
         };
+
+        pollux = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = specialArgs // {
+            inherit meta;
+          };
+          modules = [ ./hosts/servers/pollux ];
+        };
       };
     };
 }
