@@ -38,8 +38,8 @@ After restructuring my config over and over again, I came up with the following 
 │   │   │   └── NixOS config for the Vega desktop host
 │   │   └── shared config for all desktop hosts
 │   ├── servers
-│   │   ├── sirius
-│   │   │   └── NixOS config for the Sirius server host
+│   │   ├── pollux
+│   │   │   └── NixOS config for the Pollux server host
 │   │   └── shared config for all server hosts
 │   └── shared config for both desktop and server hosts
 ├── modules

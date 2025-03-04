@@ -1,11 +1,21 @@
+let
+  interface = "ens18";
+  ipv4 = {
+    address = "185.245.61.227";
+    prefix = 24;
+
+    gateway = "185.245.61.1";
+  };
+in
 {
   imports = [
     ../default.nix
     ./hardware-configuration.nix
 
     ./harmonia.nix
-    ./nextcloud.nix
+    # ./nextcloud.nix
     ./restic.nix
+    ./systemd.nix
     ./traefik.nix
     ./vaultwarden.nix
   ];
@@ -16,12 +26,13 @@
   };
   zramSwap.enable = true;
 
+  # TODO: configure IPV6
   networking = {
     hostName = "pollux";
 
     defaultGateway = {
-      address = "185.245.61.1";
-      interface = "ens18";
+      address = ipv4.gateway;
+      interface = interface;
     };
 
     interfaces.ens18 = {
@@ -30,8 +41,8 @@
       ipv4 = {
         addresses = [
           {
-            address = "185.245.61.227";
-            prefixLength = 24;
+            address = ipv4.address;
+            prefixLength = ipv4.prefix;
           }
         ];
 
@@ -39,7 +50,7 @@
           {
             address = "0.0.0.0";
             prefixLength = 0;
-            via = "185.245.61.1";
+            via = ipv4.gateway;
           }
         ];
       };
