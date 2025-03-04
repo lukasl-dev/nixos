@@ -11,7 +11,7 @@
 
   programs.go = {
     enable = true;
-    package = pkgs-unstable.go_1_23;
+    package = pkgs-unstable.go_1_24;
   };
 
   # ocaml package manager
@@ -31,8 +31,8 @@
     pkgs-unstable.gcc
 
     # go-related
-    pkgs.delve
-    pkgs.gopls
+    pkgs-unstable.delve
+    pkgs-unstable.gopls
 
     # erlang-related
     pkgs.erlang
