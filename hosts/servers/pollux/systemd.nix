@@ -24,8 +24,7 @@ let
     startLimitIntervalSec = 0;
     serviceConfig = {
       User = meta.user.name;
-      Restart = "always";
-      RestartSec = 2;
+      Restart = "on-failure";
     };
   };
 
