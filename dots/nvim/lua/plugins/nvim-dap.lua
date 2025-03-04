@@ -115,5 +115,14 @@ return {
     config = function()
       require("dap-python").setup("uv")
     end,
+  },
+
+  {
+    "leoluz/nvim-dap-go",
+    dependencies = dependencies,
+
+    ft = "go",
+
+    opts = {}
   }
 }
