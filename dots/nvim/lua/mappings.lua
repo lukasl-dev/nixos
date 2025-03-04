@@ -52,6 +52,12 @@ map("n", "<leader>dq", function()
   require("dap").terminate()
 end)
 
+map("n", "<leader>dQ", function()
+  local dap = require("dap")
+  dap.terminate()
+  dap.clear_breakpoints()
+end)
+
 map("n", "<leader>du", function()
   require("dapui").toggle()
 end)
