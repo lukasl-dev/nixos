@@ -19,6 +19,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    nvd
+
     gcc
     glib
     glibc

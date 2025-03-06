@@ -58,6 +58,18 @@
     pkgs.python312Packages.pylatexenc
     pkgs.python312Packages.debugpy
 
+    # jupyter
+    pkgs.python312Packages.jupyter
+    pkgs.python312Packages.jupyterlab
+    pkgs.python312Packages.notebook
+    pkgs.python312Packages.ipython
+    pkgs.python312Packages.ipykernel
+    pkgs.python312Packages.matplotlib
+    pkgs.python312Packages.seaborn
+    pkgs.python312Packages.pandas
+    pkgs.python312Packages.numpy
+    pkgs.python312Packages.scipy
+
     # rust-related
     pkgs.rustc
     pkgs.clippy
