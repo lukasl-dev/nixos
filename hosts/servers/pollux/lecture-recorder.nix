@@ -40,23 +40,28 @@ in
   systemd.services = {
     audimax-1h = service "bau178a-gm-1-audi-max" "3600";
     audimax-2h = service "bau178a-gm-1-audi-max" "7200";
+
+    informatik-1h = service "deu116-informatikhoersaal" "3600";
+    informatik-2h = service "deu116-informatikhoersaal" "7200";
+    informatik-3h = service "deu116-informatikhoersaal" "10800";
   };
 
   systemd.timers = {
-    mon-08 = timer "audimax-2h.service" "Mon 08:00";
-    mon-12 = timer "audimax-2h.service" "Mon 12:00";
-    mon-14 = timer "audimax-2h.service" "Mon 14:00";
+    mon-08-audimax = timer "audimax-2h.service" "Mon 08:00";
+    mon-12-audimax = timer "audimax-2h.service" "Mon 12:00";
+    mon-14-audimax = timer "audimax-2h.service" "Mon 14:00";
 
-    tue-08 = timer "audimax-2h.service" "Tue 08:00";
-    tue-10 = timer "audimax-2h.service" "Tue 10:00";
-    tue-12 = timer "audimax-2h.service" "Tue 12:00";
-    tue-14 = timer "audimax-2h.service" "Tue 14:00";
+    tue-08-audimax = timer "audimax-2h.service" "Tue 08:00";
+    tue-10-audimax = timer "audimax-2h.service" "Tue 10:00";
+    tue-12-audimax = timer "audimax-2h.service" "Tue 12:00";
+    tue-14-audimax = timer "audimax-2h.service" "Tue 14:00";
 
-    wed-14 = timer "audimax-2h.service" "Wed 14:00";
+    wed-14-audimax = timer "audimax-2h.service" "Wed 14:00";
 
-    thu-13 = timer "audimax-2h.service" "Thu 13:00";
+    thu-13-audimax = timer "audimax-2h.service" "Thu 13:00";
 
-    fri-09 = timer "audimax-2h.service" "Fri 09:00";
-    fri-11 = timer "audimax-2h.service" "Fri 11:00";
+    fri-09-audimax = timer "audimax-2h.service" "Fri 09:00";
+    fri-11-audimax = timer "audimax-2h.service" "Fri 11:00";
+    fri-11-informatik = timer "informatik-3h.service" "Fri 11:00";
   };
 }

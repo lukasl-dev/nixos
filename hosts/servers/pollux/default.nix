@@ -12,10 +12,11 @@ in
     ../default.nix
     ./hardware-configuration.nix
 
+    ./auto-update.nix
     ./harmonia.nix
+    ./lecture-recorder.nix
     # ./nextcloud.nix
     ./restic.nix
-    ./systemd.nix
     ./traefik.nix
     ./vaultwarden.nix
   ];
