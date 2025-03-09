@@ -1,4 +1,5 @@
 {
+  meta,
   config,
   pkgs,
   ...
@@ -13,14 +14,31 @@
     enable = true;
     package = pkgs.nextcloud30;
 
-    hostName = "localhost";
+    # nextcloud uses nginx as webserver
+    hostName = "cloud.lukasl.dev";
+
     config.adminpassFile = config.sops.secrets."nextcloud/admin_password".path;
-    config.dbtype = "sqlite";
+    config.dbtype = "sqlite"; # TODO: use postgres
   };
 
   sops.secrets = {
     "nextcloud/admin_password" = {
       owner = "nextcloud";
+    };
+  };
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.cloud = {
+      rule = "Host(`cloud.${meta.domain}`)";
+      entryPoints = [ "websecure" ];
+      service = "cloud";
+    };
+    services.cloud = {
+      loadBalancer.servers = [
+        {
+          url = "http://localhost:${toString config.services.nginx.defaultHTTPListenPort}";
+        }
+      ];
     };
   };
 }

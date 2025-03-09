@@ -15,7 +15,8 @@ in
     ./auto-update.nix
     ./harmonia.nix
     ./lecture-recorder.nix
-    # ./nextcloud.nix
+    ./nextcloud.nix
+    ./nginx.nix
     ./restic.nix
     ./traefik.nix
     ./vaultwarden.nix
