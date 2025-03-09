@@ -16,7 +16,8 @@ let
     ${ffmpeg} -headers "Referer: https://tuwel.tuwien.ac.at\r\n" \
            -t "${duration}" \
            -i "https://live-cdn-2.video.tuwien.ac.at/lecturetube-live/${channel}/playlist.m3u8" \
-           -c:v libx264 -preset veryslow -crf 0 -c:a copy "$mkv_file"
+           -c:v libx265 -preset slow -crf 28 \
+           -c:a copy "$mkv_file"
     printf "Finished recording at %s\n" "$(date)"
 
     echo "Moving to nextcloud"
