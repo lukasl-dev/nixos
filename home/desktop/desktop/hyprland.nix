@@ -77,6 +77,7 @@ in
           "${mainMod}, p, exec, swaync-client -t"
 
           "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
+          "${mainMod} Shift, S, exec, hyprshot -m active --clipboard-only"
 
           "${mainMod}, T, exec, ghostty"
 

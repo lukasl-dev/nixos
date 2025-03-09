@@ -14,6 +14,7 @@
     ../modules/nixos/nix.nix
     ../modules/catppuccin.nix
     ../modules/docker.nix
+    # ../modules/nh.nix
     ../modules/sops.nix
     ../modules/restic.nix
   ];
