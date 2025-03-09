@@ -30,5 +30,6 @@
     nil
     file
     cron
+    screen
   ];
 }
