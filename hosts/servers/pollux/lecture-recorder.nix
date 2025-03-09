@@ -14,18 +14,20 @@ let
 
     printf "Recording %s to %s\n" "${duration}" "$mkv_file"
     ${ffmpeg} -headers "Referer: https://tuwel.tuwien.ac.at\r\n" \
-           -t "${duration}" \
-           -i "https://live-cdn-2.video.tuwien.ac.at/lecturetube-live/${channel}/playlist.m3u8" \
-           -c:v libx265 -preset slow -crf 28 \
-           -c:a copy "$mkv_file"
+      -t "${duration}" \
+      -i "https://live-cdn-2.video.tuwien.ac.at/lecturetube-live/${channel}/playlist.m3u8" \
+      -c:a copy "$mkv_file"
     printf "Finished recording at %s\n" "$(date)"
 
     echo "Moving to nextcloud"
-    out_dir="${config.services.nextcloud.datadir}/data/root/files/Lectures/$year/$month/$day/$channel"
-    mkdir -p "$out_dir"
-    mv "$mkv_file" "$out_dir/$hour-$minute.mkv"
 
-    /run/current-system/sw/bin/nextcloud-occ files:scan root
+    out_dir="${config.services.nextcloud.datadir}/data/root/files/Lectures/$year/$month/$day/${channel}"
+    mkdir -p "$out_dir"
+
+    out_file="$out_dir/$hour-$minute.mkv"
+    mv "$mkv_file" "$out_file"
+
+    /run/current-system/sw/bin/nextcloud-occ files:scan root --path "/root/files/Lectures/$year/$month/$day/${channel}/$hour-$minute.mkv"
   '';
   # TODO: don't use /run/current-system, ideally use nix syntax
 
@@ -55,6 +57,8 @@ in
     informatik-1h = service "deu116-informatikhoersaal" "3600";
     informatik-2h = service "deu116-informatikhoersaal" "7200";
     informatik-3h = service "deu116-informatikhoersaal" "10800";
+
+    tmp-recording = service "bau178a-gm-1-audi-max" "5";
   };
 
   systemd.timers = {
