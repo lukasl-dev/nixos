@@ -1,29 +1,39 @@
-{ meta, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
+  ffmpeg = "${pkgs.ffmpeg}/bin/ffmpeg";
   script = channel: duration: ''
-    dir="/home/lukas/tutils/recordings/$(date +'%Y/%m/%d')/${channel}"
-    mkdir -p "$dir"
+    day=$(date +'%d')
+    month=$(date +'%m')
+    year=$(date +'%Y')
+    hour=$(date +'%H')
+    minute=$(date +'%M')
 
-    out_file="$dir/$(date +'%H-%M').ts"
+    timestamp=$day-$month-$year-$hour-$minute
+    mkv_file="/tmp/lecture_${channel}_$timestamp.mkv"
 
-    printf "Recording ${duration} to %s\n" "$out_file"
-    printf "Started at %s\n" "$(date)"
-
-    ${pkgs.ffmpeg}/bin/ffmpeg -headers "Referer: https://tuwel.tuwien.ac.at\r\n" \
+    printf "Recording %s to %s\n" "${duration}" "$mkv_file"
+    ${ffmpeg} -headers "Referer: https://tuwel.tuwien.ac.at\r\n" \
            -t "${duration}" \
            -i "https://live-cdn-2.video.tuwien.ac.at/lecturetube-live/${channel}/playlist.m3u8" \
-           -c copy "$out_file"
+           -c:v libx264 -preset veryslow -crf 0 -c:a copy "$mkv_file"
+    printf "Finished recording at %s\n" "$(date)"
 
-    printf "Finished at %s\n" "$(date)"
+    echo "Moving to nextcloud"
+    out_dir="${config.services.nextcloud.datadir}/data/root/files/Lectures/$year/$month/$day/$channel"
+    mkdir -p "$out_dir"
+    mv "$mkv_file" "$out_dir/$hour-$minute.mkv"
+
+    /run/current-system/sw/bin/nextcloud-occ files:scan root
   '';
+  # TODO: don't use /run/current-system, ideally use nix syntax
 
   service = channel: duration: {
     description = "lecture-${channel}-${duration}";
     script = script channel duration;
     startLimitIntervalSec = 0;
     serviceConfig = {
-      User = meta.user.name;
+      User = "nextcloud";
       Restart = "on-failure";
     };
   };

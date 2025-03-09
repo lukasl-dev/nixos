@@ -17,12 +17,12 @@
     # nextcloud uses nginx as webserver
     hostName = "cloud.lukasl.dev";
 
-    config.adminpassFile = config.sops.secrets."nextcloud/admin_password".path;
+    config.adminpassFile = config.sops.secrets."nextcloud/password".path;
     config.dbtype = "sqlite"; # TODO: use postgres
   };
 
   sops.secrets = {
-    "nextcloud/admin_password" = {
+    "nextcloud/password" = {
       owner = "nextcloud";
     };
   };
