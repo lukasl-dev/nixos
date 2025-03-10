@@ -53,17 +53,20 @@ in
   systemd.services = {
     audimax-1h = service "bau178a-gm-1-audi-max" "3600";
     audimax-2h = service "bau178a-gm-1-audi-max" "7200";
+    audimax-3h = service "bau178a-gm-1-audi-max" "10800";
 
     informatik-1h = service "deu116-informatikhoersaal" "3600";
     informatik-2h = service "deu116-informatikhoersaal" "7200";
     informatik-3h = service "deu116-informatikhoersaal" "10800";
 
-    tmp-recording = service "bau178a-gm-1-audi-max" "5";
+    gm5-1h = service "bau276a-gm-5-praktikum-hs" "3600";
+    gm5-2h = service "bau276a-gm-5-praktikum-hs" "7200";
+    gm5-3h = service "bau276a-gm-5-praktikum-hs" "10800";
   };
 
   systemd.timers = {
     mon-08-audimax = timer "audimax-2h.service" "Mon 08:00";
-    mon-12-audimax = timer "audimax-2h.service" "Mon 12:00";
+    mon-12-gm5 = timer "gm5-2h.service" "Mon 12:00";
     mon-14-audimax = timer "audimax-2h.service" "Mon 14:00";
 
     tue-08-audimax = timer "audimax-2h.service" "Tue 08:00";
