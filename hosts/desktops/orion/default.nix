@@ -13,6 +13,7 @@
   boot = {
     kernelModules = [
       "nct6775"
+      "hp-wmi"
       "coretemp"
     ];
     loader = {
