@@ -52,7 +52,7 @@ in
 
       exec-once = [
         "systemctl --user start hyprpolkitagent"
-        "wl-paste --type text --watch cliphist store"
+        "clipse --listen"
         "wpaperd -d"
 
         "zapzap"
@@ -72,12 +72,14 @@ in
           "${mainMod}, Space, exec, rofi -show drun -show-icons"
           "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
           "${mainMod}, E, exec, bemoji"
-          "${mainMod}, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+
+          # "${mainMod}, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+          ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
 
           "${mainMod}, p, exec, swaync-client -t"
 
           "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
-          "${mainMod} Shift, S, exec, hyprshot -m active --clipboard-only"
+          "${mainMod} SHIFT, S, exec, hyprshot -m active --clipboard-only"
 
           "${mainMod}, T, exec, ghostty"
 
@@ -141,6 +143,13 @@ in
       windowrule = [ ];
 
       windowrulev2 = [
+        # ========= ========= ========= ========= ========= =========
+        # Clipse
+        # ========= ========= ========= ========= ========= =========
+
+        "float,class:(clipse.clipse)"
+        "size 622 652,class:(clipse.clipse)"
+
         # ========= ========= ========= ========= ========= =========
         # 1Password
         # ========= ========= ========= ========= ========= =========

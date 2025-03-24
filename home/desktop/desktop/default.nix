@@ -59,7 +59,7 @@
 
     # clipboard
     pkgs.wl-clipboard
-    pkgs.cliphist
+    pkgs.clipse
 
     # hyprcursor
     pkgs.hyprcursor
