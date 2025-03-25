@@ -16,13 +16,12 @@
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
+    theme = ../../../dots/rofi/theme.rasi;
   };
+  catppuccin.rofi.enable = false;
 
   # notifications
-  services.swaync = {
-    enable = true;
-    style = builtins.readFile ../../../dots/swaync/theme.css;
-  };
+  services.swaync.enable = true;
 
   # auto mount removable drives
   services.udiskie.enable = true;

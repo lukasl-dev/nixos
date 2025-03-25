@@ -15,9 +15,7 @@
   home.packages = [
     # messengers
     pkgs.zapzap
-    pkgs.signal-desktop
     pkgs-unstable.vesktop
-    pkgs.slack
 
     # obsidian
     pkgs-unstable.obsidian

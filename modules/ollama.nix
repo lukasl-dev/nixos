@@ -17,15 +17,15 @@ in
     };
   };
 
-  services.open-webui = {
-    enable = true;
-    package = pkgs-unstable.open-webui;
-    port = 6969;
-    environment = {
-      ANONYMIZED_TELEMETRY = "False";
-      DO_NOT_TRACK = "True";
-      SCARF_NO_ANALYTICS = "True";
-      WEBUI_AUTH = "False";
-    };
-  };
+  # services.open-webui = {
+  #   enable = true;
+  #   package = pkgs-unstable.open-webui;
+  #   port = 6969;
+  #   environment = {
+  #     ANONYMIZED_TELEMETRY = "False";
+  #     DO_NOT_TRACK = "True";
+  #     SCARF_NO_ANALYTICS = "True";
+  #     WEBUI_AUTH = "False";
+  #   };
+  # };
 }

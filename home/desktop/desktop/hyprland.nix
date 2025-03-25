@@ -36,18 +36,18 @@ in
 
       # TODO: is all of that necessary?
       env = [
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-        "QT_QPA_PLATFORM,wayland"
-        "NVD_BACKEND,direct"
-
+        # "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        # "QT_QPA_PLATFORM,wayland"
+        # "NVD_BACKEND,direct"
+        #
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
-
+        #
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
-
-        # hyprcursor
-        "HYPRCURSOR_SIZE,26"
-        "HYPRCURSOR_THEME,Catppuccin-Mocha-Light-Cursors"
+        #
+        # # hyprcursor
+        # "HYPRCURSOR_SIZE,26"
+        # "HYPRCURSOR_THEME,Catppuccin-Mocha-Light-Cursors"
       ];
 
       exec-once = [
@@ -73,7 +73,6 @@ in
           "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
           "${mainMod}, E, exec, bemoji"
 
-          # "${mainMod}, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
           ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
 
           "${mainMod}, p, exec, swaync-client -t"
@@ -140,9 +139,7 @@ in
         (windowBinding ", mouse:273, resizewindow")
       ];
 
-      windowrule = [ ];
-
-      windowrulev2 = [
+      windowrule = [
         # ========= ========= ========= ========= ========= =========
         # Clipse
         # ========= ========= ========= ========= ========= =========

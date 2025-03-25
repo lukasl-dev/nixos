@@ -1,0 +1,127 @@
+// credits: @micartey
+//
+// https://github.com/micartey/nixos/blob/98d2a2c65a3b3ec4f94a131e8346805edab0bd33/dots/rofi/config.rasi
+
+* {
+    bg-col:  #1e1e2e21;
+    bg-col-light: #1e1e2e;
+    border-col: #cba6f7;
+    selected-col: #1e1e2e;
+    accent: #cba6f7;
+    fg-col: #cdd6f4;
+    fg-col2: #f38ba8;
+    grey: #6c7086;
+
+    height: 450px;
+    width: 800;
+    font: "JetBrainsMono Nerd Font 15";
+}
+
+element-text, element-icon , mode-switcher {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+window {
+    border: 3px;
+    border-radius: 10px;
+    border-color: @border-col;
+    background-color: @bg-col;
+}
+
+mainbox {
+    background-color: @bg-col;
+}
+
+inputbar {
+    children: [prompt,entry];
+    background-color: @bg-col;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 20px 20px 0px 20px;
+}
+
+prompt {
+    background-color: @accent;
+    padding: 6px;
+    text-color: #ffffff;
+    border-radius: 3px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+entry {
+    padding: 6px;
+    margin: 0px 0px 0px 10px;
+    text-color: @fg-col;
+    background-color: @bg-col;
+}
+
+listview {
+    border: 0px 0px 0px;
+    padding: 0px 0px 0px;
+    margin: 10px 20px 0px 20px;
+    columns: 1;
+    lines: 8;
+    background-color: @bg-col;
+}
+
+element {
+    padding: 5px;
+    background-color: @bg-col;
+    text-color: @fg-col  ;
+}
+
+element-icon {
+    size: 35px;
+}
+
+element-text {
+    padding: 10px;
+    vertical-align: 0.5;
+}
+
+element selected {
+    border-radius: 10px;
+
+    background-color:  @selected-col ;
+    text-color: @fg-col2  ;
+}
+
+mode-switcher {
+    spacing: 0;
+  }
+
+button {
+    padding: 10px;
+    background-color: @bg-col-light;
+    text-color: @grey;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+}
+
+button selected {
+  background-color: @bg-col;
+  text-color: @accent;
+}
+
+message {
+    background-color: @bg-col;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+textbox {
+    padding: 6px;
+    margin: 20px 0px 0px 20px;
+    text-color: @accent;
+    background-color: @bg-col;
+}
+
+error-message {
+    background-color: @bg-col;
+}
