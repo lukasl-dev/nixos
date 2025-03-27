@@ -1,5 +1,6 @@
 {
   meta,
+  pkgs-unstable,
   inputs,
   ...
 }:
@@ -18,6 +19,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs-unstable.stdenv.hostPlatform.system}.hyprland;
 
     sourceFirst = true;
 
