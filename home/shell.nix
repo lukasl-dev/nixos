@@ -79,6 +79,11 @@ in
             insteadOf = "https://github.com/";
           };
         };
+        merge.tool = "nvimdiff";
+        mergetool = {
+          nvimdiff.cmd = "nvim -d \$LOCAL \$REMOTE \$BASE \$MERGED";
+          keepBackup = false;
+        };
       };
 
       aliases = {
