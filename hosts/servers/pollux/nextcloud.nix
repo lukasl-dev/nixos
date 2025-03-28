@@ -19,6 +19,10 @@
 
     config.adminpassFile = config.sops.secrets."nextcloud/password".path;
     config.dbtype = "sqlite"; # TODO: use postgres
+
+    settings = {
+      overwriteprotocol = "https";
+    };
   };
 
   sops.secrets = {
