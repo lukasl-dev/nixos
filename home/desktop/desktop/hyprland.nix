@@ -141,12 +141,13 @@ in
         (windowBinding ", mouse:273, resizewindow")
       ];
 
-      windowrule = [
+      windowrulev2 = [
         # ========= ========= ========= ========= ========= =========
         # Clipse
         # ========= ========= ========= ========= ========= =========
 
         "float,class:(clipse.clipse)"
+        "center,class:(clipse.clipse)"
         "size 622 652,class:(clipse.clipse)"
 
         # ========= ========= ========= ========= ========= =========
@@ -179,6 +180,12 @@ in
         "center,initialTitle:(Bitwarden - Vivaldi)"
         "opacity 0.8,initialTitle:(Bitwarden - Vivaldi)"
         "size 581 783,initialTitle:(Bitwarden - Vivaldi)"
+
+        # ========= ========= ========= ========= ========= =========
+        # Brave
+        # ========= ========= ========= ========= ========= =========
+
+        "float,center,title:(Sign in – Google accounts - Brave)"
 
         # ========= ========= ========= ========= ========= =========
         # Vesktop
