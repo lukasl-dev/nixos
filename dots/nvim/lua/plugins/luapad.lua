@@ -1,5 +1,5 @@
 return {
   "rafcamlet/nvim-luapad",
 
-  cmd = "Luapad",
+  cmd = { "Luapad", "LuaRun" },
 }

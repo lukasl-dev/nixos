@@ -22,6 +22,8 @@
     pkgs-unstable.glfw-wayland-minecraft
     pkgs-unstable.lunar-client
 
+    pkgs-unstable.r2modman
+
     pkgs.furmark
   ];
 
