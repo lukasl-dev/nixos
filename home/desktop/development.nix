@@ -122,4 +122,8 @@
     source = ../../dots/jetbrains/.ideavimrc;
     target = ".ideavimrc";
   };
+
+  programs.pandoc = {
+    enable = true;
+  };
 }

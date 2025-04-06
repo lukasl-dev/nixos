@@ -54,6 +54,7 @@
 
     # screenshot
     pkgs.grim
+    pkgs.slurp
     pkgs.hyprshot
 
     # clipboard

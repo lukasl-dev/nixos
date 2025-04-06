@@ -1,5 +1,6 @@
 {
   meta,
+  pkgs,
   pkgs-unstable,
   inputs,
   ...
@@ -79,8 +80,7 @@ in
 
           "${mainMod}, p, exec, swaync-client -t"
 
-          "${mainMod}, S, exec, hyprshot -m region --clipboard-only"
-          "${mainMod} SHIFT, S, exec, hyprshot -m active --clipboard-only"
+          ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
 
           "${mainMod}, T, exec, ghostty"
 

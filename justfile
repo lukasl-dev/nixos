@@ -11,6 +11,14 @@ check:
 update:
     nix flake update
 
+[group('flake')]
+update-unstable:
+    nix flake update nixpkgs-unstable
+
+[group('flake')]
+update-stable:
+    nix flake update nixpkgs
+
 [group('systems')]
 list:
     @echo "{{ available_systems }}"
