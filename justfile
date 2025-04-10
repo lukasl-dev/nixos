@@ -57,3 +57,7 @@ build system:
 [group('systems')]
 diff other:
     nvd diff /run/current-system {{ other }}
+
+[group('binarycache')]
+upload-nixpkg pkg:
+    nix copy --to ssh://pollux.nodes.lukasl.dev nixpkgs#{{ pkg }}
