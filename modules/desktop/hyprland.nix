@@ -34,7 +34,7 @@
 
       egl-wayland
 
-      ueberzugpp
+      (ueberzugpp.override { enableOpencv = false; }) # TODO: fix cuda issues
 
       hyprsunset
     ];

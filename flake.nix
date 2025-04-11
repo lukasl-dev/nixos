@@ -47,14 +47,6 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs-unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [ nixgl.overlay ];
-      };
-      specialArgs = {
-        inherit inputs pkgs-unstable;
-      };
 
       meta = {
         dir = "/home/lukas/nixos";
@@ -69,52 +61,56 @@
         time = {
           zone = "Europe/Vienna";
         };
+        cuda = false;
       };
+
+      nixosSystem =
+        module: overrideMeta:
+        let
+          updatedMeta = meta // overrideMeta;
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+
+            config = {
+              allowUnfree = true;
+              cudaSupport = updatedMeta.cuda;
+            };
+
+            overlays = [ nixgl.overlay ];
+          };
+          specialArgs = {
+            inherit inputs pkgs-unstable;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = specialArgs // {
+            meta = updatedMeta;
+          };
+          modules = [ module ];
+        };
     in
     {
       nixosConfigurations = {
-        vega = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = specialArgs // {
-            meta = meta // {
-              hypr = {
-                monitors = [
-                  "DP-2, 1920x1080@239.96, 0x0, 1"
-                  "HDMI-A-1, 1920x1080@74.973, 1920x0, 1"
-                ];
-              };
-            };
+        vega = nixosSystem ./hosts/desktops/vega {
+          cuda = true;
+          hypr = {
+            monitors = [
+              "DP-2, 1920x1080@239.96, 0x0, 1"
+              "HDMI-A-1, 1920x1080@74.973, 1920x0, 1"
+            ];
           };
-          modules = [ ./hosts/desktops/vega ];
         };
 
-        orion = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = specialArgs // {
-            meta = meta // {
-              hypr = {
-                monitors = [ "eDP-1, 1920x1080@144.02800, 0x0, 1" ];
-              };
-            };
+        orion = nixosSystem ./hosts/desktops/orion {
+          hypr = {
+            monitors = [ "eDP-1, 1920x1080@144.02800, 0x0, 1" ];
           };
-          modules = [ ./hosts/desktops/orion ];
         };
 
-        sirius = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = specialArgs // {
-            inherit meta;
-          };
-          modules = [ ./hosts/servers/sirius ];
-        };
+        sirius = nixosSystem ./hosts/servers/sirius { };
 
-        pollux = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = specialArgs // {
-            inherit meta;
-          };
-          modules = [ ./hosts/servers/pollux ];
-        };
+        pollux = nixosSystem ./hosts/servers/pollux { };
       };
     };
 }

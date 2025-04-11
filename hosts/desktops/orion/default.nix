@@ -5,7 +5,7 @@
     ../default.nix
     ./hardware-configuration.nix
 
-    ../../../modules/ollama.nix
+    ../../../modules/llms.nix
   ];
 
   networking.hostName = "orion";

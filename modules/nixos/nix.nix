@@ -35,6 +35,7 @@
 
   nixpkgs.config = {
     allowUnfree = true;
+    cudaSupport = meta.cuda;
   };
 
   programs.nix-ld = {

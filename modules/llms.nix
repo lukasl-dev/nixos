@@ -17,6 +17,10 @@ in
     };
   };
 
+  environment.systemPackages = [
+    pkgs-unstable.llama-cpp
+  ];
+
   # services.open-webui = {
   #   enable = true;
   #   package = pkgs-unstable.open-webui;
