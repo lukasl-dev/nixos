@@ -3,6 +3,7 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
 
   event = "BufWinEnter",
+  cmd = { "TodoQuickFix", "TodoLocList", "TodoTelescope" },
 
   opts = {
     keywords = {

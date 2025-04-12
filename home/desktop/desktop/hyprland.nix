@@ -1,6 +1,5 @@
 {
   meta,
-  pkgs,
   pkgs-unstable,
   inputs,
   ...
