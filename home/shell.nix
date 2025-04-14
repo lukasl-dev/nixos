@@ -55,41 +55,48 @@ in
     shellAliases = shellAliases;
   };
 
-  programs.git =
-    let
-      username = meta.git.username;
-    in
-    {
-      enable = true;
+  programs.git = {
+    enable = true;
 
-      userEmail = "git@${meta.domain}";
-      userName = username;
+    userEmail = "git@${meta.domain}";
+    userName = meta.git.username;
 
-      delta.enable = true;
+    delta.enable = true;
 
-      extraConfig = {
-        color.ui = true;
-        core.editor = "${pkgs.neovim}/bin/nvim";
-        github.user = username;
-        push.autoSetupRemote = true;
-        pull.rebase = true;
-        safe.directory = "/nixos";
-        url = {
-          "ssh://git@github.com/" = {
-            insteadOf = "https://github.com/";
-          };
-        };
-        merge.tool = "nvimdiff";
-        mergetool = {
-          nvimdiff.cmd = "nvim -d \$LOCAL \$REMOTE \$BASE \$MERGED";
-          keepBackup = false;
+    extraConfig = {
+      github.user = meta.git.username;
+
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+
+      color.ui = true;
+      core.editor = "${pkgs.neovim}/bin/nvim";
+
+      safe.directory = "/nixos";
+
+      # commit signing
+      commit.gpgsign = true;
+      gpg.format = "ssh";
+      user.signingkey = "~/.ssh/id_ed25519.pub";
+
+      url = {
+        "ssh://git@github.com/" = {
+          insteadOf = "https://github.com/";
         };
       };
 
-      aliases = {
-        graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
+      # merging
+      merge.tool = "nvimdiff";
+      mergetool = {
+        nvimdiff.cmd = "nvim -d \$LOCAL \$REMOTE \$BASE \$MERGED";
+        keepBackup = false;
       };
     };
+
+    aliases = {
+      graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
+    };
+  };
 
   programs.oh-my-posh = {
     enable = true;
