@@ -4,6 +4,7 @@
   imports = [
     ./editor.nix
     ./shell.nix
+    ./sops.nix
 
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
