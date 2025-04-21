@@ -79,6 +79,7 @@
     # tex-related
     pkgs.texliveFull
     pkgs.graphviz
+    pkgs.librsvg
     pkgs.inkscape
 
     # zig-related

@@ -112,6 +112,9 @@ in
     extraConfig = ''
       set-option -g prefix C-a
 
+      set-option -g set-titles on
+      set-option -g set-titles-string '#W'
+
       set -s escape-time 0
       set-window-option -g mode-keys vi
       set -g mode-keys vi
