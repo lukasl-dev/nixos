@@ -1,4 +1,4 @@
-# { pkgs, ... }:
+{ meta, ... }:
 
 {
   gtk = {
@@ -11,14 +11,15 @@
 
     gtk3 = {
       bookmarks = [
-        "file:///home/lukas/Desktop"
-        "file:///home/lukas/Downloads"
-        "file:///home/lukas/Documents"
-        "file:///home/lukas/Pictures"
-        "file:///home/lukas/Music"
+        "file:///home/${meta.user.name}/Desktop"
+        "file:///home/${meta.user.name}/Downloads"
+        "file:///home/${meta.user.name}/Documents"
+        "file:///home/${meta.user.name}/Pictures"
+        "file:///home/${meta.user.name}/Music"
 
-        "file:///home/lukas/nixos"
-        "file:///home/lukas/notes"
+        "file:///home/${meta.user.name}/nixos"
+        "file:///home/${meta.user.name}/notes"
+        "file:///home/${meta.user.name}/r"
       ];
       extraConfig = {
         gtk-application-prefer-dark-theme = 1;
