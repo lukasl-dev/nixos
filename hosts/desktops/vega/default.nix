@@ -48,11 +48,6 @@
     binfmt = true;
   };
 
-  programs.coolercontrol = {
-    enable = true;
-    nvidiaSupport = true;
-  };
-
   environment.systemPackages = [
     pkgs.ffmpeg
   ];
