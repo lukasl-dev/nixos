@@ -256,7 +256,7 @@ in
         sensitivity = 0;
 
         repeat_rate = 25;
-        repeat_delay = 500;
+        repeat_delay = 600;
       };
 
       general = {
