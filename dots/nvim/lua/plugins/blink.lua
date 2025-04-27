@@ -14,7 +14,7 @@ return {
     keymap = { preset = "default" },
 
     appearance = {
-      nerd_font_variant = "mono"
+      nerd_font_variant = "mono",
     },
 
     completion = { documentation = { auto_show = false } },
@@ -23,9 +23,10 @@ return {
       default = { "lsp", "path", "snippets", "buffer" },
     },
 
-    fuzzy = { implementation = "prefer_rust" }
-    -- fuzzy.prebuilt_binaries.force_version
+    fuzzy = { implementation = "prefer_rust" },
+
+    signature = { enabled = true },
   },
 
-  opts_extend = { "sources.default" }
+  opts_extend = { "sources.default" },
 }
