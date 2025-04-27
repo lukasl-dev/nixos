@@ -1,9 +1,11 @@
 return {
-  settings = {
-    python = {
-      analysis = {
-        autoSearchPaths = true,
-        typeCheckingMode = "basic",
+  config = {
+    settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          typeCheckingMode = "basic",
+        },
       },
     },
   },

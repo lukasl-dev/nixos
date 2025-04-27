@@ -37,7 +37,7 @@ o.fillchars = {
 o.conceallevel = 2
 
 -- dap icons
-vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "#f38ba8", })
+vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "#f38ba8" })
 vim.fn.sign_define("DapBreakpoint", {
   text = "󰬉",
   texthl = "DapBreakpoint",
@@ -45,3 +45,20 @@ vim.fn.sign_define("DapBreakpoint", {
 
 vim.api.nvim_set_hl(0, "DapStopped", { fg = "#a6e3a1" })
 -- vim.fn.sign_define("DapStopped", { text = "󰬉", texthl = "DapStopped" })
+
+vim.fn.sign_define(
+  "DiagnosticSignError",
+  { text = "", texthl = "DiagnosticSignError" }
+)
+vim.fn.sign_define(
+  "DiagnosticSignWarn",
+  { text = "", texthl = "DiagnosticSignWarn" }
+)
+vim.fn.sign_define(
+  "DiagnosticSignInfo",
+  { text = "", texthl = "DiagnosticSignInfo" }
+)
+vim.fn.sign_define(
+  "DiagnosticSignHint",
+  { text = "", texthl = "DiagnosticSignHint" }
+)

@@ -23,6 +23,21 @@ vim.schedule(function()
   require("mappings")
 end)
 
+vim.schedule(function()
+  local files = vim.api.nvim_get_runtime_file("lua/lsps/*.lua", true)
+  for _, file in ipairs(files) do
+    local lsp_name = file:match("([^/]+)%.%w+$")
+
+    local module = require("lsps." .. lsp_name)
+    if module ~= nil then
+      if module.config ~= nil then
+        vim.lsp.config(lsp_name, module.config)
+      end
+      vim.lsp.enable(lsp_name)
+    end
+  end
+end)
+
 vim.cmd.colorscheme("catppuccin")
 
 -- Add the mason binary path to the PATH variable, so that plugins, such as

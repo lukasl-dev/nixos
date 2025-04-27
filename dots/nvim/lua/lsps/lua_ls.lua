@@ -11,17 +11,21 @@ for _, path in ipairs(rtp) do
 end
 
 return {
-  settings = {
-    Lua = {
-      diagnostics = {
-        runtime = { version = "Lua 5.1" },
-        globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
-      },
-      workspace = {
-        library = library_paths,
-        maxPreload = 100000,
-        preloadFileSize = 10000,
+  config = {
+    settings = {
+      Lua = {
+        diagnostics = {
+          runtime = { version = "Lua 5.1" },
+          globals = {
+            "bit", "vim", "it", "describe", "before_each", "after_each",
+          },
+        },
+        workspace = {
+          library = library_paths,
+          maxPreload = 100000,
+          preloadFileSize = 10000,
+        },
       },
     },
-  },
+  }
 }

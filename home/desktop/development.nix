@@ -51,6 +51,8 @@
     # nodejs-related
     pkgs.nodejs
 
+    pkgs-unstable.stylua
+
     # python-related
     pkgs.python3
     pkgs.uv
@@ -71,10 +73,10 @@
     pkgs.python312Packages.scipy
 
     # rust-related
-    pkgs.rustc
-    pkgs.clippy
-    pkgs.cargo
-    pkgs.rustfmt
+    pkgs-unstable.rustc
+    pkgs-unstable.clippy
+    pkgs-unstable.cargo
+    pkgs-unstable.rustfmt
 
     # tex-related
     pkgs.texliveFull

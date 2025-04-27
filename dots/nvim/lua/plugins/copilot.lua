@@ -4,8 +4,8 @@ return {
   cmd = "Copilot",
   event = "InsertEnter",
   opts = {
-    -- suggestion = {
-    --   enabled = falsw,
-    -- },
+    suggestion = {
+      enabled = true,
+    },
   },
 }
