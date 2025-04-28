@@ -4,6 +4,11 @@ return {
   cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
 
   opts = {
+    registries = {
+      "github:nvim-java/mason-registry",
+      "github:mason-org/mason-registry",
+    },
+
     ui = {
       icons = {
         package_pending = " ",
