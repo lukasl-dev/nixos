@@ -69,6 +69,8 @@
     # pkgs.xwaylandvideobridge
     pkgs.xdg-utils
 
+    pkgs.zenity
+
     pkgs.wlsunset
     # pkgs-unstable.walker
   ];
