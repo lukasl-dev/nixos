@@ -8,8 +8,8 @@ return {
 
   event = "BufWinEnter",
 
-  ---@module "blink.cmp"
-  ---@type blink.cmp.Config
+  --- @module "blink.cmp"
+  --- @type blink.cmp.Config
   opts = {
     keymap = { preset = "default" },
 

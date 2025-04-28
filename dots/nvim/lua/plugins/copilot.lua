@@ -3,9 +3,13 @@ return {
 
   cmd = "Copilot",
   event = "InsertEnter",
+
   opts = {
     suggestion = {
       enabled = true,
+      auto_trigger = true,
     },
+
+    -- copilot_model = "openai-o4mini",
   },
 }

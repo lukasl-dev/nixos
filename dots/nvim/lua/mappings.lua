@@ -53,7 +53,7 @@ map("n", "<leader>dq", function()
 end)
 
 map("n", "<leader>dQ", function()
-  local dap = require("dap")
+  local dap = require "dap"
   dap.terminate()
   dap.clear_breakpoints()
 end)
@@ -80,7 +80,12 @@ map("n", "-", "<CMD>Oil<CR>", { silent = true })
 -- ====================================================================
 
 map("n", "<leader>ff", ":Telescope find_files<CR>", { silent = true })
-map("n", "<leader>fh", ":Telescope find_files find_command=rg,--ignore,--hidden,--files<CR>", { silent = true })
+map(
+  "n",
+  "<leader>fh",
+  ":Telescope find_files find_command=rg,--ignore,--hidden,--files<CR>",
+  { silent = true }
+)
 map("n", "<leader>fw", ":Telescope live_grep<CR>", { silent = true })
 map("n", "<leader>fb", ":Telescope buffers<CR>", { silent = true })
 map("n", "gi", ":Telescope lsp_implementations<CR>", { silent = true })
@@ -89,13 +94,13 @@ map("n", "gr", ":Telescope lsp_references<CR>", { silent = true })
 map("n", "gl", ":Telescope diagnostics<CR>", { silent = true })
 
 -- ====================================================================
--- supermaven
+-- copilot
 -- ====================================================================
 
 map("i", "<C-j>", function()
-  local suggestion = require "supermaven-nvim.completion_preview"
-  if suggestion.has_suggestion() then
-    suggestion.on_accept_suggestion()
+  local suggestion = require "copilot.suggestion"
+  if suggestion.is_visible() then
+    suggestion.accept_line()
   end
 end, { silent = true })
 
