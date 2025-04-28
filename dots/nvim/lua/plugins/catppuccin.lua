@@ -12,6 +12,9 @@ return {
       treesitter = true,
       harpoon = true,
       lsp_trouble = true,
+      leap = true,
+      fidget = true,
+      diffview = true,
     },
   },
 }
