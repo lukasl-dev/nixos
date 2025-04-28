@@ -10,6 +10,6 @@ return {
       auto_trigger = true,
     },
 
-    -- copilot_model = "openai-o4mini",
+    copilot_model = "gemini-2.5-pro",
   },
 }
