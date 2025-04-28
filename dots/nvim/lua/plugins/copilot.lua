@@ -9,7 +9,5 @@ return {
       enabled = true,
       auto_trigger = true,
     },
-
-    copilot_model = "gemini-2.5-pro",
   },
 }

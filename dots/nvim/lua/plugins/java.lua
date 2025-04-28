@@ -3,5 +3,8 @@ return {
 
   event = "VeryLazy",
 
-  config = function() end
+  config = function()
+    require("java").setup()
+    require("lspconfig").jdtls.setup {}
+  end,
 }
