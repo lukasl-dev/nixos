@@ -17,6 +17,7 @@
     ../modules/gnupg.nix
     # ../modules/nh.nix
     ../modules/sops.nix
+    ../modules/tailscale.nix
     ../modules/restic.nix
   ];
 
