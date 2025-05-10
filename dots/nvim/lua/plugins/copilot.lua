@@ -1,13 +1,20 @@
 return {
-  "zbirenbaum/copilot.lua",
+  {
+    "zbirenbaum/copilot.lua",
 
-  cmd = "Copilot",
-  event = "InsertEnter",
+    cmd = "Copilot",
+    event = "InsertEnter",
 
-  opts = {
-    suggestion = {
-      enabled = true,
-      auto_trigger = true,
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
     },
+  },
+
+  {
+    "giuxtaposition/blink-cmp-copilot",
+    dependencies = { "zbirenbaum/copilot.lua" },
+
+    event = "BufWinEnter",
   },
 }
