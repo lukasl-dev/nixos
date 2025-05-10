@@ -48,26 +48,10 @@
     let
       system = "x86_64-linux";
 
-      meta = {
-        dir = "/home/lukas/nixos";
-        user = {
-          name = "lukas";
-          fullName = "Lukas Leeb";
-        };
-        domain = "lukasl.dev";
-        git = {
-          username = "lukasl-dev";
-        };
-        time = {
-          zone = "Europe/Vienna";
-        };
-        cuda = false;
-      };
-
       nixosSystem =
         module: overrideMeta:
         let
-          updatedMeta = meta // overrideMeta;
+          updatedMeta = (import ./meta.nix) // overrideMeta;
           pkgs-unstable = import nixpkgs-unstable {
             inherit system;
 
@@ -93,6 +77,7 @@
     {
       nixosConfigurations = {
         vega = nixosSystem ./hosts/desktops/vega {
+          hostName = "vega";
           cuda = true;
           hypr = {
             monitors = [
@@ -103,14 +88,15 @@
         };
 
         orion = nixosSystem ./hosts/desktops/orion {
+          hostName = "orion";
           hypr = {
             monitors = [ "eDP-1, 1920x1080@144.02800, 0x0, 1" ];
           };
         };
 
-        sirius = nixosSystem ./hosts/servers/sirius { };
-
-        pollux = nixosSystem ./hosts/servers/pollux { };
+        pollux = nixosSystem ./hosts/servers/pollux {
+          hostName = "sirius";
+        };
       };
     };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ meta, pkgs, ... }:
 
 {
   imports = [
@@ -20,6 +20,8 @@
     ../modules/tailscale.nix
     ../modules/restic.nix
   ];
+
+  networking.hostName = meta.hostName;
 
   environment.systemPackages = with pkgs; [
     nvd

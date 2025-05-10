@@ -1,5 +1,8 @@
 { meta, config, ... }:
 
+let
+  vaultwarden = config.services.vaultwarden;
+in
 {
   services.vaultwarden = {
     enable = true;
@@ -29,7 +32,7 @@
     services.vaultwarden = {
       loadBalancer.servers = [
         {
-          url = "http://${config.services.vaultwarden.config.ROCKET_ADDRESS}:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+          url = "http://${vaultwarden.config.ROCKET_ADDRESS}:${toString vaultwarden.config.ROCKET_PORT}";
         }
       ];
     };

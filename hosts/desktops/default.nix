@@ -30,9 +30,11 @@
     ../../modules/graphics/nvidia.nix
     ../../modules/graphics/qt.nix
 
+    ../../modules/hardware/bluetooth.nix
+
     ../../modules/sound/pipewire.nix
 
-    ../../modules/bluetooth.nix
+    ../../modules/appimage.nix
     ../../modules/polkit.nix
     ../../modules/udiskie.nix
   ];

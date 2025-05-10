@@ -30,8 +30,6 @@ in
 
   # TODO: configure IPV6
   networking = {
-    hostName = "pollux";
-
     defaultGateway = {
       address = ipv4.gateway;
       interface = interface;

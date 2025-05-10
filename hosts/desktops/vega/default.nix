@@ -8,8 +8,6 @@
     ../../../modules/llms.nix
   ];
 
-  networking.hostName = "vega";
-
   boot = {
     kernelModules = [
       "nct6775"
@@ -42,13 +40,4 @@
     XDG_SESSION_TYPE = "wayland";
     GDK_BACKEND = "wayland";
   };
-
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
-  };
-
-  environment.systemPackages = [
-    pkgs.ffmpeg
-  ];
 }
