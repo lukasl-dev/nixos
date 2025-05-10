@@ -6,6 +6,7 @@
     ./hardware-configuration.nix
 
     ../../../modules/llms.nix
+    ../../../modules/hardware/hp-wmi.nix
   ];
 
   networking.hostName = "orion";
@@ -13,7 +14,6 @@
   boot = {
     kernelModules = [
       "nct6775"
-      "hp-wmi"
       "coretemp"
     ];
     loader = {
@@ -50,9 +50,13 @@
     pkgs.alsa-ucm-conf
   ];
 
-  # TODO: move to separate module for all desktops
-  programs.coolercontrol = {
+  services.thermald.enable = true;
+
+  services.tlp = {
     enable = true;
-    nvidiaSupport = true;
+    settings = {
+      TLP_DEFAULT_MODE = "BAT";
+      TLP_PERSISTENT_DEFAULT = 1;
+    };
   };
 }

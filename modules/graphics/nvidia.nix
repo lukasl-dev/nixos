@@ -12,7 +12,7 @@
     modesetting.enable = true;
 
     powerManagement = {
-      enable = false; # TODO: configure power management
+      enable = true; # TODO: configure power management
       finegrained = false;
     };
 
