@@ -26,6 +26,9 @@
       "pljfkbaipkidhmaljaaakibigbcmmpnc" # Atom Material Icons
       "ncpjnjohbcgocheijdaafoidjnkpajka" # Tags for Google Calendar
     ];
+    commandLineArgs = [
+      "--enable-features=WaylandLinuxDrmSyncobj"
+    ];
   };
 
   programs.firefox = {
