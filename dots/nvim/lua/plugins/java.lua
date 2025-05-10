@@ -2,6 +2,7 @@ return {
   "nvim-java/nvim-java",
 
   enabled = false,
+  enable = false,
 
   -- event = "VeryLazy",
 
