@@ -113,13 +113,6 @@
     pkgs-unstable.jetbrains.idea-ultimate
   ];
 
-  # cargo
-  home.file.".cargo/config.toml" = {
-    enable = true;
-    source = ../../dots/cargo/config.toml;
-    target = ".cargo/config.toml";
-  };
-
   home.file.".ideavimrc" = {
     enable = true;
     source = ../../dots/jetbrains/.ideavimrc;

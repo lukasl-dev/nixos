@@ -27,4 +27,10 @@
     source = ../dots/ssh/id_ed25519.pub;
     target = ".ssh/id_ed25519.pub";
   };
+
+  home.file.".cargo/config.toml" = {
+    enable = true;
+    source = ../dots/cargo/config.toml;
+    target = ".cargo/config.toml";
+  };
 }
