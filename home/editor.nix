@@ -27,7 +27,6 @@
       nixfmt-rfc-style
 
       # Python
-      pyright
       ruff
       uv
       python312Packages.grip
@@ -35,24 +34,10 @@
 
       # Rust
       rustc
-      clippy
       cargo
-      rustfmt
-
-      # Go
-      delve
-      gopls
 
       # Lua
       lua-language-server
-
-      # JavaScript / TypeScript
-      nodejs
-      nodePackages.typescript-language-server
-      tailwindcss-language-server
-
-      # YAML
-      yaml-language-server
     ];
   };
 
