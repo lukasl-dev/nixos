@@ -13,10 +13,12 @@ in
     ./hardware-configuration.nix
 
     ./auto-update.nix
+    # ./dendrite.nix
     ./harmonia.nix
     ./lecture-recorder.nix
     ./nextcloud.nix
     ./nginx.nix
+    # ./pds.nix
     ./restic.nix
     ./traefik.nix
     ./vaultwarden.nix

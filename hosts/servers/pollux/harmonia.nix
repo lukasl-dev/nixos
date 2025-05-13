@@ -5,7 +5,7 @@
     enable = true;
 
     settings.bind = "127.0.0.1:5050";
-    signKeyPath = (config.sops.secrets."harmonia/secret".path);
+    signKeyPaths = [ (config.sops.secrets."harmonia/secret".path) ];
   };
 
   nix.settings.allowed-users = [ "harmonia" ];

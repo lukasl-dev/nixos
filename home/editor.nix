@@ -38,6 +38,9 @@
 
       # Lua
       lua-language-server
+
+      # NodeJS
+      nodejs
     ];
   };
 
