@@ -3,9 +3,9 @@
 {
   imports = [
     ./browsers.nix
+    ./discord.nix
     ./nyxt.nix
     ./terminals.nix
-    ./vesktop.nix
   ];
 
   programs.sioyek.enable = true;
@@ -15,7 +15,6 @@
   home.packages = [
     # messengers
     pkgs.zapzap
-    pkgs-unstable.vesktop
 
     # obsidian
     pkgs-unstable.obsidian

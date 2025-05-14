@@ -2,7 +2,10 @@
 
 {
   home = {
-    packages = [ pkgs-unstable.vesktop ];
+    packages = [
+      pkgs-unstable.vesktop
+      pkgs-unstable.discord
+    ];
 
     file = {
       ".config/vesktop/settings.json" = {
