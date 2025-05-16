@@ -19,6 +19,8 @@
     "pypi/token" = { };
 
     "restic/secret" = { };
+
+    "stack_auth/server_secret" = { };
   };
 
   # pypyrc
