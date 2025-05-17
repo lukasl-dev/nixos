@@ -148,12 +148,11 @@ map("n", "<leader>bs", gitsigns.stage_buffer)
 map("n", "<leader>br", gitsigns.reset_buffer)
 
 -- ====================================================================
--- diffview
+-- neogit
 -- ====================================================================
 
-map("n", "<leader>gdo", ":DiffviewOpen<CR>", { silent = true })
-map("n", "<leader>gdx", ":DiffviewClose<CR>", { silent = true })
-map("n", "<leader>gdf", ":DiffviewFileHistory %<CR>", { silent = true })
+map("n", "<leader>gg", ":Neogit<CR>", { silent = true })
+map("n", "<leader>gd", ":Neogit diff<CR>", { silent = true })
 
 -- ====================================================================
 -- harpoon
