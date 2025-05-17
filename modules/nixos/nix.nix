@@ -18,6 +18,7 @@
     trusted-users = [
       "root"
       (meta.user.name)
+      "nixremote"
     ];
 
     # binary cache

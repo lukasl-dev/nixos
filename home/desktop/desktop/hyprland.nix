@@ -19,6 +19,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+
     package = inputs.hyprland.packages.${pkgs-unstable.stdenv.hostPlatform.system}.hyprland;
 
     sourceFirst = true;
@@ -310,6 +311,10 @@ in
         force_default_wallpaper = 0;
         mouse_move_enables_dpms = false;
         vrr = 1;
+      };
+
+      debug = {
+        disable_logs = false;
       };
     };
   };

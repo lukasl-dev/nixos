@@ -15,6 +15,7 @@ return {
       leap = true,
       fidget = true,
       diffview = true,
+      neogit = true,
     },
   },
 }

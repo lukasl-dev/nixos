@@ -1,9 +1,9 @@
-{ ... }:
-
 {
   imports = [
     ../default.nix
     ./hardware-configuration.nix
+
+    ../../../modules/nixos/dist_builds.nix
 
     ../../../modules/llms.nix
   ];

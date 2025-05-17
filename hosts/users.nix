@@ -11,6 +11,7 @@
     users = {
       root = {
         openssh.authorizedKeys.keys = [ (builtins.readFile ../dots/ssh/id_ed25519.pub) ];
+        hashedPasswordFile = config.sops.secrets."user/password".path;
       };
 
       ${meta.user.name} = {
