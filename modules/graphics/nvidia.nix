@@ -12,11 +12,11 @@
     modesetting.enable = true;
 
     powerManagement = {
-      enable = true; # TODO: configure power management
+      enable = true;
       finegrained = false;
     };
 
-    open = true; # TODO: switch to open drivers
+    open = true;
     nvidiaSettings = true;
 
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
