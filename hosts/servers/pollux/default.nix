@@ -22,6 +22,8 @@ in
     # ./stack-auth.nix
     ./traefik.nix
     ./vaultwarden.nix
+
+    ../../../modules/nixos/distributed/server.nix
   ];
 
   boot = {

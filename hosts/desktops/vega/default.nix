@@ -3,7 +3,7 @@
     ../default.nix
     ./hardware-configuration.nix
 
-    ../../../modules/nixos/dist_builds.nix
+    ../../../modules/nixos/distributed/client.nix
 
     ../../../modules/llms.nix
   ];
