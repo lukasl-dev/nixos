@@ -10,11 +10,30 @@ map("n", "gi", vim.lsp.buf.implementation, { silent = true })
 map("n", "gs", vim.lsp.buf.signature_help, { silent = true })
 
 -- ====================================================================
+-- tabs
+-- ====================================================================
+
+map("n", "<leader>tn", ":tabnew<CR>", { silent = true })
+map("n", "<leader>tq", ":tabclose<CR>", { silent = true })
+
+-- ====================================================================
 -- diagnostic
 -- ====================================================================
 
-map("n", "[d", vim.diagnostic.goto_prev, { silent = true })
-map("n", "]d", vim.diagnostic.goto_next, { silent = true })
+map("n", "[d", function()
+  vim.diagnostic.jump { count = 1 }
+end, { silent = true })
+map("n", "]d", function()
+  vim.diagnostic.jump { count = -1 }
+end, { silent = true })
+
+map("n", "[D", function()
+  vim.diagnostic.jump { count = 1, severity = vim.diagnostic.severity.ERROR }
+end, { silent = true })
+map("n", "]D", function()
+  vim.diagnostic.jump { count = -1, severity = vim.diagnostic.severity.ERROR }
+end, { silent = true })
+
 map("n", "gef", vim.diagnostic.open_float, { silent = true })
 map("n", "geq", vim.diagnostic.setqflist, { silent = true })
 
