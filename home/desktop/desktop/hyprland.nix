@@ -29,7 +29,6 @@ in
     systemd = {
       enable = true;
       variables = [ "--all" ];
-      enableXdgAutostart = true;
     };
 
     settings = {
@@ -39,15 +38,15 @@ in
 
       # TODO: is all of that necessary?
       env = [
-        # "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-        # "QT_QPA_PLATFORM,wayland"
-        # "NVD_BACKEND,direct"
-        #
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "QT_QPA_PLATFORM,wayland"
+        "NVD_BACKEND,direct"
+
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
         #
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
-        #
+
         # # hyprcursor
         # "HYPRCURSOR_SIZE,26"
         # "HYPRCURSOR_THEME,Catppuccin-Mocha-Light-Cursors"
@@ -58,7 +57,6 @@ in
         "clipse --listen"
         "wpaperd -d"
 
-        "zapzap"
         "vesktop"
         "bitwarden"
         "localsend_app"
@@ -91,19 +89,19 @@ in
 
           "${mainMod}, Q, togglespecialworkspace,"
           "${mainMod} SHIFT, Q, movetoworkspace, special"
-
-          "${mainMod}, V, togglefloating,"
-          "${mainMod}, V, centerwindow,"
-
-          "${mainMod}, R, togglesplit"
-          "${mainMod}, N, swapsplit"
-          "${mainMod}, F, pseudo"
-
-          "${mainMod}, W, killactive,"
-
-          "${mainMod}, M, fullscreen, 1"
-          "${mainMod} SHIFT, M, fullscreen,"
         ]
+
+        (windowBinding ", V, togglefloating")
+        (windowBinding ", V, centerwindow")
+
+        (windowBinding ", R, togglesplit")
+        (windowBinding ", N, swapsplit")
+        (windowBinding ", F, pseudo")
+
+        (windowBinding ", W, killactive,")
+
+        (windowBinding ", M, fullscreen, 1")
+        (windowBinding "SHIFT, M, fullscreen,")
 
         (windowBinding ", h, movefocus, l")
         (windowBinding ", l, movefocus, r")
@@ -193,6 +191,7 @@ in
 
         # Desktop App
         "workspace 1,initialClass:(vesktop)"
+        "noinitialfocus,initialClass:(vesktop)"
 
         # File Download
         "float,initialTitle:(https://discord.com/*)"
@@ -245,6 +244,13 @@ in
         "float,initialClass:(steam),initialTitle:(Friends List)"
         "center,initialClass:(steam),initialTitle:(Friends List)"
         "size 524 706,initialClass:(steam),initialTitle:(Friends List)"
+
+        # ========= ========= ========= ========= ========= =========
+        # LocalSend
+        # ========= ========= ========= ========= ========= =========
+
+        "workspace 10, initialClass:(localsend_app)"
+        "noinitialfocus, initialClass:(localsend_app)"
       ];
 
       input = {

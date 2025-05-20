@@ -14,6 +14,7 @@ let
     gst = "git stash";
     gstp = "git stash pop";
     gd = "git diff";
+    gdh = "git diff HEAD";
     gl = "git log";
     gg = "git graph";
     gpl = "git pull";
