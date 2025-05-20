@@ -11,7 +11,6 @@
     package = pkgs-unstable.brave;
     extensions = [
       "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
-      "khgocmkkpikpnmmkgmdnfckapcdkgfaf" # 1Password
       "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
       "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
       "gppongmhjkpfnbhagpmjfkannfbllamg" # Wappalyzer
