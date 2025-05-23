@@ -319,6 +319,10 @@ in
         vrr = 1;
       };
 
+      render = {
+        direct_scanout = 1;
+      };
+
       debug = {
         disable_logs = false;
       };

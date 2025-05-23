@@ -9,5 +9,9 @@ in
 
     enable32Bit = true;
     package32 = pkgs-unstable.pkgsi686Linux.mesa;
+
+    extraPackages = with pkgs-unstable; [
+      rocmPackages.clr
+    ];
   };
 }

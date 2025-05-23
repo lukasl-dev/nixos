@@ -8,6 +8,9 @@
 {
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  boot.initrd.kernelModules = [ "nvidia" ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
+
   hardware.nvidia = {
     modesetting.enable = true;
 
@@ -29,15 +32,22 @@
     };
   };
 
-  # environment.sessionVariables = {
-  #   "LIBVA_DRIVER_NAME" = "nvidia";
-  #   "GBM_BACKEND" = "nvidia-drm";
-  #   "__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
-  #   "WLR_NO_HARDWARE_CURSORS" = "1";
-  #   "__GL_GSYNC_ALLOWED" = "1";
-  #   "__GL_VRR_ALLOWED" = "1";
-  #   "__VK_LAYER_NV_optimus" = "NVIDIA_only";
-  # };
+  environment.sessionVariables = lib.mkMerge [
+    {
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+
+      # disable vsync
+      __GL_SYNC_TO_VBLANK = "0";
+
+      # lowest frame buffering -> lower latency
+      __GL_MaxFramesAllowed = "1";
+
+      __GL_YIELD = "USLEEP";
+
+      __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
+    }
+  ];
 
   environment.systemPackages = with pkgs; [
     nvidia-vaapi-driver
