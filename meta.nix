@@ -1,4 +1,6 @@
 {
+  stateVersion = "25.05";
+
   dir = "/home/lukas/nixos";
 
   user = {

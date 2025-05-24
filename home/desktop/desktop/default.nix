@@ -8,8 +8,10 @@
 {
   imports = [
     ./hyprland.nix
-    ./wallpaper.nix
-    ./waybar.nix
+
+    ../../../homeModules/desktop/wpaperd.nix
+
+    ../../../homeModules/desktop/wayland/waybar
   ];
 
   # quick access

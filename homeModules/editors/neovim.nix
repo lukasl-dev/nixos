@@ -6,7 +6,6 @@
 }:
 
 {
-  # neovim
   programs.neovim = {
     enable = true;
     package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
@@ -44,12 +43,9 @@
     ];
   };
 
-  # nvim config directory
   home.file.".config/nvim" = {
     enable = true;
-    source = ../dots/nvim;
+    source = ../../dots/nvim;
     target = ".config/nvim";
   };
-  # home.file.".config/nvim/lazy-lock.json".source =
-  #   config.lib.file.mkOutOfStoreSymlink "${meta.dir}/dots/nvim/lazy-lock.json";
 }

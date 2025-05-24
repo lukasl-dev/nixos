@@ -1,4 +1,4 @@
-{ meta, config, ... }:
+{ meta, ... }:
 
 {
   sops.secrets = {

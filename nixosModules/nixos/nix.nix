@@ -1,7 +1,7 @@
-{ meta, pkgs, ... }:
+{ meta, ... }:
 
 {
-  system.stateVersion = "25.05";
+  system.stateVersion = meta.stateVersion;
 
   nix.settings = {
     experimental-features = [
@@ -18,10 +18,4 @@
     allowUnfree = true;
     cudaSupport = meta.cuda;
   };
-
-  environment.systemPackages = with pkgs; [
-    # nix language server
-    nixd
-    nixfmt-rfc-style
-  ];
 }

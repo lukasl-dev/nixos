@@ -18,6 +18,8 @@ This is my personal [NixOS](https://nixos.org/) configuration for my desktops an
 
 After restructuring my config over and over again, I came up with the following structure, which works very well for me at the moment:
 
+#todo update
+
 ```
 .
 ├── docs

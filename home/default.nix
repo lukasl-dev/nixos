@@ -2,24 +2,20 @@
 
 {
   imports = [
-    ./editor.nix
     ./shell.nix
-    ./sops.nix
 
-    inputs.catppuccin.homeModules.catppuccin
+    ../homeModules/editors/neovim.nix
+
+    ../homeModules/security/sops.nix
+    ../homeModules/shells/zsh.nix
   ];
 
   programs.home-manager.enable = true;
   home = {
-    stateVersion = "25.05";
+    stateVersion = meta.stateVersion;
 
     username = meta.user.name;
     homeDirectory = "/home/${meta.user.name}";
-  };
-
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
   };
 
   home.file.".ssh/id_ed25519.pub" = {
