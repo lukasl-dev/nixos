@@ -33,6 +33,8 @@
     pkgs-unstable.youtube-tui
 
     pkgs-unstable.pinta
+
+    pkgs-unstable.nautilus
   ];
 
   # thunderbird

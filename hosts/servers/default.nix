@@ -11,7 +11,7 @@
   imports = [
     ../default.nix
 
-    ../../modules/ssh/server.nix
+    ../../modules/networking/ssh/server.nix
   ];
 
   networking.domain = "nodes.${meta.domain}";

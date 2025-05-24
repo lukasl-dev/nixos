@@ -6,12 +6,12 @@
     ./shell.nix
     ./sops.nix
 
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
   ];
 
   programs.home-manager.enable = true;
   home = {
-    stateVersion = "24.11";
+    stateVersion = "25.05";
 
     username = meta.user.name;
     homeDirectory = "/home/${meta.user.name}";

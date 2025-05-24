@@ -9,15 +9,19 @@
     ./shell.nix
     ./users.nix
 
-    ../modules/dns/cloudflare.nix
+    ../modules/networking/dns/cloudflare.nix
+    ../modules/networking/tailscale.nix
+
+    ../modules/security/gnupg.nix
+    ../modules/security/sops.nix
+
+    ../modules/system/restic.nix
+
+    ../modules/virtualisations/docker.nix
+
     ../modules/nixos/home-manager.nix
     ../modules/nixos/nix.nix
-    ../modules/virtualisation/docker.nix
     ../modules/catppuccin.nix
-    ../modules/gnupg.nix
-    ../modules/sops.nix
-    ../modules/tailscale.nix
-    ../modules/restic.nix
   ];
 
   networking.hostName = meta.hostName;

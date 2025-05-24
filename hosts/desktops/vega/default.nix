@@ -3,8 +3,8 @@
     ../default.nix
     ./hardware-configuration.nix
 
-    ../../../modules/distributed/client.nix
-    ../../../modules/distributed/machines
+    ../../../modules/nixos/distributed/client.nix
+    ../../../modules/nixos/distributed/machines
 
     ../../../modules/llms.nix
   ];
