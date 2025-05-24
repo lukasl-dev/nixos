@@ -4,9 +4,10 @@
   nix.buildMachines = [
     {
       hostName = "pollux.nodes.${meta.domain}";
+      sshUser = "build";
       system = "x86_64-linux";
       protocol = "ssh-ng";
-      maxJobs = 3;
+      maxJobs = 2;
       speedFactor = 2;
       supportedFeatures = [
         "nixos-test"
@@ -17,9 +18,4 @@
       mandatoryFeatures = [ ];
     }
   ];
-
-  nix.distributedBuilds = true;
-  nix.settings = {
-    builders-use-substitutes = true;
-  };
 }

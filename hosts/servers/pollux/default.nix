@@ -13,17 +13,15 @@ in
     ./hardware-configuration.nix
 
     ./auto-update.nix
-    ./harmonia.nix
     ./lecture-recorder.nix
     ./nextcloud.nix
     ./nginx.nix
     ./postgres.nix
     ./restic.nix
-    # ./stack-auth.nix
     ./traefik.nix
     ./vaultwarden.nix
 
-    ../../../modules/nixos/distributed/server.nix
+    ../../../modules/distributed/server.nix
   ];
 
   boot = {

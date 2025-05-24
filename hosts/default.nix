@@ -12,10 +12,9 @@
     ../modules/dns/cloudflare.nix
     ../modules/nixos/home-manager.nix
     ../modules/nixos/nix.nix
+    ../modules/virtualisation/docker.nix
     ../modules/catppuccin.nix
-    ../modules/docker.nix
     ../modules/gnupg.nix
-    # ../modules/nh.nix
     ../modules/sops.nix
     ../modules/tailscale.nix
     ../modules/restic.nix

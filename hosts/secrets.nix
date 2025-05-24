@@ -15,33 +15,14 @@
     "calcurse/client_secret" = { };
     "calcurse/gmail" = { };
 
-    "pypi/password" = { };
-    "pypi/token" = { };
-
     "restic/secret" = { };
 
     "stack_auth/server_secret" = { };
   };
 
-  # pypyrc
-  sops.templates.".pypirc" = {
-    path = "/home/${meta.user.name}/.pypirc";
-    owner = meta.user.name;
-    content = ''
-      [pypi]
-      username = __token__
-      password = ${config.sops.placeholder."pypi/token"}
-
-      [distutils]
-      index-servers =
-          pypi
-          testpypi
-
-      [pypi]
-      repository = https://upload.pypi.org/legacy/
-
-      [testpypi]
-      repository = https://test.pypi.org/legacy/
-    '';
+  sops.templates."/root/.ssh/id_ed25519" = {
+    path = "/root/.ssh/id_ed25519";
+    owner = "root";
+    content = config.sops.placeholder."ssh/private_key";
   };
 }

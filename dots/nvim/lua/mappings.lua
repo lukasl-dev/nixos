@@ -27,10 +27,10 @@ map("n", "]d", function()
   vim.diagnostic.jump { count = -1 }
 end, { silent = true })
 
-map("n", "[D", function()
+map("n", "]D", function()
   vim.diagnostic.jump { count = 1, severity = vim.diagnostic.severity.ERROR }
 end, { silent = true })
-map("n", "]D", function()
+map("n", "[D", function()
   vim.diagnostic.jump { count = -1, severity = vim.diagnostic.severity.ERROR }
 end, { silent = true })
 
