@@ -3,8 +3,17 @@ local map = vim.keymap.set
 -- ====================================================================
 -- editing
 -- ====================================================================
-map("n", "<C-j>", ":m .+1<CR>==", { silent = true })
-map("n", "<C-k>", ":m .-2<CR>==", { silent = true })
+map("n", "<C-j>", "':m .+' .. v:count1 .. '<CR>=='", {
+  expr = true,
+  silent = true,
+  desc = "Move line down by [count]",
+})
+map(
+  "n",
+  "<C-k>",
+  "':m .-' .. (v:count1 + 1) .. '<CR>=='",
+  { expr = true, silent = true, desc = "Move line up by [count]" }
+)
 
 -- ====================================================================
 -- lsp
