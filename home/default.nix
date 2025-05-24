@@ -1,4 +1,4 @@
-{ meta, inputs, ... }:
+{ meta, ... }:
 
 {
   imports = [
@@ -6,8 +6,25 @@
 
     ../homeModules/editors/neovim.nix
 
+    ../homeModules/programs/bat.nix
+    ../homeModules/programs/btop.nix
+    ../homeModules/programs/direnv.nix
+    ../homeModules/programs/eza.nix
+    ../homeModules/programs/fastfetch.nix
+    ../homeModules/programs/fzf.nix
+    ../homeModules/programs/git.nix
+    ../homeModules/programs/ripgrep.nix
+    ../homeModules/programs/yazi.nix
+    ../homeModules/programs/zoxide.nix
+
     ../homeModules/security/sops.nix
+
+    ../homeModules/shells/oh-my-posh
+    ../homeModules/shells/tmux
+    ../homeModules/shells/bash.nix
     ../homeModules/shells/zsh.nix
+
+    ../homeModules/themes/catppuccin.nix
   ];
 
   programs.home-manager.enable = true;

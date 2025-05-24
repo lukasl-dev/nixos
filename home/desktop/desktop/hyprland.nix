@@ -1,5 +1,7 @@
 {
   meta,
+  config,
+  lib,
   pkgs-unstable,
   inputs,
   ...
@@ -13,6 +15,9 @@ let
     "${mainMod} ${s}"
     "ALT ${s}"
   ];
+
+  rofi = config.programs.rofi.enable;
+  swaync = config.services.swaync.enable;
 in
 {
   imports = [ inputs.hyprland.homeManagerModules.default ];
@@ -70,13 +75,13 @@ in
 
       bind = builtins.concatLists [
         [
-          "${mainMod}, Space, exec, rofi -show drun -show-icons"
-          "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
-          "${mainMod}, E, exec, bemoji"
+          (lib.mkIf rofi "${mainMod}, Space, exec, rofi -show drun -show-icons")
+          (lib.mkIf rofi "${mainMod}, Backspace, exec, rofi -show drun -show-icons")
+          (lib.mkIf rofi "${mainMod}, E, exec, bemoji")
 
           ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
 
-          "${mainMod}, p, exec, swaync-client -t"
+          (lib.mkIf swaync "${mainMod}, p, exec, swaync-client -t")
 
           ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
 
