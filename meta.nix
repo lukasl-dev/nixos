@@ -1,7 +1,7 @@
-{
+rec {
   stateVersion = "25.05";
 
-  dir = "/home/lukas/nixos";
+  dir = "/home/${user.name}/nixos";
 
   user = {
     name = "lukas";

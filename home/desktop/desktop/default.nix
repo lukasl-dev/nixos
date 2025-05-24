@@ -7,7 +7,7 @@
 
 {
   imports = [
-    ./hyprland.nix
+    ../../../homeModules/desktop/wayland/hyprland.nix
 
     ../../../homeModules/desktop/wayland/waybar
     ../../../homeModules/desktop/wayland/wlsunset.nix
@@ -15,6 +15,7 @@
     ../../../homeModules/desktop/rofi
     ../../../homeModules/desktop/wpaperd.nix
     ../../../homeModules/desktop/swaync.nix
+    ../../../homeModules/desktop/zenity.nix
   ];
 
   # auto mount removable drives
@@ -47,10 +48,5 @@
     # miscellaneous
     # pkgs.xwaylandvideobridge
     pkgs.xdg-utils
-
-    pkgs.zenity
-
-    pkgs.wlsunset
-    # pkgs-unstable.walker
   ];
 }

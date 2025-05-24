@@ -15,6 +15,7 @@
     ../homeModules/programs/git.nix
     ../homeModules/programs/ripgrep.nix
     ../homeModules/programs/yazi.nix
+    ../homeModules/programs/zip.nix
     ../homeModules/programs/zoxide.nix
 
     ../homeModules/security/sops.nix

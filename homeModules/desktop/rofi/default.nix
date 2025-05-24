@@ -18,6 +18,7 @@ in
   catppuccin.rofi.enable = false;
 
   home.packages = [
+    # emojis
     pkgs.bemoji
   ];
 }
