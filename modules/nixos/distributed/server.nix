@@ -16,4 +16,6 @@
       build = { };
     };
   };
+
+  nix.settings.trusted-users = [ "build" ];
 }

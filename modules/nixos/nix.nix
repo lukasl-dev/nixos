@@ -11,7 +11,6 @@
     trusted-users = [
       "root"
       (meta.user.name)
-      "build"
     ];
   };
 

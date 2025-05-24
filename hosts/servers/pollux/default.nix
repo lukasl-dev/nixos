@@ -21,7 +21,7 @@ in
     ./traefik.nix
     ./vaultwarden.nix
 
-    ../../../modules/distributed/server.nix
+    ../../../modules/nixos/distributed/server.nix
   ];
 
   boot = {
