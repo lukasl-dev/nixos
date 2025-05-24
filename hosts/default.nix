@@ -9,21 +9,21 @@
     ./shell.nix
     ./users.nix
 
-    ../modules/networking/dns/cloudflare.nix
-    ../modules/networking/tailscale.nix
+    ../nixosModules/networking/dns/cloudflare.nix
+    ../nixosModules/networking/tailscale.nix
 
-    ../modules/security/gnupg.nix
-    ../modules/security/sops.nix
+    ../nixosModules/nixos/caches
+    ../nixosModules/nixos/home-manager.nix
+    ../nixosModules/nixos/nix.nix
 
-    ../modules/system/restic.nix
+    ../nixosModules/security/gnupg.nix
+    ../nixosModules/security/sops.nix
 
-    ../modules/virtualisations/docker.nix
+    ../nixosModules/system/restic.nix
 
-    ../modules/nixos/caches
-    ../modules/nixos/home-manager.nix
-    ../modules/nixos/nix.nix
+    ../nixosModules/themes/catppuccin.nix
 
-    ../modules/catppuccin.nix
+    ../nixosModules/virtualisations/docker.nix
   ];
 
   networking.hostName = meta.hostName;

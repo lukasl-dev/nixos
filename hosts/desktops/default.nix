@@ -11,28 +11,28 @@
   imports = [
     ../default.nix
 
-    ../../modules/apps/localsend.nix
-    ../../modules/apps/seahorse.nix
-    ../../modules/apps/uxplay.nix
-    ../../modules/apps/wireshark.nix
+    ../../nixosModules/apps/localsend.nix
+    ../../nixosModules/apps/seahorse.nix
+    ../../nixosModules/apps/uxplay.nix
+    ../../nixosModules/apps/wireshark.nix
 
-    ../../modules/graphical/display/wayland/hyprland.nix
-    ../../modules/graphical/display/x11/xserver.nix
-    ../../modules/graphical/desktop/sddm.nix
-    ../../modules/graphical/qt.nix
+    ../../nixosModules/graphical/display/wayland/hyprland.nix
+    ../../nixosModules/graphical/display/x11/xserver.nix
+    ../../nixosModules/graphical/desktop/sddm.nix
+    ../../nixosModules/graphical/qt.nix
 
-    ../../modules/hardware/gpus/nvidia.nix
+    ../../nixosModules/hardware/gpus/nvidia.nix
 
-    ../../modules/gaming/gamemode.nix
-    ../../modules/gaming/steam.nix
+    ../../nixosModules/gaming/gamemode.nix
+    ../../nixosModules/gaming/steam.nix
 
-    ../../modules/security/polkit.nix
-    ../../modules/security/sops.nix
+    ../../nixosModules/security/polkit.nix
+    ../../nixosModules/security/sops.nix
 
-    ../../modules/system/appimage.nix
-    ../../modules/system/bluetooth.nix
-    ../../modules/system/udiskie.nix
-    ../../modules/system/sound/pipewire.nix
+    ../../nixosModules/system/appimage.nix
+    ../../nixosModules/system/bluetooth.nix
+    ../../nixosModules/system/udiskie.nix
+    ../../nixosModules/system/sound/pipewire.nix
   ];
 
   networking.domain = "hosts.${meta.domain}";

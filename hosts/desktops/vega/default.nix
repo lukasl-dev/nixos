@@ -3,10 +3,10 @@
     ../default.nix
     ./hardware-configuration.nix
 
-    ../../../modules/nixos/distributed/client.nix
-    ../../../modules/nixos/distributed/machines
+    ../../../nixosModules/nixos/distributed/client.nix
+    ../../../nixosModules/nixos/distributed/machines
 
-    ../../../modules/llms.nix
+    ../../../nixosModules/llms.nix
   ];
 
   boot = {
