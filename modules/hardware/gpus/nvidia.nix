@@ -20,7 +20,7 @@
     };
 
     open = true;
-    nvidiaSettings = true;
+    nvidiaSettings = false;
 
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
       version = "575.51.02";

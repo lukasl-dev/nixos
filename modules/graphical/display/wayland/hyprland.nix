@@ -8,10 +8,10 @@
 let
   hypr-nixpkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
-  packages = inputs.hyprland.packages.${pkgs-unstable.stdenv.hostPlatform.system};
+  hypr-pkgs = inputs.hyprland.packages.${pkgs-unstable.stdenv.hostPlatform.system};
 
-  hyprland = packages.hyprland;
-  xdg-desktop-portal-hyprland = packages.xdg-desktop-portal-hyprland;
+  hyprland = hypr-pkgs.hyprland;
+  xdg-desktop-portal-hyprland = hypr-pkgs.xdg-desktop-portal-hyprland;
 in
 {
   imports = [ ../../../nixos/caches/hyprland.nix ];
@@ -53,4 +53,14 @@ in
 
     extraPackages = [ hypr-nixpkgs.rocmPackages.clr ];
   };
+
+  # xdg.portal = {
+  #   config = {
+  #     hyprland.default = [
+  #       "gtk"
+  #       "hyprland"
+  #     ];
+  #   };
+  #   extraPortals = [ xdg-desktop-portal-hyprland ];
+  # };
 }

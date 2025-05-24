@@ -19,8 +19,10 @@
 
     ../modules/virtualisations/docker.nix
 
+    ../modules/nixos/caches
     ../modules/nixos/home-manager.nix
     ../modules/nixos/nix.nix
+
     ../modules/catppuccin.nix
   ];
 

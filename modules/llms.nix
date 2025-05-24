@@ -1,6 +1,6 @@
 {
   config,
-  pkgs-unstable,
+  # pkgs-unstable,
   ...
 }:
 
@@ -9,7 +9,7 @@ let
 in
 {
   services.ollama = {
-    enable = true;
+    enable = false;
 
     acceleration = if nvidiaEnabled then "cuda" else false;
     environmentVariables = {
@@ -17,7 +17,7 @@ in
     };
   };
 
-  environment.systemPackages = [
-    pkgs-unstable.llama-cpp
-  ];
+  # environment.systemPackages = [
+  #   pkgs-unstable.llama-cpp
+  # ];
 }
