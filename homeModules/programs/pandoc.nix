@@ -1,0 +1,3 @@
+{
+  programs.pandoc.enable = true;
+}

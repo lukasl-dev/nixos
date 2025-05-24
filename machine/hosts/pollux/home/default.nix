@@ -1,0 +1,3 @@
+{
+  imports = [ ../../../presets/shared/home ];
+}

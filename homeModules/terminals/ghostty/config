@@ -1,0 +1,16 @@
+theme = catppuccin-mocha
+
+window-decoration = false
+window-padding-x = 8
+window-padding-y = 8
+
+command = tmux attach-session || tmux new-session
+
+confirm-close-surface = false
+
+font-family = Geist Mono
+font-style = Semibold
+font-size = 12
+
+shell-integration = zsh
+

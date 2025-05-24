@@ -1,8 +1,13 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  wayland = config.programs.hyprland.enable;
+in
 {
   services.displayManager.sddm = {
     enable = true;
+
+    wayland.enable = wayland;
 
     theme = "catppuccin-mocha";
     package = pkgs.kdePackages.sddm;
