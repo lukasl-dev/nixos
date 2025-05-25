@@ -43,6 +43,8 @@ in
     };
 
     systemPackages = [
+      pkgs-unstable.hyprpicker
+
       pkgs-unstable.egl-wayland
       pkgs-unstable.wl-clipboard
 

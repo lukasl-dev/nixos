@@ -61,6 +61,7 @@ in
       exec-once = [
         "systemctl --user start hyprpolkitagent"
         "wpaperd -d"
+        "clipse --listen"
 
         "vesktop"
         "bitwarden"
