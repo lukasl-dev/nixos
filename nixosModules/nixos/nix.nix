@@ -14,6 +14,10 @@
     ];
   };
 
+  nix.nixPath = [
+    "homeModules=${../../homeModules}"
+  ];
+
   nixpkgs.config = {
     allowUnfree = true;
     cudaSupport = meta.cuda;

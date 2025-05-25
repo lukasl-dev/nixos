@@ -87,16 +87,16 @@
           };
         };
 
-        # orion = nixosSystem ./hosts/desktops/orion {
-        #   hostName = "orion";
-        #   hypr = {
-        #     monitors = [ "eDP-1, 1920x1080@144.02800, 0x0, 1" ];
-        #   };
-        # };
+        orion = nixosSystem ./machines/orion/nixos {
+          hostName = "orion";
+          hypr = {
+            monitors = [ "eDP-1, 1920x1080@144.02800, 0x0, 1" ];
+          };
+        };
 
-        # pollux = nixosSystem ./hosts/servers/pollux {
-        #   hostName = "sirius";
-        # };
+        pollux = nixosSystem ./machines/pollux/nixos {
+          hostName = "sirius";
+        };
       };
     };
 }

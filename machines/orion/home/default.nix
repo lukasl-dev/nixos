@@ -1,4 +1,7 @@
-{
-  imports = [ ../../../presets/desktop ];
+{ ... }:
 
+{
+  imports = [
+    ../../../presets/laptop/home
+  ];
 }
