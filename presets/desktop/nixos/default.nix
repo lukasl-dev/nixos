@@ -8,8 +8,8 @@
     ../../../nixosModules/apps/seahorse.nix
     ../../../nixosModules/apps/uxplay.nix
 
+    ../../../nixosModules/graphical/desktop/sddm
     ../../../nixosModules/graphical/display/wayland/hyprland.nix
-    ../../../nixosModules/graphical/desktop/sddm.nix
     ../../../nixosModules/graphical/fonts.nix
     ../../../nixosModules/graphical/qt.nix
 

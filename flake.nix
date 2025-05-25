@@ -31,7 +31,9 @@
     nixgl.url = "github:nix-community/nixGL";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
     catppuccin.url = "github:catppuccin/nix";
+    catppuccin-where-is-my-sddm-theme.url = "github:catppuccin/where-is-my-sddm-theme";
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";

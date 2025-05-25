@@ -30,7 +30,7 @@ in
     sessionVariables = {
       # hint electron apps to use ozone wayland platform
       NIXOS_OZONE_WL = "1";
-      ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
       # prefer wayland over X11 for GTK apps
       GDK_BACKEND = "wayland,x11";
