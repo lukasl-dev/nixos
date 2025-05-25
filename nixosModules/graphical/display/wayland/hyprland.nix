@@ -42,7 +42,17 @@ in
       _JAVA_AWT_WM_NONREPARENTING = "1";
     };
 
-    systemPackages = [ pkgs-unstable.egl-wayland ];
+    systemPackages = [
+      pkgs-unstable.egl-wayland
+      pkgs-unstable.wl-clipboard
+
+      pkgs-unstable.hyprcursor
+      pkgs.catppuccin-cursors.mochaMauve
+
+      pkgs.grim
+      pkgs.slurp
+      pkgs.hyprshot
+    ];
   };
 
   hardware.graphics = {
