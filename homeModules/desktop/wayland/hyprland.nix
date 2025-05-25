@@ -17,6 +17,7 @@ let
   ];
 
   rofi = config.programs.rofi.enable;
+  clipse = config.services.clipse.enable;
   swaync = config.services.swaync.enable;
 in
 {
@@ -59,7 +60,6 @@ in
 
       exec-once = [
         "systemctl --user start hyprpolkitagent"
-        "clipse --listen"
         "wpaperd -d"
 
         "vesktop"
@@ -79,7 +79,7 @@ in
           (lib.mkIf rofi "${mainMod}, Backspace, exec, rofi -show drun -show-icons")
           (lib.mkIf rofi "${mainMod}, E, exec, bemoji")
 
-          ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
+          (lib.mkIf clipse ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"'')
 
           (lib.mkIf swaync "${mainMod}, p, exec, swaync-client -t")
 

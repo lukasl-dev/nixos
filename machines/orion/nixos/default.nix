@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
 
     ../../../nixosModules/hardware/gpus/nvidia.nix
+    ../../../nixosModules/hardware/hp-wmi.nix
   ];
 
   boot = {

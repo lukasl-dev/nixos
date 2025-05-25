@@ -1,0 +1,3 @@
+{
+  services.clipse.enable = true;
+}

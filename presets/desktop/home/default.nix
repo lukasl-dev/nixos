@@ -14,6 +14,7 @@
     ../../../homeModules/desktop/xdg.nix
 
     ../../../homeModules/programs/bitwarden.nix
+    ../../../homeModules/programs/clipse.nix
     ../../../homeModules/programs/discord.nix
     ../../../homeModules/programs/nautilus.nix
     ../../../homeModules/programs/obsidian.nix
