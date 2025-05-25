@@ -4,7 +4,9 @@
   imports = [
     ../../../homeModules/editors/neovim.nix
 
+    ../../../homeModules/development/lua.nix
     ../../../homeModules/development/nix.nix
+    ../../../homeModules/development/python.nix
 
     ../../../homeModules/programs/bat.nix
     ../../../homeModules/programs/btop.nix

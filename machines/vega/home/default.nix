@@ -4,6 +4,9 @@
   imports = [
     ../../../presets/desktop/home
 
+    ../../../homeModules/development/go.nix
+    ../../../homeModules/development/javascript.nix
+
     ../../../homeModules/gaming/bottles.nix
     ../../../homeModules/gaming/gamescope.nix
     ../../../homeModules/gaming/lutris.nix
