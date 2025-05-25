@@ -1,0 +1,5 @@
+{
+  imports = [
+    ../../../presets/server/home
+  ];
+}

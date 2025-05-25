@@ -11,12 +11,12 @@
     ../../../presets/desktop/nixos
     ./hardware-configuration.nix
 
-    ../../../../nixosModules/gaming/gamemode.nix
-    ../../../../nixosModules/gaming/steam.nix
+    ../../../nixosModules/gaming/gamemode.nix
+    ../../../nixosModules/gaming/steam.nix
 
-    ../../../../nixosModules/hardware/gpus/nvidia.nix
+    ../../../nixosModules/hardware/gpus/nvidia.nix
 
-    ../../../../nixosModules/system/bluetooth.nix
+    ../../../nixosModules/system/bluetooth.nix
   ];
 
   boot = {

@@ -1,0 +1,3 @@
+{
+  imports = [ ../../../presets/server/nixos ];
+}

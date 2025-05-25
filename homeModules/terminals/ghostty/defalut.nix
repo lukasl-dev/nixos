@@ -6,7 +6,7 @@
 
     file.".config/ghostty" = {
       enable = true;
-      source = ./;
+      source = ./config;
       target = ".config/ghostty";
     };
   };

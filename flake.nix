@@ -76,7 +76,7 @@
     in
     {
       nixosConfigurations = {
-        vega = nixosSystem ./machine/hosts/vega/nixos {
+        vega = nixosSystem ./machines/vega/nixos {
           hostName = "vega";
           cuda = true;
           hypr = {
