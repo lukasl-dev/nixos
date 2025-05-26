@@ -1,4 +1,12 @@
 {
+  meta,
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
+
+{
   imports = [
     ../../../presets/server/nixos
     ./hardware-configuration.nix
@@ -10,6 +18,10 @@
     ./traefik.nix
     ./vaultwarden.nix
   ];
+
+  home-manager.users.${meta.user.name} = import ../home {
+    inherit inputs pkgs pkgs-unstable;
+  };
 
   boot = {
     loader.grub.device = "/dev/sda";
