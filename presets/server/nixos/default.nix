@@ -1,11 +1,11 @@
 { meta, ... }:
 
 {
-  imports = [ 
+  imports = [
     ../../shared/nixos
 
-   ../../../nixosModules/networking/ssh/server.nix
- ];
+    ../../../nixosModules/networking/ssh/server.nix
+  ];
 
   networking.domain = "nodes.${meta.domain}";
 
