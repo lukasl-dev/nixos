@@ -97,7 +97,7 @@
         };
 
         pollux = nixosSystem ./machines/pollux/nixos {
-          hostName = "sirius";
+          hostName = "pollux";
         };
       };
     };

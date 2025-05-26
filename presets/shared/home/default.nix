@@ -15,6 +15,7 @@
     ../../../homeModules/programs/fastfetch.nix
     ../../../homeModules/programs/fzf.nix
     ../../../homeModules/programs/git.nix
+    ../../../homeModules/programs/gh.nix
     ../../../homeModules/programs/ripgrep.nix
     ../../../homeModules/programs/yazi.nix
     ../../../homeModules/programs/zip.nix

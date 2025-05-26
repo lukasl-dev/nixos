@@ -1,3 +1,7 @@
 {
-  imports = [ ../../shared/home ];
+  imports = [
+    ../../shared/home
+
+    ../../../nixosModules/networking/ssh/server.nix
+  ];
 }
