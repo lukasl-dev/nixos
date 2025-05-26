@@ -24,6 +24,7 @@
     ../../../homeModules/security/ssh.nix
 
     ../../../homeModules/shells/oh-my-posh
+    ../../../homeModules/shells/television
     ../../../homeModules/shells/tmux
     ../../../homeModules/shells/bash.nix
     ../../../homeModules/shells/zsh.nix
