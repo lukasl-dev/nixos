@@ -5,7 +5,10 @@
     ../../../presets/desktop/home
 
     ../../../homeModules/development/go.nix
+    ../../../homeModules/development/java.nix
     ../../../homeModules/development/javascript.nix
+
+    ../../../homeModules/editors/jetbrains/idea-ultimate.nix
 
     ../../../homeModules/gaming/bottles.nix
     ../../../homeModules/gaming/gamescope.nix
