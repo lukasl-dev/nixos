@@ -8,10 +8,10 @@
 {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud30;
+    package = pkgs.nextcloud31;
 
     # nextcloud uses nginx as webserver
-    hostName = "cloud.lukasl.dev";
+    hostName = "cloud.${meta.domain}";
 
     config.adminpassFile = config.sops.secrets."nextcloud/password".path;
     config.dbtype = "sqlite";

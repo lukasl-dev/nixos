@@ -11,6 +11,7 @@
     ../../../presets/server/nixos
     ./hardware-configuration.nix
 
+    ./gitea.nix
     ./lecture-recorder.nix
     ./nextcloud.nix
     ./nginx.nix
