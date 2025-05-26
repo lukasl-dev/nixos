@@ -2,6 +2,13 @@
   imports = [
     ../../../presets/server/nixos
     ./hardware-configuration.nix
+
+    ./lecture-recorder.nix
+    ./nextcloud.nix
+    ./nginx.nix
+    ./restic.nix
+    ./traefik.nix
+    ./vaultwarden.nix
   ];
 
   boot = {
