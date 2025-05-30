@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
 
     ./gitea.nix
+    # ./kavita.nix
     ./lecture-recorder.nix
     ./nextcloud.nix
     ./nginx.nix
