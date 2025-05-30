@@ -17,6 +17,8 @@
     ../../../homeModules/desktop/xdg.nix
     ../../../homeModules/desktop/zenity.nix
 
+    ../../../homeModules/development/tex.nix
+
     ../../../homeModules/programs/bitwarden.nix
     ../../../homeModules/programs/clipse.nix
     ../../../homeModules/programs/discord.nix
