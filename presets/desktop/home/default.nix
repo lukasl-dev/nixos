@@ -3,7 +3,7 @@
     ../../shared/home
 
     ../../../homeModules/browsers/brave.nix
-    ../../../homeModules/browsers/firefox.nix
+    ../../../homeModules/browsers/zen.nix
 
     ../../../homeModules/desktop/wayland/waybar
     ../../../homeModules/desktop/wayland/hyprcursor.nix
