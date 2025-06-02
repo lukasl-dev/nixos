@@ -252,24 +252,22 @@ in
         "size 524 706,initialClass:(steam),initialTitle:(Friends List)"
 
         # ========= ========= ========= ========= ========= =========
-        # LocalSend
+        # Obsidian
         # ========= ========= ========= ========= ========= =========
-
-        "workspace 10, initialClass:(localsend_app)"
-        "noinitialfocus, initialClass:(localsend_app)"
+        "workspace 10,initialClass:(obsidian)"
+        # "noinitialfocus,initialClass:(obsidian)"
 
         # ========= ========= ========= ========= ========= =========
         # Zen
         # ========= ========= ========= ========= ========= =========
-        "float,initialClass:(zen-beta),title:(Extension:)"
-        "center,initialClass:(zen-beta),title:(Extension:)"
-        "size 524 706,initialClass:(zen-beta),title:(Extension:)"
-        # title: Extension:
+        "float,initialClass:(zen-beta),title:(Extension:.*)"
+        "center,initialClass:(zen-beta),title:(Extension:).*"
+        "size 524 706,initialClass:(zen-beta),title:(Extension:.*)"
       ];
 
       input = {
-        kb_layout = "us";
-        kb_variant = ",qwerty";
+        kb_layout = meta.keyboard.layout;
+        kb_variant = meta.keyboard.variant;
         follow_mouse = 1;
         touchpad = {
           natural_scroll = "yes";

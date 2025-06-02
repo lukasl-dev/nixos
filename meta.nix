@@ -20,7 +20,7 @@ rec {
 
   keyboard = {
     layout = "us";
-    variant = "";
+    variant = ",qwerty";
   };
 
   cuda = false;
