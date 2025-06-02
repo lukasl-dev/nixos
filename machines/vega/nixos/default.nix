@@ -11,6 +11,9 @@
     ../../../presets/desktop/nixos
     ./hardware-configuration.nix
 
+    ../../../nixosModules/nixos/distributed/client.nix
+    ../../../nixosModules/nixos/distributed/machines/default.nix
+
     ../../../nixosModules/gaming/gamemode.nix
     ../../../nixosModules/gaming/steam.nix
 

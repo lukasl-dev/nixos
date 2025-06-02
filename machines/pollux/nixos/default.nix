@@ -11,6 +11,8 @@
     ../../../presets/server/nixos
     ./hardware-configuration.nix
 
+    ../../../nixosModules/nixos/distributed/server.nix
+
     ./gitea.nix
     # ./kavita.nix
     ./lecture-recorder.nix
