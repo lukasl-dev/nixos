@@ -1,7 +1,7 @@
 {
   home.file.".ideavimrc" = {
     enable = true;
-    source = ./ideavim.nix;
+    source = ./.ideavimrc;
     target = ".ideavimrc";
   };
 }

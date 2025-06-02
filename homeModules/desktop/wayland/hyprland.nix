@@ -88,7 +88,7 @@ in
 
           "${mainMod}, T, exec, ghostty"
 
-          "${mainMod}, B, exec, brave"
+          "${mainMod}, B, exec, zen-beta"
 
           "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
           "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -257,6 +257,14 @@ in
 
         "workspace 10, initialClass:(localsend_app)"
         "noinitialfocus, initialClass:(localsend_app)"
+
+        # ========= ========= ========= ========= ========= =========
+        # Zen
+        # ========= ========= ========= ========= ========= =========
+        "float,initialClass:(zen-beta),title:(Extension:)"
+        "center,initialClass:(zen-beta),title:(Extension:)"
+        "size 524 706,initialClass:(zen-beta),title:(Extension:)"
+        # title: Extension:
       ];
 
       input = {

@@ -13,7 +13,7 @@
 
     mimeApps =
       let
-        browser = [ "brave.desktop" ];
+        browser = [ "zen-beta.desktop" ];
         sioyek = [ "sioyek.desktop" ];
       in
       {

@@ -24,6 +24,7 @@
     ../../../homeModules/programs/discord.nix
     ../../../homeModules/programs/nautilus.nix
     ../../../homeModules/programs/obsidian.nix
+    ../../../homeModules/programs/sioyek.nix
 
     ../../../homeModules/terminals/ghostty
   ];
