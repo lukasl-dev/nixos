@@ -17,5 +17,7 @@
     file
     cron
     screen
+
+    dysk
   ];
 }
