@@ -50,12 +50,7 @@ in
 
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
-        #
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
-
-        # # hyprcursor
-        # "HYPRCURSOR_SIZE,26"
-        # "HYPRCURSOR_THEME,Catppuccin-Mocha-Light-Cursors"
       ];
 
       exec-once = [
@@ -68,6 +63,9 @@ in
         "localsend_app"
 
         "waybar"
+
+        # https://discourse.nixos.org/t/keyctl-read-alloc-permission-denied/8667/4
+        "keyctl link @u @s"
       ];
 
       cursor = {
@@ -251,6 +249,8 @@ in
         "center,initialClass:(steam),initialTitle:(Friends List)"
         "size 524 706,initialClass:(steam),initialTitle:(Friends List)"
 
+        "renderunfocused, initialClass:(steam_app_2622380)"
+
         # ========= ========= ========= ========= ========= =========
         # Obsidian
         # ========= ========= ========= ========= ========= =========
@@ -260,9 +260,9 @@ in
         # ========= ========= ========= ========= ========= =========
         # Zen
         # ========= ========= ========= ========= ========= =========
-        "float,initialClass:(zen-beta),title:(Extension:.*)"
-        "center,initialClass:(zen-beta),title:(Extension:).*"
-        "size 524 706,initialClass:(zen-beta),title:(Extension:.*)"
+        "float,initialClass:(zen-beta),title:^(Extension:.*)$"
+        "center,initialClass:(zen-beta),title:^(Extension:.*)$"
+        "size 524 706,initialClass:(zen-beta),title:^(Extension:.*)$"
       ];
 
       input = {
@@ -275,7 +275,7 @@ in
         sensitivity = 0;
 
         repeat_rate = 25;
-        repeat_delay = 600;
+        repeat_delay = 200;
       };
 
       general = {
