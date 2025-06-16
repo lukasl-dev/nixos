@@ -11,5 +11,7 @@
     pkgs-unstable.delve
     pkgs-unstable.gopls
     pkgs-unstable.nilaway
+    pkgs-unstable.golangci-lint
+    pkgs-unstable.golangci-lint-langserver
   ];
 }
