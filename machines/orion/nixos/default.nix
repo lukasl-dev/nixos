@@ -13,6 +13,8 @@
 
     ../../../nixosModules/hardware/gpus/nvidia.nix
     ../../../nixosModules/hardware/hp-wmi.nix
+
+    ../../../nixosModules/system/bluetooth.nix
   ];
 
   boot = {
