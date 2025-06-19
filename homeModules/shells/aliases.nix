@@ -16,6 +16,7 @@
   gg = "git graph";
   gpl = "git pull";
   gpu = "git push";
+  gpuf = "git push --force-with-lease";
 
   cat = "bat";
 
