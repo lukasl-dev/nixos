@@ -59,8 +59,6 @@ in
         "clipse --listen"
 
         "vesktop"
-        "bitwarden"
-        "localsend_app"
 
         "waybar"
 
