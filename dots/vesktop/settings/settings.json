@@ -172,7 +172,7 @@
       "stickerSize": 160,
       "transformStickers": true,
       "transformCompoundSentence": false,
-      "enableStreamQualityBypass": true,
+      "enableStreamQualityBypass": false,
       "useHyperLinks": true,
       "hyperLinkText": "{{NAME}}",
       "disableEmbedPermissionCheck": false

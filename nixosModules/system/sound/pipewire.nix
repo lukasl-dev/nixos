@@ -15,6 +15,7 @@
     extraConfig.pipewire = {
       "context.properties" = {
         "default.clock.min-quantum" = 2048;
+        "default.clock.quantum-limit" = 8192;
       };
     };
   };
