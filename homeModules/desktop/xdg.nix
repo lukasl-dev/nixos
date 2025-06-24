@@ -15,6 +15,8 @@
       let
         browser = [ "zen-beta.desktop" ];
         sioyek = [ "sioyek.desktop" ];
+        imageViewer = if config.programs.feh.enable then [ "feh.desktop" ] else null;
+        videoPlayer = if config.programs.mpv.enable then [ "mpv.desktop" ] else null;
       in
       {
         enable = true;
@@ -35,8 +37,31 @@
           "x-scheme-handler/https" = browser;
           "x-scheme-handler/unknown" = browser;
           "image/svg+xml" = browser;
-
           "application/pdf" = sioyek;
+
+          "image/jpeg" = imageViewer;
+          "image/jpg" = imageViewer;
+          "image/png" = imageViewer;
+          "image/gif" = imageViewer;
+          "image/bmp" = imageViewer;
+          "image/tiff" = imageViewer;
+          "image/webp" = imageViewer;
+          "image/x-portable-pixmap" = imageViewer;
+          "image/x-portable-graymap" = imageViewer;
+          "image/x-portable-bitmap" = imageViewer;
+          "image/x-portable-anymap" = imageViewer;
+
+          "video/mp4" = videoPlayer;
+          "video/mpeg" = videoPlayer;
+          "video/quicktime" = videoPlayer;
+          "video/x-msvideo" = videoPlayer;
+          "video/x-ms-wmv" = videoPlayer;
+          "video/webm" = videoPlayer;
+          "video/ogg" = videoPlayer;
+          "video/x-matroska" = videoPlayer;
+          "video/x-flv" = videoPlayer;
+          "video/3gpp" = videoPlayer;
+          "video/x-ms-asf" = videoPlayer;
         };
       };
 
