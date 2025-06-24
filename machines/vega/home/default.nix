@@ -4,6 +4,8 @@
   imports = [
     ../../../presets/desktop/home
 
+    ../../../homeModules/programs/anki.nix
+
     ../../../homeModules/development/go.nix
     ../../../homeModules/development/java.nix
     ../../../homeModules/development/javascript.nix
