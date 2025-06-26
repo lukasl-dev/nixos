@@ -18,34 +18,37 @@ This is my personal [NixOS](https://nixos.org/) configuration for my desktops an
 
 After restructuring my config over and over again, I came up with the following structure, which works very well for me at the moment:
 
-#todo update
-
 ```
 .
 ├── docs
 │   └── documentation-related files, e.g. screenshots, ...
-├── dots
-│   └── dotfiles, e.g. Neovim, ghostty, ...
-├── home
+├── homeModules
+│   └── home-manager modules for user-specific configurations (browsers, editors, shells, etc.)
+├── machines
+│   ├── orion
+│   │   ├── home
+│   │   └── nixos
+│   ├── pollux
+│   │   ├── home
+│   │   └── nixos
+│   └── vega
+│       ├── home
+│       └── nixos
+├── nixosModules
+│   └── system-level NixOS modules (networking, hardware, security, etc.)
+├── presets
 │   ├── desktop
-│   │   └── home-manager config for desktop hosts
-│   ├── headless
-│   │   └── home-manager config for non-desktop hosts, e.g. servers
-│   └── shared config for both desktop and headless hosts
-├── hosts
-│   ├── desktops
-│   │   ├── orion
-│   │   │   └── NixOS config for the Orion desktop host
-│   │   ├── vega
-│   │   │   └── NixOS config for the Vega desktop host
-│   │   └── shared config for all desktop hosts
-│   ├── servers
-│   │   ├── pollux
-│   │   │   └── NixOS config for the Pollux server host
-│   │   └── shared config for all server hosts
-│   └── shared config for both desktop and server hosts
-├── modules
-│   └── NixOS modules for various services and apps
+│   │   ├── home
+│   │   └── nixos
+│   ├── laptop
+│   │   ├── home
+│   │   └── nixos
+│   ├── server
+│   │   ├── home
+│   │   └── nixos
+│   └── shared
+│       ├── home
+│       └── nixos
 ├── scripts
 │   └── useful scripts
 ├── secrets
@@ -54,13 +57,40 @@ After restructuring my config over and over again, I came up with the following 
 │   └── wallpapers used by desktop hosts
 ```
 
+## Usage
+
+This NixOS configuration uses a flake-based approach with justfile commands for easy management:
+
+```bash
+# List available systems
+just list
+
+# Build a specific system configuration
+just build system
+
+# Switch to a specific system configuration
+just switch system
+
+# Update flake dependencies
+just update
+```
+
+## Features
+
+- Multiple machine configurations (desktop, laptop, server)
+- Hyprland desktop environment with Catppuccin theme
+- Secret management via sops-nix
+- Structured modular configuration 
+- Home-Manager for user-level configurations
+
 ## Credits
 
 This configuration takes advantage of some other repositories and projects, including:
 
 - [home-manager](https://github.com/nix-community/home-manager)
-- [sops](https://github.com/Mic92/sops-nix)
+- [sops-nix](https://github.com/Mic92/sops-nix)
 - [hyprland](https://github.com/hyprwm/Hyprland)
+- [catppuccin](https://github.com/catppuccin/nix)
 - [wallpapers](./wallpapers/README.md)
 - [Vimjoyer's Discord community](https://www.youtube.com/@vimjoyer)
 
