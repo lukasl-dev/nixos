@@ -1,63 +1,69 @@
-available_systems := `nix flake show --json . | jq '.nixosConfigurations | keys'`
+available_systems := `nix-shell -p jq --run "nix flake show --json . | jq '.nixosConfigurations | keys'"`
 
 default:
     @just --list
 
 [group('flake')]
 check:
-    nix flake check
+    @echo "--> Checking flake..."
+    @{ nix flake check 1>/dev/null; } 2>&1 | nix-shell -p pv --run "pv"
 
 [group('flake')]
 update:
-    nix flake update
+    @echo "--> Updating all flake inputs..."
+    @{ nix flake update 1>/dev/null; } 2>&1 | nix-shell -p pv --run "pv"
+
+[group('flake')]
+update-input input:
+    @echo "--> Updating flake input '{{ input }}'..."
+    @{ nix flake update {{ input }} 1>/dev/null; } 2>&1 | nix-shell -p pv --run "pv"
 
 [group('flake')]
 update-unstable:
-    nix flake update nixpkgs-unstable
+    @just update-input nixpkgs-unstable
 
 [group('flake')]
 update-stable:
-    nix flake update nixpkgs
+    @just update-input nixpkgs
 
 [group('systems')]
 list:
-    @echo "{{ available_systems }}"
+    @echo "Available NixOS configurations in this flake:"
+    @echo '{{ available_systems }}' | nix-shell -p jq --run "jq --raw-output .[]"
 
 [group('systems')]
 has system:
-    @if echo '{{ available_systems }}' | jq --exit-status --arg system "{{ system }}" 'index($system)' > /dev/null; then \
-         echo "true"; \
+    @if echo '{{ available_systems }}' | nix-shell -p jq --run "jq --exit-status --arg system '{{ system }}' 'any(. == \$system)'" > /dev/null; then \
+        echo "true"; \
     else \
-         echo "false"; \
+        echo "false"; \
     fi
 
 [group('systems')]
 require system:
-    @if ! echo '{{ available_systems }}' | jq --exit-status --arg system "{{ system }}" 'index($system)' > /dev/null; then \
-       echo "System {{ system }} not found. Use 'just systems' to list available systems."; \
+    @if ! echo '{{ available_systems }}' | nix-shell -p jq --run "jq --exit-status --arg system '{{ system }}' 'any(. == \$system)'" > /dev/null; then \
+       echo "Error: System '{{ system }}' not found in flake. Use 'just systems list' to see available systems."; \
        exit 1; \
     fi
 
 [group('systems')]
 switch system:
-    @if ! echo '{{ available_systems }}' | jq --exit-status --arg system "{{ system }}" 'index($system)' > /dev/null; then \
-         echo "System {{ system }} not found. Use 'just systems' to list available systems."; \
-         exit 1; \
-    fi
-    nixos-rebuild switch --flake .#{{ system }}
+    @just require '{{ system }}'
+    @echo "--> Building system '{{ system }}' for activation..."
+    @just build '{{ system }}'
+    @echo "--> Activating new system configuration '{{ system }}'..."
+    @sudo ./result/bin/switch-to-configuration switch
+    @echo "--> Switch complete."
 
 [group('systems')]
 build system:
-    @if ! echo '{{ available_systems }}' | jq --exit-status --arg system "{{ system }}" 'index($system)' > /dev/null; then \
-         echo "System {{ system }} not found. Use 'just systems' to list available systems."; \
-         exit 1; \
-    fi
-    nixos-rebuild build --flake .#{{ system }}
+    @just require '{{ system }}'
+    @echo "--> Building system '{{ system }}'..."
+    @{ nixos-rebuild build --flake .#{{ system }} --fast 1>/dev/null; } 2>&1 | nix-shell -p pv --run "pv"
 
 [group('systems')]
 diff other:
-    nvd diff /run/current-system {{ other }}
-
-[group('binarycache')]
-upload-nixpkg pkg:
-    nix copy --to ssh://pollux.nodes.lukasl.dev nixpkgs#{{ pkg }}
+    @just require '{{ other }}'
+    @echo "--> Diffing current system against flake configuration '{{ other }}'..."
+    @# `nvd` is provided by a nix-shell to diff system generations.
+    nix-shell -p nvd --run "nvd diff /run/current-system .#{{ other }}"
