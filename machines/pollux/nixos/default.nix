@@ -15,7 +15,7 @@
 
     ./gitea.nix
     # ./kavita.nix
-    ./lecture-recorder.nix
+    # ./lecture-recorder.nix
     ./nextcloud.nix
     ./nginx.nix
     ./restic.nix
