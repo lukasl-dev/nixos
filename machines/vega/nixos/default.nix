@@ -20,6 +20,8 @@
     ../../../nixosModules/hardware/gpus/nvidia.nix
 
     ../../../nixosModules/system/bluetooth.nix
+
+    ../../../nixosModules/ollama.nix
   ];
 
   boot = {

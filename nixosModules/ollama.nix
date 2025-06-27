@@ -1,23 +1,15 @@
-{
-  config,
-  # pkgs-unstable,
-  ...
-}:
+{ config, ... }:
 
 let
   nvidiaEnabled = config.hardware.nvidia.modesetting.enable;
 in
 {
   services.ollama = {
-    enable = false;
+    enable = true;
 
     acceleration = if nvidiaEnabled then "cuda" else false;
     environmentVariables = {
       "OLLAMA_ORIGINS" = "app://obsidian.md*";
     };
   };
-
-  # environment.systemPackages = [
-  #   pkgs-unstable.llama-cpp
-  # ];
 }
