@@ -7,7 +7,7 @@
       repository = "/var/backup/restic/local";
       paths = [
         "/var/lib/vaultwarden"
-        "/var/lib/nextcloud"
+        (config.services.nextcloud.datadir)
       ];
       passwordFile = config.sops.secrets."restic/secret".path;
     };
