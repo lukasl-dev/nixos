@@ -21,6 +21,7 @@
     ./restic.nix
     ./traefik.nix
     ./vaultwarden.nix
+    ./anki-sync-server.nix
   ];
 
   home-manager.users.${meta.user.name} = import ../home {
