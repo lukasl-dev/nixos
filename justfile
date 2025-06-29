@@ -49,7 +49,6 @@ require system:
 [group('systems')]
 switch system:
     @just require '{{ system }}'
-    @echo "--> Building system '{{ system }}' for activation..."
     @just build '{{ system }}'
     @echo "--> Activating new system configuration '{{ system }}'..."
     @sudo ./result/bin/switch-to-configuration switch

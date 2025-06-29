@@ -62,17 +62,17 @@ After restructuring my config over and over again, I came up with the following 
 This NixOS configuration uses a flake-based approach with justfile commands for easy management:
 
 ```bash
-# List available systems
+# list all targets
+just
+
+# list available systems
 just list
 
-# Build a specific system configuration
+# build a specific system configuration
 just build system
 
-# Switch to a specific system configuration
+# switch to a specific system configuration
 just switch system
-
-# Update flake dependencies
-just update
 ```
 
 ## Features
