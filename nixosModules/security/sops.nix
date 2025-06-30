@@ -1,5 +1,4 @@
 {
-  meta,
   inputs,
   pkgs-unstable,
   ...
@@ -12,5 +11,5 @@
 
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/${meta.user.name}/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/etc/sops/age/keys.txt";
 }
