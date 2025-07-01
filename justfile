@@ -49,10 +49,9 @@ require system:
 [group('systems')]
 switch system:
     @just require '{{ system }}'
-    @just build '{{ system }}'
-    @echo "--> Activating new system configuration '{{ system }}'..."
-    @sudo ./result/bin/switch-to-configuration switch
-    @echo "--> Switch complete."
+    @echo "--> Building and switching to new system configuration '{{ system }}'..."
+    @{ sudo nixos-rebuild switch --flake .#{{ system }} --fast 1>/dev/null; } 2>&1 | nix-shell -p pv --run "pv"
+    @echo "--> Switch complete." 
 
 [group('systems')]
 build system:

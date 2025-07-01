@@ -16,6 +16,7 @@
     ../../../nixosModules/security/sops.nix
     ../../../nixosModules/security/polkit.nix
 
+    ../../../nixosModules/system/git.nix
     ../../../nixosModules/system/i18n.nix
     ../../../nixosModules/system/packages.nix
     ../../../nixosModules/system/shell.nix
