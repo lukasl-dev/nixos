@@ -18,5 +18,4 @@
   };
 
   nix.settings.trusted-users = [ "build" ];
-  nix.settings.daemon = true;
 }
