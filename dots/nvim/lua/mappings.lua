@@ -211,3 +211,153 @@ for i = 1, 9 do
     harpoon:list():select(i)
   end)
 end
+
+-- ====================================================================
+-- github
+-- ====================================================================
+
+map(
+  "n",
+  "<leader>ghcc",
+  "<cmd>GHCloseCommit<cr>",
+  { silent = true, desc = "Close" }
+)
+map(
+  "n",
+  "<leader>ghce",
+  "<cmd>GHExpandCommit<cr>",
+  { silent = true, desc = "Expand" }
+)
+map(
+  "n",
+  "<leader>ghco",
+  "<cmd>GHOpenToCommit<cr>",
+  { silent = true, desc = "Open To" }
+)
+map(
+  "n",
+  "<leader>ghcp",
+  "<cmd>GHPopOutCommit<cr>",
+  { silent = true, desc = "Pop Out" }
+)
+map(
+  "n",
+  "<leader>ghcz",
+  "<cmd>GHCollapseCommit<cr>",
+  { silent = true, desc = "Collapse" }
+)
+map(
+  "n",
+  "<leader>ghip",
+  "<cmd>GHPreviewIssue<cr>",
+  { silent = true, desc = "Preview" }
+)
+map(
+  "n",
+  "<leader>ghlt",
+  "<cmd>LTPanel<cr>",
+  { silent = true, desc = "Toggle Panel" }
+)
+map(
+  "n",
+  "<leader>ghtv",
+  "<cmd>GHToggleViewed<cr>",
+  { silent = true, desc = "Toggle Viewede" }
+)
+map(
+  "n",
+  "<leader>ghpc",
+  "<cmd>GHClosePR<cr>",
+  { silent = true, desc = "Close" }
+)
+map(
+  "n",
+  "<leader>ghpd",
+  "<cmd>GHPRDetails<cr>",
+  { silent = true, desc = "Details" }
+)
+map(
+  "n",
+  "<leader>ghpe",
+  "<cmd>GHExpandPR<cr>",
+  { silent = true, desc = "Expand" }
+)
+map("n", "<leader>ghpo", "<cmd>GHOpenPR<cr>", { silent = true, desc = "Open" })
+map(
+  "n",
+  "<leader>ghpp",
+  "<cmd>GHPopOutPR<cr>",
+  { silent = true, desc = "PopOut" }
+)
+map(
+  "n",
+  "<leader>ghpr",
+  "<cmd>GHRefreshPR<cr>",
+  { silent = true, desc = "Refresh" }
+)
+map(
+  "n",
+  "<leader>ghpt",
+  "<cmd>GHOpenToPR<cr>",
+  { silent = true, desc = "Open To" }
+)
+map(
+  "n",
+  "<leader>ghpz",
+  "<cmd>GHCollapsePR<cr>",
+  { silent = true, desc = "Collapse" }
+)
+map(
+  "n",
+  "<leader>ghrb",
+  "<cmd>GHStartReview<cr>",
+  { silent = true, desc = "Begin" }
+)
+map(
+  "n",
+  "<leader>ghrc",
+  "<cmd>GHCloseReview<cr>",
+  { silent = true, desc = "Close" }
+)
+map(
+  "n",
+  "<leader>ghrd",
+  "<cmd>GHDeleteReview<cr>",
+  { silent = true, desc = "Delete" }
+)
+map(
+  "n",
+  "<leader>ghre",
+  "<cmd>GHExpandReview<cr>",
+  { silent = true, desc = "Expand" }
+)
+map(
+  "n",
+  "<leader>ghrs",
+  "<cmd>GHSubmitReview<cr>",
+  { silent = true, desc = "Submit" }
+)
+map(
+  "n",
+  "<leader>ghrz",
+  "<cmd>GHCollapseReview<cr>",
+  { silent = true, desc = "Collapse" }
+)
+map(
+  "n",
+  "<leader>ghtc",
+  "<cmd>GHCreateThread<cr>",
+  { silent = true, desc = "Create" }
+)
+map(
+  "n",
+  "<leader>ghtn",
+  "<cmd>GHNextThread<cr>",
+  { silent = true, desc = "Next" }
+)
+map(
+  "n",
+  "<leader>ghtt",
+  "<cmd>GHToggleThread<cr>",
+  { silent = true, desc = "Toggle" }
+)

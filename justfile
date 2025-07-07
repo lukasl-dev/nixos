@@ -50,14 +50,14 @@ require system:
 switch system:
     @just require '{{ system }}'
     @echo "--> Building and switching to new system configuration '{{ system }}'..."
-    @{ sudo nixos-rebuild switch --flake .#{{ system }} --fast 1>/dev/null; } 2>&1 | nix-shell -p pv --run "pv"
+    @sudo time nixos-rebuild switch --fast --flake .#{{ system }}
     @echo "--> Switch complete." 
 
 [group('systems')]
 build system:
     @just require '{{ system }}'
     @echo "--> Building system '{{ system }}'..."
-    @{ nixos-rebuild build --flake .#{{ system }} --fast 1>/dev/null; } 2>&1 | nix-shell -p pv --run "pv"
+    @sudo time nixos-rebuild build --fast --flake .#{{ system }}
 
 [group('systems')]
 diff other:
