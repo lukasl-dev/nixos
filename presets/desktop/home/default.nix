@@ -4,7 +4,6 @@
 
     ../../../homeModules/browsers/brave.nix
     ../../../homeModules/browsers/zen.nix
-    ../../../homeModules/browsers/qutebrowser.nix
 
     ../../../homeModules/desktop/wayland/waybar
     ../../../homeModules/desktop/wayland/hyprcursor.nix
