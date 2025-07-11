@@ -53,17 +53,24 @@ in
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
       ];
 
-      exec-once = [
-        "systemctl --user start hyprpolkitagent"
-        "wpaperd -d"
-        "clipse --listen"
-
-        "vesktop"
-
-        "waybar"
-
-        # https://discourse.nixos.org/t/keyctl-read-alloc-permission-denied/8667/4
-        "keyctl link @u @s"
+      exec-once = builtins.concatLists [
+        [
+          "systemctl --user start hyprpolkitagent"
+          # https://discourse.nixos.org/t/keyctl-read-alloc-permission-denied/8667/4
+          "keyctl link @u @s"
+        ]
+        (lib.optionals config.services.clipse.enable [
+          "${config.services.clipse.package}/bin/clipse --listen"
+        ])
+        (lib.optionals config.services.wpaperd.enable [
+          "${config.services.wpaperd.package}/bin/wpaperd -d"
+        ])
+        (lib.optionals config.programs.vesktop.enable [
+          "${config.programs.vesktop.package}/bin/vesktop"
+        ])
+        (lib.optionals config.programs.waybar.enable [
+          "${config.programs.waybar.package}/bin/waybar"
+        ])
       ];
 
       cursor = {
@@ -71,15 +78,18 @@ in
       };
 
       bind = builtins.concatLists [
+        (lib.optionals rofi [
+          "${mainMod}, Space, exec, rofi -show drun -show-icons"
+          "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
+          "${mainMod}, E, exec, bemoji"
+        ])
+        (lib.optionals clipse [
+          ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
+        ])
+        (lib.optionals swaync [
+          "${mainMod}, p, exec, swaync-client -t"
+        ])
         [
-          (lib.mkIf rofi "${mainMod}, Space, exec, rofi -show drun -show-icons")
-          (lib.mkIf rofi "${mainMod}, Backspace, exec, rofi -show drun -show-icons")
-          (lib.mkIf rofi "${mainMod}, E, exec, bemoji")
-
-          (lib.mkIf clipse ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"'')
-
-          (lib.mkIf swaync "${mainMod}, p, exec, swaync-client -t")
-
           ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
 
           "${mainMod}, T, exec, ghostty"
