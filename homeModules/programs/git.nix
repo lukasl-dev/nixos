@@ -14,6 +14,7 @@
 
       pull.rebase = true;
       push.autoSetupRemote = true;
+      init.defaultBranch = "master";
 
       color.ui = true;
       core.editor = "nvim";
