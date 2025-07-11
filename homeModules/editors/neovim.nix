@@ -38,6 +38,9 @@
       # Lua
       lua-language-server
 
+      # Bash
+      bash-language-server
+
       # NodeJS
       nodejs
     ];
