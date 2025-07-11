@@ -20,9 +20,25 @@ in
 
   programs.zen-browser = {
     enable = true;
+
     policies = {
       DisableAppUpdate = true;
       DisableTelemetry = true;
+      EnableTrackingProtection = {
+        Value = true;
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
+      AutofillAddressEnabled = true;
+      AutofillCreditCardEnabled = false;
+      DisableFeedbackCommands = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DontCheckDefaultBrowser = true;
+      NoDefaultBookmarks = true;
+      OfferToSaveLogins = false;
+
       ExtensionSettings = extensions [
         {
           # SponsorBlock
