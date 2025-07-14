@@ -4,7 +4,7 @@
   imports = [
     ../../../nixosModules/networking/firewall.nix
     ../../../nixosModules/networking/tailscale.nix
-    ../../../nixosModules/networking/dns/cloudflare.nix
+    ../../../nixosModules/networking/dns.nix
     ../../../nixosModules/networking/ssh/keys.nix
 
     ../../../nixosModules/nixos/caches

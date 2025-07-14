@@ -58,19 +58,11 @@ in
           "systemctl --user start hyprpolkitagent"
           # https://discourse.nixos.org/t/keyctl-read-alloc-permission-denied/8667/4
           "keyctl link @u @s"
-        ]
-        (lib.optionals config.services.clipse.enable [
           "${config.services.clipse.package}/bin/clipse --listen"
-        ])
-        (lib.optionals config.services.wpaperd.enable [
           "${config.services.wpaperd.package}/bin/wpaperd -d"
-        ])
-        (lib.optionals config.programs.vesktop.enable [
           "${config.programs.vesktop.package}/bin/vesktop"
-        ])
-        (lib.optionals config.programs.waybar.enable [
           "${config.programs.waybar.package}/bin/waybar"
-        ])
+        ]
       ];
 
       cursor = {
