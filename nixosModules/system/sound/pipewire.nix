@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   security.rtkit.enable = true;
 
@@ -22,4 +24,8 @@
 
   services.libinput.enable = true;
   # services.jack.jackd.enable = true;
+
+  environment.systemPackages = [
+    pkgs.helvum
+  ];
 }
