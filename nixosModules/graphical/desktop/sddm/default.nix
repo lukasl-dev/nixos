@@ -21,6 +21,11 @@ in
     theme = "where_is_my_sddm_theme";
     package = pkgs.kdePackages.sddm;
   };
+
+  services.displayManager.preStart = ''
+    ${pkgs.coreutils}/bin/sleep 2
+  '';
+
   catppuccin.sddm.enable = false;
 
   environment.systemPackages = [
