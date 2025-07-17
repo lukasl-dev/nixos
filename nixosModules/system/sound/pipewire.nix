@@ -25,7 +25,5 @@
   services.libinput.enable = true;
   # services.jack.jackd.enable = true;
 
-  environment.systemPackages = [
-    pkgs.helvum
-  ];
+  environment.systemPackages = [ pkgs.helvum ];
 }

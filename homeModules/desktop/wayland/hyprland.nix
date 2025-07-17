@@ -193,6 +193,8 @@ in
         # Vesktop
         # ========= ========= ========= ========= ========= =========
 
+        "renderunfocused, initialClass:(vesktop)"
+
         # Desktop App
         "workspace 1,initialClass:(vesktop)"
         "noinitialfocus,initialClass:(vesktop)"
