@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   pkgs-unstable,
   ...
@@ -12,4 +13,8 @@
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/etc/sops/age/keys.txt";
+
+  environment.sessionVariables = {
+    SOPS_AGE_KEY_FILE = config.sops.age.keyFile;
+  };
 }
