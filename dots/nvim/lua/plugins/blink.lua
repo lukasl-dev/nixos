@@ -6,7 +6,7 @@ return {
 
   dependencies = {
     "rafamadriz/friendly-snippets",
-    "giuxtaposition/blink-cmp-copilot",
+    "saghen/blink.cmp",
   },
 
   event = "BufWinEnter",
@@ -24,7 +24,7 @@ return {
       providers = {
         copilot = {
           name = "copilot",
-          module = "blink-cmp-copilot",
+          module = "blink-copilot",
           score_offset = 100,
           async = true,
         },

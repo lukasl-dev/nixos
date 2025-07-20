@@ -12,9 +12,13 @@ return {
   },
 
   {
-    "giuxtaposition/blink-cmp-copilot",
+    "fang2hou/blink-copilot",
     dependencies = { "zbirenbaum/copilot.lua" },
 
     event = "BufWinEnter",
+
+    opts = {
+      max_completions = 1,
+    },
   },
 }
