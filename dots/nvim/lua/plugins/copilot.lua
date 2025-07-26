@@ -6,19 +6,8 @@ return {
     event = "InsertEnter",
 
     opts = {
-      suggestion = { enabled = false },
+      suggestion = { enabled = true, auto_trigger = true },
       panel = { enabled = false },
-    },
-  },
-
-  {
-    "fang2hou/blink-copilot",
-    dependencies = { "zbirenbaum/copilot.lua" },
-
-    event = "BufWinEnter",
-
-    opts = {
-      max_completions = 1,
     },
   },
 }

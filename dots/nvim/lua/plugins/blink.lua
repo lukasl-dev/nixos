@@ -19,16 +19,16 @@ return {
     completion = { documentation = { auto_show = false } },
 
     sources = {
-      default = { "lsp", "path", "snippets", "buffer", "copilot" },
+      default = { "lsp", "path", "snippets", "buffer" },
 
-      providers = {
-        copilot = {
-          name = "copilot",
-          module = "blink-copilot",
-          score_offset = 100,
-          async = true,
-        },
-      },
+      -- providers = {
+      --   copilot = {
+      --     name = "copilot",
+      --     module = "blink-copilot",
+      --     score_offset = 100,
+      --     async = true,
+      --   },
+      -- },
     },
 
     fuzzy = { implementation = "prefer_rust" },

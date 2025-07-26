@@ -132,10 +132,11 @@ map("n", "gl", ":Telescope diagnostics<CR>", { silent = true })
 -- copilot
 -- ====================================================================
 
-map("i", "<C-j>", function()
+map("i", "<C-g>", function()
   local suggestion = require "copilot.suggestion"
   if suggestion.is_visible() then
     suggestion.accept_line()
+  else
   end
 end, { silent = true })
 
