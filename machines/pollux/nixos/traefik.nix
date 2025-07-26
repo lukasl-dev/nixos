@@ -73,6 +73,7 @@
 
   sops.secrets = {
     "cloudflare/email" = { };
+    "cloudflare/account_id" = { };
     "cloudflare/global_api_key" = { };
   };
 
