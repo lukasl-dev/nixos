@@ -1,5 +1,11 @@
 { meta, config, ... }:
 
+let
+  httpPort = 80;
+  httpsPort = 443;
+  submissionPort = 587;
+  smtpsPort = 465;
+in
 {
   services.traefik = {
     enable = true;
@@ -11,7 +17,7 @@
 
       entryPoints = {
         web = {
-          address = ":80";
+          address = ":${toString httpPort}";
           http.redirections.entrypoint = {
             to = "websecure";
             scheme = "https";
@@ -19,7 +25,7 @@
         };
 
         websecure = {
-          address = ":443";
+          address = ":${toString httpsPort}";
           http.tls = {
             certResolver = "cloudflare";
             domains = [
@@ -29,6 +35,14 @@
               }
             ];
           };
+        };
+
+        submission = {
+          address = ":${toString submissionPort}";
+        };
+
+        smtps = {
+          address = ":${toString smtpsPort}";
         };
       };
 
@@ -69,6 +83,8 @@
     80
     443
     8080
+    587
+    465
   ];
 
   sops.secrets = {
