@@ -3,8 +3,10 @@ name: Justfile
 on:
   push:
     branches: [ master, main ]
+    paths: [ "justfile" ]
   pull_request:
     branches: [ master, main ]
+    paths: [ "justfile" ]
 
 jobs:
   list:

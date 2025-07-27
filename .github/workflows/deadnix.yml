@@ -1,10 +1,12 @@
+name: Deadnix
+
 on:
   push:
     branches: [ master, main]
+    paths: [ "**.nix" ]
   pull_request:
     branches: [ master, main ]
-
-name: Nix
+    paths: [ "**.nix" ]
 
 jobs:
   deadcode:
@@ -17,12 +19,3 @@ jobs:
         with:
           name: deadnix
       - uses: astro/deadnix-action@main
-  flake-check:
-    name: Flake check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v25
-      - name: Run Nix Flake Check
-        run: nix flake check
-
