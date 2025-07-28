@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  port = 5291;
+in
 {
   services.freshrss = {
     enable = true;
@@ -12,7 +15,7 @@
     package = pkgs-unstable.freshrss;
 
     defaultUser = meta.user.name;
-    defaultPasswordFile = config.sops.secrets."freshrss/password".path;
+    passwordFile = config.sops.secrets."freshrss/password".path;
 
     webserver = "nginx";
     virtualHost = "rss";
@@ -20,7 +23,18 @@
   };
 
   sops.secrets = {
-    "freshrss/password" = { };
+    "freshrss/password" = {
+      owner = config.services.freshrss.user;
+    };
+  };
+
+  services.nginx.virtualHosts.${config.services.freshrss.virtualHost} = {
+    listen = [
+      {
+        addr = "127.0.0.1";
+        port = port;
+      }
+    ];
   };
 
   services.traefik.dynamicConfigOptions.http = {
@@ -30,11 +44,14 @@
       service = "rss";
     };
     services.rss = {
-      loadBalancer.servers = [
-        {
-          url = "http://localhost:${toString config.services.nginx.defaultHTTPListenPort}";
-        }
-      ];
+      loadBalancer = {
+        passHostHeader = true;
+        servers = [
+          {
+            url = "http://localhost:${toString port}";
+          }
+        ];
+      };
     };
   };
 }

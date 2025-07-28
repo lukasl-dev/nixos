@@ -3,8 +3,8 @@
 let
   httpPort = 80;
   httpsPort = 443;
-  submissionPort = 587;
-  smtpsPort = 465;
+  # submissionPort = 587;
+  # smtpsPort = 465;
 in
 {
   services.traefik = {
@@ -37,13 +37,13 @@ in
           };
         };
 
-        submission = {
-          address = ":${toString submissionPort}";
-        };
-
-        smtps = {
-          address = ":${toString smtpsPort}";
-        };
+        # submission = {
+        #   address = ":${toString submissionPort}";
+        # };
+        #
+        # smtps = {
+        #   address = ":${toString smtpsPort}";
+        # };
       };
 
       log = {

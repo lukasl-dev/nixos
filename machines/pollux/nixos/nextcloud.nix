@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  port = 8314;
+in
 {
   services.nextcloud = {
     enable = true;
@@ -29,6 +32,15 @@
     };
   };
 
+  services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+    listen = [
+      {
+        addr = "127.0.0.1";
+        port = port;
+      }
+    ];
+  };
+
   services.traefik.dynamicConfigOptions.http = {
     routers.cloud = {
       rule = "Host(`cloud.${meta.domain}`)";
@@ -36,11 +48,14 @@
       service = "cloud";
     };
     services.cloud = {
-      loadBalancer.servers = [
-        {
-          url = "http://localhost:${toString config.services.nginx.defaultHTTPListenPort}";
-        }
-      ];
+      loadBalancer = {
+        passHostHeader = true;
+        servers = [
+          {
+            url = "http://localhost:${toString port}";
+          }
+        ];
+      };
     };
   };
 }
