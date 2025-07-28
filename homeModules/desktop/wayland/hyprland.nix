@@ -60,8 +60,9 @@ in
           "keyctl link @u @s"
           "${config.services.clipse.package}/bin/clipse --listen"
           "${config.services.wpaperd.package}/bin/wpaperd -d"
-          "${config.programs.vesktop.package}/bin/vesktop"
+          "mullvad-exclude ${config.programs.vesktop.package}/bin/vesktop"
           "${config.programs.waybar.package}/bin/waybar"
+          "mullvad-vpn"
         ]
       ];
 
@@ -265,6 +266,12 @@ in
         "float,initialClass:(zen-beta),title:^(Extension:.*)$"
         "center,initialClass:(zen-beta),title:^(Extension:.*)$"
         "size 524 706,initialClass:(zen-beta),title:^(Extension:.*)$"
+
+        # ========= ========= ========= ========= ========= =========
+        # Mullvad VPN
+        # ========= ========= ========= ========= ========= =========
+        "float,initialTitle:(Mullvad VPN)"
+        "pin,initialTitle:(Mullvad VPN)"
       ];
 
       input = {

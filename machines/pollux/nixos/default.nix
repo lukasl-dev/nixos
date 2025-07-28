@@ -13,6 +13,7 @@
 
     ../../../nixosModules/nixos/distributed/server.nix
 
+    ./freshrss.nix
     ./gitea.nix
     # ./kavita.nix
     # ./lecture-recorder.nix
