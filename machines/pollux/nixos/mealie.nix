@@ -20,7 +20,7 @@
 
   services.traefik.dynamicConfigOptions.http = {
     routers.mealy = {
-      rule = "Host(`recipes.${meta.domain}`)";
+      rule = "Host(`kitchen.${meta.domain}`)";
       entryPoints = [ "websecure" ];
       service = "mealy";
     };
