@@ -26,6 +26,7 @@ D(
 	CNAME("proxy", "pollux.nodes.lukasl.dev."),
 	CNAME("vault", "pollux.nodes.lukasl.dev."),
 	CNAME("rss", "pollux.nodes.lukasl.dev."),
+	CNAME("recipes", "pollux.nodes.lukasl.dev."),
 
 	// iconolatry
 	CNAME("icons", "cname.vercel-dns.com."),
