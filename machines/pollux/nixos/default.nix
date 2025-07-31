@@ -15,6 +15,7 @@
 
     ./freshrss.nix
     ./gitea.nix
+    ./jellyfin.nix
     # ./kavita.nix
     # ./lecture-recorder.nix
     # ./mail-server.nix
