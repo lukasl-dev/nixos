@@ -361,5 +361,11 @@ map(
   "n",
   "<leader>ghtt",
   "<cmd>GHToggleThread<cr>",
-  { silent = true, desc = "Toggle" }
+  { silent = true, desc = "Toggle Thread" }
+)
+map(
+  "n",
+  "<leader>ghtv",
+  "<cmd>GHToggleViewed<cr>",
+  { silent = true, desc = "Toggle Viewed" }
 )

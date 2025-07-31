@@ -52,6 +52,8 @@
   environment.systemPackages = with pkgs; [
     nvidia-vaapi-driver
     vulkan-headers
+    vulkan-tools
+    vulkan-loader
     dxvk
 
     nvtopPackages.nvidia

@@ -71,6 +71,11 @@ in
           name = "languagetool";
         }
         {
+          # Return YouTube Dislike
+          id = "762f9885-5a13-4abd-9c77-433dcd38b8fd";
+          name = "return-youtube-dislike";
+        }
+        {
           # uBlock Origin
           id = "uBlock0@raymondhill.net";
           name = "ublock-origin";
