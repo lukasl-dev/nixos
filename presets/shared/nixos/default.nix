@@ -11,6 +11,7 @@
 
     ../../../nixosModules/nixos/caches
     ../../../nixosModules/nixos/home-manager.nix
+    ../../../nixosModules/nixos/nh.nix
     ../../../nixosModules/nixos/nix-ld.nix
     ../../../nixosModules/nixos/nix.nix
 
