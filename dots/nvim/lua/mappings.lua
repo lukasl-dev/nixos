@@ -114,6 +114,7 @@ map("n", "-", "<CMD>Oil<CR>", { silent = true })
 -- ====================================================================
 
 map("n", "<leader>ff", ":Telescope find_files<CR>", { silent = true })
+-- map("n", "<leader>ff", function () require("fff").toggle() end, { silent = true })
 map(
   "n",
   "<leader>fh",

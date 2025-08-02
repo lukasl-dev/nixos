@@ -1,4 +1,4 @@
-{ meta, ... }:
+{ meta, pkgs, ... }:
 {
   programs.git = {
     enable = true;
@@ -8,4 +8,6 @@
       ];
     };
   };
+
+  environment.systemPackages = [ pkgs.git-filter-repo ];
 }
