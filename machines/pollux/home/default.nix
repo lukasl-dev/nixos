@@ -1,7 +1,0 @@
-{ ... }:
-
-{
-  imports = [
-    ../../../presets/server/home
-  ];
-}

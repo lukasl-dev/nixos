@@ -10,11 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix.url = "github:Mic92/sops-nix";
 
     nil = {
@@ -35,18 +30,16 @@
     catppuccin.url = "github:catppuccin/nix";
     catppuccin-where-is-my-sddm-theme.url = "github:catppuccin/where-is-my-sddm-theme";
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     ghostty.url = "github:ghostty-org/ghostty";
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
+    hjem.url = "github:feel-co/hjem";
   };
 
   outputs =
     {
       nixpkgs,
       nixpkgs-unstable,
-      nixgl,
       ...
     }@inputs:
     let
@@ -55,16 +48,12 @@
       nixosSystem =
         module: overrideMeta:
         let
-          updatedMeta = (import ./meta.nix) // overrideMeta;
           pkgs-unstable = import nixpkgs-unstable {
             inherit system;
 
             config = {
               allowUnfree = true;
-              cudaSupport = updatedMeta.cuda;
             };
-
-            overlays = [ nixgl.overlay ];
           };
           specialArgs = {
             inherit inputs pkgs-unstable;
@@ -72,35 +61,17 @@
         in
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = specialArgs // {
-            meta = updatedMeta;
-          };
-          modules = [ module ];
+          specialArgs = specialArgs;
+          modules = [
+            ./options
+            ./universe.nix
+            module
+          ];
         };
     in
     {
       nixosConfigurations = {
-        vega = nixosSystem ./machines/vega/nixos {
-          hostName = "vega";
-          cuda = true;
-          hypr = {
-            monitors = [
-              "DP-2, 1920x1080@239.96, 0x0, 1"
-              "HDMI-A-1, 1920x1080@74.973, 1920x0, 1"
-            ];
-          };
-        };
-
-        orion = nixosSystem ./machines/orion/nixos {
-          hostName = "orion";
-          hypr = {
-            monitors = [ "eDP-1, 1920x1080@144.02800, 0x0, 1" ];
-          };
-        };
-
-        pollux = nixosSystem ./machines/pollux/nixos {
-          hostName = "pollux";
-        };
+        vega = nixosSystem ./planets/vega { };
       };
     };
 }

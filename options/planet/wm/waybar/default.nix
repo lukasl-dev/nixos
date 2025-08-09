@@ -1,0 +1,152 @@
+{ config, lib, ... }:
+
+let
+  planet = config.planet;
+  hyprland = planet.wm.hyprland;
+
+  waybar = planet.wm.waybar;
+in
+{
+  options.planet.wm.waybar = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = hyprland.enable;
+      description = "Enable Waybar for Hyprland";
+    };
+  };
+
+  config = lib.mkIf waybar.enable {
+    universe.hm = [
+      {
+        programs.waybar = {
+          enable = true;
+
+          style = builtins.readFile ./style.css;
+
+          settings = {
+            mainBar = {
+              layer = "top";
+              position = "top";
+              mod = "dock";
+              exclusive = true;
+              passtrough = false;
+              gtk-layer-shell = true;
+              height = 32;
+
+              modules-left = [
+                "clock"
+                "hyprland/workspaces"
+              ];
+
+              modules-center = [ ];
+
+              modules-right = builtins.concatLists [
+                [
+                  "tray"
+                  "network"
+                  "bluetooth"
+                  "custom/mic"
+                  "wireplumber"
+                  "battery"
+                ]
+                (lib.optionals (config.planet.programs.uxplay.enable) [
+                  "custom/uxplay"
+                ])
+              ];
+
+              "hyprland/window" = {
+                format = "{}";
+              };
+
+              "hyprland/workspaces" = {
+                on-scroll-up = "hyprctl dispatch workspace e+1";
+                on-scroll-down = "hyprctl dispatch workspace e-1";
+                all-outputs = true;
+                on-click = "activate";
+                format = "{icon}";
+                format-icons = {
+                  "1" = "1";
+                  "2" = "2";
+                  "3" = "3";
+                  "4" = "4";
+                  "5" = "5";
+                  "6" = "6";
+                  "7" = "7";
+                  "8" = "8";
+                  "9" = "9";
+                  "10" = "10";
+                };
+              };
+
+              "custom/uxplay" = lib.mkIf config.planet.programs.uxplay.enable {
+                format = "{}";
+                exec = "if pgrep uxplay > /dev/null; then echo ''; else echo ''; fi";
+                interval = 1;
+                on-click = "if pgrep uxplay > /dev/null; then pkill -f uxplay; else uxplay -p tcp 4000 -p udp 5000; fi";
+              };
+
+              "custom/mic" = {
+                format = "{}";
+                escape = true;
+                interval = 1;
+                tooltip = false;
+                exec = ''
+                  wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{print ($NF == "[MUTED]") ? " " : " " int($2*100)"%"}'
+                '';
+                on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+                max-length = 50;
+              };
+
+              wireplumber = {
+                format = "{icon} {volume}%";
+                format-muted = " ";
+                format-icons = {
+                  default = [
+                    ""
+                    ""
+                    " "
+                  ];
+                };
+                on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              };
+
+              tray = {
+                icon-size = 18;
+                tooltip = false;
+                spacing = 12;
+              };
+
+              clock = {
+                timezone = planet.timeZone;
+                format = "{:%d/%m/%Y %H:%M}";
+              };
+
+              network = {
+                format-wifi = "  {essid} {signalStrength}%";
+                format-ethernet = "󰈀";
+                format-disconnected = "󰈂";
+              };
+
+              bluetooth = {
+                format-bluetooth = " {status}";
+                format-connected = " {num_connections}";
+                format-disconnected = "";
+                format-disabled = "";
+              };
+
+              battery = {
+                states = {
+                  warning = 20;
+                  critical = 15;
+                };
+                format = "󰁹 {capacity}%";
+                format-charging = "󰂄 {capacity}%";
+                format-plugged = "󰂄 {capacity}%";
+              };
+            };
+          };
+        };
+      }
+    ];
+  };
+}
