@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -42,6 +43,11 @@ in
         assertion = git.user.name != "";
         message = "🪐 Please define 'universe.git.user.name'.";
       }
+    ];
+
+    environment.systemPackages = with pkgs-unstable; [
+      git-lfs
+      git-filter-repo
     ];
 
     universe.hm = [
