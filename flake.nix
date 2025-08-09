@@ -72,6 +72,7 @@
     {
       nixosConfigurations = {
         vega = nixosSystem ./planets/vega { };
+        pollux = nixosSystem ./planets/pollux { };
       };
     };
 }

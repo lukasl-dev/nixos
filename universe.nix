@@ -1,6 +1,7 @@
 {
   universe = {
     stateVersion = "25.05";
+    domain = "lukasl.dev";
 
     user = {
       name = "lukas";

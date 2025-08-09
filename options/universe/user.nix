@@ -45,7 +45,6 @@ in
       users = {
         root = {
           hashedPasswordFile = config.sops.secrets."universe/user/password".path;
-          openssh.authorizedKeys.keys = lib.optional (user.ssh != null) user.ssh.publicKey;
         };
 
         "${user.name}" = {
@@ -59,7 +58,6 @@ in
           ];
 
           hashedPasswordFile = config.sops.secrets."universe/user/password".path;
-          openssh.authorizedKeys.keys = lib.optional (user.ssh != null) user.ssh.publicKey;
         };
       };
     };

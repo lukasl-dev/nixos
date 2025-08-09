@@ -8,6 +8,7 @@
 
     ./appimage.nix
     ./devenv.nix
+    ./domain.nix
     ./i18n.nix
     ./networking.nix
     ./nh.nix

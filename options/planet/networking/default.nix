@@ -1,3 +1,5 @@
 {
-  imports = [ ./dns.nix ];
+  imports = [
+    ./dns.nix
+  ];
 }
