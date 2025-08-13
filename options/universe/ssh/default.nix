@@ -9,13 +9,10 @@ in
     path = "/home/${user.name}/.ssh/id_ed25519";
   };
 
-  # hjem.users.${user.name}.files.".ssh/id_ed25519.pub".source = ./id_ed25519.pub;
-
   users.users = {
     root.openssh.authorizedKeys.keys = [
       (builtins.readFile ./id_ed25519.pub)
     ];
-
     ${user.name}.openssh.authorizedKeys.keys = [
       (builtins.readFile ./id_ed25519.pub)
     ];

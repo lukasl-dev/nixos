@@ -17,7 +17,6 @@
     ./gpg.nix
     ./hyperfine.nix
     ./imagemagick.nix
-    ./mullvad.nix
     ./ripgrep.nix
     ./speedtest.nix
     ./television.nix

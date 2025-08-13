@@ -49,6 +49,10 @@
       uxplay.enable = true;
     };
 
+    services = {
+      mullvad.enable = true;
+    };
+
     gaming = {
       enable = true;
 
