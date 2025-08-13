@@ -2,7 +2,7 @@
 
 {
   services.tailscale = {
-    enable = true;
+    enable = false;
     extraUpFlags = [ "--ssh" ];
     authKeyFile = config.sops.secrets."universe/tailscale/auth_key".path;
   };
