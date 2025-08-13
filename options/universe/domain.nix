@@ -8,7 +8,7 @@ in
     type = lib.types.str;
     description = "The domain of the universe.";
     default = "";
-    example = "example.com";
+    example = "lukasl.dev";
   };
 
   config = {
