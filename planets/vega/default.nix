@@ -7,13 +7,18 @@
       "coretemp"
     ];
     loader = {
-      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+      };
     };
     supportedFilesystems = {
       ntfs = true;
     };
   };
+  catppuccin.grub.enable = true;
 
   planet = {
     name = "vega";
