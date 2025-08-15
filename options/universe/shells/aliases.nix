@@ -28,4 +28,6 @@
 
   files = "yazi";
   f = "yazi";
+
+  s = "nix-shell --run zsh -p ";
 }
