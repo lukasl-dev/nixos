@@ -20,6 +20,18 @@ This is my personal [NixOS](https://nixos.org/) configuration for my desktops an
 > 2. Public Nix configs allows new users to get inspired by different ideas
 >    and configuration methods.
 
+## Terminology
+
+### Planet
+
+The term "planet" refers to a single node in my "universe" (cluster) with its own
+set of rules, e.g. `hardware-configuration`, custom services, etc.
+
+### Universe
+
+The term "universe" refers to the cluster of nodes. The universes comprises
+universal rules, like shell aliases, users, domain, etc.
+
 ## Credits
 
 This configuration takes advantage of some other repositories and projects, including:
