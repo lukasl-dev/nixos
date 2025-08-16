@@ -11,29 +11,29 @@ D(
 
 	DefaultTTL(1),
 
-	// nodes
-	A("pollux.nodes", "185.245.61.227"),
-	AAAA("pollux.nodes", "2a13:7e80:0:b2::"),
+	// planets
+	A("pollux.planets", "185.245.61.227"),
+	AAAA("pollux.planets", "2a13:7e80:0:b2::"),
 
 	// github pages
 	ALIAS("@", "lukasl-dev.github.io."),
 
 	// services
-	CNAME("anki", "pollux.nodes.lukasl.dev."),
-	CNAME("cloud", "pollux.nodes.lukasl.dev."),
-	CNAME("git", "pollux.nodes.lukasl.dev."),
+	CNAME("anki", "pollux.planets.lukasl.dev."),
+	CNAME("cloud", "pollux.planets.lukasl.dev."),
+	CNAME("git", "pollux.planets.lukasl.dev."),
 	CNAME("notes", "lukasl-dev.github.io."),
-	CNAME("proxy", "pollux.nodes.lukasl.dev."),
-	CNAME("vault", "pollux.nodes.lukasl.dev."),
-	CNAME("rss", "pollux.nodes.lukasl.dev."),
-	CNAME("kitchen", "pollux.nodes.lukasl.dev."),
-	CNAME("media", "pollux.nodes.lukasl.dev."),
+	CNAME("proxy", "pollux.planets.lukasl.dev."),
+	CNAME("vault", "pollux.planets.lukasl.dev."),
+	CNAME("rss", "pollux.planets.lukasl.dev."),
+	CNAME("kitchen", "pollux.planets.lukasl.dev."),
+	CNAME("media", "pollux.planets.lukasl.dev."),
 
 	// iconolatry
 	CNAME("icons", "cname.vercel-dns.com."),
 
 	// mail
-	CNAME("mail", "pollux.nodes.lukasl.dev."),
+	CNAME("mail", "pollux.planets.lukasl.dev."),
 	MX("@", 10, "mail.lukasl.dev."),
 	TXT("@", "v=spf1 a:mail.lukasl.dev -all"),
 	TXT("_dmarc", "v=DMARC1; p=none"),
