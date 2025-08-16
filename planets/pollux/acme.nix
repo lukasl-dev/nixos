@@ -11,6 +11,12 @@ in
       dnsProvider = "cloudflare";
       environmentFile = config.sops.templates."acme/env".path;
     };
+
+    certs.${domain} = {
+      domain = domain;
+      extraDomainNames = [ "*.${domain}" ];
+      reloadServices = [ "traefik.service" ];
+    };
   };
 
   sops = {
