@@ -1,6 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./acme.nix
     ./boot.nix
     ./networking.nix
 
@@ -12,6 +13,7 @@
     # ./services/nextcloud.nix
     ./services/prometheus.nix
     # ./services/nginx.nix
+    ./services/postfix.nix
     # ./services/restic.nix
     ./services/traefik.nix
     ./services/vaultwarden.nix
