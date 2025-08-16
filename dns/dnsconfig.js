@@ -28,6 +28,7 @@ D(
 	CNAME("rss", "pollux.planets.lukasl.dev."),
 	CNAME("kitchen", "pollux.planets.lukasl.dev."),
 	CNAME("media", "pollux.planets.lukasl.dev."),
+	CNAME("metrics", "pollux.planets.lukasl.dev."),
 
 	// iconolatry
 	CNAME("icons", "cname.vercel-dns.com."),
