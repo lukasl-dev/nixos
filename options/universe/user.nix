@@ -62,13 +62,13 @@ in
       };
     };
 
-    universe.hm = [
-      {
-        home = {
-          username = user.name;
-          homeDirectory = "/home/${user.name}";
-        };
-      }
-    ];
+    # universe.hm = [
+    #   {
+    #     home = {
+    #       username = user.name;
+    #       homeDirectory = "/home/${user.name}";
+    #     };
+    #   }
+    # ];
   };
 }

@@ -30,6 +30,7 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
 
+      users.root = lib.mkMerge config.universe.hm;
       users.${user.name} = lib.mkMerge config.universe.hm;
     };
   };
