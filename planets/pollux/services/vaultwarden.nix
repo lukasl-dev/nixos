@@ -16,12 +16,28 @@ in
       DOMAIN = "https://vault.${domain}";
       SIGNUPS_ALLOWED = false;
     };
+
+    environmentFile = config.sops.templates."planets/pollux/vaultwarden/env".path;
   };
 
-  sops.secrets = {
-    "planets/pollux/vaultwarden/key" = {
+  sops = {
+    secrets = {
+      "planets/pollux/vaultwarden/key" = {
+        owner = "vaultwarden";
+        path = "/var/lib/bitwarden_rs/rsa_key.pem";
+      };
+    };
+
+    templates."planets/pollux/vaultwarden/env" = {
       owner = "vaultwarden";
-      path = "/var/lib/bitwarden_rs/rsa_key.pem";
+      content = ''
+        SMTP_HOST=mail.${domain}
+        SMTP_PORT=465
+        SMTP_SECURITY=force_tls
+        SMTP_FROM=bot@${domain}
+        SMTP_USERNAME=bot@${domain}
+        SMTP_PASSWORD=${config.sops.placeholder."planets/pollux/maddy/bot"}
+      '';
     };
   };
 

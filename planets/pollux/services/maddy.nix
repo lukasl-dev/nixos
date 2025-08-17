@@ -110,15 +110,17 @@ in
         auth &local_authdb
 
         source $(local_domains) {
-          check {
-            authorize_sender {
-              prepare_email &local_rewrites
+        check {
+          authorize_sender {
+            prepare_email &local_rewrites
 
-              user_to_email static {
-                entry "me@$(primary_domain)" "me@$(primary_domain)" "bot@$(primary_domain)"
-              }
+            user_to_email static {
+              entry "me@$(primary_domain)" "$(primary_domain)"
+              entry "bot@$(primary_domain)" "bot@$(primary_domain)"
             }
           }
+        }
+
 
           destination postmaster $(local_domains) {
             deliver_to &local_routing
