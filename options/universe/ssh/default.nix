@@ -1,6 +1,12 @@
-{ config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
+  domain = config.universe.domain;
   user = config.universe.user;
 in
 {
@@ -29,6 +35,15 @@ in
     };
   };
   networking.firewall.allowedTCPPorts = [ 22 ];
+
+  environment.systemPackages = [
+    (pkgs.writeShellApplication {
+      name = "ssh-pollux";
+      text = ''
+        ${lib.optionalString config.planet.services.mullvad.enable "mullvad-exclude "}ssh pollux.planets.${domain}
+      '';
+    })
+  ];
 
   universe.hm = [
     {
