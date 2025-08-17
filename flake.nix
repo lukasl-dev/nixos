@@ -46,7 +46,7 @@
       system = "x86_64-linux";
 
       nixosSystem =
-        module: overrideMeta:
+        module:
         let
           pkgs-unstable = import nixpkgs-unstable {
             inherit system;
@@ -71,8 +71,8 @@
     in
     {
       nixosConfigurations = {
-        vega = nixosSystem ./planets/vega { };
-        pollux = nixosSystem ./planets/pollux { };
+        vega = nixosSystem ./planets/vega;
+        pollux = nixosSystem ./planets/pollux;
       };
     };
 }

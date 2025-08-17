@@ -1,4 +1,4 @@
-{ config, options, ... }:
+{ config, ... }:
 
 let
   domain = config.universe.domain;

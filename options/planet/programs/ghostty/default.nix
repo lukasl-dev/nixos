@@ -6,8 +6,6 @@
 }:
 
 let
-  user = config.universe.user;
-
   wm = config.planet.wm;
 in
 {
