@@ -34,10 +34,9 @@ D(
 	CNAME("icons", "cname.vercel-dns.com."),
 
 	// mail
-	CNAME("mail", "pollux.planets.lukasl.dev."),
+	A("mail", "185.245.61.227"),
 	MX("@", 10, "mail.lukasl.dev."),
-	TXT("@", "v=spf1 a:mail.lukasl.dev -all"),
-	TXT("_dmarc", "v=DMARC1; p=none"),
+	TXT("@", "v=spf1 mx -all"),
 
 	// social auth
 	TXT("_atproto", "did=did:plc:hj7h5xqaqhtlinjcz4q2dclk"),
