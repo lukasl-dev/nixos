@@ -67,11 +67,11 @@ in
       service_addr = ":1323";
       domain = "autoconfig.${domain}";
       imap = {
-        server = config.services.maddy.primaryDomain;
+        server = config.services.maddy.hostname;
         port = 993;
       };
       smtp = {
-        server = config.services.maddy.primaryDomain;
+        server = config.services.maddy.hostname;
         port = 587;
       };
     };
