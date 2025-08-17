@@ -7,6 +7,7 @@
 
 let
   user = config.universe.user;
+
   homeDir = config.home-manager.users.${user.name}.home.homeDirectory;
 in
 {
@@ -24,6 +25,13 @@ in
       text = # bash
         ''
           cp ${../nvim} ${homeDir}/.config/ -r
+        '';
+    })
+    (pkgs.writeShellApplication {
+      name = "nvim-unswap";
+      text = # bash
+        ''
+          rm -rf ${homeDir}/.local/state/nvim/swap
         '';
     })
   ];
