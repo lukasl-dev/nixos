@@ -11,7 +11,7 @@ in
 
     openFirewall = true;
 
-    primaryDomain = "mail.${domain}";
+    primaryDomain = domain;
     hostname = "mail.${domain}";
 
     ensureAccounts = [ "me@${domain}" ];
