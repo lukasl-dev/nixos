@@ -65,14 +65,18 @@ in
       }
 
       msgpipeline local_routing {
+        check {
+          rspamd {
+            api_path http://127.0.0.1:11334
+          }
+        }
+
         destination "bot@$(primary_domain)" {
           reject 550 5.1.1 "bot does not accept mail"
         }
 
         destination postmaster $(local_domains) {
-          modify {
-            replace_rcpt &rcpt_rewrites
-          }
+          modify { replace_rcpt &rcpt_rewrites }
           deliver_to &local_mailboxes
         }
 
@@ -219,6 +223,33 @@ in
         port = 587;
       };
     };
+  };
+
+  services.rspamd = {
+    enable = true;
+    locals = {
+      "dkim_signing.conf".text = ''
+        selector = "default";
+        domain = "project-insanity.org";
+        path = "/var/lib/maddy/dkim_keys/$domain_$selector.key";
+      '';
+
+      "redis.conf".text = ''
+        servers = "${config.services.redis.servers.rspamd.unixSocket}";
+      '';
+
+      "classifier-bayes.conf".text = ''
+        backend = "redis";
+        autolearn = true;
+      '';
+    };
+  };
+  systemd.services.rspamd.serviceConfig.SupplementaryGroups = [ "maddy" ];
+
+  services.redis.servers.rspamd = {
+    enable = true;
+    port = 0;
+    user = config.services.rspamd.user;
   };
 
   services.traefik.dynamicConfigOptions.http = {
