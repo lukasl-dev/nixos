@@ -35,6 +35,7 @@ D(
 
 	// mail
 	A("mail", "185.245.61.227"),
+	CNAME("autoconfig", "pollux.planets.lukasl.dev."),
 	MX("@", 10, "mail.lukasl.dev."),
 	TXT("@", "v=spf1 mx -all"),
 

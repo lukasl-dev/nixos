@@ -6,15 +6,14 @@
     ./networking.nix
 
     ./services/anki-sync-server.nix
-    ./services/dovecot.nix
     ./services/forgejo.nix
     # ./services/freshrss.nix
     # ./services/jellyfin.nix
+    ./services/maddy.nix
     # ./services/mealie.nix
     # ./services/nextcloud.nix
     ./services/prometheus.nix
     # ./services/nginx.nix
-    ./services/postfix.nix
     # ./services/restic.nix
     ./services/traefik.nix
     ./services/vaultwarden.nix

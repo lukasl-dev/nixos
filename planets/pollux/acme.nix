@@ -15,7 +15,10 @@ in
     certs.${domain} = {
       domain = domain;
       extraDomainNames = [ "*.${domain}" ];
-      reloadServices = [ "traefik.service" ];
+      reloadServices = [
+        "traefik.service"
+        "maddy.service"
+      ];
     };
   };
 
