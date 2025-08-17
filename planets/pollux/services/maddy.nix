@@ -14,9 +14,13 @@ in
     primaryDomain = domain;
     hostname = "mail.${domain}";
 
-    ensureAccounts = [ "me@${domain}" ];
+    ensureAccounts = [
+      "me@${domain}"
+      "bot@${domain}"
+    ];
     ensureCredentials = {
       "me@${domain}".passwordFile = config.sops.secrets."planets/pollux/maddy/me".path;
+      "bot@${domain}".passwordFile = config.sops.secrets."planets/pollux/maddy/bot".path;
     };
 
     tls = {
@@ -42,6 +46,12 @@ in
         options.services.maddy.config.default;
   };
 
+  environment.etc."maddy/aliases".text = ''
+    info@${domain}: me@${domain}
+    contact@${domain}: me@${domain}
+    git@${domain}: me@${domain}
+  '';
+
   users = {
     users.maddy = {
       isSystemUser = true;
@@ -57,8 +67,13 @@ in
     465
   ];
 
-  sops.secrets."planets/pollux/maddy/me" = {
-    owner = "maddy";
+  sops.secrets = {
+    "planets/pollux/maddy/me" = {
+      owner = "maddy";
+    };
+    "planets/pollux/maddy/bot" = {
+      owner = "maddy";
+    };
   };
 
   services.go-autoconfig = {
