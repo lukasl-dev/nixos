@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -11,18 +11,12 @@ in
 {
   options.planet.programs.uxplay = {
     enable = lib.mkEnableOption "Enable UxPlay";
-
-    openFirewall = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Open the firewall for LocalSend";
-    };
   };
 
   config = lib.mkIf uxplay.enable {
-    environment.systemPackages = [ pkgs.uxplay ];
+    environment.systemPackages = [ pkgs-unstable.uxplay ];
 
-    networking.firewall = lib.mkIf uxplay.openFirewall {
+    networking.firewall = {
       allowedTCPPorts = [
         7000
         7100
