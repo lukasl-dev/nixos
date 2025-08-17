@@ -38,6 +38,14 @@ D(
 	CNAME("autoconfig", "pollux.planets.lukasl.dev."),
 	MX("@", 10, "mail.lukasl.dev."),
 	TXT("@", "v=spf1 mx -all"),
+	TXT(
+		"default._domainkey",
+		"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzXZ9KSNwZeQltqCdiXJpK9/UWrOPaleqIP2sHR/IquUb/h1/9KNfiJBtX14KXbCugf4+Ae/d42Jlxt4138cbwKjjoxSSPpHZyNKN9MD+GpYX17Ytx+zr5B7zQDGjg7vqH/+QmtdDho/VjpaX7HYZS6ACINgMCDs57Y8K2KTn7v+LVxecauPTvdgHUCW559aKXX9F5pqmFHIvOgMSX2i116+o+CrxTOo+g3NeMKQmct7Jh+h66hSK5ocazIOV6FEttODaZ0zCqqx+lBJRTzLWyZ0I8iAiSrnj+jfcguBpRO6FMswfyHxKu9DgPSfnoMk6nGgFm9sD6YIZ2erPRy7FFwIDAQAB",
+	),
+	TXT(
+		"_dmarc",
+		"v=DMARC1; p=quarantine; rua=mailto:dmarc@lukasl.dev; ruf=mailto:dmarc@lukasl.dev; fo=1; adkim=s; aspf=s; pct=100",
+	),
 
 	// social auth
 	TXT("_atproto", "did=did:plc:hj7h5xqaqhtlinjcz4q2dclk"),
