@@ -32,6 +32,27 @@ set of rules, e.g. `hardware-configuration`, custom services, etc.
 The term "universe" refers to the cluster of nodes. The universes comprises
 universal rules, like shell aliases, users, domain, etc.
 
+## Synopsis
+
+```
+.
+├──. dns
+│  └── dns records configured via dnscontrol
+├──. options
+│  ├── universe
+│  │   └── universal configuration applied to all hosts
+│  └── planets
+│      └── host-specific configuration that needs to be toggled
+├──. planets
+│  └── host-specific entry configurations
+├──. secrets
+│  └── encrypted sops-nix secrets
+├──. wallpapers
+│  └── wallpapers that are randomly chosen on desktops
+└── universe.nix
+   └── universally applied values, like username, domain, etc.
+```
+
 ## Credits
 
 This configuration takes advantage of some other repositories and projects, including:
@@ -42,4 +63,3 @@ This configuration takes advantage of some other repositories and projects, incl
 - [catppuccin](https://github.com/catppuccin/nix)
 - [wallpapers](./wallpapers/README.md)
 - [Vimjoyer's Discord community](https://www.youtube.com/@vimjoyer)
-
