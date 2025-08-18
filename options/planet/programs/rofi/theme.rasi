@@ -66,12 +66,12 @@ listview {
     margin: 10px 20px 0px 20px;
     columns: 1;
     lines: 8;
-    background-color: @bg-col;
+    background-color: transparent;
 }
 
 element {
     padding: 5px;
-    background-color: @bg-col;
+    background-color: transparent;
     text-color: @fg-col  ;
 }
 
@@ -109,7 +109,7 @@ button selected {
 }
 
 message {
-    background-color: @bg-col;
+    background-color: transparent;
     margin: 2px;
     padding: 2px;
     border-radius: 5px;
@@ -119,9 +119,9 @@ textbox {
     padding: 6px;
     margin: 20px 0px 0px 20px;
     text-color: @accent;
-    background-color: @bg-col;
+    background-color: transparent;
 }
 
 error-message {
-    background-color: @bg-col;
+    background-color: transparent;
 }
