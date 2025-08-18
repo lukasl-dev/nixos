@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs-unstable,
+  ...
+}:
 
 let
   nvidia = config.planet.hardware.nvidia;
@@ -18,6 +23,8 @@ in
   config = lib.mkIf ollama.enable {
     services.ollama = {
       enable = true;
+
+      package = if nvidia.cuda then pkgs-unstable.ollama-cuda else pkgs-unstable.ollama;
 
       acceleration = if nvidia.cuda then "cuda" else false;
       environmentVariables = {
