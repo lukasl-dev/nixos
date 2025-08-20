@@ -12,7 +12,7 @@ in
 {
   imports = [
     ./lutris.nix
-    ./prismlauncher.nix
+    ./minecraft.nix
     ./r2modman.nix
     ./steam.nix
   ];

@@ -8,14 +8,14 @@
 let
   hyprland = config.planet.wm.hyprland;
 
-  prismlauncher = config.planet.gaming.prismlauncher;
+  minecraft = config.planet.gaming.minecraft;
 in
 {
-  options.planet.gaming.prismlauncher = {
-    enable = lib.mkEnableOption "Enable prismlauncher";
+  options.planet.gaming.minecraft = {
+    enable = lib.mkEnableOption "Enable minecraft";
   };
 
-  config = lib.mkIf prismlauncher.enable {
+  config = lib.mkIf minecraft.enable {
     environment.systemPackages = [
       pkgs-unstable.prismlauncher
       pkgs-unstable.lunar-client
