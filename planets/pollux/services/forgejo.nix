@@ -25,6 +25,19 @@ in
       metrics = {
         ENABLED = true;
       };
+
+      mailer = {
+        ENABLED = true;
+        SMTP_ADDR = "mail.lukasl.dev";
+        FROM = "bot@${domain}";
+        USER = "bot@${domain}";
+      };
+    };
+
+    secrets = {
+      mailer = {
+        PASSWD = config.sops.secrets."planets/pollux/maddy/bot".path;
+      };
     };
   };
 
@@ -44,7 +57,9 @@ in
   };
 
   sops = {
-    secrets."planets/pollux/forgejo/runner" = { };
+    secrets = {
+      "planets/pollux/forgejo/runner" = { };
+    };
     templates."planets/pollux/forgejo/runner-token-file".content = ''
       TOKEN=${config.sops.placeholder."planets/pollux/forgejo/runner"}
     '';
