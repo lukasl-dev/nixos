@@ -28,6 +28,28 @@ in
     };
   };
 
+  services.gitea-actions-runner = {
+    package = pkgs-unstable.forgejo-runner;
+    instances.pollux = {
+      enable = true;
+      name = "pollux";
+      tokenFile = config.sops.templates."planets/pollux/forgejo/runner-token-file".path;
+      url = "https://git.lukasl.dev/";
+      labels = [
+        "nixos-latest:docker://nixos/nix"
+        "ubuntu-latest:docker://node:24-bullseye"
+      ];
+      settings = { };
+    };
+  };
+
+  sops = {
+    secrets."planets/pollux/forgejo/runner" = { };
+    templates."planets/pollux/forgejo/runner-token-file".content = ''
+      TOKEN=${config.sops.placeholder."planets/pollux/forgejo/runner"}
+    '';
+  };
+
   services.traefik.dynamicConfigOptions.http = {
     routers.git = {
       rule = "Host(`git.${domain}`)";
