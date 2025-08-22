@@ -37,6 +37,7 @@ in
   networking.firewall.allowedTCPPorts = [ 22 ];
 
   environment.systemPackages = [
+    # TODO: if tailscale is enabled, use tailscale ssh
     (pkgs.writeShellApplication {
       name = "ssh-pollux";
       text = ''
