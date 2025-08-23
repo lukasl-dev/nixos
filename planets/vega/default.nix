@@ -49,8 +49,6 @@
 
     programs = {
       anki.enable = true;
-      bitwarden.enable = true;
-      discord.enable = true;
       uxplay.enable = true;
     };
 

@@ -14,5 +14,6 @@
     ./fonts.nix
     ./name.nix
     ./time.nix
+    ./xdg.nix
   ];
 }
