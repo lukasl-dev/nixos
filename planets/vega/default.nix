@@ -66,6 +66,7 @@
 
     development = {
       lean.enable = true;
+      python.enable = true;
     };
   };
 }
