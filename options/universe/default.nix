@@ -14,6 +14,7 @@
     ./nh.nix
     ./nix-ld.nix
     ./nix.nix
+    ./packages.nix
     ./stateVersion.nix
     ./udisks2.nix
     ./user.nix
