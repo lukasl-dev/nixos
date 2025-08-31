@@ -11,6 +11,7 @@ let
 in
 {
   imports = [
+    ./bottles.nix
     ./lutris.nix
     ./minecraft.nix
     ./r2modman.nix

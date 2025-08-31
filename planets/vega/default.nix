@@ -60,6 +60,8 @@
       enable = true;
 
       lutris.enable = true;
+      bottles.enable = true;
+
       steam.enable = true;
       minecraft.enable = true;
     };
@@ -67,6 +69,14 @@
     development = {
       lean.enable = true;
       python.enable = true;
+    };
+
+    virtualisation = {
+      libvirt = {
+        enable = true;
+        virt-manager.enable = true;
+      };
+      winapps.enable = true;
     };
   };
 }

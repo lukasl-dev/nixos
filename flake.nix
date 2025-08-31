@@ -34,6 +34,11 @@
     ghostty.url = "github:ghostty-org/ghostty";
 
     hjem.url = "github:feel-co/hjem";
+
+    winapps = {
+      url = "github:winapps-org/winapps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

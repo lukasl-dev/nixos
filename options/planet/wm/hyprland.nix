@@ -419,6 +419,7 @@ in
                 force_default_wallpaper = 0;
                 mouse_move_enables_dpms = false;
                 vrr = 1;
+                enable_anr_dialog = false;
               };
 
               render = {

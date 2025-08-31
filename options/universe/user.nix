@@ -55,6 +55,9 @@ in
             "wheel"
             "docker"
             "wireshark"
+            "libvirtd"
+            "libvirt"
+            "kvm"
           ];
 
           hashedPasswordFile = config.sops.secrets."universe/user/password".path;

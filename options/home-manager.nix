@@ -30,6 +30,8 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
 
+      backupFileExtension = "backup";
+
       users.root = lib.mkMerge config.universe.hm;
       users.${user.name} = lib.mkMerge config.universe.hm;
     };
