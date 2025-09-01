@@ -8,17 +8,15 @@
     ];
     loader = {
       efi.canTouchEfiVariables = true;
-      grub = {
+      limine = {
         enable = true;
-        efiSupport = true;
-        device = "nodev";
+        efiInstallAsRemovable = true;
       };
     };
     supportedFilesystems = {
       ntfs = true;
     };
   };
-  catppuccin.grub.enable = true;
 
   planet = {
     name = "vega";

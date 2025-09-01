@@ -33,7 +33,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     ghostty.url = "github:ghostty-org/ghostty";
 
-    hjem.url = "github:feel-co/hjem";
+    # hjem.url = "github:feel-co/hjem";
 
     winapps = {
       url = "github:winapps-org/winapps";

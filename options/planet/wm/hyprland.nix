@@ -27,7 +27,10 @@ in
   };
 
   config = lib.mkIf config.planet.wm.hyprland.enable {
+
     security.polkit.enable = true;
+    # TODO: update and enable this:
+    # services.hyprpolkitagent.enable = true;
 
     programs.hyprland = {
       enable = true;
