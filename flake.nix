@@ -83,6 +83,7 @@
     in
     {
       nixosConfigurations = {
+        orion = nixosSystem ./planets/orion;
         vega = nixosSystem ./planets/vega;
         pollux = nixosSystem ./planets/pollux;
       };
