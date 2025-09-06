@@ -73,8 +73,14 @@
       libvirt = {
         enable = true;
         virt-manager.enable = true;
+        winapps.enable = true;
+        # domains = {
+        #   RDPWindows = {
+        #     source = ../../vms/RDPWindows.xml;
+        #     autostart = false; # set to true if you want libvirt to autostart it
+        #   };
+        # };
       };
-      winapps.enable = true;
     };
   };
 }

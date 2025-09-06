@@ -91,6 +91,7 @@ in
     };
 
     hardware.graphics = {
+      enable = true;
       package = hypr-nixpkgs.mesa;
 
       enable32Bit = true;

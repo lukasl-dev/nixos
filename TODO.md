@@ -1,5 +1,5 @@
 # To Do
 
-- [ ] Remove home manager for faster builds
-- [ ] Create README.md
+- [ ] Remove home manager for faster builds?
+- [ ] Only use nixpkgs-unstable
 
