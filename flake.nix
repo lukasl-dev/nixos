@@ -21,16 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nil = {
-      url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-alien.url = "github:thiagokokada/nix-alien";
 
     nixgl.url = "github:nix-community/nixGL";
@@ -57,6 +47,7 @@
       nixpkgs-unstable,
       determinate,
       systems,
+      nvf,
       ...
     }@inputs:
     let
@@ -96,21 +87,18 @@
         pollux = nixosSystem ./planets/pollux;
       };
 
-      # packages = forEachSystem (
-      #   system:
-      #   let
-      #     pkgs = nixpkgs.legacyPackages.${system};
-      #   in
-      #   {
-      #     nvim = (
-      #       nvf.lib.neovimConfiguration {
-      #         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      #         modules = [
-      #           ./nvim/default.nix
-      #         ];
-      #       }
-      #     );
-      #   }
-      # );
+      packages = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          vim =
+            (nvf.lib.neovimConfiguration {
+              inherit pkgs;
+              modules = [ ./vim.nix ];
+            }).neovim;
+        }
+      );
     };
 }

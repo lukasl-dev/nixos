@@ -26,16 +26,16 @@ in
       (lib.mkIf wm.enable pkgs-unstable.mullvad-browser)
     ];
 
-    systemd.services.mullvad-allow-lan = {
-      description = "Allow LAN traffic with Mullvad";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "mullvad-daemon.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-      };
-      script = ''
-        ${lib.getExe pkgs-unstable.mullvad-vpn} lan set allow || true
-      '';
-    };
+    # systemd.services.mullvad-allow-lan = {
+    #   description = "Allow LAN traffic with Mullvad";
+    #   wantedBy = [ "multi-user.target" ];
+    #   after = [ "mullvad-daemon.service" ];
+    #   serviceConfig = {
+    #     Type = "oneshot";
+    #   };
+    #   script = ''
+    #     ${lib.getExe pkgs-unstable.mullvad-vpn} lan set allow || true
+    #   '';
+    # };
   };
 }

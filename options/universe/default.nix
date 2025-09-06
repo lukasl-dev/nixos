@@ -12,7 +12,6 @@
     ./i18n.nix
     ./networking.nix
     ./nh.nix
-    ./nix-ld.nix
     ./nix.nix
     ./packages.nix
     ./session-path.nix
