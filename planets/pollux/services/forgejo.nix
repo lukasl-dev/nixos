@@ -28,7 +28,7 @@ in
 
       mailer = {
         ENABLED = true;
-        SMTP_ADDR = "mail.lukasl.dev";
+        SMTP_ADDR = "mail.${domain}";
         FROM = "bot@${domain}";
         USER = "bot@${domain}";
       };
@@ -47,7 +47,7 @@ in
       enable = true;
       name = "pollux";
       tokenFile = config.sops.templates."planets/pollux/forgejo/runner-token-file".path;
-      url = "https://git.lukasl.dev/";
+      url = "https://git.${domain}/";
       labels = [
         "nixos-latest:docker://nixos/nix"
         "ubuntu-latest:docker://node:24-bullseye"
