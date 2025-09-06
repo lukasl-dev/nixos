@@ -11,6 +11,7 @@ in
     ./networking.nix
 
     ./services/anki-sync-server.nix
+    ./services/attic.nix
     ./services/forgejo.nix
     # ./services/freshrss.nix
     # ./services/jellyfin.nix
@@ -37,5 +38,5 @@ in
     '';
   };
 
-  users.users.${user.name}.linger = true;
+  # users.users.${user.name}.linger = true;
 }
