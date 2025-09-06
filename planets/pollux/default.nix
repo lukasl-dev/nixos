@@ -1,3 +1,8 @@
+{ config, ... }:
+
+let
+  user = config.universe.user;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -31,4 +36,6 @@
       %wheel ALL=(ALL) NOPASSWD: ALL
     '';
   };
+
+  users.users.${user.name}.linger = true;
 }
