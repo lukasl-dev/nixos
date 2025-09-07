@@ -159,10 +159,6 @@
       };
     };
 
-    notes = {
-      todo-comments.enable = true;
-    };
-
     navigation = {
       harpoon = {
         enable = true;
@@ -175,6 +171,14 @@
           file4 = "<leader>4";
         };
       };
+    };
+
+    binds = {
+      whichKey.enable = true;
+    };
+
+    notes = {
+      todo-comments.enable = true;
     };
 
     assistant = {
