@@ -17,7 +17,7 @@ This is my personal [NixOS](https://nixos.org/) configuration for my desktops an
 >
 > 1. Making this repository public allows me to setup devices easier since I
 >    don't need to manage credentials.
-> 2. Public Nix configs allows new users to get inspired by different ideas
+> 2. Public Nix configs allow new users to get inspired by different ideas
 >    and configuration methods.
 
 ## Terminology
