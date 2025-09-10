@@ -1,8 +1,3 @@
-{ config, ... }:
-
-let
-  user = config.universe.user;
-in
 {
   imports = [
     ./hardware-configuration.nix
