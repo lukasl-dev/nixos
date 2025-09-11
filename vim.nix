@@ -76,6 +76,13 @@
       }
     ];
 
+    # clipboard = {
+    #   enable = true;
+    #   providers = {
+    #     wl-copy.enable = true;
+    #   };
+    # };
+
     treesitter = {
       enable = true;
     };
@@ -100,9 +107,24 @@
         enable = true;
         lsp.enable = false;
       };
+      markdown = {
+        enable = true;
+        extensions = {
+          render-markdown-nvim.enable = true;
+        };
+      };
     };
 
-    telescope.enable = true;
+    telescope = {
+      enable = true;
+      setupOpts = {
+        defaults.color_devicons = true;
+      };
+    };
+
+    autopairs = {
+      nvim-autopairs.enable = true;
+    };
 
     lsp = {
       enable = true;
