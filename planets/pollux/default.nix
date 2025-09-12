@@ -17,6 +17,7 @@
     ./services/prometheus.nix
     # ./services/nginx.nix
     # ./services/restic.nix
+    ./services/seafile.nix
     ./services/traefik.nix
     ./services/vaultwarden.nix
   ];
