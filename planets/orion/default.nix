@@ -14,7 +14,6 @@
       systemd-boot.enable = false;
       limine = {
         enable = true;
-        # Install as a normal EFI boot entry (not fallback path)
         efiInstallAsRemovable = false;
       };
     };
