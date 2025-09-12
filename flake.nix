@@ -7,7 +7,7 @@
 
     systems.url = "github:nix-systems/default";
 
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    # determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -45,7 +45,7 @@
     {
       nixpkgs,
       nixpkgs-unstable,
-      determinate,
+      # determinate,
       systems,
       nvf,
       ...
@@ -73,7 +73,7 @@
           inherit system;
           specialArgs = specialArgs;
           modules = [
-            determinate.nixosModules.default
+            # determinate.nixosModules.default
 
             ./options
             ./universe.nix
