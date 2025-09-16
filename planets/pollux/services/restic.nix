@@ -5,10 +5,7 @@
     local = {
       initialize = true;
       repository = "/var/backup/restic/local";
-      paths = [
-        "/var/lib/vaultwarden"
-        (config.services.nextcloud.datadir)
-      ];
+      paths = [ "/var/lib" ];
       passwordFile = config.sops.secrets."planets/pollux/restic/secret".path;
     };
   };

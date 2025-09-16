@@ -22,6 +22,7 @@ in
     };
     seahubAddress = "127.0.0.1:${toString seahubPort}";
   };
+
   services.traefik.dynamicConfigOptions.http = {
     routers = {
       seafile-files = {
