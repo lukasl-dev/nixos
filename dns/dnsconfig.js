@@ -15,8 +15,10 @@ D(
 	A("pollux.planets", "185.245.61.227"),
 	AAAA("pollux.planets", "2a13:7e80:0:b2::"),
 
-	// github pages
-	ALIAS("@", "lukasl-dev.github.io."),
+	A("@", "185.245.61.227"),
+	AAAA("@", "2a13:7e80:0:b2::"),
+
+	CNAME("www", "lukasl-dev.github.io."),
 
 	// services
 	CNAME("anki", "pollux.planets.lukasl.dev."),

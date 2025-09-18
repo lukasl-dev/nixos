@@ -13,6 +13,7 @@ let
   traefikEntryPointName = "matrix";
   traefikEntryPointPort = 8448;
   matrixHost = "matrix.${domain}";
+  matrixServerName = domain;
 in
 {
   imports = [
@@ -24,11 +25,15 @@ in
     package = inputs.tuwunel.packages.${system}.default;
     settings = {
       global = {
-        server_name = matrixHost;
+        server_name = matrixServerName;
         address = [ "127.0.0.1" ];
         port = [ tuwunelPort ];
         allow_registration = true;
         registration_token_file = config.sops.secrets."planets/pollux/tuwunel/registration_token".path;
+        well_known = {
+          client = "https://${matrixHost}";
+          server = "${matrixHost}:${toString traefikEntryPointPort}";
+        };
       };
     };
   };
@@ -44,10 +49,18 @@ in
 
     dynamicConfigOptions = {
       http = {
-        routers.tuwunel = {
-          rule = "Host(`${matrixHost}`)";
-          entryPoints = [ "websecure" ];
-          service = "tuwunel";
+        routers = {
+          tuwunel = {
+            rule = "Host(`${matrixHost}`)";
+            entryPoints = [ "websecure" ];
+            service = "tuwunel";
+          };
+
+          tuwunel-well-known = {
+            rule = "Host(`${matrixServerName}`) && PathPrefix(`/.well-known/matrix`)";
+            entryPoints = [ "websecure" ];
+            service = "tuwunel";
+          };
         };
 
         services.tuwunel = {
@@ -60,11 +73,20 @@ in
       };
 
       tcp = {
-        routers.tuwunel = {
-          rule = "HostSNI(`${matrixHost}`)";
-          entryPoints = [ traefikEntryPointName ];
-          service = "tuwunel-tcp";
-          tls = { };
+        routers = {
+          tuwunel = {
+            rule = "HostSNI(`${matrixHost}`)";
+            entryPoints = [ traefikEntryPointName ];
+            service = "tuwunel-tcp";
+            tls = { };
+          };
+
+          tuwunel-apex = {
+            rule = "HostSNI(`${matrixServerName}`)";
+            entryPoints = [ traefikEntryPointName ];
+            service = "tuwunel-tcp";
+            tls = { };
+          };
         };
 
         services."tuwunel-tcp" = {
