@@ -1,7 +1,9 @@
 {
   inputs,
   config,
+  pkgs,
   pkgs-unstable,
+  lib,
   ...
 }:
 
@@ -15,12 +17,39 @@ let
   traefikEntryPointPort = 8448;
 
   matrixHost = "matrix.${domain}";
+  matrixClientUrl = "https://${matrixHost}";
+  matrixWellKnownServer = "${matrixHost}:${toString traefikEntryPointPort}";
   matrixServerName = domain;
+
+  elementCallHost = "call.${domain}";
+  elementCallPort = 8765;
+  elementCallUpstream = "http://127.0.0.1:${toString elementCallPort}";
+  matrixFocusUrl = "https://${elementCallHost}/livekit";
+  elementCallConfigJson = builtins.toJSON {
+    default_server_config = {
+      "m.homeserver" = {
+        "base_url" = matrixClientUrl;
+        "server_name" = matrixServerName;
+      };
+    };
+    livekit.livekit_service_url = matrixFocusUrl;
+  };
+
+  livekitApiPort = 8080;
+  livekitSfuPort = 7880;
 in
 {
   imports = [
     (pkgs-unstable.path + "/nixos/modules/services/matrix/tuwunel.nix")
   ];
+
+  systemd.services = {
+    livekit.serviceConfig.Restart = lib.mkForce "always";
+    lk-jwt-service = {
+      serviceConfig.Restart = lib.mkForce "always";
+      environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = matrixServerName;
+    };
+  };
 
   services.matrix-tuwunel = {
     enable = true;
@@ -33,21 +62,117 @@ in
         allow_registration = true;
         registration_token_file = config.sops.secrets."planets/pollux/tuwunel/registration_token".path;
         well_known = {
-          client = "https://${matrixHost}";
-          server = "${matrixHost}:${toString traefikEntryPointPort}";
-          # "org.matrix.msc4143.rtc_foci" = [
-          #   {
-          #     type = "livekit";
-          #     livekit_service_url = matrixFocusUrl;
-          #   }
-          # ];
+          client = matrixClientUrl;
+          server = matrixWellKnownServer;
+          "org.matrix.msc4143.rtc_foci" = [
+            {
+              type = "livekit";
+              livekit_service_url = matrixFocusUrl;
+            }
+          ];
         };
+      };
+    };
+  };
+
+  services.livekit = {
+    enable = true;
+    keyFile = config.sops.secrets."planets/pollux/livekit/keys".path;
+    openFirewall = true;
+    settings = {
+      port = livekitSfuPort;
+    };
+  };
+
+  services.lk-jwt-service = {
+    enable = true;
+    livekitUrl = "wss://${elementCallHost}/livekit/sfu";
+    keyFile = config.services.livekit.keyFile;
+    port = livekitApiPort;
+  };
+
+  services.nginx.virtualHosts.${elementCallHost} = {
+    listen = [
+      {
+        addr = "127.0.0.1";
+        port = elementCallPort;
+      }
+    ];
+    root = pkgs-unstable.element-call;
+    index = [ "index.html" ];
+    extraConfig = ''
+      autoindex off;
+    '';
+    locations = {
+      "/" = {
+        extraConfig = ''
+          try_files $uri /index.html;
+        '';
+      };
+
+      "= /config.json" = {
+        extraConfig = ''
+          default_type application/json;
+          return 200 '${elementCallConfigJson}';
+        '';
+      };
+
+      "/livekit/sfu/get" = {
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_pass http://127.0.0.1:${toString livekitApiPort}/sfu/get;
+        '';
+      };
+
+      "/livekit/sfu/" = {
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/sfu/;
+        '';
+      };
+
+      "= /livekit/sfu" = {
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/sfu;
+        '';
+      };
+
+      "^~ /livekit/jwt/" = {
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_pass http://127.0.0.1:${toString livekitApiPort}/;
+        '';
       };
     };
   };
 
   sops.secrets."planets/pollux/tuwunel/registration_token" = {
     owner = config.services.matrix-tuwunel.user;
+  };
+
+  sops.secrets."planets/pollux/livekit/keys" = {
+    mode = "0400";
   };
 
   services.traefik = {
@@ -70,11 +195,11 @@ in
             service = "tuwunel";
           };
 
-          # element-call = {
-          #   rule = "Host(`${elementCallHost}`)";
-          #   entryPoints = [ "websecure" ];
-          #   service = "element-call";
-          # };
+          element-call = {
+            rule = "Host(`${elementCallHost}`)";
+            entryPoints = [ "websecure" ];
+            service = "element-call";
+          };
         };
 
         services = {
@@ -86,16 +211,16 @@ in
             ];
           };
 
-          # element-call = {
-          #   loadBalancer = {
-          #     passHostHeader = false;
-          #     servers = [
-          #       {
-          #         url = elementCallUpstream;
-          #       }
-          #     ];
-          #   };
-          # };
+          element-call = {
+            loadBalancer = {
+              passHostHeader = false;
+              servers = [
+                {
+                  url = elementCallUpstream;
+                }
+              ];
+            };
+          };
         };
       };
 
