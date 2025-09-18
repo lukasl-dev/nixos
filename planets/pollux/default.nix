@@ -10,6 +10,7 @@
     ./services/forgejo.nix
     # ./services/freshrss.nix
     # ./services/jellyfin.nix
+    ./services/jitsi.nix
     ./services/maddy.nix
     # ./services/mealie.nix
     # ./services/nextcloud.nix

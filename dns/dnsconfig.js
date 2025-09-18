@@ -32,6 +32,7 @@ D(
 	CNAME("media", "pollux.planets.lukasl.dev."),
 	CNAME("metrics", "pollux.planets.lukasl.dev."),
 	CNAME("matrix", "pollux.planets.lukasl.dev."),
+	CNAME("meet", "pollux.planets.lukasl.dev."),
 	CNAME("turn", "pollux.planets.lukasl.dev."),
 	CNAME("nix", "pollux.planets.lukasl.dev."),
 
