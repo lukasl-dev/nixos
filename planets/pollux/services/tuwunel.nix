@@ -10,13 +10,16 @@ let
   domain = config.universe.domain;
 
   tuwunelPort = 6167;
+
   traefikEntryPointName = "matrix";
   traefikEntryPointPort = 8448;
+
   matrixHost = "matrix.${domain}";
   matrixServerName = domain;
+
+  matrixFocusUrl = "https://livekit-jwt.call.matrix.org";
   elementCallHost = "meet.${domain}";
   elementCallUpstream = "https://call.element.io";
-  matrixFocusUrl = "https://livekit-jwt.call.matrix.org";
 in
 {
   imports = [
