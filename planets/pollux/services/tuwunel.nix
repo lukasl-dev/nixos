@@ -92,6 +92,7 @@ in
   };
 
   services.nginx.virtualHosts.${elementCallHost} = {
+    enableACME = false;
     listen = [
       {
         addr = "127.0.0.1";
@@ -165,6 +166,12 @@ in
         '';
       };
     };
+  };
+
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
   };
 
   sops.secrets."planets/pollux/tuwunel/registration_token" = {
