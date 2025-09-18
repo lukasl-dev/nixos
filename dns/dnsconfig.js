@@ -11,10 +11,10 @@ D(
 
 	DefaultTTL(1),
 
+	A("@", "185.245.61.227"),
+
 	// planets
 	A("pollux.planets", "185.245.61.227"),
-
-	A("@", "185.245.61.227"),
 
 	CNAME("www", "lukasl-dev.github.io."),
 
