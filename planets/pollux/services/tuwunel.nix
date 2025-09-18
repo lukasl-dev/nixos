@@ -24,7 +24,8 @@ let
   elementCallHost = "call.${domain}";
   elementCallPort = 8765;
   elementCallUpstream = "http://127.0.0.1:${toString elementCallPort}";
-  matrixFocusUrl = "https://${elementCallHost}/livekit";
+  elementCallLivekitUrl = "https://${elementCallHost}/livekit";
+  matrixRtcFocusUrl = "https://${elementCallHost}/livekit/jwt";
   elementCallConfigJson = builtins.toJSON {
     default_server_config = {
       "m.homeserver" = {
@@ -32,7 +33,7 @@ let
         "server_name" = matrixServerName;
       };
     };
-    livekit.livekit_service_url = matrixFocusUrl;
+    livekit.livekit_service_url = elementCallLivekitUrl;
   };
 
   livekitApiPort = 8080;
@@ -67,7 +68,7 @@ in
           "org.matrix.msc4143.rtc_foci" = [
             {
               type = "livekit";
-              livekit_service_url = matrixFocusUrl;
+              livekit_service_url = matrixRtcFocusUrl;
             }
           ];
         };
@@ -163,6 +164,12 @@ in
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_pass http://127.0.0.1:${toString livekitApiPort}/;
+        '';
+      };
+
+      "= /livekit/jwt" = {
+        extraConfig = ''
+          return 307 /livekit/jwt/;
         '';
       };
     };
