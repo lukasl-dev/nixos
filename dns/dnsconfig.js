@@ -13,7 +13,6 @@ D(
 
 	// planets
 	A("pollux.planets", "185.245.61.227"),
-	AAAA("pollux.planets", "2a13:7e80:0:b2::"),
 
 	A("@", "185.245.61.227"),
 
