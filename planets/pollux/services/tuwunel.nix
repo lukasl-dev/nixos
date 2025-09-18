@@ -16,10 +16,6 @@ let
 
   matrixHost = "matrix.${domain}";
   matrixServerName = domain;
-
-  matrixFocusUrl = "https://livekit-jwt.call.matrix.org";
-  elementCallHost = "meet.${domain}";
-  elementCallUpstream = "https://call.element.io";
 in
 {
   imports = [
@@ -39,12 +35,12 @@ in
         well_known = {
           client = "https://${matrixHost}";
           server = "${matrixHost}:${toString traefikEntryPointPort}";
-          "org.matrix.msc4143.rtc_foci" = [
-            {
-              type = "livekit";
-              livekit_service_url = matrixFocusUrl;
-            }
-          ];
+          # "org.matrix.msc4143.rtc_foci" = [
+          #   {
+          #     type = "livekit";
+          #     livekit_service_url = matrixFocusUrl;
+          #   }
+          # ];
         };
       };
     };
@@ -74,11 +70,11 @@ in
             service = "tuwunel";
           };
 
-          element-call = {
-            rule = "Host(`${elementCallHost}`)";
-            entryPoints = [ "websecure" ];
-            service = "element-call";
-          };
+          # element-call = {
+          #   rule = "Host(`${elementCallHost}`)";
+          #   entryPoints = [ "websecure" ];
+          #   service = "element-call";
+          # };
         };
 
         services = {
@@ -90,16 +86,16 @@ in
             ];
           };
 
-          element-call = {
-            loadBalancer = {
-              passHostHeader = false;
-              servers = [
-                {
-                  url = elementCallUpstream;
-                }
-              ];
-            };
-          };
+          # element-call = {
+          #   loadBalancer = {
+          #     passHostHeader = false;
+          #     servers = [
+          #       {
+          #         url = elementCallUpstream;
+          #       }
+          #     ];
+          #   };
+          # };
         };
       };
 
