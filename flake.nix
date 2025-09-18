@@ -39,6 +39,8 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tuwunel.url = "github:matrix-construct/tuwunel";
   };
 
   outputs =

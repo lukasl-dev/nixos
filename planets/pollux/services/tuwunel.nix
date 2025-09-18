@@ -1,6 +1,12 @@
-{ config, pkgs-unstable, ... }:
+{
+  inputs,
+  config,
+  pkgs-unstable,
+  ...
+}:
 
 let
+  system = pkgs-unstable.stdenv.hostPlatform.system;
   domain = config.universe.domain;
 
   tuwunelPort = 6167;
@@ -15,7 +21,7 @@ in
 
   services.matrix-tuwunel = {
     enable = true;
-    package = pkgs-unstable.matrix-tuwunel;
+    package = inputs.tuwunel.packages.${system}.default;
     settings = {
       global = {
         server_name = matrixHost;
