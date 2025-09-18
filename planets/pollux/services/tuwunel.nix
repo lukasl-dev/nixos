@@ -14,6 +14,9 @@ let
   traefikEntryPointPort = 8448;
   matrixHost = "matrix.${domain}";
   matrixServerName = domain;
+  elementCallHost = "meet.${domain}";
+  elementCallUpstream = "https://call.element.io";
+  matrixFocusUrl = "https://livekit-jwt.call.matrix.org";
 in
 {
   imports = [
@@ -33,6 +36,12 @@ in
         well_known = {
           client = "https://${matrixHost}";
           server = "${matrixHost}:${toString traefikEntryPointPort}";
+          "org.matrix.msc4143.rtc_foci" = [
+            {
+              type = "livekit";
+              livekit_service_url = matrixFocusUrl;
+            }
+          ];
         };
       };
     };
@@ -61,14 +70,33 @@ in
             entryPoints = [ "websecure" ];
             service = "tuwunel";
           };
+
+          element-call = {
+            rule = "Host(`${elementCallHost}`)";
+            entryPoints = [ "websecure" ];
+            service = "element-call";
+          };
         };
 
-        services.tuwunel = {
-          loadBalancer.servers = [
-            {
-              url = "http://127.0.0.1:${toString tuwunelPort}";
-            }
-          ];
+        services = {
+          tuwunel = {
+            loadBalancer.servers = [
+              {
+                url = "http://127.0.0.1:${toString tuwunelPort}";
+              }
+            ];
+          };
+
+          element-call = {
+            loadBalancer = {
+              passHostHeader = false;
+              servers = [
+                {
+                  url = elementCallUpstream;
+                }
+              ];
+            };
+          };
         };
       };
 
