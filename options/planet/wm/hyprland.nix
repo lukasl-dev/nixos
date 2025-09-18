@@ -153,8 +153,10 @@ in
                   "clipse --listen"
                   "wpaperd -d"
                   "vesktop"
-                  "waybar-toggle"
+                  "element-desktop"
+                  "bitwarden"
                   "mullvad-vpn"
+                  "waybar-toggle"
                 ]
               ];
 
