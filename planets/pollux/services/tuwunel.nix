@@ -100,9 +100,9 @@ in
       }
     ];
     root = pkgs-unstable.element-call;
-    index = [ "index.html" ];
     extraConfig = ''
       autoindex off;
+      index index.html;
     '';
     locations = {
       "/" = {
