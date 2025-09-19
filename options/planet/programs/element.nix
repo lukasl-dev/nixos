@@ -21,8 +21,12 @@ in
   };
 
   config = lib.mkIf element.enable {
-    environment.systemPackages = [
-      pkgs-unstable.element-desktop
+    universe.hm = [
+      {
+        programs.element-desktop = {
+          enable = true;
+        };
+      }
     ];
   };
 }
