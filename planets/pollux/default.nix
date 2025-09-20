@@ -15,7 +15,7 @@
     # ./services/nextcloud.nix
     # ./services/ntfy-sh.nix
     ./services/prometheus.nix
-    # ./services/nginx.nix
+    ./services/nginx.nix
     # ./services/restic.nix
     ./services/seafile.nix
     ./services/restic.nix
