@@ -16,8 +16,6 @@ D(
 	// planets
 	A("pollux.planets", "185.245.61.227"),
 
-	CNAME("www", "lukasl-dev.github.io."),
-
 	// services
 	CNAME("anki", "pollux.planets.lukasl.dev."),
 	CNAME("cloud", "pollux.planets.lukasl.dev."),

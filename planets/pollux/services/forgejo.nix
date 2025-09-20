@@ -50,7 +50,8 @@ in
       url = "https://git.${domain}/";
       labels = [
         "nixos-latest:docker://nixos/nix"
-        "ubuntu-latest:docker://node:24-bullseye"
+        # "ubuntu-latest:docker://node:24-bullseye"
+        "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
       ];
       settings = { };
     };

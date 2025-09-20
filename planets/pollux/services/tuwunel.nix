@@ -100,7 +100,7 @@ in
       }
     ];
     root = pkgs-unstable.element-call;
-    index = [ "index.html" ];
+    # index = [ "index.html" ];
     extraConfig = ''
       autoindex off;
     '';
