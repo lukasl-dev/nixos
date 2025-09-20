@@ -64,17 +64,18 @@ D(
 	),
 );
 
-// D(
-// 	"onyx.md",
-// 	REG_NONE,
-// 	DnsProvider(DSP_CLOUDFLARE),
-//
-// 	DefaultTTL(1),
-//
-// 	A("@", "185.245.61.227"),
-//
-// 	TXT(
-// 		"_discord",
-// 		"dh=a093e62cdc46e107e1f3be45b38db8ad9bafcaf4",
-// 	),
-// );
+D(
+	"onyx.md",
+	REG_NONE,
+	DnsProvider(DSP_CLOUDFLARE),
+
+	DefaultTTL(1),
+
+	A("@", "216.198.79.1"),
+  CNAME("www", "609cdebc2adcc25c.vercel-dns-017.com."),
+
+	TXT(
+		"_discord",
+		"dh=a093e62cdc46e107e1f3be45b38db8ad9bafcaf4",
+	),
+);
