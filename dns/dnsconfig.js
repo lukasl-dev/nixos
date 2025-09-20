@@ -62,3 +62,16 @@ D(
 		"google-site-verification=SUszN4qahDNys9qK5s1jezKTNRva5rhfoBRbSkVoo3U",
 	),
 );
+
+D(
+	"onyx.md",
+	REG_NONE,
+	DnsProvider(DSP_CLOUDFLARE),
+
+	DefaultTTL(1),
+
+	TXT(
+		"_discord",
+		"dh=a093e62cdc46e107e1f3be45b38db8ad9bafcaf4",
+	),
+);
