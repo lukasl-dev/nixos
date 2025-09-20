@@ -70,6 +70,8 @@ D(
 
 	DefaultTTL(1),
 
+	A("@", "185.245.61.227"),
+
 	TXT(
 		"_discord",
 		"dh=a093e62cdc46e107e1f3be45b38db8ad9bafcaf4",
