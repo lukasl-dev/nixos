@@ -200,6 +200,7 @@ in
             rule = "Host(`${matrixServerName}`) && PathPrefix(`/.well-known/matrix`)";
             entryPoints = [ "websecure" ];
             service = "tuwunel";
+            priority = 100;
           };
 
           element-call = {
