@@ -13,7 +13,6 @@
     ./services/maddy.nix
     # ./services/mealie.nix
     # ./services/nextcloud.nix
-    ./services/onyx.nix
     # ./services/ntfy-sh.nix
     ./services/prometheus.nix
     ./services/nginx.nix
