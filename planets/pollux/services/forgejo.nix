@@ -12,8 +12,12 @@ in
     package = pkgs-unstable.forgejo;
 
     settings = {
+      DEFAULT = {
+        APP_NAME = "Lukas' Forge";
+      };
+
       server = {
-        DOMAIN = "git.${domain}";
+        DOMAIN = "forge.${domain}";
         HTTP_PORT = 7297;
         ROOT_URL = "https://${forgejo.settings.server.DOMAIN}";
       };
@@ -47,7 +51,7 @@ in
       enable = true;
       name = "pollux";
       tokenFile = config.sops.templates."planets/pollux/forgejo/runner-token-file".path;
-      url = "https://git.${domain}/";
+      url = "https://forge.${domain}/";
       labels = [
         "nixos-latest:docker://nixos/nix"
         # "ubuntu-latest:docker://node:24-bullseye"
@@ -67,12 +71,12 @@ in
   };
 
   services.traefik.dynamicConfigOptions.http = {
-    routers.git = {
-      rule = "Host(`git.${domain}`)";
+    routers.forge = {
+      rule = "Host(`forge.${domain}`)";
       entryPoints = [ "websecure" ];
-      service = "git";
+      service = "forge";
     };
-    services.git = {
+    services.forge = {
       loadBalancer.servers = [
         {
           url = "http://localhost:${toString forgejo.settings.server.HTTP_PORT}";
