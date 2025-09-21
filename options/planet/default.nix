@@ -13,6 +13,7 @@
 
     ./fonts.nix
     ./name.nix
+    ./sudo.nix
     ./time.nix
     ./xdg.nix
   ];

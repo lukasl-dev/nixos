@@ -30,13 +30,8 @@
   planet = {
     name = "pollux";
     timeZone = "Europe/Berlin";
-  };
 
-  security.sudo = {
-    enable = true;
-    extraConfig = ''
-      %wheel ALL=(ALL) NOPASSWD: ALL
-    '';
+    sudo.password = false;
   };
 
   # users.users.${user.name}.linger = true;
