@@ -72,6 +72,9 @@ in
         };
         url_preview_domain_explicit_allowlist = [
           "youtube.com"
+          "www.youtube.com"
+          "m.youtube.com"
+          "consent.youtube.com"
           "youtu.be"
           "ytimg.com"
         ];
