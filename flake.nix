@@ -53,12 +53,12 @@
       ...
     }@inputs:
     let
-      system = "x86_64-linux";
+      defaultSystem = "x86_64-linux";
 
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
 
-      nixosSystem =
-        module:
+      mkSpecialArgs =
+        system:
         let
           pkgs-unstable = import nixpkgs-unstable {
             inherit system;
@@ -67,12 +67,19 @@
               allowUnfree = true;
             };
           };
-          specialArgs = {
-            inherit self inputs pkgs-unstable;
-          };
         in
+        {
+          inherit self inputs pkgs-unstable;
+        };
+
+      mkNixosSystem =
+        {
+          system ? defaultSystem,
+          module,
+        }:
         nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
+          inherit system;
+          specialArgs = mkSpecialArgs system;
           modules = [
             ./options
             ./universe.nix
@@ -82,9 +89,13 @@
     in
     {
       nixosConfigurations = {
-        orion = nixosSystem ./planets/orion;
-        vega = nixosSystem ./planets/vega;
-        pollux = nixosSystem ./planets/pollux;
+        orion = mkNixosSystem { module = ./planets/orion; };
+        vega = mkNixosSystem { module = ./planets/vega; };
+        pollux = mkNixosSystem { module = ./planets/pollux; };
+        ida = mkNixosSystem {
+          system = "aarch64-linux";
+          module = ./planets/ida;
+        };
       };
 
       packages = forEachSystem (
