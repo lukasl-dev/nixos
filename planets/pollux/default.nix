@@ -8,7 +8,7 @@
     ./services/anki-sync-server.nix
     ./services/attic.nix
     ./services/forgejo.nix
-    # ./services/freshrss.nix
+    ./services/freshrss.nix
     # ./services/jellyfin.nix
     ./services/maddy.nix
     # ./services/mealie.nix
