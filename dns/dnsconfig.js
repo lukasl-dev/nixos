@@ -35,7 +35,7 @@ D(
 	CNAME("meet", "pollux.planets.lukasl.dev."),
 	CNAME("turn", "pollux.planets.lukasl.dev."),
 	CNAME("nix", "pollux.planets.lukasl.dev."),
-	CNAME("onyx", "pollux.planets.lukasl.dev."),
+	CNAME("fin", "pollux.planets.lukasl.dev."),
 
 	// iconolatry
 	CNAME("icons", "cname.vercel-dns.com."),

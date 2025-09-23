@@ -70,14 +70,17 @@ in
             }
           ];
         };
-        url_preview_domain_explicit_allowlist = [
-          "youtube.com"
-          "www.youtube.com"
-          "m.youtube.com"
-          "consent.youtube.com"
-          "youtu.be"
-          "ytimg.com"
-        ];
+        url_preview_domain_contains_allowlist = [ "*" ];
+        # url_preview_domain_explicit_allowlist = [
+        #   "youtube.com"
+        #   "www.youtube.com"
+        #   "m.youtube.com"
+        #   "consent.youtube.com"
+        #   "youtu.be"
+        #   "ytimg.com"
+        #   "github.com"
+        #   "wikipedia.org"
+        # ];
         url_preview_check_root_domain = true;
       };
     };
