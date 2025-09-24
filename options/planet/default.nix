@@ -11,6 +11,7 @@
     ./virtualisation
     ./wm
 
+    ./attic.nix
     ./fonts.nix
     ./name.nix
     ./sudo.nix

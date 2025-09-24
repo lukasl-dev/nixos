@@ -33,7 +33,7 @@ D(
 	CNAME("call", "pollux.planets.lukasl.dev."),
 	CNAME("meet", "pollux.planets.lukasl.dev."),
 	CNAME("turn", "pollux.planets.lukasl.dev."),
-	CNAME("nix", "pollux.planets.lukasl.dev."),
+	CNAME("cache", "pollux.planets.lukasl.dev."),
 	CNAME("fin", "pollux.planets.lukasl.dev."),
 	CNAME("notify", "pollux.planets.lukasl.dev."),
 

@@ -18,7 +18,7 @@ in
       jwt = { };
 
       chunking = {
-        nar-size-threshold = 64 * 1024; 
+        nar-size-threshold = 64 * 1024;
         min-size = 16 * 1024;
         avg-size = 64 * 1024;
         max-size = 256 * 1024;
@@ -48,12 +48,12 @@ in
   };
 
   services.traefik.dynamicConfigOptions.http = {
-    routers.attic = {
-      rule = "Host(`nix.${domain}`)";
+    routers.cache = {
+      rule = "Host(`cache.${domain}`)";
       entryPoints = [ "websecure" ];
-      service = "attic";
+      service = "cache";
     };
-    services.attic = {
+    services.cache = {
       loadBalancer.servers = [
         {
           url = "http://localhost:${toString port}";

@@ -27,3 +27,5 @@ sudo resolvectl domain ens18 ~.
 # Verify
 resolvectl status ens18
 ```
+
+## Attic
