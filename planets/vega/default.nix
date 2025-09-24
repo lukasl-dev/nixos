@@ -27,8 +27,12 @@
 
       sops.token = "planets/vega/attic/token";
 
-      cache = "vega";
-      trusted-public-key = "vega:B57uOXZgdBLi/6kEAnfmoIpIg+V8/RjLvxQI6iVCtO8=";
+      caches = {
+        vega = {
+          name = "vega";
+          trusted-public-key = "vega:B57uOXZgdBLi/6kEAnfmoIpIg+V8/RjLvxQI6iVCtO8=";
+        };
+      };
     };
 
     hardware = {
