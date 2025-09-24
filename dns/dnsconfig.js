@@ -22,7 +22,6 @@ D(
 	CNAME("files", "pollux.planets.lukasl.dev."),
 	CNAME("git", "pollux.planets.lukasl.dev."),
 	CNAME("forge", "pollux.planets.lukasl.dev."),
-	CNAME("ntfy", "pollux.planets.lukasl.dev."),
 	CNAME("notes", "lukasl-dev.github.io."),
 	CNAME("proxy", "pollux.planets.lukasl.dev."),
 	CNAME("vault", "pollux.planets.lukasl.dev."),
@@ -36,6 +35,7 @@ D(
 	CNAME("turn", "pollux.planets.lukasl.dev."),
 	CNAME("nix", "pollux.planets.lukasl.dev."),
 	CNAME("fin", "pollux.planets.lukasl.dev."),
+	CNAME("notify", "pollux.planets.lukasl.dev."),
 
 	// iconolatry
 	CNAME("icons", "cname.vercel-dns.com."),

@@ -12,6 +12,7 @@
     ./localsend.nix
     ./mpv.nix
     ./obsidian.nix
+    ./seahorse.nix
     ./thunderbird.nix
     ./uxplay.nix
     ./wireshark.nix
