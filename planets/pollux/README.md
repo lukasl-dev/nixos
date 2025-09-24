@@ -29,3 +29,19 @@ resolvectl status ens18
 ```
 
 ## Attic
+
+### Generate an Attic Token
+
+On pollux:
+
+```bash
+sudo atticd-atticadm make-token --sub '<sub>' --validity '1 year' --create-cache '<cache-name>' --push '<cache-name>' --pull '<cache-name>'
+```
+
+
+On the client:
+
+```bash
+attic login attic https://cache.lukasl.dev/<cache-name> "<token>"
+```
+
