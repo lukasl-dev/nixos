@@ -87,6 +87,7 @@ in
                 "image/svg+xml" = browser;
 
                 "application/pdf" = pdf;
+                "inode/directory" = "yazi.desktop";
               };
           };
         };
