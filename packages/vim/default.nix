@@ -3,7 +3,7 @@
     ./languages
     ./plugins
 
-    ./clipbaord.nix
+    ./clipboard.nix
     ./git.nix
     ./mappings.nix
     ./options.nix
