@@ -12,5 +12,6 @@
     screen
     dysk
     attic-client
+    cava
   ];
 }

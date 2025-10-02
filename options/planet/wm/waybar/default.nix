@@ -29,25 +29,28 @@ in
               position = "top";
               mod = "dock";
               exclusive = true;
-              passtrough = false;
+              passthrough = false;
               gtk-layer-shell = true;
               height = 32;
 
               modules-left = [
-                "clock"
                 "hyprland/workspaces"
               ];
 
-              modules-center = [ ];
+              modules-center = [
+                "hyprland/window"
+              ];
 
               modules-right = builtins.concatLists [
                 [
-                  "tray"
+                  "privacy"
+                  "wireplumber"
+                  "custom/mic"
                   "network"
                   "bluetooth"
-                  "custom/mic"
-                  "wireplumber"
                   "battery"
+                  "tray"
+                  "clock"
                 ]
                 (lib.optionals (config.planet.programs.uxplay.enable) [
                   "custom/uxplay"
@@ -56,6 +59,7 @@ in
 
               "hyprland/window" = {
                 format = "{}";
+                max-length = 80;
               };
 
               "hyprland/workspaces" = {
@@ -86,19 +90,24 @@ in
               };
 
               "custom/mic" = {
-                format = "{}";
-                escape = true;
+                return-type = "json";
                 interval = 1;
                 tooltip = false;
                 exec = ''
-                  wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{print ($NF == "[MUTED]") ? " " : " " int($2*100)"%"}'
+                  status=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@)
+                  vol=$(echo "$status" | awk '{print int($2*100)}')
+                  if echo "$status" | grep -q "\[MUTED\]"; then
+                    echo '{"text":"","class":"muted"}'
+                  else
+                    echo "{\"text\":\" $vol%\",\"class\":\"unmuted\"}"
+                  fi
                 '';
                 on-click = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
                 max-length = 50;
               };
 
               wireplumber = {
-                format = "{icon} {volume}%";
+                format = "{icon}   {volume}%";
                 format-muted = " ";
                 format-icons = {
                   default = [
@@ -111,18 +120,19 @@ in
               };
 
               tray = {
-                icon-size = 18;
+                icon-size = 16;
                 tooltip = false;
-                spacing = 12;
+                spacing = 8;
               };
 
               clock = {
                 timezone = planet.timeZone;
-                format = "{:%d/%m/%Y %H:%M}";
+                format = "{:%a %d/%m %H:%M}";
+                tooltip-format = "{:%A, %B %d • %Y}";
               };
 
               network = {
-                format-wifi = "  {essid} {signalStrength}%";
+                format-wifi = "    {signalStrength}%";
                 format-ethernet = "󰈀";
                 format-disconnected = "󰈂";
               };
@@ -132,6 +142,22 @@ in
                 format-connected = " {num_connections}";
                 format-disconnected = "";
                 format-disabled = "";
+              };
+
+              privacy = {
+                "icon-spacing" = 4;
+                "icon-size" = 18;
+                "transition-duration" = 250;
+                modules = [
+                  { type = "screenshare"; tooltip = true; "tooltip-icon-size" = 24; }
+                  { type = "audio-out";  tooltip = true; "tooltip-icon-size" = 24; }
+                  { type = "audio-in";   tooltip = true; "tooltip-icon-size" = 24; }
+                ];
+                "ignore-monitor" = true;
+                ignore = [
+                  { type = "audio-in"; name = "cava"; }
+                  { type = "screenshare"; name = "obs"; }
+                ];
               };
 
               battery = {
