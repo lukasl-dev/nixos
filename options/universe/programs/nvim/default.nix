@@ -52,9 +52,13 @@ in
           gnumake
           ripgrep
 
+          copilot-language-server
+
           # nix
           nixd
           nixfmt-rfc-style
+
+          codex
 
           # python
           ruff

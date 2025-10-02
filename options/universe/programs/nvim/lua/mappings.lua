@@ -108,17 +108,17 @@ map("n", "gd", ":Telescope lsp_definitions<CR>", { silent = true })
 map("n", "gr", ":Telescope lsp_references<CR>", { silent = true })
 map("n", "gl", ":Telescope diagnostics<CR>", { silent = true })
 
--- ====================================================================
--- copilot
--- ====================================================================
-
-map("i", "<C-g>", function()
-  local suggestion = require "copilot.suggestion"
-  if suggestion.is_visible() then
-    suggestion.accept_line()
-  else
-  end
-end, { silent = true })
+-- -- ====================================================================
+-- -- copilot
+-- -- ====================================================================
+--
+-- map("i", "<C-g>", function()
+--   local suggestion = require "copilot.suggestion"
+--   if suggestion.is_visible() then
+--     suggestion.accept_line()
+--   else
+--   end
+-- end, { silent = true })
 
 -- ====================================================================
 -- gitsigns

@@ -6,7 +6,7 @@ return {
     event = "InsertEnter",
 
     opts = {
-      suggestion = { enabled = true, auto_trigger = true },
+      suggestion = { enabled = false, auto_trigger = false },
       panel = { enabled = false },
     },
   },
