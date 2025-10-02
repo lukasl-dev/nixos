@@ -45,6 +45,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       nixpkgs-unstable,
       systems,
@@ -67,7 +68,7 @@
             };
           };
           specialArgs = {
-            inherit inputs pkgs-unstable;
+            inherit self inputs pkgs-unstable;
           };
         in
         nixpkgs.lib.nixosSystem {
@@ -96,7 +97,9 @@
             (nvf.lib.neovimConfiguration {
               inherit pkgs;
               modules = [ ./packages/vim ];
-              extraSpecialArgs = { rinputs = inputs; };
+              extraSpecialArgs = {
+                rinputs = inputs;
+              };
             }).neovim;
         }
       );

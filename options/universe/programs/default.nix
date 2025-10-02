@@ -1,6 +1,6 @@
 {
   imports = [
-    ./nvim
+    # ./nvim
     ./oh-my-posh
     ./tmux
 
@@ -18,6 +18,7 @@
     ./gpg.nix
     ./hyperfine.nix
     ./imagemagick.nix
+    ./nvim.nix
     ./ripgrep.nix
     ./speedtest.nix
     ./television.nix

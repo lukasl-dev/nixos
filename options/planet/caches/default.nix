@@ -1,7 +1,3 @@
 {
-  imports = [
-    ./ghostty.nix
-    ./hyprland.nix
-    ./nix-community.nix
-  ];
+  imports = [ ./nix-community.nix ];
 }
