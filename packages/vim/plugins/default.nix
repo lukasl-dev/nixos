@@ -1,0 +1,23 @@
+{
+  imports = [
+    ./blink-cmp.nix
+    ./cellular-automaton.nix
+    ./copilot.nix
+    ./diffview-nvim.nix
+    ./fff.nix
+    ./fidget-nvim.nix
+    ./fugitive.nix
+    ./gitsigns.nix
+    ./harpoon.nix
+    ./indent-blankline.nix
+    ./nvim-autopairs.nix
+    ./nvim-web-devicons.nix
+    ./oil.nix
+    ./otter-nvim.nix
+    ./sidekick.nix
+    ./telescope.nix
+    ./todo-comments.nix
+    ./trouble.nix
+    ./whichKey.nix
+  ];
+}

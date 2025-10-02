@@ -7,8 +7,6 @@
 
     systems.url = "github:nix-systems/default";
 
-    # determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,13 +39,14 @@
     };
 
     tuwunel.url = "github:matrix-construct/tuwunel";
+
+    fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
   };
 
   outputs =
     {
       nixpkgs,
       nixpkgs-unstable,
-      # determinate,
       systems,
       nvf,
       ...
@@ -72,11 +71,8 @@
           };
         in
         nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = specialArgs;
+          inherit system specialArgs;
           modules = [
-            # determinate.nixosModules.default
-
             ./options
             ./universe.nix
             module
@@ -99,7 +95,8 @@
           vim =
             (nvf.lib.neovimConfiguration {
               inherit pkgs;
-              modules = [ ./vim.nix ];
+              modules = [ ./packages/vim ];
+              extraSpecialArgs = { rinputs = inputs; };
             }).neovim;
         }
       );
