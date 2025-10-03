@@ -4,42 +4,28 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     systems.url = "github:nix-systems/default";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     sops-nix.url = "github:Mic92/sops-nix";
-
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-alien.url = "github:thiagokokada/nix-alien";
-
     nixgl.url = "github:nix-community/nixGL";
-
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-
     catppuccin.url = "github:catppuccin/nix";
-
     catppuccin-where-is-my-sddm-theme.url = "github:catppuccin/where-is-my-sddm-theme";
-
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-
     ghostty.url = "github:ghostty-org/ghostty";
-
     winapps = {
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     tuwunel.url = "github:matrix-construct/tuwunel";
-
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
   };
 
