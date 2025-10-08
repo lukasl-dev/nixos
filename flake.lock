@@ -122,11 +122,11 @@
         "zls": "zls"
       },
       "locked": {
-        "lastModified": 1759928931,
-        "narHash": "sha256-9kye+p3LCskfib3YoChbqZN57dt+YAY+/qyG7fWgJCg=",
+        "lastModified": 1759937750,
+        "narHash": "sha256-vIDc7VafVHI0J7tC7I9Zrsf4vsrAo60p5v4tEZpI0vk=",
         "owner": "lukasl-dev",
         "repo": "capTUre",
-        "rev": "093075d6c85aedddc3a0c83c72c6aec2de7d932a",
+        "rev": "ad2df6361a19a0b6910cef355b1861076a6349fa",
         "type": "github"
       },
       "original": {
