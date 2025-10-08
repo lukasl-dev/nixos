@@ -17,7 +17,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nixgl.url = "github:nix-community/nixGL";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
     catppuccin-where-is-my-sddm-theme.url = "github:catppuccin/where-is-my-sddm-theme";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     ghostty.url = "github:ghostty-org/ghostty";
@@ -27,6 +27,7 @@
     };
     tuwunel.url = "github:matrix-construct/tuwunel";
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
+    capTUre.url = "github:lukasl-dev/capTUre";
   };
 
   outputs =
@@ -61,16 +62,20 @@
       mkNixosSystem =
         {
           system ? defaultSystem,
-          module,
+          module ? null,
+          modules ? [ ],
         }:
+        let
+          baseModules = [
+            ./options
+            ./universe.nix
+          ];
+          extraModules = (if module != null then [ module ] else [ ]) ++ modules;
+        in
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = mkSpecialArgs system;
-          modules = [
-            ./options
-            ./universe.nix
-            module
-          ];
+          modules = baseModules ++ extraModules;
         };
     in
     {
@@ -78,9 +83,17 @@
         orion = mkNixosSystem { module = ./planets/orion; };
         vega = mkNixosSystem { module = ./planets/vega; };
         pollux = mkNixosSystem { module = ./planets/pollux; };
+
         ida = mkNixosSystem {
           system = "aarch64-linux";
           module = ./planets/ida;
+        };
+        ida-vm = mkNixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ./planets/ida
+            ./planets/ida/vm.nix
+          ];
         };
       };
 

@@ -14,7 +14,24 @@ in
   };
 
   config = lib.mkIf uxplay.enable {
-    environment.systemPackages = [ pkgs-unstable.uxplay ];
+
+    environment.systemPackages = [
+      pkgs-unstable.uxplay
+      (pkgs-unstable.writeShellApplication {
+        name = "uxplay-toggle";
+        runtimeInputs = [ pkgs-unstable.uxplay ];
+        text = ''
+          PID_FILE="/tmp/uxplay.pid"
+          if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null; then
+              kill "$(cat "$PID_FILE")"
+              rm "$PID_FILE"
+          else
+              uxplay -p tcp 4000 -p udp 5000 &> /dev/null & echo $! > "$PID_FILE"
+          fi
+        '';
+      })
+
+    ];
 
     networking.firewall = {
       allowedTCPPorts = [

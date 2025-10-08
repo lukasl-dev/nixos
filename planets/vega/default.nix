@@ -78,6 +78,7 @@
 
       steam.enable = true;
       minecraft.enable = true;
+      r2modman.enable = true;
     };
 
     development = {
