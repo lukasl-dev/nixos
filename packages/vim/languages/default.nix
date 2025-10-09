@@ -8,6 +8,7 @@
     ./markdown.nix
     ./nix.nix
     ./python.nix
+    ./r.nix
     ./rust.nix
     ./yaml.nix
     ./zig.nix
