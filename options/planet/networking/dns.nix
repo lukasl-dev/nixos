@@ -26,7 +26,7 @@ in
 
   config.networking = {
     networkmanager = {
-      enable = true;
+      enable = lib.mkDefault true;
       dns = "none";
     };
 

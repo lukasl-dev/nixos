@@ -88,13 +88,6 @@
           system = "aarch64-linux";
           module = ./planets/ida;
         };
-        ida-vm = mkNixosSystem {
-          system = "aarch64-linux";
-          modules = [
-            ./planets/ida
-            ./planets/ida/vm.nix
-          ];
-        };
       };
 
       packages = forEachSystem (
