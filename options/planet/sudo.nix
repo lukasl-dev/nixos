@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  sudo = config.planet.sudo;
+  inherit (config.planet) sudo;
 in
 {
   options.planet.sudo = {
@@ -15,9 +15,7 @@ in
   config = {
     security.sudo = {
       enable = true;
-      extraConfig = lib.mkIf (!sudo.password) ''
-        %wheel ALL=(ALL) NOPASSWD: ALL
-      '';
+      wheelNeedsPassword = sudo.password;
     };
   };
 }

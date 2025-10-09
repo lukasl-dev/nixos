@@ -25,6 +25,10 @@
   hardware = {
     enableRedistributableFirmware = true;
     firmware = [ pkgs.raspberrypiWirelessFirmware ];
+
+    deviceTree = {
+      kernelPackage = pkgs.linuxKernel.kernels.linux_rpi4;
+    };
   };
 
   zramSwap = {

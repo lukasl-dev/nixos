@@ -7,8 +7,8 @@
 }:
 
 let
-  system = pkgs-unstable.stdenv.hostPlatform.system;
-  domain = config.universe.domain;
+  inherit (pkgs-unstable.stdenv.hostPlatform) system;
+  inherit (config.universe) domain;
 
   tuwunelPort = 6167;
 

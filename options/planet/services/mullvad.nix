@@ -6,9 +6,9 @@
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
 
-  mullvad = config.planet.services.mullvad;
+  inherit (config.planet.services) mullvad;
 in
 {
   options.planet.services.mullvad = {
@@ -26,16 +26,24 @@ in
       (lib.mkIf wm.enable pkgs-unstable.mullvad-browser)
     ];
 
-    # systemd.services.mullvad-allow-lan = {
-    #   description = "Allow LAN traffic with Mullvad";
-    #   wantedBy = [ "multi-user.target" ];
-    #   after = [ "mullvad-daemon.service" ];
-    #   serviceConfig = {
-    #     Type = "oneshot";
-    #   };
-    #   script = ''
-    #     ${lib.getExe pkgs-unstable.mullvad-vpn} lan set allow || true
-    #   '';
-    # };
+    systemd.services.mullvad-tailscale-compat = {
+      description = "Mullvad settings for Tailscale compatibility";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "mullvad-daemon.service" ];
+      requires = [ "mullvad-daemon.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      script = ''
+        set -euo pipefail
+        MULLVAD=${lib.getExe pkgs-unstable.mullvad-vpn}
+
+        $MULLVAD lan set allow || true
+
+        if $MULLVAD help 2>&1 | grep -q "split-tunnel"; then
+          $MULLVAD split-tunnel add by-app /run/current-system/sw/bin/tailscaled || true
+        fi
+      '';
+    };
   };
 }
