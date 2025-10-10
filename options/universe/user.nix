@@ -1,9 +1,7 @@
 { config, lib, ... }:
 
 let
-  universe = config.universe;
-
-  user = universe.user;
+  inherit (config.universe) user;
 in
 {
   options.universe.user = {
@@ -25,7 +23,7 @@ in
   config = {
     assertions = [
       {
-        assertion = universe.user.name != "";
+        assertion = user.name != "";
         message = "🪐 Please define 'universe.user.name'.";
       }
     ];
@@ -49,7 +47,7 @@ in
 
         "${user.name}" = {
           isNormalUser = true;
-          description = user.description;
+          inherit (user) description;
           extraGroups = [
             "networkmanager"
             "wheel"
@@ -63,6 +61,10 @@ in
           hashedPasswordFile = config.sops.secrets."universe/user/password".path;
         };
       };
+    };
+
+    environment.sessionVariables = {
+      EDITOR = "nvim";
     };
 
     # universe.hm = [
