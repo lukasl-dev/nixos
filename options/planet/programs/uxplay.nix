@@ -6,7 +6,7 @@
 }:
 
 let
-  uxplay = config.planet.programs.uxplay;
+  inherit (config.planet.programs) uxplay;
 in
 {
   options.planet.programs.uxplay = {
@@ -37,6 +37,7 @@ in
       allowedTCPPorts = [
         7000
         7100
+
         4000
         4001
         4002
