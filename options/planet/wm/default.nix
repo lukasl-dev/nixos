@@ -6,12 +6,13 @@
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
 in
 {
   imports = [
     ./waybar
 
+    ./caelestia.nix
     ./gtk.nix
     ./hyprland.nix
     ./qt.nix

@@ -28,6 +28,11 @@
     tuwunel.url = "github:matrix-construct/tuwunel";
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
     capTUre.url = "github:lukasl-dev/capTUre";
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      # TODO: resolve issue
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -10,6 +10,7 @@
     ./gitsigns.nix
     ./harpoon.nix
     ./indent-blankline.nix
+    ./lean.nix
     ./neogit.nix
     ./nvim-autopairs.nix
     ./nvim-web-devicons.nix
