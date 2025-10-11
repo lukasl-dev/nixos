@@ -8,11 +8,11 @@
 }:
 
 let
-  system = pkgs.stdenv.hostPlatform.system;
+  inherit (pkgs.stdenv.hostPlatform) system;
   hypr-nixpkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system};
+
   hypr-pkgs = inputs.hyprland.packages.${system};
-  hyprland = hypr-pkgs.hyprland;
-  xdg-desktop-portal-hyprland = hypr-pkgs.xdg-desktop-portal-hyprland;
+  inherit (hypr-pkgs) hyprland xdg-desktop-portal-hyprland;
 in
 {
   options.planet.wm.hyprland = {
@@ -166,17 +166,20 @@ in
                   "element-desktop"
                   "bitwarden"
                   "mullvad-vpn"
-                  "waybar-toggle"
+                  # "waybar-toggle"
                 ]
               ];
 
               bind = builtins.concatLists [
                 [
-                  "${mainMod}, Space, exec, rofi -show drun -show-icons"
-                  "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
+                  # "${mainMod}, Space, exec, rofi -show drun -show-icons"
+                  "${mainMod}, Space, exec, caelestia shell drawers toggle launcher"
+                  # "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
+                  "${mainMod}, Backspace, exec, caelestia shell drawers toggle launcher"
                   "${mainMod}, E, exec, bemoji"
-                  ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
-                  "${mainMod}, p, exec, swaync-client -t"
+                  # ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
+                  "${mainMod}, C, exec, caelestia clipboard"
+                  # "${mainMod}, p, exec, swaync-client -t"
                   ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
                   "${mainMod}, T, exec, ghostty"
                   "${mainMod}, B, exec, zen-beta"
@@ -456,23 +459,23 @@ in
         };
 
         # wallpapers
-        services.wpaperd = {
-          enable = true;
-          settings = {
-            default = {
-              duration = "5m";
-              mode = "center";
-              sorting = "random";
-            };
-            any = {
-              path = ../../../wallpapers;
-            };
-          };
-        };
+        # services.wpaperd = {
+        #   enable = true;
+        #   settings = {
+        #     default = {
+        #       duration = "5m";
+        #       mode = "center";
+        #       sorting = "random";
+        #     };
+        #     any = {
+        #       path = ../../../wallpapers;
+        #     };
+        #   };
+        # };
 
         # notification manager
-        services.swaync.enable = true;
-        home.packages = [ pkgs.libnotify ];
+        # services.swaync.enable = true;
+        # home.packages = [ pkgs.libnotify ];
 
         # TODO: make this configurable
         # dimming

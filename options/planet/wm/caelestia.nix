@@ -18,44 +18,48 @@ lib.mkIf config.planet.wm.enable {
           environment = [ ];
         };
         settings = {
-          bar.entries = [
-            {
-              id = "logo";
-              enabled = true;
-            }
-            {
-              id = "workspaces";
-              enabled = true;
-            }
-            {
-              id = "spacer";
-              enabled = true;
-            }
-            {
-              id = "activeWindow";
-              enabled = false;
-            }
-            {
-              id = "spacer";
-              enabled = true;
-            }
-            {
-              id = "tray";
-              enabled = true;
-            }
-            {
-              id = "clock";
-              enabled = true;
-            }
-            {
-              id = "statusIcons";
-              enabled = true;
-            }
-            {
-              id = "power";
-              enabled = false;
-            }
-          ];
+          appearance.rounding.scale = 2;
+          bar = {
+            entries = [
+              {
+                id = "logo";
+                enabled = true;
+              }
+              {
+                id = "workspaces";
+                enabled = true;
+              }
+              {
+                id = "spacer";
+                enabled = true;
+              }
+              {
+                id = "activeWindow";
+                enabled = false;
+              }
+              {
+                id = "spacer";
+                enabled = true;
+              }
+              {
+                id = "tray";
+                enabled = true;
+              }
+              {
+                id = "clock";
+                enabled = true;
+              }
+              {
+                id = "statusIcons";
+                enabled = true;
+              }
+              {
+                id = "power";
+                enabled = false;
+              }
+            ];
+            tray.recolour = true;
+          };
           paths.wallpaperDir = ././../../../wallpapers;
         };
         cli = {
@@ -65,6 +69,8 @@ lib.mkIf config.planet.wm.enable {
           };
         };
       };
+
+      # services.cliphist.enable = true;
     }
   ];
 }

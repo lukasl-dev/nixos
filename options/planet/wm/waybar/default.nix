@@ -1,16 +1,14 @@
 { config, lib, ... }:
 
 let
-  planet = config.planet;
-  hyprland = planet.wm.hyprland;
-
-  waybar = planet.wm.waybar;
+  inherit (config) planet;
+  inherit (planet.wm) hyprland waybar;
 in
 {
   options.planet.wm.waybar = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = hyprland.enable;
+      default = hyprland.enable && false;
       description = "Enable Waybar for Hyprland";
     };
   };
