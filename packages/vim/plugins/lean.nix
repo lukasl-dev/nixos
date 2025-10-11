@@ -49,7 +49,10 @@ let
 in
 {
   vim = {
-    extraPackages = with pkgs; [ lean4 ];
+    extraPackages = with pkgs; [
+      lean4
+      elan
+    ];
 
     lazy.plugins."lean.nvim" = {
       inherit package;
