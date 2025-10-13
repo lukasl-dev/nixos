@@ -84,6 +84,7 @@
     development = {
       lean.enable = true;
       python.enable = true;
+      R.enable = true;
     };
 
     virtualisation = {

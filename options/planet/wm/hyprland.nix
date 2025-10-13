@@ -161,7 +161,7 @@ in
 
                   # TODO: only start these if the corresponding service is enabled
                   "clipse --listen"
-                  "wpaperd -d"
+                  # "wpaperd -d"
                   "vesktop"
                   "element-desktop"
                   "bitwarden"
@@ -183,7 +183,7 @@ in
                   ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
                   "${mainMod}, T, exec, ghostty"
                   "${mainMod}, B, exec, zen-beta"
-                  "${mainMod}, G, exec, waybar-toggle"
+                  # "${mainMod}, G, exec, waybar-toggle"
 
                   "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
                   "${mainMod}, O, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"

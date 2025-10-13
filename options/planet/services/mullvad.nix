@@ -26,6 +26,7 @@ in
       (lib.mkIf wm.enable pkgs-unstable.mullvad-browser)
     ];
 
+    # Re-apply LAN allow on boot / daemon restart
     systemd.services.mullvad-tailscale-compat = {
       description = "Mullvad settings for Tailscale compatibility";
       wantedBy = [ "multi-user.target" ];
@@ -36,14 +37,13 @@ in
       };
       script = ''
         set -euo pipefail
-        MULLVAD=${lib.getExe pkgs-unstable.mullvad-vpn}
-
-        $MULLVAD lan set allow || true
-
-        if $MULLVAD help 2>&1 | grep -q "split-tunnel"; then
-          $MULLVAD split-tunnel add by-app /run/current-system/sw/bin/tailscaled || true
-        fi
+        ${lib.getExe pkgs-unstable.mullvad-vpn} lan set allow || true
       '';
     };
+
+    # Ensure tailscaled is always excluded via split tunnel, even after restarts
+    systemd.services.tailscaled.serviceConfig.ExecStartPost = [
+      "-${lib.getExe pkgs-unstable.mullvad-vpn} split-tunnel add $MAINPID"
+    ];
   };
 }

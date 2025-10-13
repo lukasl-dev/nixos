@@ -4,7 +4,8 @@
   services.tailscale = {
     enable = true;
     openFirewall = true;
-    extraUpFlags = [ "--ssh" ];
+    # Avoid DNS conflicts with Mullvad by keeping system DNS under your control.
+    extraUpFlags = [ "--ssh" "--accept-dns=false" ];
     authKeyFile = config.sops.secrets."universe/tailscale/auth_key".path;
   };
 
