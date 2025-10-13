@@ -5,6 +5,7 @@
     ./javascript.nix
     ./python.nix
     ./lean.nix
+    ./r.nix
     ./tex.nix
   ];
 }

@@ -6,13 +6,17 @@
 }:
 
 let
-  domain = config.universe.domain;
-  user = config.universe.user;
+  inherit (config.universe) domain user;
 in
 {
-  sops.secrets."universe/user/ssh/private_key" = {
-    owner = user.name;
-    path = "/home/${user.name}/.ssh/id_ed25519";
+  sops.secrets = {
+    "universe/user/ssh/private_keys/default" = {
+      owner = user.name;
+      path = "/home/${user.name}/.ssh/id_ed25519";
+    };
+    "universe/user/ssh/private_keys/g0_complang_tuwien_ac_at" = {
+      owner = user.name;
+    };
   };
 
   users.users = {
@@ -49,6 +53,15 @@ in
   universe.hm = [
     {
       home.file.".ssh/id_ed25519.pub".source = ./id_ed25519.pub;
+
+      programs.ssh = {
+        enable = true;
+        extraConfig = ''
+          Host g0.complang.tuwien.ac.at
+            IdentityFile ${config.sops.secrets."universe/user/ssh/private_keys/g0_complang_tuwien_ac_at".path}
+            IdentitiesOnly yes
+        '';
+      };
     }
   ];
 }

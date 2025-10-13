@@ -32,11 +32,6 @@ in
       "universe/user/password" = {
         neededForUsers = true;
       };
-
-      "universe/user/ssh/private_key" = {
-        owner = user.name;
-        path = "/home/${user.name}/.ssh/id_ed25519";
-      };
     };
 
     users = {
