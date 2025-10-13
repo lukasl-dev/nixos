@@ -13,5 +13,6 @@
     dysk
     attic-client
     cava
+    tree
   ];
 }
