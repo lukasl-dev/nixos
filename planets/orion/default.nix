@@ -97,7 +97,7 @@
 
       hyprland = {
         enable = true;
-        monitors = [ 
+        monitors = [
           "eDP-1, 1920x1080@144.02800, 0x0, 1"
         ];
       };
@@ -111,6 +111,12 @@
 
     services = {
       mullvad.enable = true;
+    };
+
+    development = {
+      lean.enable = true;
+      python.enable = true;
+      R.enable = true;
     };
   };
 
