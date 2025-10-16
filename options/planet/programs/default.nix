@@ -13,6 +13,7 @@
     ./mpv.nix
     ./obsidian.nix
     ./seahorse.nix
+    ./sioyek.nix
     ./thunderbird.nix
     ./uxplay.nix
     ./wireshark.nix

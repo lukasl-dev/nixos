@@ -13,7 +13,7 @@ in
   options.planet.programs.rofi = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = wm.enable;
+      default = wm.enable && false;
       description = "Enable rofi";
     };
   };

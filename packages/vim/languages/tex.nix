@@ -18,7 +18,17 @@ let
 in
 {
   vim = {
-    extraPackages = with pkgs; [ sioyek ];
+    extraPackages = [
+      (pkgs.symlinkJoin {
+        name = "sioyek";
+        paths = [ pkgs.sioyek ];
+        buildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/sioyek \
+            --set QT_QPA_PLATFORM xcb
+        '';
+      })
+    ];
 
     lazy.plugins."vimtex" = {
       inherit package;
