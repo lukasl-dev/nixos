@@ -10,6 +10,7 @@
     ./python.nix
     ./r.nix
     ./rust.nix
+    ./tex.nix
     ./yaml.nix
     ./zig.nix
   ];
