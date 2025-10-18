@@ -7,7 +7,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "folke";
       repo = "sidekick.nvim";
-      rev = "52a6ed40d312726a45ffc191fdc81791c4d928f5";
+      rev = "cefee0d4d8b59488d3d46b720542b50d45d0f3eb";
       hash = "sha256-+uChBKOYqxhrk3NghcX/PsHXYRgI1lJaLbEFOW9mgVg=";
     };
     nvimSkipModules = [ "sidekick.docs" ];

@@ -28,7 +28,8 @@
     formatter.conform-nvim = {
       enable = true;
       setupOpts.format_on_save = {
-        timeout_ms = 500;
+        # Increase to accommodate slower formatters (e.g., IntelliJ CLI on first run)
+        timeout_ms = 20000;
         lsp_fallback = true;
       };
     };

@@ -11,27 +11,21 @@ return {
   },
 
   config = function(opts)
-    local formatters = {}
-
+    -- Load optional formatter definitions from runtime (lua/fmts/*.lua)
+    local extra_formatters = {}
     local files = vim.api.nvim_get_runtime_file("lua/fmts/*.lua", true)
     for _, file in ipairs(files) do
       local fmt_name = file:match "([^/]+)%.%w+$"
-
-      local mod = require("fmts." .. fmt_name)
-      if mod ~= nil then
-        formatters[fmt_name] = mod
+      local ok, mod = pcall(require, "fmts." .. fmt_name)
+      if ok and mod ~= nil then
+        extra_formatters[fmt_name] = mod
       end
     end
 
-    -- TODO: this is currently needeed?
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*",
-      callback = function(args)
-        require("conform").format { bufnr = args.buf }
-      end,
-    })
+    -- Merge any discovered formatter definitions into opts.formatters
+    opts.formatters = vim.tbl_deep_extend("force", opts.formatters or {}, extra_formatters)
 
-    opts.formatters_by_ft = formatters
+    -- Rely on conform.nvim's built-in format_on_save; avoid custom autocmds
     require("conform").setup(opts)
   end,
 }
