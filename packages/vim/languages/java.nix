@@ -23,19 +23,19 @@ in
 
     languages.java.enable = true;
 
-    formatter.conform-nvim = {
-      setupOpts = {
-        formatters = {
-          intellij_format = {
-            command = "${intellijFormat}/bin/intellij-format";
-            args = [ "$FILENAME" ];
-            stdin = false;
-            # Allow enough time for the JVM to start
-            timeout_ms = 60000;
-          };
-        };
-        formatters_by_ft.java = [ "intellij_format" ];
-      };
-    };
+    # formatter.conform-nvim = {
+    #   setupOpts = {
+    #     formatters = {
+    #       intellij_format = {
+    #         command = "${intellijFormat}/bin/intellij-format";
+    #         args = [ "$FILENAME" ];
+    #         stdin = false;
+    #         # Allow enough time for the JVM to start
+    #         timeout_ms = 60000;
+    #       };
+    #     };
+    #     formatters_by_ft.java = [ "intellij_format" ];
+    #   };
+    # };
   };
 }
