@@ -14,7 +14,7 @@ in
 
     templates."universe/ntfy/client" = {
       content = ''
-        default-host: https://notify.${domain}
+        default-host: https://ntfy.${domain}
         default-user: ${config.sops.placeholder."universe/ntfy/user"}
         default-password: ${config.sops.placeholder."universe/ntfy/password"}
       '';
