@@ -13,7 +13,7 @@ in
     package = pkgs-unstable.ntfy-sh;
 
     settings = {
-      base-url = "https://notify.${domain}";
+      base-url = "https://ntfy.${domain}";
       listen-http = "127.0.0.1:${toString port}";
       behind-proxy = true;
       enable-login = true;
@@ -38,12 +38,12 @@ in
   };
 
   services.traefik.dynamicConfigOptions.http = {
-    routers.notify = {
-      rule = "Host(`notify.${domain}`)";
+    routers.ntfy = {
+      rule = "Host(`ntfy.${domain}`)";
       entryPoints = [ "websecure" ];
-      service = "notify";
+      service = "ntfy";
     };
-    services.notify = {
+    services.ntfy = {
       loadBalancer = {
         passHostHeader = true;
         servers = [

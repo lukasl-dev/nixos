@@ -19,7 +19,7 @@ in
         default-password: ${config.sops.placeholder."universe/ntfy/password"}
       '';
       owner = user.name;
-      path = "/home/${user.name}/.config/ntfy/client.yaml";
+      path = "/home/${user.name}/.config/ntfy/client.yml";
     };
   };
 }

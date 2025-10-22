@@ -35,7 +35,7 @@ D(
 	CNAME("turn", "pollux.planets.lukasl.dev."),
 	CNAME("cache", "pollux.planets.lukasl.dev."),
 	CNAME("fin", "pollux.planets.lukasl.dev."),
-	CNAME("notify", "pollux.planets.lukasl.dev."),
+	CNAME("ntfy", "pollux.planets.lukasl.dev."),
 
 	// iconolatry
 	CNAME("icons", "cname.vercel-dns.com."),
