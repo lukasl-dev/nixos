@@ -18,6 +18,7 @@
     ./gpg.nix
     ./hyperfine.nix
     ./imagemagick.nix
+    ./ntfy.nix
     ./nvim.nix
     ./ripgrep.nix
     ./speedtest.nix
