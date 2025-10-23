@@ -23,7 +23,6 @@ D(
 	CNAME("git", "pollux.planets.lukasl.dev."),
 	CNAME("forge", "pollux.planets.lukasl.dev."),
 	CNAME("notes", "pollux.planets.lukasl.dev."),
-	// CNAME("notes", "lukasl-dev.github.io."),
 	CNAME("proxy", "pollux.planets.lukasl.dev."),
 	CNAME("vault", "pollux.planets.lukasl.dev."),
 	CNAME("rss", "pollux.planets.lukasl.dev."),
