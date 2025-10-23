@@ -18,6 +18,7 @@
     ./services/ntfy.nix
     ./services/prometheus.nix
     ./services/nginx.nix
+    ./services/notes.nix
     # ./services/restic.nix
     ./services/seafile.nix
     ./services/restic.nix
