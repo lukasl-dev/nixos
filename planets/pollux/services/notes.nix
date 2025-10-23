@@ -19,6 +19,13 @@ in
       }
     ];
     root = "/var/www/notes";
+    locations."/" = {
+      index = "index.html";
+      tryFiles = "$uri $uri.html $uri/ =404";
+    };
+    extraConfig = ''
+      error_page 404 /404.html;
+    '';
   };
 
   services.traefik.dynamicConfigOptions.http = {
