@@ -11,6 +11,8 @@ in
 
     package = pkgs-unstable.forgejo;
 
+    lfs.enable = true;
+
     settings = {
       DEFAULT = {
         APP_NAME = "Lukas' Forge";
