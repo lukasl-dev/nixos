@@ -11,7 +11,7 @@
     ./services/firefly.nix
     ./services/forgejo.nix
     ./services/freshrss.nix
-    # ./services/jellyfin.nix
+    ./services/jellyfin.nix
     ./services/maddy.nix
     # ./services/mealie.nix
     # ./services/nextcloud.nix
