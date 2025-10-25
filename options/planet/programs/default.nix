@@ -1,6 +1,5 @@
 {
   imports = [
-    ./ghostty
     ./rofi
 
     ./anki.nix
@@ -9,6 +8,7 @@
     ./discord.nix
     ./element.nix
     ./feh.nix
+    ./ghostty.nix
     ./localsend.nix
     ./mpv.nix
     ./obsidian.nix

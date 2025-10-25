@@ -37,13 +37,13 @@ in
       };
       script = ''
         set -euo pipefail
-        ${lib.getExe pkgs-unstable.mullvad-vpn} lan set allow || true
+        mullvad lan set allow || true
       '';
     };
 
     # Ensure tailscaled is always excluded via split tunnel, even after restarts
     systemd.services.tailscaled.serviceConfig.ExecStartPost = [
-      "-${lib.getExe pkgs-unstable.mullvad-vpn} split-tunnel add $MAINPID"
+      "-mullvad split-tunnel add $MAINPID"
     ];
   };
 }
