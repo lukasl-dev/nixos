@@ -1,7 +1,7 @@
 { config, pkgs-unstable, ... }:
 
 let
-  domain = config.universe.domain;
+  inherit (config.universe) domain;
 
   port = 8096;
 in
