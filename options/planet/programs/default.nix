@@ -9,6 +9,7 @@
     ./element.nix
     ./feh.nix
     ./ghostty.nix
+    ./jellyfin.nix
     ./localsend.nix
     ./mpv.nix
     ./obsidian.nix
