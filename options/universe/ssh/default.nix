@@ -34,7 +34,8 @@ in
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
       AllowUsers = null;
-      UseDns = true;
+      # Avoid reverse-DNS lookups that can slow logins or fail when DNS is flaky
+      UseDns = false;
       PermitRootLogin = "yes";
     };
   };

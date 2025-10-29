@@ -14,18 +14,27 @@ let
 in
 {
   networking = {
-    enableIPv6 = true;
+    # IPv4: keep static config as-is
+    enableIPv6 = false; # fully disable IPv6 for now (was half-enabled)
     defaultGateway = {
       address = ipv4.gateway;
       inherit interface;
     };
-    defaultGateway6 = {
-      address = ipv6.gateway;
-      inherit interface;
-    };
+
+    # Do NOT declare defaultGateway6 when IPv6 addressing is disabled; it
+    # can cause resolver/egress stalls and odd timeouts.
+
+    # Use networkd for static config and disable NetworkManager to avoid DNS races.
+    useNetworkd = true;
+    networkmanager.enable = false;
 
     interfaces.ens18 = {
       useDHCP = false;
+
+      # Temporary MTU mitigation in case the provider added a tunnel/scrubber
+      # that lowered path MTU and blocks ICMP "frag needed". This avoids
+      # blackhole stalls on TLS/SSH handshakes.
+      mtu = 1400;
 
       ipv4 = {
         addresses = [
@@ -43,23 +52,15 @@ in
           }
         ];
       };
-
-      # ipv6 = {
-      #   addresses = [
-      #     {
-      #       address = ipv6.address;
-      #       prefixLength = ipv6.prefix;
-      #     }
-      #   ];
-      #
-      #   routes = [
-      #     {
-      #       address = "::";
-      #       prefixLength = 0;
-      #       via = ipv6.gateway;
-      #     }
-      #   ];
-      # };
     };
   };
+
+  # Also enable TCP MTU probing in case of PMTU blackholes.
+  boot.kernel.sysctl = {
+    "net.ipv4.tcp_mtu_probing" = 1; # try probing when loss is detected
+  };
+
+  # Prefer systemd-resolved managing DNS; nameservers come from
+  # options/planet/networking/dns.nix (Cloudflare/Google).
+  services.resolved.enable = true;
 }
