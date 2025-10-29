@@ -18,6 +18,7 @@ D(
 
 	// services
 	CNAME("anki", "pollux.planets.lukasl.dev."),
+	CNAME("auth", "pollux.planets.lukasl.dev."),
 	CNAME("cloud", "pollux.planets.lukasl.dev."),
 	CNAME("files", "pollux.planets.lukasl.dev."),
 	CNAME("git", "pollux.planets.lukasl.dev."),

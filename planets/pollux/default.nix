@@ -6,6 +6,7 @@
     ./networking.nix
 
     ./services/anki-sync-server.nix
+    ./services/authelia.nix
     ./services/attic.nix
     ./services/capTUre.nix
     ./services/firefly.nix
@@ -13,6 +14,7 @@
     ./services/freshrss.nix
     ./services/jellyfin.nix
     ./services/maddy.nix
+    ./services/authelia.nix
     # ./services/mealie.nix
     # ./services/nextcloud.nix
     ./services/ntfy.nix
