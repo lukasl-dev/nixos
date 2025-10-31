@@ -77,6 +77,10 @@ in
 
           BOOKLORE_PORT=${toString port}
 
+          # Allow large uploads through Spring Boot (env maps to spring.servlet.multipart.*)
+          SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE=2G
+          SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE=2G
+
           PUID=${toString uid}
           PGID=${toString gid}
           USER_ID=${toString uid}
