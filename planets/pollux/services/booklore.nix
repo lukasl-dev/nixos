@@ -128,9 +128,19 @@ in
       service = "booklore";
     };
     services.booklore = {
-      loadBalancer.servers = [
-        { url = "http://127.0.0.1:${toString port}"; }
-      ];
+      loadBalancer = {
+        servers = [
+          { url = "http://127.0.0.1:${toString port}"; }
+        ];
+        # Use a dedicated serversTransport with long timeouts for uploads
+        serversTransport = "booklore-timeouts";
+        responseForwarding.flushInterval = "100ms";
+      };
+    };
+    serversTransports.booklore-timeouts.forwardingTimeouts = {
+      dialTimeout = "30s";
+      responseHeaderTimeout = "600s";
+      idleConnTimeout = "600s";
     };
   };
 }

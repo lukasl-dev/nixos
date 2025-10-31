@@ -26,7 +26,15 @@ in
 
         websecure = {
           address = ":${toString httpsPort}";
-          http.tls = { };
+          http = {
+            tls = { };
+            transport.respondingTimeouts = {
+              # Allow long uploads and slow clients
+              readTimeout = "0s";   # no limit
+              writeTimeout = "0s";  # no limit
+              idleTimeout = "600s"; # keep idle conns longer
+            };
+          };
         };
       };
 
