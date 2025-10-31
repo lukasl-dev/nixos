@@ -18,6 +18,9 @@ D(
 
 	// services
 	CNAME("anki", "pollux.planets.lukasl.dev."),
+	CNAME("books", "pollux.planets.lukasl.dev."),
+	CNAME("cache", "pollux.planets.lukasl.dev."),
+	CNAME("call", "pollux.planets.lukasl.dev."),
 	CNAME("cloud", "pollux.planets.lukasl.dev."),
 	CNAME("files", "pollux.planets.lukasl.dev."),
 	CNAME("git", "pollux.planets.lukasl.dev."),
@@ -30,10 +33,8 @@ D(
 	CNAME("media", "pollux.planets.lukasl.dev."),
 	CNAME("metrics", "pollux.planets.lukasl.dev."),
 	CNAME("matrix", "pollux.planets.lukasl.dev."),
-	CNAME("call", "pollux.planets.lukasl.dev."),
 	CNAME("meet", "pollux.planets.lukasl.dev."),
 	CNAME("turn", "pollux.planets.lukasl.dev."),
-	CNAME("cache", "pollux.planets.lukasl.dev."),
 	CNAME("fin", "pollux.planets.lukasl.dev."),
 	CNAME("ntfy", "pollux.planets.lukasl.dev."),
 
