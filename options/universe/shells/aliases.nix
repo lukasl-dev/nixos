@@ -29,5 +29,7 @@
   files = "yazi";
   f = "yazi";
 
+  o = "xdg-open";
+
   s = "nix-shell --run zsh -p ";
 }
