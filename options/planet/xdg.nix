@@ -87,6 +87,15 @@ in
                 "image/svg+xml" = browser;
 
                 "application/pdf" = pdf;
+
+                "image/png" = "feh.desktop";
+                "image/jpeg" = "feh.desktop";
+                "image/jpg" = "feh.desktop";
+                "image/webp" = "feh.desktop";
+                "image/gif" = "feh.desktop";
+                "image/bmp" = "feh.desktop";
+                "image/tiff" = "feh.desktop";
+
                 "inode/directory" = "yazi.desktop";
               };
           };

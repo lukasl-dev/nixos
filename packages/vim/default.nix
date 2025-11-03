@@ -5,6 +5,7 @@
   imports = [
     ./languages
     ./plugins
+    ./filetypes.nix
 
     ./clipboard.nix
     ./git.nix

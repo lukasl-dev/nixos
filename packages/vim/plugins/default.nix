@@ -11,6 +11,7 @@
     ./harpoon.nix
     ./indent-blankline.nix
     ./lean.nix
+    ./nvim-soil.nix
     ./neogit.nix
     ./nvim-autopairs.nix
     ./nvim-web-devicons.nix
