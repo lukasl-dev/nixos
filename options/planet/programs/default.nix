@@ -7,6 +7,7 @@
     ./brave.nix
     ./discord.nix
     ./element.nix
+    ./espanso.nix
     ./feh.nix
     ./ghostty.nix
     ./jellyfin.nix

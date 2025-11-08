@@ -33,6 +33,7 @@
       # TODO: resolve issue
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    codex.url = "github:openai/codex";
   };
 
   outputs =

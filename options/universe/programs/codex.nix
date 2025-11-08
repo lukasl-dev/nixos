@@ -1,5 +1,11 @@
+{ inputs, pkgs, ... }:
+
 {
   # TODO: enable after home-manager update:
+
+  environment.systemPackages = [
+    inputs.codex.packages.${pkgs.stdenv.system}.default
+  ];
 
   # universe.hm = [
   #   {

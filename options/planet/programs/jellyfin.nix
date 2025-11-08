@@ -38,9 +38,11 @@ in
             ph = config.sops.placeholder;
           in
           ''
-            server: ${ph."universe/jellyfin/server"}
-            username: ${ph."universe/jellyfin/username"}
-            password: ${ph."universe/jellyfin/password"}
+            servers:
+            - name: home
+              password: ${ph."universe/jellyfin/password"}
+              url: ${ph."universe/jellyfin/server"}
+              username: ${ph."universe/jellyfin/username"}
           '';
       };
     };
