@@ -1,0 +1,5 @@
+{
+  programs.firejail = {
+    enable = true;
+  };
+}

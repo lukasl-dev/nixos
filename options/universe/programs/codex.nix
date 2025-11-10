@@ -1,11 +1,17 @@
 { inputs, pkgs, ... }:
 
+let
+  # codexPkg =
+  #   inputs.codex.packages.${pkgs.stdenv.system}.default.overrideAttrs (old: {
+  #     CARGO_BUILD_JOBS = "2";
+  #     RUSTFLAGS = (old.RUSTFLAGS or "") + " -C codegen-units=4 -C opt-level=2";
+  #     doCheck = false;
+  #   });
+in
 {
   # TODO: enable after home-manager update:
 
-  environment.systemPackages = [
-    inputs.codex.packages.${pkgs.stdenv.system}.default
-  ];
+  # environment.systemPackages = [ codexPkg ];
 
   # universe.hm = [
   #   {

@@ -9,6 +9,7 @@
     ./appimage.nix
     ./devenv.nix
     ./domain.nix
+    ./firejail.nix
     ./i18n.nix
     ./networking.nix
     ./nh.nix

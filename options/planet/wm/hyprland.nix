@@ -180,6 +180,7 @@ in
                   # ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
                   "${mainMod}, C, exec, caelestia clipboard"
                   # "${mainMod}, p, exec, swaync-client -t"
+                  "${mainMod}, p, exec, obsidian"
                   ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
                   "${mainMod}, T, exec, ghostty"
                   "${mainMod}, B, exec, zen-beta"
