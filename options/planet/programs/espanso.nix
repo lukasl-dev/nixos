@@ -19,6 +19,34 @@ in
         services.espanso = {
           enable = true;
           waylandSupport = hyprland.enable;
+          x11Support = !hyprland.enable;
+
+          configs = {
+            default = {
+              keyboard_layout = {
+                layout = "us";
+              };
+            };
+          };
+
+          matches = {
+            emdash = {
+              matches = [
+                {
+                  trigger = "\\emdash";
+                  replace = "—";
+                }
+              ];
+            };
+          };
+        };
+
+        systemd.user.services.espanso = lib.mkIf hyprland.enable {
+          Unit = {
+            After = [ "graphical-session.target" ];
+            PartOf = [ "graphical-session.target" ];
+          };
+          Install.WantedBy = lib.mkForce [ "graphical-session.target" ];
         };
       }
     ];

@@ -51,6 +51,7 @@ in
             "libvirtd"
             "libvirt"
             "kvm"
+            "input"
           ];
 
           hashedPasswordFile = config.sops.secrets."universe/user/password".path;
