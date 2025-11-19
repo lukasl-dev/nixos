@@ -2,7 +2,6 @@
   imports = [
     # ./nvim
     ./oh-my-posh
-    ./opencode
     ./tmux
 
     ./bat.nix
@@ -21,6 +20,7 @@
     ./imagemagick.nix
     ./ntfy.nix
     ./nvim.nix
+    ./opencode.nix
     ./ripgrep.nix
     ./speedtest.nix
     ./television.nix

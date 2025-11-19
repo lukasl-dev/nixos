@@ -35,6 +35,7 @@
     };
     # codex.url = "github:openai/codex";
     opencode.url = "github:sst/opencode";
+    rime.url = "github:lukasl-dev/rime";
   };
 
   outputs =
