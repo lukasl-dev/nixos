@@ -2,6 +2,7 @@
   imports = [
     # ./nvim
     ./oh-my-posh
+    ./opencode
     ./tmux
 
     ./bat.nix

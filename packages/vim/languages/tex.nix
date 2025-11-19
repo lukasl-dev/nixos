@@ -32,7 +32,7 @@ in
 
     lazy.plugins."vimtex" = {
       inherit package;
-      event = [ "BufWinEnter" ];
+      ft = [ "tex" "plaintex" ];
     };
 
     globals = {

@@ -30,6 +30,7 @@
   f = "yazi";
 
   o = "xdg-open";
+  oc = "opencode";
 
   s = "nix-shell --run zsh -p ";
 }

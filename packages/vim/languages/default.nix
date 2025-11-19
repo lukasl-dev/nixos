@@ -1,6 +1,7 @@
 {
   imports = [
     ./bash.nix
+    ./dafny.nix
     ./go.nix
     ./haskell.nix
     ./java.nix
@@ -28,7 +29,6 @@
     formatter.conform-nvim = {
       enable = true;
       setupOpts.format_on_save = {
-        # Increase to accommodate slower formatters (e.g., IntelliJ CLI on first run)
         timeout_ms = 20000;
         lsp_fallback = true;
       };

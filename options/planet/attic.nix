@@ -63,16 +63,16 @@ in
   };
 
   config = lib.mkIf attic.enable {
-    nix.settings =
-      let
-        caches = builtins.attrValues attic.caches;
-        substituters = map (cache: "https://cache.${domain}/${cache.name}") caches;
-        publicKeys = map (cache: cache.trusted-public-key) caches;
-      in
-      {
-        substituters = lib.mkBefore substituters;
-        trusted-public-keys = lib.mkBefore publicKeys;
-      };
+    # nix.settings =
+    #   let
+    #     caches = builtins.attrValues attic.caches;
+    #     substituters = map (cache: "https://cache.${domain}/${cache.name}") caches;
+    #     publicKeys = map (cache: cache.trusted-public-key) caches;
+    #   in
+    #   {
+    #     substituters = lib.mkBefore substituters;
+    #     trusted-public-keys = lib.mkBefore publicKeys;
+    #   };
 
     sops = {
       secrets.${attic.sops.token} = { };
