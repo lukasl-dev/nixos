@@ -54,8 +54,9 @@ in
     middlewares.seafile-strip.stripPrefix.prefixes = [ "/seafhttp" ];
     serversTransports.seafile-timeouts.forwardingTimeouts = {
       dialTimeout = "30s";
-      responseHeaderTimeout = "600s";
-      idleConnTimeout = "600s";
+      # Disable backend timeouts for long uploads/downloads; rely on Seafile/app limits instead.
+      responseHeaderTimeout = "0s";
+      idleConnTimeout = "0s";
     };
   };
 }
