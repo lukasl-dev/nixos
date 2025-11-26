@@ -179,11 +179,11 @@ in
     '';
   };
 
-  # environment.etc."maddy/aliases".text = ''
-  #   info@${domain}: me@${domain}
-  #   contact@${domain}: me@${domain}
-  #   git@${domain}: me@${domain}
-  # '';
+  environment.etc."maddy/aliases".text = ''
+    info@${domain}: me@${domain}
+    contact@${domain}: me@${domain}
+    git@${domain}: me@${domain}
+  '';
 
   users = {
     users.maddy = {
@@ -219,10 +219,12 @@ in
       imap = {
         server = config.services.maddy.hostname;
         port = 993;
+        socketType = "SSL";
       };
       smtp = {
         server = config.services.maddy.hostname;
         port = 587;
+        socketType = "STARTTLS";
       };
     };
   };
