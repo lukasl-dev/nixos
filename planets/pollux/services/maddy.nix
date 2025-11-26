@@ -198,6 +198,8 @@ in
   networking.firewall.allowedTCPPorts = [
     993
     465
+    587
+    25
   ];
 
   sops.secrets = {

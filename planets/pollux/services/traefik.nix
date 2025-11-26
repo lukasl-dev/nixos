@@ -62,8 +62,6 @@ in
     80
     443
     8080
-    587
-    465
   ];
 
   users.users.traefik.extraGroups = [ "acme" ];
