@@ -131,7 +131,7 @@ in
           }
 
           default_destination {
-            modify { dkim $(primary_domain) $(local_domains) default }
+            modify { dkim $(primary_domain) "default" }
             deliver_to &remote_queue
           }
         }
