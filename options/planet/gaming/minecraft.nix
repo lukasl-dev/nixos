@@ -20,7 +20,7 @@ in
       pkgs-unstable.prismlauncher
       pkgs-unstable.lunar-client
 
-      (lib.mkIf hyprland.enable pkgs-unstable.glfw-wayland-minecraft)
+      (lib.mkIf hyprland.enable pkgs-unstable.glfw3-minecraft)
     ];
   };
 

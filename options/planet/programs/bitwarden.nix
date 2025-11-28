@@ -6,9 +6,9 @@
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
 
-  bitwarden = config.planet.programs.bitwarden;
+  inherit (config.planet.programs) bitwarden;
 in
 {
   options.planet.programs.bitwarden = {
@@ -22,7 +22,7 @@ in
 
   config = lib.mkIf bitwarden.enable {
     environment.systemPackages = [
-      pkgs-unstable.bitwarden
+      pkgs-unstable.bitwarden-desktop
       pkgs-unstable.bitwarden-cli
     ];
   };
