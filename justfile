@@ -3,3 +3,6 @@ sd-image planet:
 
 flake-changes input:
     ./scripts/flake-changes.sh {{ input }}
+
+switch:
+    ./scripts/safe-switch.sh
