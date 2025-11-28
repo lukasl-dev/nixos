@@ -97,7 +97,7 @@ in
 
   services.lk-jwt-service = {
     enable = true;
-    livekitUrl = "wss://${elementCallHost}/livekit/sfu";
+    livekitUrl = "wss://${elementCallHost}/livekit";
     keyFile = config.services.livekit.keyFile;
     port = livekitApiPort;
   };
@@ -126,6 +126,19 @@ in
         extraConfig = ''
           default_type application/json;
           return 200 '${elementCallConfigJson}';
+        '';
+      };
+
+      "/livekit" = {
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/;
         '';
       };
 
@@ -214,6 +227,13 @@ in
             priority = 100;
           };
 
+          tuwunel-livekit = {
+            rule = "Host(`${matrixHost}`) && (PathPrefix(`/_matrix/client/unstable/org.matrix.msc4143`) || PathPrefix(`/_matrix/client/v1/org.matrix.msc4143`))";
+            entryPoints = [ "websecure" ];
+            service = "lk-jwt-service";
+            priority = 200;
+          };
+
           element-call = {
             rule = "Host(`${elementCallHost}`)";
             entryPoints = [ "websecure" ];
@@ -239,6 +259,14 @@ in
                 }
               ];
             };
+          };
+
+          lk-jwt-service = {
+            loadBalancer.servers = [
+              {
+                url = "http://127.0.0.1:${toString livekitApiPort}";
+              }
+            ];
           };
         };
       };
