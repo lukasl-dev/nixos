@@ -63,6 +63,13 @@
 
         '';
     })
+    (pkgs.writeShellApplication {
+      name = "battery_level";
+      text = # bash
+        ''
+          cat /sys/class/power_supply/BAT1/capacity
+        '';
+    })
   ];
 
   services = {
