@@ -14,5 +14,6 @@
     attic-client
     cava
     tree
+    man-pages
   ];
 }
