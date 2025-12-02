@@ -1,6 +1,7 @@
 {
   imports = [
     ./bash.nix
+    ./c.nix
     ./dafny.nix
     ./go.nix
     ./haskell.nix
