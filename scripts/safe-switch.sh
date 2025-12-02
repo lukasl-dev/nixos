@@ -9,18 +9,15 @@ limit_bytes=$(( limit_kb * 1024 ))
 total_cores=$(nproc)
 cpus=""
 
-if [ "$total_cores" -gt 4 ]; then
-    # Exclude cores 0 and 1 for system responsiveness
-    last_core=$(( total_cores - 1 ))
-    cpus=$(seq -s, 2 $last_core)
-elif [ "$total_cores" -gt 1 ]; then
-    # Exclude core 0
-    last_core=$(( total_cores - 1 ))
-    cpus=$(seq -s, 1 $last_core)
-else
-    # Single core, use it
-    cpus="0"
+# Use the upper half of cores to leave lower cores available for system responsiveness
+cores_to_use=$(( total_cores / 2 ))
+if [ "$cores_to_use" -lt 1 ]; then
+    cores_to_use=1
 fi
+
+start_core=$(( total_cores - cores_to_use ))
+last_core=$(( total_cores - 1 ))
+cpus=$(seq -s, $start_core $last_core)
 
 echo "Safe-switch: limiting to $((limit_kb / 1024)) MB RAM and CPUs: $cpus"
 
