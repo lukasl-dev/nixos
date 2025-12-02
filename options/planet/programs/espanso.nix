@@ -3,6 +3,7 @@
 let
   wm = config.planet.wm;
   hyprland = wm.hyprland;
+  user = config.universe.user;
 in
 {
   options.planet.programs.espanso = {
@@ -14,6 +15,13 @@ in
   };
 
   config = lib.mkIf config.planet.programs.espanso.enable {
+    hardware.uinput.enable = true;
+
+    users.users.${user.name}.extraGroups = lib.mkAfter [
+      "uinput"
+      "input"
+    ];
+
     universe.hm = [
       {
         services.espanso = {
