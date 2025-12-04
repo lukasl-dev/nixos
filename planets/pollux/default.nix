@@ -14,7 +14,7 @@
     ./services/freshrss.nix
     ./services/jellyfin.nix
     ./services/maddy.nix
-    # ./services/mealie.nix
+    ./services/mealie.nix
     # ./services/nextcloud.nix
     ./services/ntfy.nix
     ./services/prometheus.nix
