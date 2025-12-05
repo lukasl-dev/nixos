@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   wm = config.planet.wm;
@@ -20,6 +20,7 @@ in
       {
         programs.thunderbird = {
           enable = true;
+          package = pkgs.thunderbird-bin;
           profiles.default = {
             isDefault = true;
           };
