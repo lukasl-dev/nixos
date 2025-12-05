@@ -19,12 +19,13 @@ start_core=$(( total_cores - cores_to_use ))
 last_core=$(( total_cores - 1 ))
 cpus=$(seq -s, $start_core $last_core)
 
-echo "Safe-switch: limiting to $((limit_kb / 1024)) MB RAM and CPUs: $cpus"
+max_jobs=1
+echo "Safe-switch: limiting to $((limit_kb / 1024)) MB RAM, CPUs: $cpus (Nix: $max_jobs jobs, $cores_to_use cores)"
 
 flake_path=$(pwd)
 
 exec sudo systemd-run --scope --quiet \
     --property=MemoryMax="${limit_bytes}" \
     --property=AllowedCPUs="$cpus" \
-    nh os switch -R "$@" "$flake_path"
+    nh os switch -R "$@" "$flake_path" -- --max-jobs "$max_jobs" --cores "$cores_to_use"
 
