@@ -36,6 +36,9 @@ in
   };
 
   config = lib.mkIf libvirt.enable (
+    #        - The 'virtualisation.libvirtd.qemu.ovmf' submodule has been removed. All OVMF images distributed with QEMU are now available by default.
+    # Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."vega".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
+
     lib.mkMerge [
       {
         virtualisation = {
@@ -43,7 +46,7 @@ in
             enable = true;
             qemu = {
               swtpm.enable = true;
-              ovmf.packages = [ pkgs-unstable.OVMFFull.fd ];
+              # ovmf.packages = [ pkgs-unstable.OVMFFull.fd ];
             };
           };
           spiceUSBRedirection.enable = true;

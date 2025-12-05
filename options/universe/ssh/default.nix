@@ -12,7 +12,6 @@ in
   sops.secrets = {
     "universe/user/ssh/private_keys/default" = {
       owner = user.name;
-      path = "/home/${user.name}/.ssh/id_ed25519";
     };
     "universe/user/ssh/private_keys/g0_complang_tuwien_ac_at" = {
       owner = user.name;
@@ -56,11 +55,19 @@ in
 
       programs.ssh = {
         enable = true;
-        extraConfig = ''
-          Host g0.complang.tuwien.ac.at
-            IdentityFile ${config.sops.secrets."universe/user/ssh/private_keys/g0_complang_tuwien_ac_at".path}
-            IdentitiesOnly yes
-        '';
+
+        enableDefaultConfig = false;
+
+        matchBlocks = {
+          "*" = {
+            identityFile = config.sops.secrets."universe/user/ssh/private_keys/default".path;
+          };
+
+          "g0.complang.tuwien.ac.at" = {
+            identityFile = config.sops.secrets."universe/user/ssh/private_keys/g0_complang_tuwien_ac_at".path;
+            identitiesOnly = true;
+          };
+        };
       };
     }
   ];

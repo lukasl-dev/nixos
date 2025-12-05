@@ -52,33 +52,39 @@ in
 
     universe.hm = [
       {
-        programs.git = {
-          enable = true;
+        programs = {
+          git = {
+            enable = true;
 
-          userEmail = git.user.email;
-          userName = git.user.name;
+            settings = {
+              user = { inherit (git.user) name email; };
 
-          delta.enable = true;
+              aliases = {
+                graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
+              };
 
-          extraConfig = {
-            github.user = git.user.name;
+              github.user = git.user.name;
 
-            color.ui = true;
-            core.editor = "nvim";
+              color.ui = true;
+              core.editor = "nvim";
 
-            pull.rebase = true;
-            push.autoSetupRemote = true;
-            init.defaultBranch = "master";
+              pull.rebase = true;
+              push.autoSetupRemote = true;
+              init.defaultBranch = "master";
 
-            safe.directory = "/nixos";
+              safe.directory = "/nixos";
 
-            commit.gpgsign = true;
-            gpg.format = "ssh";
-            user.signingkey = "~/.ssh/id_ed25519.pub";
+              commit.gpgsign = true;
+              gpg.format = "ssh";
+              user.signingkey = "~/.ssh/id_ed25519.pub";
+            };
           };
 
-          aliases = {
-            graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all";
+          # TODO: move outside
+          delta = {
+            enable = true;
+
+            enableGitIntegration = true;
           };
         };
 
