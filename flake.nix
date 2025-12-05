@@ -17,7 +17,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nixgl.url = "github:nix-community/nixGL";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    catppuccin.url = "github:catppuccin/nix/release-25.05";
+    catppuccin.url = "github:catppuccin/nix/release-25.05"; # TODO: upgrade to 25.11 as soon as it is available
     catppuccin-where-is-my-sddm-theme.url = "github:catppuccin/where-is-my-sddm-theme";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     ghostty.url = "github:ghostty-org/ghostty";

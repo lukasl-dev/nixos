@@ -7,7 +7,7 @@
 }:
 
 let
-  git = config.universe.git;
+  inherit (config.universe) git;
 in
 {
   options.universe.git = {
@@ -72,19 +72,12 @@ in
               push.autoSetupRemote = true;
               init.defaultBranch = "master";
 
-              safe.directory = "/nixos";
+              safe.directory = "~/nixos";
 
               commit.gpgsign = true;
               gpg.format = "ssh";
               user.signingkey = "~/.ssh/id_ed25519.pub";
             };
-          };
-
-          # TODO: move outside
-          delta = {
-            enable = true;
-
-            enableGitIntegration = true;
           };
         };
 

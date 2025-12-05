@@ -7,6 +7,7 @@
     ./bat.nix
     ./btop.nix
     ./codex.nix
+    ./delta.nix
     ./direnv.nix
     ./dnscontrol.nix
     ./eza.nix

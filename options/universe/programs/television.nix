@@ -3,6 +3,7 @@
 let
   ns = pkgs.writeShellApplication {
     name = "ns";
+    excludeShellChecks = [ "SC2016" ];
     runtimeInputs = with pkgs; [
       fzf
       nix-search-tv
