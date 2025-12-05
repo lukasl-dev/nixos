@@ -22,5 +22,6 @@ jobs:
           extra_nix_config: |
             extra-experimental-features = nix-command flakes
             extra-platforms = aarch64-linux
+      - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Run Nix Flake Check
         run: nix flake check
