@@ -44,6 +44,30 @@ in
                   trigger = "\\emdash";
                   replace = "—";
                 }
+                {
+                  trigger = "\\ae";
+                  replace = "ä";
+                }
+                {
+                  trigger = "\\Ae";
+                  replace = "Ä";
+                }
+                {
+                  trigger = "\\oe";
+                  replace = "ö";
+                }
+                {
+                  trigger = "\\Oe";
+                  replace = "Ö";
+                }
+                {
+                  trigger = "\\ue";
+                  replace = "ü";
+                }
+                {
+                  trigger = "\\Ue";
+                  replace = "Ü";
+                }
               ];
             };
           };
