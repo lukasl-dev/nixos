@@ -68,6 +68,10 @@ in
                   trigger = "\\Ue";
                   replace = "Ü";
                 }
+                {
+                  trigger = "\\ss";
+                  replace = "ß";
+                }
               ];
             };
           };
