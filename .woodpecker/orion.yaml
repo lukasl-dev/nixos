@@ -1,0 +1,31 @@
+steps:
+  build:
+    image: voidcontext/woodpecker-plugin-nix-attic:0.2.0
+    settings:
+      binary_cache: https://cache.lukasl.dev/orion
+      binary_cache_public_key: orion:P7gyPhpujk1EDTOi02RPWIp9jFXmY2zLNvm2zLWEbuQ=
+      binary_cache_token:
+        from_secret: orion_binary_cache_access_token
+      script: |
+        attic login attic $PLUGIN_BINARY_CACHE $PLUGIN_BINARY_CACHE_TOKEN
+
+        echo "machine cache.lukasl.dev password $PLUGIN_BINARY_CACHE_TOKEN" > ~/.netrc
+
+        export NIX_CONFIG="netrc-file = $HOME/.netrc"
+
+        nix build \
+          --substituters "https://cache.nixos.org $PLUGIN_BINARY_CACHE" \
+          --trusted-public-keys "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= $PLUGIN_BINARY_CACHE_PUBLIC_KEY" \
+          .#nixosConfigurations.orion.config.system.build.toplevel
+
+        attic push attic:orion $(nix path-info .#nixosConfigurations.orion.config.system.build.toplevel)
+
+when:
+  - event: [push, pull_request]
+    path:
+      - ".woodpecker/orion.yaml"
+      - "planets/orion/**"
+      - "options/**"
+      - "packages/**"
+      - "flake.nix"
+      - "flake.lock"
