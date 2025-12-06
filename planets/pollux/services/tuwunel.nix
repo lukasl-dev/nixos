@@ -38,9 +38,9 @@ let
   livekitSfuPort = 7880;
 in
 {
-  imports = [
-    (pkgs-unstable.path + "/nixos/modules/services/matrix/tuwunel.nix")
-  ];
+  # imports = [
+  #   (pkgs-unstable.path + "/nixos/modules/services/matrix/tuwunel.nix")
+  # ];
 
   systemd.services = {
     livekit.serviceConfig.Restart = lib.mkForce "always";

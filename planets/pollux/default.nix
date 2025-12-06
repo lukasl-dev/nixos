@@ -20,8 +20,7 @@
     ./services/prometheus.nix
     ./services/nginx.nix
     ./services/notes.nix
-    # ./services/restic.nix
-    ./services/seafile.nix
+    # ./services/seafile.nix
     ./services/restic.nix
     # ./services/coturn.nix
     ./services/traefik.nix
