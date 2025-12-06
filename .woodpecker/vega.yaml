@@ -1,0 +1,14 @@
+steps:
+  build:
+    image: nixos/nix
+    commands:
+      - nix --extra-experimental-features 'nix-command flakes' build .#nixosConfigurations.vega.config.system.build.toplevel
+
+when:
+  - event: [push, pull_request]
+    path:
+      - "planets/vega/**"
+      - "options/**"
+      - "packages/**"
+      - "flake.nix"
+      - "flake.lock"

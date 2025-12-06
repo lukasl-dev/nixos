@@ -26,6 +26,7 @@
     ./services/traefik.nix
     ./services/tuwunel.nix
     ./services/vaultwarden.nix
+    ./services/woodpecker.nix
     ./services/www.nix
   ];
 
