@@ -9,7 +9,10 @@ steps:
       script: |
         attic login attic $PLUGIN_BINARY_CACHE $PLUGIN_BINARY_CACHE_TOKEN
         attic use attic:pollux
-        nix build .#nixosConfigurations.pollux.config.system.build.toplevel
+        nix build \
+          --substituters "https://cache.nixos.org $PLUGIN_BINARY_CACHE" \
+          --trusted-public-keys "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= $PLUGIN_BINARY_CACHE_PUBLIC_KEY" \
+          .#nixosConfigurations.pollux.config.system.build.toplevel
         attic push attic:pollux $(nix path-info .#nixosConfigurations.pollux.config.system.build.toplevel)
 
 when:
