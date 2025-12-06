@@ -8,11 +8,16 @@ steps:
         from_secret: binary_cache_access_token
       script: |
         attic login attic $PLUGIN_BINARY_CACHE $PLUGIN_BINARY_CACHE_TOKEN
-        attic use attic:pollux
+
+        echo "machine cache.lukasl.dev password $PLUGIN_BINARY_CACHE_TOKEN" > ~/.netrc
+
+        export NIX_CONFIG="netrc-file = $HOME/.netrc"
+
         nix build \
           --substituters "https://cache.nixos.org $PLUGIN_BINARY_CACHE" \
           --trusted-public-keys "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= $PLUGIN_BINARY_CACHE_PUBLIC_KEY" \
           .#nixosConfigurations.pollux.config.system.build.toplevel
+
         attic push attic:pollux $(nix path-info .#nixosConfigurations.pollux.config.system.build.toplevel)
 
 when:
