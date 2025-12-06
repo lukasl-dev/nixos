@@ -1,0 +1,14 @@
+steps:
+  build:
+    image: nixos/nix
+    commands:
+      - nix --extra-experimental-features 'nix-command flakes' build .#nixosConfigurations.pollux.config.system.build.toplevel
+
+when:
+  - event: [push, pull_request]
+    path:
+      - "planets/pollux/**"
+      - "options/**"
+      - "packages/**"
+      - "flake.nix"
+      - "flake.lock"
