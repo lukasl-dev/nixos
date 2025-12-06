@@ -1,0 +1,17 @@
+steps:
+  mirror:
+    image: alpine/git
+    environment:
+      SSH_KEY:
+        from_secret: github_mirror_ssh_key
+    commands:
+      - mkdir -p ~/.ssh
+      - echo "$SSH_KEY" > ~/.ssh/id_ed25519
+      - chmod 600 ~/.ssh/id_ed25519
+      - ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - git remote add mirror git@github.com:lukasl-dev/nixos.git || true
+      - git push --mirror mirror
+
+when:
+  event: push
+  branch: master
