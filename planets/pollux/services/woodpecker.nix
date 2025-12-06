@@ -16,8 +16,6 @@ in
 
         WOODPECKER_FORGEJO = "true";
         WOODPECKER_FORGEJO_URL = "https://forge.${domain}";
-
-        WOODPECKER_GITHUB = "true";
       };
       environmentFile = config.sops.templates."planets/pollux/woodpecker/env".path;
     };
@@ -28,11 +26,10 @@ in
         extraGroups = [ "docker" ];
         environment = {
           WOODPECKER_SERVER = "localhost:9000";
-          WOODPECKER_MAX_WORKFLOWS = "2";
-          WOODPECKER_HEALTHCHECK_ADDR = ":3008";
-
-          WOODPECKER_BACKEND = "docker";
+          WOODPECKER_MAX_WORKFLOWS = "4";
           DOCKER_HOST = "unix:///var/run/docker.sock";
+          WOODPECKER_BACKEND = "docker";
+          WOODPECKER_HEALTHCHECK_ADDR = ":3008";
         };
         environmentFile = [
           config.sops.templates."planets/pollux/woodpecker/env".path
@@ -70,23 +67,14 @@ in
 
   sops = {
     secrets = {
-      "planets/pollux/woodpecker/agent/secret" = { };
-
-      "planets/pollux/woodpecker/forgejo/client" = { };
-      "planets/pollux/woodpecker/forgejo/secret" = { };
-
-      "planets/pollux/woodpecker/github/client" = { };
-      "planets/pollux/woodpecker/github/secret" = { };
+      "planets/pollux/woodpecker/agent_secret" = { };
+      "planets/pollux/woodpecker/forgejo_client" = { };
+      "planets/pollux/woodpecker/forgejo_secret" = { };
     };
-
     templates."planets/pollux/woodpecker/env".content = ''
-      WOODPECKER_AGENT_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/agent/secret"}
-
-      WOODPECKER_FORGEJO_CLIENT=${config.sops.placeholder."planets/pollux/woodpecker/forgejo/client"}
-      WOODPECKER_FORGEJO_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/forgejo/secret"}
-
-      WOODPECKER_GITHUB_CLIENT=${config.sops.placeholder."planets/pollux/woodpecker/github/client"}
-      WOODPECKER_GITHUB_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/github/secret"}
+      WOODPECKER_AGENT_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/agent_secret"}
+      WOODPECKER_FORGEJO_CLIENT=${config.sops.placeholder."planets/pollux/woodpecker/forgejo_client"}
+      WOODPECKER_FORGEJO_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/forgejo_secret"}
     '';
   };
 }
