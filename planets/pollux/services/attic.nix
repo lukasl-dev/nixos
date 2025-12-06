@@ -23,6 +23,10 @@ in
         avg-size = 64 * 1024;
         max-size = 256 * 1024;
       };
+
+      garbage-collection = {
+        default-retention-period = "1 weeks";
+      };
     };
   };
 
