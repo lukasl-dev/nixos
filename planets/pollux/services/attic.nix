@@ -1,9 +1,10 @@
 { config, ... }:
 
 let
-  domain = config.universe.domain;
+  inherit (config.universe) domain;
 
-  atticd = config.services.atticd;
+  inherit (config.services) atticd;
+
   port = 1571;
 in
 {
@@ -25,7 +26,7 @@ in
       };
 
       garbage-collection = {
-        default-retention-period = "1 weeks";
+        default-retention-period = "7 days";
       };
     };
   };
