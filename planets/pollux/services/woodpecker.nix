@@ -68,14 +68,14 @@ in
 
   sops = {
     secrets = {
-      "planets/pollux/woodpecker/agent_secret" = { };
-      "planets/pollux/woodpecker/forgejo_client" = { };
-      "planets/pollux/woodpecker/forgejo_secret" = { };
+      "planets/pollux/woodpecker/agent/secret" = { };
+      "planets/pollux/woodpecker/forgejo/client" = { };
+      "planets/pollux/woodpecker/forgejo/secret" = { };
     };
     templates."planets/pollux/woodpecker/env".content = ''
-      WOODPECKER_AGENT_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/agent_secret"}
-      WOODPECKER_FORGEJO_CLIENT=${config.sops.placeholder."planets/pollux/woodpecker/forgejo_client"}
-      WOODPECKER_FORGEJO_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/forgejo_secret"}
+      WOODPECKER_AGENT_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/agent/secret"}
+      WOODPECKER_FORGEJO_CLIENT=${config.sops.placeholder."planets/pollux/woodpecker/forgejo/client"}
+      WOODPECKER_FORGEJO_SECRET=${config.sops.placeholder."planets/pollux/woodpecker/forgejo/secret"}
     '';
   };
 }
