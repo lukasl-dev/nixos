@@ -47,22 +47,6 @@ in
     };
   };
 
-  services.gitea-actions-runner = {
-    package = pkgs-unstable.forgejo-runner;
-    instances.pollux = {
-      enable = true;
-      name = "pollux";
-      tokenFile = config.sops.templates."planets/pollux/forgejo/runner-token-file".path;
-      url = "https://forge.${domain}/";
-      labels = [
-        "nixos-latest:docker://nixos/nix"
-        # "ubuntu-latest:docker://node:24-bullseye"
-        "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
-      ];
-      settings = { };
-    };
-  };
-
   sops = {
     secrets = {
       "planets/pollux/forgejo/runner" = { };
