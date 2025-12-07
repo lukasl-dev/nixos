@@ -2,10 +2,10 @@ steps:
   build:
     image: voidcontext/woodpecker-plugin-nix-attic:0.2.0
     settings:
-      binary_cache: https://cache.lukasl.dev/pollux
-      binary_cache_public_key: pollux:F7WHpedmr4qMZ1Asg0XYQfJ1xShcL+MINf5FwrgBcwg=
+      binary_cache: https://cache.lukasl.dev/universe
+      binary_cache_public_key: universe:w0jdMOE2LZ74t2WSja4jKaMBPzai2aVM/VuBzszi0BQ=
       binary_cache_token:
-        from_secret: pollux_binary_cache_access_token
+        from_secret: binary_cache_access_token
       script: |
         attic login attic $PLUGIN_BINARY_CACHE $PLUGIN_BINARY_CACHE_TOKEN
 
