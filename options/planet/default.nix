@@ -2,10 +2,10 @@
   imports = [
     ./audio
     ./caches
-    ./development
     ./gaming
     ./hardware
     ./networking
+    ./programming
     ./programs
     ./services
     ./virtualisation
