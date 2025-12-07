@@ -30,7 +30,7 @@ in
           WOODPECKER_MAX_WORKFLOWS = "4";
           DOCKER_HOST = "unix:///var/run/docker.sock";
           WOODPECKER_BACKEND = "docker";
-          WOODPECKER_BACKEND_DOCKER_VOLUMES = "/nix/store:/nix/store:ro";
+          # WOODPECKER_BACKEND_DOCKER_VOLUMES = "/nix/store:/nix/store:ro";
           WOODPECKER_HEALTHCHECK_ADDR = ":3008";
         };
         environmentFile = [
