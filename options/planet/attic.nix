@@ -77,16 +77,27 @@ in
     sops = {
       secrets.${attic.sops.token} = { };
 
-      templates."planets/${config.planet.name}/attic/config" = {
-        content = ''
-          default-server = "attic"
+      templates = {
+        "planets/${config.planet.name}/attic/config" = {
+          content = ''
+            default-server = "attic"
 
-          [servers.attic]
-          endpoint = "https://cache.${domain}"
-          token = "${config.sops.placeholder.${attic.sops.token}}"
-        '';
-        owner = user.name;
-        path = "/home/${user.name}/.config/attic/config.toml";
+            [servers.attic]
+            endpoint = "https://cache.${domain}"
+            token = "${config.sops.placeholder.${attic.sops.token}}"
+          '';
+          owner = user.name;
+          path = "/home/${user.name}/.config/attic/config.toml";
+        };
+
+        # TODO: problematic if there are multiple .netrc files are required
+        "planets/${config.planet.name}/attic/netrc" = {
+          content = ''
+            machine cache.${domain} password "${config.sops.placeholder.${attic.sops.token}}"
+          '';
+          owner = user.name;
+          path = "/home/${user.name}/.netrc";
+        };
       };
     };
 

@@ -7,6 +7,7 @@
     ./ssh
 
     ./appimage.nix
+    ./attic.nix
     ./devenv.nix
     ./domain.nix
     ./firejail.nix

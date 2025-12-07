@@ -27,7 +27,7 @@ in
         extraGroups = [ "docker" ];
         environment = {
           WOODPECKER_SERVER = "localhost:9000";
-          WOODPECKER_MAX_WORKFLOWS = "4";
+          WOODPECKER_MAX_WORKFLOWS = "2";
           DOCKER_HOST = "unix:///var/run/docker.sock";
           WOODPECKER_BACKEND = "docker";
           # WOODPECKER_BACKEND_DOCKER_VOLUMES = "/nix/store:/nix/store:ro";
