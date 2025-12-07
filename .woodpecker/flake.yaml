@@ -13,19 +13,7 @@ steps:
 
         export NIX_CONFIG="netrc-file = $HOME/.netrc"
 
-        nix build \
-          --substituters "https://cache.nixos.org $PLUGIN_BINARY_CACHE" \
-          --trusted-public-keys "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= $PLUGIN_BINARY_CACHE_PUBLIC_KEY" \
-          .#nixosConfigurations.vega.config.system.build.toplevel
-
-        attic push attic:vega $(nix path-info .#nixosConfigurations.vega.config.system.build.toplevel)
+        nix flake check
 
 when:
   - event: [push, pull_request]
-    path:
-      - ".woodpecker/vega.yaml"
-      - "planets/vega/**"
-      - "options/**"
-      - "packages/**"
-      - "flake.nix"
-      - "flake.lock"
