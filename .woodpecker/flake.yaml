@@ -8,9 +8,7 @@ steps:
         from_secret: binary_cache_access_token
       script: |
         attic login attic $PLUGIN_BINARY_CACHE $PLUGIN_BINARY_CACHE_TOKEN
-
         echo "machine cache.lukasl.dev password $PLUGIN_BINARY_CACHE_TOKEN" > ~/.netrc
-
         export NIX_CONFIG="netrc-file = $HOME/.netrc"
 
         nix flake check
