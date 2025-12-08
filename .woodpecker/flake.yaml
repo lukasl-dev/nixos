@@ -1,5 +1,5 @@
 steps:
-  build:
+  check:
     image: voidcontext/woodpecker-plugin-nix-attic:0.2.0
     settings:
       binary_cache: https://cache.lukasl.dev/universe
