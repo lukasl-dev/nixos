@@ -6,9 +6,12 @@
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
+  inherit (config.planet.wm) hyprland;
 
-  element = config.planet.programs.element;
+  inherit (config.planet.programs) element;
+
+  package = pkgs-unstable.element-desktop;
 in
 {
   options.planet.programs.element = {
@@ -25,7 +28,21 @@ in
       {
         programs.element-desktop = {
           enable = true;
-          package = pkgs-unstable.element-desktop;
+          inherit package;
+        };
+
+        wayland.windowManager.hyprland.settings = {
+          exec-once = lib.mkAfter [ (lib.getExe package) ];
+          windowrulev2 = lib.mkIf hyprland.enable (
+            let
+              selector = "initialClass:(Element)";
+            in
+            lib.mkAfter [
+              "renderunfocused, ${selector}"
+              "workspace 1, ${selector}"
+              "noinitialfocus, ${selector}"
+            ]
+          );
         };
       }
     ];

@@ -6,9 +6,12 @@
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
+  inherit (config.planet.wm) hyprland;
 
-  discord = config.planet.programs.discord;
+  inherit (config.planet.programs) discord;
+
+  package = pkgs-unstable.vesktop;
 in
 {
   options.planet.programs.discord = {
@@ -25,7 +28,7 @@ in
       {
         programs.vesktop = {
           enable = true;
-          package = pkgs-unstable.vesktop;
+          inherit package;
 
           vencord.settings = {
             autoUpdate = true;
@@ -113,6 +116,19 @@ in
             hardwareAcceleration = true;
             discordBranch = "stable";
           };
+        };
+
+        wayland.windowManager.hyprland.settings = lib.mkIf hyprland.enable {
+          exec-once = lib.mkAfter [ (lib.getExe package) ];
+          windowrulev2 =
+            let
+              selector = "initialClass:(vesktop)";
+            in
+            lib.mkAfter [
+              "renderunfocused, ${selector}"
+              "workspace 1, ${selector}"
+              "noinitialfocus, ${selector}"
+            ];
         };
       }
     ];
