@@ -53,6 +53,10 @@ universal rules, like shell aliases, users, domain, etc.
    └── universally applied values, like username, domain, etc.
 ```
 
+## Useful Resources
+
+- [noogle](https://noogle.dev/)
+
 ## Credits
 
 This configuration takes advantage of some other repositories and projects, including:
