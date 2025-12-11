@@ -17,6 +17,7 @@ in
   imports = [
     ./cursors.nix
     ./graphics.nix
+    ./bindings.nix
   ];
 
   options = {
@@ -24,8 +25,9 @@ in
       enable = lib.mkEnableOption "Enable Hyprland";
 
       mod = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
+        type = lib.types.str;
         default = "SUPER";
+        readOnly = true;
         description = "Main modifier used for Hyprland bindings.";
       };
 
@@ -34,6 +36,37 @@ in
         default = [ ];
         example = [ "eDP-1" ];
         description = "List of monitors to use with Hyprland. Use the output of 'hyprctl monitors' to get the correct names.";
+      };
+
+      bindings = lib.mkOption {
+        type = lib.types.listOf (
+          lib.types.submodule {
+            options = {
+              keys = lib.mkOption {
+                type = lib.types.listOf lib.types.str;
+                description = "Keys that trigger this binding";
+                default = [ ];
+                example = [ "Space" "Backspace" ];
+              };
+
+              action = lib.mkOption {
+                type = lib.types.str;
+                description = "Hyprland action to perform";
+                default = "exec";
+                example = "exec";
+              };
+
+              params = lib.mkOption {
+                type = lib.types.str;
+                description = "Parameters to be passed to Hyprland action";
+                default = "";
+                example = "rofi";
+              };
+            };
+          }
+        );
+        default = [ ];
+        description = "List of Hyprland key bindings.";
       };
     };
   };
@@ -85,6 +118,30 @@ in
 
           settings = {
             monitor = hyprland.monitors ++ [ "Unknown-1,disable" ];
+
+            bind =
+              let
+                binding =
+                  {
+                    keys ? [ ],
+                    action ? "exec",
+                    params ? "",
+                  }:
+                  let
+                    modStr = hyprland.mod;
+                    mk = key:
+                      let
+                        parts = [
+                          modStr
+                          key
+                          action
+                        ] ++ lib.optional (params != "") params;
+                      in
+                      lib.concatStringsSep ", " parts;
+                  in
+                  map mk keys;
+              in
+              lib.mkAfter (lib.concatMap binding hyprland.bindings);
 
             general = {
               gaps_in = 5;
