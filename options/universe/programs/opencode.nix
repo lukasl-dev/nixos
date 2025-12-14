@@ -16,8 +16,8 @@ in
           {
             "$schema": "https://opencode.ai/config.json",
             "plugin": [
-              "opencode-openai-codex-auth",
-              "opencode-gemini-auth"
+              "opencode-openai-codex-auth@4.1.0",
+              "opencode-gemini-auth@1.2.0"
             ],
             "provider": {
               "openai": {
@@ -31,6 +31,18 @@ in
                   "store": false
                 },
                 "models": {
+                  "gpt-5.2-high": {
+                    "name": "GPT 5.2 High (OAuth)",
+                    "limit": { "context": 272000, "output": 128000 },
+                    "modalities": { "input": ["text", "image"], "output": ["text"] },
+                    "options": {
+                      "reasoningEffort": "high",
+                      "reasoningSummary": "detailed",
+                      "textVerbosity": "medium",
+                      "include": ["reasoning.encrypted_content"],
+                      "store": false
+                    }
+                  },
                   "gpt-5.1-codex-low": {
                     "name": "GPT 5.1 Codex Low (OAuth)",
                     "limit": {
