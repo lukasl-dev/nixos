@@ -48,35 +48,35 @@ in
             writing = {
               matches = [
                 {
-                  trigger = ";emdash";
+                  trigger = ";emdash;";
                   replace = "—";
                 }
                 {
-                  trigger = ";ae";
+                  trigger = ";ae;";
                   replace = "ä";
                 }
                 {
-                  trigger = ";Ae";
+                  trigger = ";Ae;";
                   replace = "Ä";
                 }
                 {
-                  trigger = ";oe";
+                  trigger = ";oe;";
                   replace = "ö";
                 }
                 {
-                  trigger = ";Oe";
+                  trigger = ";Oe;";
                   replace = "Ö";
                 }
                 {
-                  trigger = ";ue";
+                  trigger = ";ue;";
                   replace = "ü";
                 }
                 {
-                  trigger = ";Ue";
+                  trigger = ";Ue;";
                   replace = "Ü";
                 }
                 {
-                  trigger = ";ss";
+                  trigger = ";ss;";
                   replace = "ß";
                 }
               ];
@@ -84,195 +84,195 @@ in
             greek = {
               matches = [
                 {
-                  trigger = ";alpha";
+                  trigger = ";alpha;";
                   replace = "α";
                 }
                 {
-                  trigger = ";Alpha";
+                  trigger = ";Alpha;";
                   replace = "Α";
                 }
                 {
-                  trigger = ";beta";
+                  trigger = ";beta;";
                   replace = "β";
                 }
                 {
-                  trigger = ";Beta";
+                  trigger = ";Beta;";
                   replace = "Β";
                 }
                 {
-                  trigger = ";gamma";
+                  trigger = ";gamma;";
                   replace = "γ";
                 }
                 {
-                  trigger = ";Gamma";
+                  trigger = ";Gamma;";
                   replace = "Γ";
                 }
                 {
-                  trigger = ";delta";
+                  trigger = ";delta;";
                   replace = "δ";
                 }
                 {
-                  trigger = ";Delta";
+                  trigger = ";Delta;";
                   replace = "Δ";
                 }
                 {
-                  trigger = ";epsilon";
+                  trigger = ";epsilon;";
                   replace = "ε";
                 }
                 {
-                  trigger = ";Epsilon";
+                  trigger = ";Epsilon;";
                   replace = "Ε";
                 }
                 {
-                  trigger = ";zeta";
+                  trigger = ";zeta;";
                   replace = "ζ";
                 }
                 {
-                  trigger = ";Zeta";
+                  trigger = ";Zeta;";
                   replace = "Ζ";
                 }
                 {
-                  trigger = ";eta";
+                  trigger = ";eta;";
                   replace = "η";
                 }
                 {
-                  trigger = ";Eta";
+                  trigger = ";Eta;";
                   replace = "Η";
                 }
                 {
-                  trigger = ";theta";
+                  trigger = ";theta;";
                   replace = "θ";
                 }
                 {
-                  trigger = ";Theta";
+                  trigger = ";Theta;";
                   replace = "Θ";
                 }
                 {
-                  trigger = ";iota";
+                  trigger = ";iota;";
                   replace = "ι";
                 }
                 {
-                  trigger = ";Iota";
+                  trigger = ";Iota;";
                   replace = "Ι";
                 }
                 {
-                  trigger = ";kappa";
+                  trigger = ";kappa;";
                   replace = "κ";
                 }
                 {
-                  trigger = ";Kappa";
+                  trigger = ";Kappa;";
                   replace = "Κ";
                 }
                 {
-                  trigger = ";lambda";
+                  trigger = ";lambda;";
                   replace = "λ";
                 }
                 {
-                  trigger = ";Lambda";
+                  trigger = ";Lambda;";
                   replace = "Λ";
                 }
                 {
-                  trigger = ";mu";
+                  trigger = ";mu;";
                   replace = "μ";
                 }
                 {
-                  trigger = ";Mu";
+                  trigger = ";Mu;";
                   replace = "Μ";
                 }
                 {
-                  trigger = ";nu";
+                  trigger = ";nu;";
                   replace = "ν";
                 }
                 {
-                  trigger = ";Nu";
+                  trigger = ";Nu;";
                   replace = "Ν";
                 }
                 {
-                  trigger = ";xi";
+                  trigger = ";xi;";
                   replace = "ξ";
                 }
                 {
-                  trigger = ";Xi";
+                  trigger = ";Xi;";
                   replace = "Ξ";
                 }
                 {
-                  trigger = ";omicron";
+                  trigger = ";omicron;";
                   replace = "ο";
                 }
                 {
-                  trigger = ";Omicron";
+                  trigger = ";Omicron;";
                   replace = "Ο";
                 }
                 {
-                  trigger = ";pi";
+                  trigger = ";pi;";
                   replace = "π";
                 }
                 {
-                  trigger = ";Pi";
+                  trigger = ";Pi;";
                   replace = "Π";
                 }
                 {
-                  trigger = ";rho";
+                  trigger = ";rho;";
                   replace = "ρ";
                 }
                 {
-                  trigger = ";Rho";
+                  trigger = ";Rho;";
                   replace = "Ρ";
                 }
                 {
-                  trigger = ";sigma";
+                  trigger = ";sigma;";
                   replace = "σ";
                 }
                 {
-                  trigger = ";Sigma";
+                  trigger = ";Sigma;";
                   replace = "Σ";
                 }
                 {
-                  trigger = ";tau";
+                  trigger = ";tau;";
                   replace = "τ";
                 }
                 {
-                  trigger = ";Tau";
+                  trigger = ";Tau;";
                   replace = "Τ";
                 }
                 {
-                  trigger = ";upsilon";
+                  trigger = ";upsilon;";
                   replace = "υ";
                 }
                 {
-                  trigger = ";Upsilon";
+                  trigger = ";Upsilon;";
                   replace = "Υ";
                 }
                 {
-                  trigger = ";phi";
+                  trigger = ";phi;";
                   replace = "φ";
                 }
                 {
-                  trigger = ";Phi";
+                  trigger = ";Phi;";
                   replace = "Φ";
                 }
                 {
-                  trigger = ";chi";
+                  trigger = ";chi;";
                   replace = "χ";
                 }
                 {
-                  trigger = ";Chi";
+                  trigger = ";Chi;";
                   replace = "Χ";
                 }
                 {
-                  trigger = ";psi";
+                  trigger = ";psi;";
                   replace = "ψ";
                 }
                 {
-                  trigger = ";Psi";
+                  trigger = ";Psi;";
                   replace = "Ψ";
                 }
                 {
-                  trigger = ";omega";
+                  trigger = ";omega;";
                   replace = "ω";
                 }
                 {
-                  trigger = ";Omega";
+                  trigger = ";Omega;";
                   replace = "Ω";
                 }
               ];
@@ -280,127 +280,131 @@ in
             math = {
               matches = [
                 {
-                  trigger = ";forall";
+                  trigger = ";forall;";
                   replace = "∀";
                 }
                 {
-                  trigger = ";exists";
+                  trigger = ";exists;";
                   replace = "∃";
                 }
                 {
-                  trigger = ";cup";
+                  trigger = ";cup;";
                   replace = "∪";
                 }
                 {
-                  trigger = ";cap";
+                  trigger = ";cap;";
                   replace = "∩";
                 }
                 {
-                  trigger = ";land";
+                  trigger = ";land;";
                   replace = "∧";
                 }
                 {
-                  trigger = ";lor";
+                  trigger = ";lor;";
                   replace = "∨";
                 }
                 {
-                  trigger = ";neg";
+                  trigger = ";neg;";
                   replace = "¬";
                 }
                 {
-                  trigger = ";implies";
+                  trigger = ";implies;";
                   replace = "⇒";
                 }
                 {
-                  trigger = ";iff";
+                  trigger = ";iff;";
                   replace = "⇔";
                 }
                 {
-                  trigger = ";neq";
+                  trigger = ";neq;";
                   replace = "≠";
                 }
                 {
-                  trigger = ";leq";
+                  trigger = ";leq;";
                   replace = "≤";
                 }
                 {
-                  trigger = ";geq";
+                  trigger = ";geq;";
                   replace = "≥";
                 }
                 {
-                  trigger = ";approx";
+                  trigger = ";approx;";
                   replace = "≈";
                 }
                 {
-                  trigger = ";equiv";
+                  trigger = ";equiv;";
                   replace = "≡";
                 }
                 {
-                  trigger = ";in";
+                  trigger = ";in;";
                   replace = "∈";
                 }
                 {
-                  trigger = ";notin";
+                  trigger = ";notin;";
                   replace = "∉";
                 }
                 {
-                  trigger = ";subset";
+                  trigger = ";subset;";
                   replace = "⊂";
                 }
                 {
-                  trigger = ";subseteq";
+                  trigger = "⊂eq;";
                   replace = "⊆";
                 }
                 {
-                  trigger = ";emptyset";
+                  trigger = ";subseteq;";
+                  replace = "⊆";
+                }
+                {
+                  trigger = ";emptyset;";
                   replace = "∅";
                 }
                 {
-                  trigger = ";sum";
+                  trigger = ";sum;";
                   replace = "∑";
                 }
                 {
-                  trigger = ";prod";
+                  trigger = ";prod;";
                   replace = "∏";
                 }
                 {
-                  trigger = ";int";
+                  trigger = ";int;";
                   replace = "∫";
                 }
                 {
-                  trigger = ";partial";
+                  trigger = ";partial;";
                   replace = "∂";
                 }
                 {
-                  trigger = ";infty";
+                  trigger = ";infty;";
                   replace = "∞";
                 }
                 {
-                  trigger = ";sqrt";
+                  trigger = ";sqrt;";
                   replace = "√";
                 }
                 {
-                  trigger = ";pm";
+                  trigger = ";pm;";
                   replace = "±";
                 }
                 {
-                  trigger = ";times";
+                  trigger = ";times;";
                   replace = "×";
                 }
                 {
-                  trigger = ";div";
+                  trigger = ";div;";
                   replace = "÷";
                 }
                 {
-                  trigger = ";to";
+                  trigger = ";to;";
                   replace = "→";
                 }
                 {
-                  trigger = ";gets";
+                  trigger = ";gets;";
                   replace = "←";
                 }
                 {
-                  trigger = ";mapsto";
+                  trigger = ";mapsto;";
                   replace = "↦";
                 }
               ];
