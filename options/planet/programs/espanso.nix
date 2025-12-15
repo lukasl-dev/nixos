@@ -45,8 +45,11 @@ in
             };
             ghostty = {
               filter_class = "com\\.mitchellh\\.ghostty";
-              backend = "inject";
-              disable_x11_fast_inject = true;
+              backend = "clipboard";
+              paste_shortcut = "CTRL+SHIFT+V";
+              pre_paste_delay = 500;
+              paste_shortcut_event_delay = 100;
+              restore_clipboard_delay = 500;
             };
           };
 
