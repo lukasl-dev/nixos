@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   wm = config.planet.wm;
@@ -40,7 +45,8 @@ in
             };
             ghostty = {
               filter_class = "com\\.mitchellh\\.ghostty";
-              paste_shortcut = "CTRL+SHIFT+V";
+              backend = "inject";
+              disable_x11_fast_inject = true;
             };
           };
 
