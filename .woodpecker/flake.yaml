@@ -8,6 +8,7 @@ steps:
         from_secret: binary_cache_access_token
     commands:
       - echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
+      - echo "extra-platforms = aarch64-linux" >> /etc/nix/nix.conf
       - echo "extra-substituters = $BINARY_CACHE" >> /etc/nix/nix.conf
       - echo "extra-trusted-public-keys = $BINARY_CACHE_PUBLIC_KEY" >> /etc/nix/nix.conf
       - echo "machine cache.lukasl.dev password $BINARY_CACHE_ACCESS_TOKEN" > ~/.netrc
