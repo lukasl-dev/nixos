@@ -33,14 +33,19 @@ in
             default = {
               keyboard_layout = {
                 layout = "us";
-                inject_delay = 0;
-                key_delay = 0;
               };
+              inject_delay = 0;
+              key_delay = 0;
+              backend = "clipboard";
+            };
+            ghostty = {
+              filter_class = "com\\.mitchellh\\.ghostty";
+              paste_shortcut = "CTRL+SHIFT+V";
             };
           };
 
           matches = {
-            emdash = {
+            writing = {
               matches = [
                 {
                   trigger = ";emdash";
@@ -74,22 +79,10 @@ in
                   trigger = ";ss";
                   replace = "ß";
                 }
-                {
-                  trigger = ";forall";
-                  replace = "∀";
-                }
-                {
-                  trigger = ";exists";
-                  replace = "∃";
-                }
-                {
-                  trigger = ";cup";
-                  replace = "∪";
-                }
-                {
-                  trigger = ";cap";
-                  replace = "∩";
-                }
+              ];
+            };
+            greek = {
+              matches = [
                 {
                   trigger = ";alpha";
                   replace = "α";
@@ -281,6 +274,26 @@ in
                 {
                   trigger = ";Omega";
                   replace = "Ω";
+                }
+              ];
+            };
+            math = {
+              matches = [
+                {
+                  trigger = ";forall";
+                  replace = "∀";
+                }
+                {
+                  trigger = ";exists";
+                  replace = "∃";
+                }
+                {
+                  trigger = ";cup";
+                  replace = "∪";
+                }
+                {
+                  trigger = ";cap";
+                  replace = "∩";
                 }
                 {
                   trigger = ";land";
