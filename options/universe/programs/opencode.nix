@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   pkgs-unstable,
+  config,
   ...
 }:
 
@@ -10,11 +11,26 @@ let
 
   inherit (pkgs-unstable) github-mcp-server;
 
+  github-mcp-server-wrapped = pkgs.writeShellScriptBin "github-mcp-server" ''
+    source ${config.sops.templates."universe/opencode/env".path}
+    exec ${github-mcp-server}/bin/github-mcp-server "$@"
+  '';
+
   opencode = inputs.opencode.packages.${system}.default;
   rime = inputs.rime.packages.${system}.default;
 in
 {
   environment.systemPackages = [ opencode ];
+
+  sops = {
+    secrets."universe/opencode/github_pat" = { };
+    templates."universe/opencode/env" = {
+      owner = config.universe.user.name;
+      content = ''
+        export GITHUB_PERSONAL_ACCESS_TOKEN="${config.sops.placeholder."universe/opencode/github_pat"}"
+      '';
+    };
+  };
 
   universe.hm = [
     {
@@ -189,8 +205,8 @@ in
               },
               "github": {
                 "type": "local",
-                "command": ["${github-mcp-server}/bin/github-mcp-server", "stdio"],
-                "enabled": false
+                "command": ["${github-mcp-server-wrapped}/bin/github-mcp-server", "stdio"],
+                "enabled": true
               }
             }
           }
