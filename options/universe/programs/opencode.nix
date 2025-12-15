@@ -1,7 +1,14 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 let
   inherit (pkgs.stdenv.hostPlatform) system;
+
+  inherit (pkgs-unstable) github-mcp-server;
 
   opencode = inputs.opencode.packages.${system}.default;
   rime = inputs.rime.packages.${system}.default;
@@ -179,6 +186,11 @@ in
                 "type": "local",
                 "command": ["${rime}/bin/rime", "stdio"],
                 "enabled": true
+              },
+              "github": {
+                "type": "local",
+                "command": ["${github-mcp-server}/bin/github-mcp-server", "stdio"],
+                "enabled": false
               }
             }
           }
