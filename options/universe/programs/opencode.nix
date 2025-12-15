@@ -40,6 +40,29 @@ in
         enable = true;
         package = opencode;
 
+        rules = '''';
+
+        agents = {
+          zig = # markdown
+            ''
+              # Zig Expert
+
+              You're the Zig expert who is always up2date with the newest Zig
+              standard library changes.
+
+              You can access the Zig standard library directory at:
+              ```bash
+              zig env | awk -F'"' '/std_dir/ { print $2; exit }'
+              ```
+
+              ## Guidelines
+
+              - Format a changed file using `zig fmt [file]`.
+              - Run always all tests using `zig build test`. Don't run tests individually.
+              - To prevent system crashes, run builds and tests using `systemd-run`, if available.
+            '';
+        };
+
         settings = {
           plugin = [
             "opencode-openai-codex-auth@4.1.0"
