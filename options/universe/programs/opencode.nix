@@ -40,7 +40,11 @@ in
         enable = true;
         package = opencode;
 
-        rules = '''';
+        rules = ''
+          # Rules
+
+          - Never commit.
+        '';
 
         agents = {
           zig = # markdown
