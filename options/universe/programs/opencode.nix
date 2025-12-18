@@ -112,6 +112,7 @@ in
               6. **Tone & Structure**:
                  - Academic, concise, and structured.
                  - Use headers (`##`, `###`) to organize content logically.
+                 - British spelling.
 
               7. **Markdown Linting**:
                  - Preserve existing markdown linting recommendations.
@@ -140,7 +141,7 @@ in
 
         settings = {
           plugin = [
-            "opencode-openai-codex-auth@4.1.0"
+            "opencode-openai-codex-auth@4.1.1"
             "opencode-gemini-auth@1.2.0"
           ];
           provider = {
