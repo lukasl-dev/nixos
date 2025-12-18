@@ -13,6 +13,7 @@
     ./r.nix
     ./rust.nix
     ./tex.nix
+    ./typescript.nix
     ./yaml.nix
     ./zig.nix
   ];
