@@ -41,10 +41,14 @@ universal rules, like shell aliases, users, domain, etc.
 ├──. options
 │  ├── universe
 │  │   └── universal configuration applied to all hosts
-│  └── planets
+│  └── planet
 │      └── host-specific configuration that needs to be toggled
+├──. packages
+│  └── custom packages and vim configuration
 ├──. planets
 │  └── host-specific entry configurations
+├──. scripts
+│  └── maintenance and utility scripts
 ├──. secrets
 │  └── encrypted sops-nix secrets
 ├──. wallpapers
