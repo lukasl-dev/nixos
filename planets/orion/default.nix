@@ -67,7 +67,7 @@
       name = "battery_level";
       text = # bash
         ''
-          echo $(cat /sys/class/power_supply/BAT1/capacity) \($(cat /sys/class/power_supply/BAT1/capacity_level)\)
+          echo "$(cat /sys/class/power_supply/BAT1/capacity) ($(cat /sys/class/power_supply/BAT1/capacity_level))"
         '';
     })
   ];
