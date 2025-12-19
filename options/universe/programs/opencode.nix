@@ -141,7 +141,7 @@ in
 
         settings = {
           plugin = [
-            "opencode-openai-codex-auth@4.1.1"
+            "opencode-openai-codex-auth@4.2.0"
             "opencode-gemini-auth@1.2.0"
           ];
           provider = {
@@ -156,6 +156,69 @@ in
                 store = false;
               };
               models = {
+                "gpt-5.2-none" = {
+                  name = "GPT 5.2 None (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "none";
+                    reasoningSummary = "auto";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.2-low" = {
+                  name = "GPT 5.2 Low (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "low";
+                    reasoningSummary = "auto";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.2-medium" = {
+                  name = "GPT 5.2 Medium (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "medium";
+                    reasoningSummary = "auto";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
                 "gpt-5.2-high" = {
                   name = "GPT 5.2 High (OAuth)";
                   limit = {
@@ -177,19 +240,213 @@ in
                     store = false;
                   };
                 };
+                "gpt-5.2-xhigh" = {
+                  name = "GPT 5.2 Extra High (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "xhigh";
+                    reasoningSummary = "detailed";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.2-codex-low" = {
+                  name = "GPT 5.2 Codex Low (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "low";
+                    reasoningSummary = "auto";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.2-codex-medium" = {
+                  name = "GPT 5.2 Codex Medium (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "medium";
+                    reasoningSummary = "auto";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.2-codex-high" = {
+                  name = "GPT 5.2 Codex High (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "high";
+                    reasoningSummary = "detailed";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.2-codex-xhigh" = {
+                  name = "GPT 5.2 Codex Extra High (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "xhigh";
+                    reasoningSummary = "detailed";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.1-codex-max-low" = {
+                  name = "GPT 5.1 Codex Max Low (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "low";
+                    reasoningSummary = "detailed";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.1-codex-max-medium" = {
+                  name = "GPT 5.1 Codex Max Medium (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "medium";
+                    reasoningSummary = "detailed";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.1-codex-max-high" = {
+                  name = "GPT 5.1 Codex Max High (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "high";
+                    reasoningSummary = "detailed";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.1-codex-max-xhigh" = {
+                  name = "GPT 5.1 Codex Max Extra High (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "xhigh";
+                    reasoningSummary = "detailed";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
                 "gpt-5.1-codex-low" = {
                   name = "GPT 5.1 Codex Low (OAuth)";
                   limit = {
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "low";
                     reasoningSummary = "auto";
                     textVerbosity = "medium";
-                    include = [
-                      "reasoning.encrypted_content"
-                    ];
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
@@ -199,13 +456,18 @@ in
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "medium";
                     reasoningSummary = "auto";
                     textVerbosity = "medium";
-                    include = [
-                      "reasoning.encrypted_content"
-                    ];
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
@@ -215,13 +477,18 @@ in
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "high";
                     reasoningSummary = "detailed";
                     textVerbosity = "medium";
-                    include = [
-                      "reasoning.encrypted_content"
-                    ];
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
@@ -231,13 +498,18 @@ in
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "medium";
                     reasoningSummary = "auto";
                     textVerbosity = "medium";
-                    include = [
-                      "reasoning.encrypted_content"
-                    ];
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
@@ -247,13 +519,39 @@ in
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "high";
                     reasoningSummary = "detailed";
                     textVerbosity = "medium";
-                    include = [
-                      "reasoning.encrypted_content"
+                    include = [ "reasoning.encrypted_content" ];
+                    store = false;
+                  };
+                };
+                "gpt-5.1-none" = {
+                  name = "GPT 5.1 None (OAuth)";
+                  limit = {
+                    context = 272000;
+                    output = 128000;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
                     ];
+                    output = [ "text" ];
+                  };
+                  options = {
+                    reasoningEffort = "none";
+                    reasoningSummary = "auto";
+                    textVerbosity = "medium";
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
@@ -263,13 +561,18 @@ in
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "low";
                     reasoningSummary = "auto";
                     textVerbosity = "low";
-                    include = [
-                      "reasoning.encrypted_content"
-                    ];
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
@@ -279,13 +582,18 @@ in
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "medium";
                     reasoningSummary = "auto";
                     textVerbosity = "medium";
-                    include = [
-                      "reasoning.encrypted_content"
-                    ];
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
@@ -295,13 +603,18 @@ in
                     context = 272000;
                     output = 128000;
                   };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
                   options = {
                     reasoningEffort = "high";
                     reasoningSummary = "detailed";
                     textVerbosity = "high";
-                    include = [
-                      "reasoning.encrypted_content"
-                    ];
+                    include = [ "reasoning.encrypted_content" ];
                     store = false;
                   };
                 };
