@@ -6,13 +6,10 @@
 }:
 
 let
-  user = config.universe.user;
+  inherit (config.universe) user;
 in
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-    # inputs.hjem.nixosModules.default
-  ];
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   options.universe.hm = lib.mkOption {
     type = lib.types.listOf lib.types.attrs;
@@ -21,19 +18,20 @@ in
   };
 
   config = {
-    # hjem.users.${user.name} = {
-    #   enable = true;
-    #   directory = "/home/${user.name}";
-    # };
-
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
 
       backupFileExtension = "backup";
 
-      users.root = lib.mkMerge config.universe.hm;
-      users.${user.name} = lib.mkMerge config.universe.hm;
+      users =
+        let
+          module = lib.mkMerge config.universe.hm;
+        in
+        {
+          root = module;
+          ${user.name} = module;
+        };
     };
   };
 }
