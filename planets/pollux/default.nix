@@ -36,6 +36,7 @@
   planet = {
     name = "pollux";
     timeZone = "Europe/Berlin";
+    stateVersion = "25.05";
 
     sudo.password = false;
   };

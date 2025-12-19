@@ -14,6 +14,7 @@
     ./attic.nix
     ./fonts.nix
     ./name.nix
+    ./stateVersion.nix
     ./sudo.nix
     ./time.nix
     ./xdg.nix

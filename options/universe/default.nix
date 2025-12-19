@@ -17,7 +17,6 @@
     ./nix.nix
     ./packages.nix
     ./session-path.nix
-    ./stateVersion.nix
     ./udisks2.nix
     ./user.nix
     ./wine.nix

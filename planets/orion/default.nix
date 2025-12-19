@@ -89,6 +89,7 @@
   planet = {
     name = "orion";
     timeZone = "Europe/Vienna";
+    stateVersion = "25.05";
 
     hardware = {
       bluetooth.enable = true;

@@ -17,6 +17,7 @@
   planet = {
     name = "ida";
     timeZone = "Europe/Vienna";
+    stateVersion = "25.05";
 
     sudo.password = false;
   };

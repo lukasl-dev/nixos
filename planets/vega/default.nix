@@ -24,6 +24,7 @@
   planet = {
     name = "vega";
     timeZone = "Europe/Vienna";
+    stateVersion = "25.05";
 
     hardware = {
       bluetooth.enable = true;
