@@ -7,6 +7,7 @@
 
     ./services/anki-sync-server.nix
     ./services/attic.nix
+    ./services/authelia.nix
     ./services/booklore.nix
     ./services/capTUre.nix
     ./services/firefly.nix

@@ -28,6 +28,7 @@ D(
 	CNAME("forge", "pollux.planets.lukasl.dev."),
 	CNAME("notes", "pollux.planets.lukasl.dev."),
 	CNAME("proxy", "pollux.planets.lukasl.dev."),
+	CNAME("auth", "pollux.planets.lukasl.dev."),
 	CNAME("vault", "pollux.planets.lukasl.dev."),
 	CNAME("rss", "pollux.planets.lukasl.dev."),
 	CNAME("kitchen", "pollux.planets.lukasl.dev."),
