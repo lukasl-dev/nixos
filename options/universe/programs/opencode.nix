@@ -44,7 +44,7 @@ in
           # Rules
 
           - Never commit.
-          - Delegate to preserve main context.
+          - Delegate to preserve main context. When launching a subagent, remind it to use the scratchpad if the task involves research or exploration.
 
           ## Exploration (CRITICAL)
 
@@ -66,6 +66,7 @@ in
           ## Scratchpad (Knowledge Cache)
 
           - `.scratchpad/*.md` persists across sessions.
+          - Use the format `YYYY-MM-DD-topic.md` for scratchpad files (e.g., `2025-11-03-zig-stdlib_changes.md`).
           - Domain agents (nix, zig) read/write scratchpad directly.
           - Before deep exploration: check scratchpad.
           - After expensive research: write to scratchpad.
@@ -83,6 +84,7 @@ in
               ---
               description: Fast codebase exploration (read-only)
               mode: subagent
+              model: google/gemini-3-flash-preview
               tools:
                 write: false
                 edit: false
@@ -92,6 +94,11 @@ in
               # Explore Agent
 
               You are a read-only exploration agent. Your job is to locate relevant files, symbols, and patterns quickly.
+
+              ## Scratchpad
+              - ALWAYS check `.scratchpad/*.md` before starting your exploration.
+              - If the information exists in the scratchpad, use it to narrow your search.
+              - After finding new architectural patterns or file locations, update the relevant scratchpad file.
 
               ## Workflow
               1. Use glob/grep/read to find candidates
@@ -118,8 +125,8 @@ in
               Specialized agent for Nix/NixOS work. Handle ALL Nix-related tasks autonomously.
 
               ## Scratchpad
-              - Read `.scratchpad/nix-*.md` before deep exploration
-              - Write findings to `.scratchpad/nix-<topic>.md` after learning non-obvious patterns
+              - Read `.scratchpad/*-nix-*.md` before deep exploration
+              - Write findings to `.scratchpad/YYYY-MM-DD-nix-<topic>.md` after learning non-obvious patterns
               - Format: `# Title`, `## Summary`, `## Details`, `## References`
 
               ## Workflow
@@ -162,19 +169,20 @@ in
               Handle Zig development tasks autonomously.
 
               ## Scratchpad
-              - Read `.scratchpad/zig-*.md` before exploring stdlib
-              - Write findings to `.scratchpad/zig-<topic>.md` after learning non-obvious patterns
+              - **CRITICAL**: Read `.scratchpad/*-zig-*.md` before exploring stdlib or implementing features.
+              - **ALWAYS** write findings to `.scratchpad/YYYY-MM-DD-zig-<topic>.md` after learning non-obvious patterns or solving complex issues.
+              - Use the scratchpad to avoid redundant research and maintain continuity.
               - Format: `# Title`, `## Summary`, `## Details`, `## References`
 
               ## Access
               Zig stdlib: `zig env | jq -r .std_dir`
 
               ## Workflow
-              1. Check scratchpad for cached knowledge
+              1. **Consult Scratchpad**: Check existing notes for context or similar implementations.
               2. Make changes
               3. Format: `zig fmt <file>`
               4. Test: `systemd-run --user --scope zig build test`
-              5. Cache new stdlib/pattern knowledge to scratchpad
+              5. **Update Scratchpad**: Cache new stdlib/pattern knowledge to scratchpad.
 
               ## Return Format
               - Changes made
@@ -188,6 +196,24 @@ in
             "opencode-gemini-auth@1.2.0"
           ];
           provider = {
+            google = {
+              models = {
+                "gemini-3-flash-preview" = {
+                  name = "Gemini 3 Flash Preview";
+                  limit = {
+                    context = 1048576;
+                    output = 8192;
+                  };
+                  modalities = {
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                  };
+                };
+              };
+            };
             openai = {
               options = {
                 reasoningEffort = "medium";

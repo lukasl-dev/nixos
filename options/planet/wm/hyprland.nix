@@ -385,7 +385,7 @@ in
                 sensitivity = 0;
 
                 repeat_rate = 25;
-                repeat_delay = 200;
+                repeat_delay = 400;
               };
 
               general = {
