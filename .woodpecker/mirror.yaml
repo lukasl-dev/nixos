@@ -9,6 +9,12 @@ steps:
       - echo "$SSH_KEY" > ~/.ssh/id_ed25519
       - chmod 600 ~/.ssh/id_ed25519
       - ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - |
+        if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then
+          git fetch --unshallow --tags --prune
+        else
+          git fetch --tags --prune
+        fi
       - git remote add mirror git@github.com:lukasl-dev/nixos.git || true
       - git push --mirror mirror
 
