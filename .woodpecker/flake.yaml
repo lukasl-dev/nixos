@@ -8,13 +8,22 @@ steps:
         from_secret: binary_cache_access_token
     commands:
       - echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
-      - echo "extra-platforms = aarch64-linux" >> /etc/nix/nix.conf
       - echo "extra-substituters = $BINARY_CACHE" >> /etc/nix/nix.conf
       - echo "extra-trusted-public-keys = $BINARY_CACHE_PUBLIC_KEY" >> /etc/nix/nix.conf
-      - echo "machine cache.lukasl.dev password $BINARY_CACHE_ACCESS_TOKEN" > ~/.netrc
-      - export NIX_CONFIG="netrc-file = $HOME/.netrc"
-      # - nix run nixpkgs#attic-client -- login attic $BINARY_CACHE $BINARY_CACHE_ACCESS_TOKEN
-      - nix flake check
+      - echo "machine cache.lukasl.dev password $BINARY_CACHE_ACCESS_TOKEN" > /etc/nix/netrc
+      - export NIX_CONFIG="netrc-file = /etc/nix/netrc"
+      - |
+        if [ "$(uname -m)" = "x86_64" ]; then
+          nix build .#nixosConfigurations.orion.config.system.build.toplevel
+          nix build .#nixosConfigurations.vega.config.system.build.toplevel
+          nix build .#nixosConfigurations.pollux.config.system.build.toplevel
+          nix build .#vim
+        fi
+      - |
+        if [ "$(uname -m)" = "aarch64" ]; then
+          nix build .#nixosConfigurations.ida.config.system.build.toplevel
+          nix build .#vim
+        fi
 
 when:
   - event: [push, pull_request]
