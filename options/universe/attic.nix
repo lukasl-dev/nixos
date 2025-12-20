@@ -11,8 +11,12 @@ let
 
   client = pkgs-unstable.attic-client;
   cache = "universe";
+
+  netrc-file = "/etc/nix/netrc";
 in
 {
+  nix.settings.netrc-file = netrc-file;
+
   environment.systemPackages = lib.mkBefore [ client ];
 
   systemd.user.services."attic-use-${cache}" =
@@ -51,13 +55,14 @@ in
         path = "/home/${user.name}/.config/attic/config.toml";
       };
 
-      # TODO: problematic if there are multiple .netrc files are required
       "universe/attic/netrc" = {
         content = ''
           machine cache.${domain} password "${config.sops.placeholder."universe/attic/token"}"
         '';
-        owner = user.name;
-        path = "/home/${user.name}/.netrc";
+        owner = "root";
+        group = "root";
+        mode = "0400";
+        path = netrc-file;
       };
     };
   };
