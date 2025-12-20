@@ -43,7 +43,7 @@ in
         rules = ''
           # Rules
 
-          - Never commit.
+          - **NEVER** perform commits.
           - Delegate to preserve main context. When launching a subagent, remind it to use the scratchpad if the task involves research or exploration.
 
           ## Exploration (CRITICAL)
