@@ -1964,11 +1964,11 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1766275638,
-        "narHash": "sha256-QAC/waVbEW4Im1U3bp3t8/Q8jG5+CRQ5gXccaKmcrL4=",
+        "lastModified": 1766338878,
+        "narHash": "sha256-eMj0Sjt3ap5QAyMFCd+FLNt1T07a8jKvrJ5GLDiTktA=",
         "owner": "lukasl-dev",
         "repo": "rime",
-        "rev": "1089dc79bce101dca8f675d25ae2089a57309d99",
+        "rev": "7552e2a463538135912d37ee7f25050c6eb9d033",
         "type": "github"
       },
       "original": {
