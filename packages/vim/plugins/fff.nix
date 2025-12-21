@@ -3,6 +3,9 @@
 {
   vim.lazy.plugins."fff.nvim" = {
     package = rinputs.fff-nvim.packages.${pkgs.stdenv.system}.fff-nvim;
+    setupOpts = {
+      prompt = "> ";
+    };
     keys = [
       {
         key = "<leader>ff";
