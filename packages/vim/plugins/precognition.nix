@@ -1,3 +1,3 @@
 {
-  vim.utility.motion.precognition.enable = true;
+  vim.utility.motion.precognition.enable = false;
 }

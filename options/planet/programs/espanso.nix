@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -9,6 +10,7 @@ let
   inherit (config.universe) user;
 
   inherit (wm) hyprland;
+
 in
 {
   options.planet.programs.espanso = {
@@ -39,21 +41,21 @@ in
               keyboard_layout = {
                 layout = "us";
               };
-              backend = "clipboard";
-              pre_paste_delay = 50;
-              paste_shortcut_event_delay = 5;
-              restore_clipboard_delay = 50;
-              inject_delay = 0;
-              key_delay = 0;
+              # backend = "clipboard";
+              # pre_paste_delay = 50;
+              # paste_shortcut_event_delay = 5;
+              # restore_clipboard_delay = 50;
+              # inject_delay = 0;
+              # key_delay = 0;
             };
-            ghostty = {
-              filter_class = "com\\.mitchellh\\.ghostty";
-              backend = "clipboard";
-              paste_shortcut = "CTRL+SHIFT+V";
-              pre_paste_delay = 100;
-              paste_shortcut_event_delay = 10;
-              restore_clipboard_delay = 100;
-            };
+            # ghostty = {
+            #   filter_class = "com\\.mitchellh\\.ghostty";
+            #   backend = "clipboard";
+            #   paste_shortcut = "CTRL+SHIFT+V";
+            #   pre_paste_delay = 500;
+            #   paste_shortcut_event_delay = 100;
+            #   restore_clipboard_delay = 500;
+            # };
           };
 
           matches = {

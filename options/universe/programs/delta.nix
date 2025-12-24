@@ -5,6 +5,7 @@
         enable = true;
 
         enableGitIntegration = true;
+        enableJujutsuIntegration = true;
       };
     }
   ];

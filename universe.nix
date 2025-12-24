@@ -13,5 +13,12 @@
         email = "git@lukasl.dev";
       };
     };
+
+    jujutsu = {
+      user = {
+        name = "lukasl-dev";
+        email = "git@lukasl.dev";
+      };
+    };
   };
 }

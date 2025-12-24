@@ -18,6 +18,7 @@
     ./gpg.nix
     ./hyperfine.nix
     ./imagemagick.nix
+    ./jj.nix
     ./ntfy.nix
     ./nvim.nix
     ./opencode.nix

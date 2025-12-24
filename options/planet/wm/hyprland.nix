@@ -385,7 +385,7 @@ in
                 sensitivity = 0;
 
                 repeat_rate = 25;
-                repeat_delay = 400;
+                repeat_delay = 500;
               };
 
               general = {
@@ -444,10 +444,6 @@ in
 
               render = {
                 direct_scanout = 1;
-              };
-
-              debug = {
-                disable_logs = false;
               };
             };
         };
