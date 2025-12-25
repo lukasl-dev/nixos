@@ -1971,11 +1971,11 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1766622830,
-        "narHash": "sha256-ZZCFCVbq/hMWw9sV8wcFtaL9pXJUUUm50eHEN9mqmPY=",
+        "lastModified": 1766624254,
+        "narHash": "sha256-RGr7GQOx0aYoKycUQXNbdlzT+p7MnjIvbZGkOkxOZWA=",
         "owner": "lukasl-dev",
         "repo": "outofbounds",
-        "rev": "3a1bab0f41677d7e8325c1752278a29dcee5741e",
+        "rev": "64df7ddcdc8107671885906476a423766462bb68",
         "type": "github"
       },
       "original": {

@@ -1,7 +1,7 @@
 { inputs, config, ... }:
 
 {
-  imports = [ inputs.outofbounds.nixosModules.outofbounds ];
+  imports = [ inputs.outofbounds.nixosModules.default ];
 
   services.outofbounds = {
     enable = true;
@@ -11,7 +11,7 @@
   };
 
   sops = {
-    secrets."planets/pollux/outofbounds/settings".content = {
+    secrets."planets/pollux/outofbounds/settings" = {
       owner = "outofbounds";
     };
   };

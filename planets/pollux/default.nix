@@ -19,6 +19,7 @@
     ./services/mealie.nix
     # ./services/nextcloud.nix
     ./services/ntfy.nix
+    ./services/outofbounds.nix
     ./services/prometheus.nix
     ./services/nginx.nix
     ./services/notes.nix
