@@ -4,7 +4,7 @@ let
   inherit (config.universe) domain;
 
   port = 89;
-  host = domain;
+  host = "blog.${domain}";
 
   routerName = "blog";
   serviceName = routerName;
