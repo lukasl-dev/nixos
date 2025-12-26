@@ -3,10 +3,10 @@
 let
   inherit (config.universe) domain;
 
-  port = 81;
+  port = 89;
   host = domain;
 
-  routerName = "www";
+  routerName = "blog";
   serviceName = routerName;
 
   upstream = "http://127.0.0.1:${toString port}";
@@ -19,7 +19,7 @@ in
         inherit port;
       }
     ];
-    root = "/var/www/www";
+    root = "/var/www/blog";
   };
 
   services.traefik.dynamicConfigOptions.http = {

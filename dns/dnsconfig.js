@@ -20,6 +20,7 @@ D(
   CNAME("anki", "pollux.planets.lukasl.dev."),
   CNAME("box", "pollux.planets.lukasl.dev."),
   CNAME("books", "pollux.planets.lukasl.dev."),
+  CNAME("blog", "pollux.planets.lukasl.dev."),
   CNAME("cache", "pollux.planets.lukasl.dev."),
   CNAME("call", "pollux.planets.lukasl.dev."),
   CNAME("ci", "pollux.planets.lukasl.dev."),
