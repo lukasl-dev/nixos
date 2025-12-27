@@ -1843,11 +1843,11 @@
         "systems": "systems_8"
       },
       "locked": {
-        "lastModified": 1766797329,
-        "narHash": "sha256-4X01UuX3EUJLPS8yMhcLpfLT0umWLA72MIqGdDFjwMM=",
+        "lastModified": 1766859030,
+        "narHash": "sha256-Bvf7DQmRPYuDBEUPhPDu6ok0m04wHk49DXQJ4Xngjmg=",
         "owner": "lukasl-dev",
         "repo": "rime",
-        "rev": "236dbd560d14db29337ef4b4ef0c526d4da75684",
+        "rev": "5fbbd4d6ea5704825a201216aacac759dd54416c",
         "type": "github"
       },
       "original": {
