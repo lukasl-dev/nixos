@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ./bash.nix
@@ -20,7 +22,10 @@
 
   vim = {
     treesitter.enable = true;
-    lsp.enable = true;
+    lsp = {
+      enable = true;
+      lspconfig.enable = true;
+    };
 
     languages = {
       enableDAP = true;
