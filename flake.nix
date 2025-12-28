@@ -28,6 +28,7 @@
     tuwunel.url = "github:matrix-construct/tuwunel";
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
     capTUre.url = "github:lukasl-dev/capTUre";
+    nur.url = "github:nix-community/NUR";
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
       # TODO: resolve issue

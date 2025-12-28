@@ -1,4 +1,8 @@
-{ config, ... }:
+{
+  config,
+  inputs,
+  ...
+}:
 
 {
   nix.settings = {
@@ -12,7 +16,13 @@
     ];
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+
+    overlays = [
+      inputs.nur.overlays.default
+    ];
   };
 }

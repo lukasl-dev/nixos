@@ -1,29 +1,30 @@
 {
   config,
   lib,
-  pkgs-unstable,
+  pkgs,
   ...
 }:
 
 let
   inherit (config.planet) wm;
   inherit (wm) hyprland;
+  inherit (config.planet.programs) helium;
 in
 {
-  options.planet.programs.brave = {
+  options.planet.programs.helium = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = false;
-      description = "Enable brave";
+      default = wm.enable;
+      description = "Enable helium browser";
     };
   };
 
-  config = lib.mkIf config.planet.programs.brave.enable {
+  config = lib.mkIf helium.enable {
     universe.hm = [
       {
         programs.chromium = {
           enable = true;
-          package = pkgs-unstable.brave;
+          package = pkgs.nur.repos.Ev357.helium;
           extensions = [
             "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
             "nngceckbapebfimnlniiiahkandclblb" # Bitwarden

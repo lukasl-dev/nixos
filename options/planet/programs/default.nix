@@ -10,6 +10,7 @@
     ./espanso.nix
     ./feh.nix
     ./ghostty.nix
+    ./helium.nix
     ./jellyfin.nix
     ./localsend.nix
     ./mpv.nix
