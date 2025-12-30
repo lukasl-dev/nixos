@@ -16,10 +16,26 @@ let
     exec ${github-mcp-server}/bin/github-mcp-server "$@"
   '';
 
-  opencode = inputs.opencode.packages.${system}.default;
-  # opencode-wrapped = pkgs.writeShellScriptBin "opencode" ''
-  #   exec ${pkgs.firejail}/bin/firejail --blacklist=$(which sops) ${opencode}/bin/opencode "$@"
-  # '';
+  opencode =
+    let
+      pkg = inputs.opencode.packages.${system}.default;
+    in
+    pkgs.symlinkJoin {
+      inherit (pkg) name;
+      paths = [ pkg ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        rm $out/bin/opencode
+        makeWrapper ${pkgs.firejail}/bin/firejail $out/bin/opencode \
+          --add-flags "--noprofile" \
+          --add-flags "--blacklist=sops" \
+          --add-flags "--blacklist=${pkgs-unstable.sops}/bin/sops" \
+          --add-flags "--blacklist=${pkgs.sops}/bin/sops" \
+          --add-flags "--" \
+          --add-flags "${pkg}/bin/opencode"
+        sed -i 's|${pkgs.firejail}/bin/firejail|/run/wrappers/bin/firejail|' $out/bin/opencode
+      '';
+    };
 
   rime = inputs.rime.packages.${system}.default;
 in
