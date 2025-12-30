@@ -9,6 +9,8 @@
 let
   inherit (pkgs.stdenv.hostPlatform) system;
 
+  inherit (config) sops;
+
   inherit (pkgs-unstable) github-mcp-server;
 
   github-mcp-server-wrapped = pkgs.writeShellScriptBin "github-mcp-server" ''
@@ -31,6 +33,7 @@ let
           --add-flags "--blacklist=sops" \
           --add-flags "--blacklist=${pkgs-unstable.sops}/bin/sops" \
           --add-flags "--blacklist=${pkgs.sops}/bin/sops" \
+          --add-flags "--blacklist=${sops.age.keyFile}" \
           --add-flags "--" \
           --add-flags "${pkg}/bin/opencode"
         sed -i 's|${pkgs.firejail}/bin/firejail|/run/wrappers/bin/firejail|' $out/bin/opencode
