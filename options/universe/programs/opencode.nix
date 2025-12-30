@@ -228,7 +228,7 @@ in
         settings = {
           plugin = [
             "opencode-openai-codex-auth@4.2.0"
-            "opencode-gemini-auth@1.2.0"
+            "opencode-gemini-auth@1.3.6"
           ];
           provider = {
             google = {
