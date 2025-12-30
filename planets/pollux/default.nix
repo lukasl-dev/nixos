@@ -5,6 +5,8 @@
     ./boot.nix
     ./networking.nix
 
+    ./lukasl.dev
+
     ./services/anki-sync-server.nix
     ./services/attic.nix
     ./services/authelia.nix
