@@ -1,3 +1,4 @@
 # Nix
 result
 *.qcow2
+.scratchpad/

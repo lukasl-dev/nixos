@@ -12,6 +12,7 @@ in
       environmentFile = config.sops.templates."acme/env".path;
     };
 
+    # TODO: remove this
     certs.${domain} = {
       domain = domain;
       extraDomainNames = [ "*.${domain}" ];

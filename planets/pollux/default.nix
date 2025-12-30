@@ -5,25 +5,25 @@
     ./boot.nix
     ./networking.nix
 
-    ./lukasl.dev
+    ./containers
+    ./options
 
-    ./services/anki-sync-server.nix
+    # ./services/anki-sync-server.nix
     ./services/attic.nix
     ./services/authelia.nix
     ./services/blog.nix
     ./services/booklore.nix
     ./services/capTUre.nix
-    ./services/firefly.nix
+    # ./services/firefly.nix
     ./services/forgejo.nix
     ./services/freshrss.nix
-    ./services/homebox.nix
+    # ./services/homebox.nix
     ./services/jellyfin.nix
     ./services/maddy.nix
-    ./services/mealie.nix
+    # ./services/mealie.nix
     # ./services/nextcloud.nix
-    ./services/ntfy.nix
+    # ./services/ntfy.nix
     ./services/outofbounds.nix
-    ./services/prometheus.nix
     ./services/nginx.nix
     ./services/notes.nix
     # ./services/seafile.nix
