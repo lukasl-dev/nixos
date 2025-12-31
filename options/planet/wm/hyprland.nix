@@ -183,7 +183,7 @@ in
                   "${mainMod}, p, exec, obsidian"
                   ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
                   "${mainMod}, T, exec, ghostty"
-                  "${mainMod}, B, exec, zen-beta"
+                  "${mainMod}, B, exec, helium"
                   # "${mainMod}, G, exec, waybar-toggle"
 
                   "${mainMod}, I, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
