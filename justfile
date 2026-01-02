@@ -6,3 +6,6 @@ flake-changes input:
 
 switch:
     ./scripts/safe-switch.sh
+
+cache:
+    nix-store -qR --include-outputs $(nix-store -qd /run/current-system) | xargs nix run nixpkgs#attic-client -- push universe
