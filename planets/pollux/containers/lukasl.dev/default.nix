@@ -16,6 +16,7 @@ in
     ./kitchen.nix
     ./metrics.nix
     ./ntfy.nix
+    ./waka.nix
   ];
 
   security.acme.certs.${meta.domain} = {
