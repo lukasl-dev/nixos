@@ -23,6 +23,24 @@ in
   config = lib.mkIf nvidia.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
 
+    boot.initrd.kernelModules = [
+      "nvidia"
+      "nvidia_modeset"
+      "nvidia_uvm"
+      "nvidia_drm"
+    ];
+
+    boot.kernelParams = [
+      # use the nvidia framebuffer device
+      "nvidia_drm.fbdev=1"
+
+      # required for stable suspend/resume
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+
+      # save vram to disk instead of ram (tmpfs) to prevent resume failures
+      "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+    ];
+
     # boot.kernelModules = [ "nvidia" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
 
@@ -52,13 +70,21 @@ in
     environment.sessionVariables = lib.mkMerge [
       {
         GBM_BACKEND = "nvidia-drm";
+
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+
+        # hardware video acceleration
+        LIBVA_DRIVER_NAME = "nvidia";
 
         # disable vsync
         __GL_SYNC_TO_VBLANK = "0";
 
         # lowest frame buffering -> lower latency
         __GL_MaxFramesAllowed = "1";
+
+        # g-sync/vrr support
+        __GL_GSYNC_ALLOWED = "1";
+        __GL_VRR_ALLOWED = "1";
 
         __GL_YIELD = "USLEEP";
 

@@ -44,6 +44,8 @@ in
       enable = true;
 
       package = hyprland;
+      # NOTE: portalPackage is handled here. We avoid a separate xdg.portal block
+      # to prevent conflicts on NixOS 25.05+, as the module handles this automatically.
       portalPackage = xdg-desktop-portal-hyprland;
 
       xwayland.enable = true;
@@ -74,6 +76,8 @@ in
 
         pkgs-unstable.hyprcursor
         pkgs.catppuccin-cursors.mochaMauve
+
+        pkgs.xdg-desktop-portal-gtk
 
         pkgs.grim
         pkgs.slurp
@@ -107,7 +111,7 @@ in
       enable32Bit = true;
       package32 = hypr-nixpkgs.pkgsi686Linux.mesa;
 
-      extraPackages = [ hypr-nixpkgs.rocmPackages.clr ];
+      extraPackages = [ ];
     };
 
     universe.hm = [
@@ -372,7 +376,8 @@ in
               ];
 
               cursor = {
-                no_hardware_cursors = true;
+                # 2 is 'auto', which is recommended for NVIDIA
+                no_hardware_cursors = 2;
               };
 
               input = {
@@ -403,6 +408,7 @@ in
 
               decoration = {
                 rounding = 10;
+                dim_modal = true;
 
                 blur = {
                   enabled = true;
@@ -432,18 +438,18 @@ in
               };
 
               gestures = {
-                workspace_swipe = "off";
               };
 
               misc = {
                 force_default_wallpaper = 0;
                 mouse_move_enables_dpms = false;
-                vrr = 1;
+                vrr = 2;
                 enable_anr_dialog = false;
+                disable_hyprland_guiutils_check = true;
               };
 
               render = {
-                direct_scanout = 1;
+                direct_scanout = 0;
               };
             };
         };
