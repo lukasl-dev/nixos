@@ -22,6 +22,7 @@
     ./telescope.nix
     ./todo-comments.nix
     ./trouble.nix
+    ./wakatime.nix
     ./whichKey.nix
   ];
 }

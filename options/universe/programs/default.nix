@@ -25,6 +25,7 @@
     ./ripgrep.nix
     ./speedtest.nix
     ./television.nix
+    ./wakatime.nix
     ./yazi.nix
     ./yt-dlp.nix
     ./zip.nix
