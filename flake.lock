@@ -1928,11 +1928,11 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1766624254,
-        "narHash": "sha256-RGr7GQOx0aYoKycUQXNbdlzT+p7MnjIvbZGkOkxOZWA=",
+        "lastModified": 1767326374,
+        "narHash": "sha256-Anm1/x2fM0u8QJL2CoOBa60qtrwB/7y4A3uTcfqjS1w=",
         "owner": "lukasl-dev",
         "repo": "outofbounds",
-        "rev": "64df7ddcdc8107671885906476a423766462bb68",
+        "rev": "2bb13ac1d8af2e2f9d79c4826bb34fa66ab7137d",
         "type": "github"
       },
       "original": {
