@@ -1993,11 +1993,11 @@
         "systems": "systems_8"
       },
       "locked": {
-        "lastModified": 1766859030,
-        "narHash": "sha256-Bvf7DQmRPYuDBEUPhPDu6ok0m04wHk49DXQJ4Xngjmg=",
+        "lastModified": 1767480275,
+        "narHash": "sha256-FLzYIYnzaMhxYXhQpJ5jl9T+vnkux099jc5qk+djbAU=",
         "owner": "lukasl-dev",
         "repo": "rime",
-        "rev": "5fbbd4d6ea5704825a201216aacac759dd54416c",
+        "rev": "2dfcf5e7a80052a1237c7d305aae9444c96b0387",
         "type": "github"
       },
       "original": {
