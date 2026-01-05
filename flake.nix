@@ -35,7 +35,7 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     # codex.url = "github:openai/codex";
-    opencode.url = "github:sst/opencode";
+    opencode.url = "github:anomalyco/opencode";
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";
   };
