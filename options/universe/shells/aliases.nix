@@ -1,3 +1,4 @@
+{ pkgs }:
 {
   g = "git status";
   gf = "git fetch";
@@ -33,4 +34,6 @@
   oc = "opencode";
 
   s = "nix-shell --run zsh -p ";
+
+  ld_cc = ''LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib}/lib'';
 }

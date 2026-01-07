@@ -26,7 +26,7 @@ in
       programs.zsh = {
         enable = true;
 
-        shellAliases = import ./aliases.nix;
+        shellAliases = import ./aliases.nix { inherit pkgs; };
 
         enableCompletion = true;
         syntaxHighlighting.enable = true;

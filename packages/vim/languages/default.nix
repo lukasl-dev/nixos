@@ -22,6 +22,7 @@
 
   vim = {
     treesitter.enable = true;
+
     lsp = {
       enable = true;
       lspconfig.enable = true;
@@ -40,5 +41,25 @@
         lsp_fallback = true;
       };
     };
+
+    debugger.nvim-dap = {
+      enable = true;
+      ui.enable = false;
+    };
+
+    extraPlugins = {
+      blink-compat = {
+        package = pkgs.vimPlugins.blink-compat;
+      };
+      cmp-dap = {
+        package = pkgs.vimPlugins.cmp-dap;
+      };
+    };
+    # extraPlugins = {
+    #   nvim-dap-virtual-text = {
+    #     package = pkgs.vimPlugins.nvim-dap-virtual-text;
+    #     setup = "require('nvim-dap-virtual-text').setup({})";
+    #   };
+    # };
   };
 }
