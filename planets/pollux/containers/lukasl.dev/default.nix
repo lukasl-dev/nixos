@@ -54,6 +54,10 @@ in
     hostAddress = meta.address.host;
     localAddress = meta.address.local;
 
+    # Enable nesting to allow Docker to run inside the container
+    # This is required for OCI containers to work.
+    additionalCapabilities = [ "all" ];
+
     bindMounts = {
       ${acmeDir} = {
         hostPath = acmeDir;
