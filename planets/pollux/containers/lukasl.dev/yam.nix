@@ -20,7 +20,7 @@ in
         virtualisation.oci-containers.containers = {
           yamtrack = {
             image = "ghcr.io/fuzzygrim/yamtrack:latest";
-            ports = [ "${meta.address.local}:${toString port}:8000" ];
+            ports = [ "${toString port}:8000" ];
             environment = {
               TZ = "Europe/Berlin";
               REDIS_URL = "redis://yamtrack-redis:6379";
