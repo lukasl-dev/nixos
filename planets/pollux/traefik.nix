@@ -1,6 +1,6 @@
 let
   httpPort = 80;
-  httpsPort = 80;
+  httpsPort = 443;
 in
 {
   services.traefik = {
