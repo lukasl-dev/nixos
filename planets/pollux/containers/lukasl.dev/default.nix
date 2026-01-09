@@ -17,6 +17,7 @@ in
     ./metrics.nix
     ./ntfy.nix
     ./waka.nix
+    ./yam.nix
   ];
 
   security.acme.certs.${meta.domain} = {
@@ -57,6 +58,11 @@ in
       system.stateVersion = "25.05";
 
       networking.hostName = meta.hostName;
+
+      virtualisation = {
+        docker.enable = true;
+        oci-containers.backend = "docker";
+      };
 
       sops = {
         inherit (sops) defaultSopsFile defaultSopsFormat;
