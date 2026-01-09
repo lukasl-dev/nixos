@@ -1907,11 +1907,11 @@
         "nixpkgs": "nixpkgs_16"
       },
       "locked": {
-        "lastModified": 1767654623,
-        "narHash": "sha256-Tu5/5CLhTf0un/ZSkXeQZ8d8aAS9G+BxVyZjaQ9uBi4=",
+        "lastModified": 1767917606,
+        "narHash": "sha256-NfA+Jkm8ATXXYSLnD8TsvN+hWBbv2DYG/OZiE3Bxg2Q=",
         "owner": "anomalyco",
         "repo": "opencode",
-        "rev": "21053732e77e7f38d0862dd2b00ad1a987a9a191",
+        "rev": "cf97633d7d81c68aa154b82eeb718ba99beb13d8",
         "type": "github"
       },
       "original": {
