@@ -29,6 +29,22 @@ in
     ];
   };
 
+  services.traefik.dynamicConfigOptions = {
+    tls.certificates = [
+      {
+        certFile = "${acmeDir}/fullchain.pem";
+        keyFile = "${acmeDir}/key.pem";
+      }
+    ];
+    http.routers = {
+      dashboard = {
+        rule = "Host(`proxy.${meta.domain}`)";
+        entryPoints = [ "websecure" ];
+        service = "api@internal";
+      };
+    };
+  };
+
   containers.${meta.container} = {
     autoStart = true;
 

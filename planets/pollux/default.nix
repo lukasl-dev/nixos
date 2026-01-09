@@ -8,6 +8,8 @@
     ./containers
     ./options
 
+    ./traefik.nix
+
     # ./services/anki-sync-server.nix
     ./services/attic.nix
     ./services/authelia.nix
@@ -29,7 +31,7 @@
     # ./services/seafile.nix
     ./services/restic.nix
     # ./services/coturn.nix
-    ./services/traefik.nix
+    # ./services/traefik.nix
     ./services/tuwunel.nix
     ./services/vaultwarden.nix
     ./services/woodpecker.nix
