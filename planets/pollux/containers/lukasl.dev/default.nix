@@ -73,7 +73,11 @@ in
 
       system.stateVersion = "25.05";
 
-      networking.hostName = meta.hostName;
+      networking = {
+        hostName = meta.hostName;
+        defaultGateway = meta.address.host;
+        nameservers = [ "1.1.1.1" ];
+      };
 
       virtualisation = {
         docker.enable = true;
