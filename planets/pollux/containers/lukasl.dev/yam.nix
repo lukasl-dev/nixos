@@ -25,6 +25,7 @@ in
               TZ = "Europe/Berlin";
               REDIS_URL = "redis://yamtrack-redis:6379";
               URLS = "https://${host}";
+              REGISTRATION = "False";
             };
             environmentFiles = [ templates."planets/pollux/yamtrack/env".path ];
             volumes = [ "${stateDir}:/yamtrack/db" ];
