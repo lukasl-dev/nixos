@@ -21,6 +21,9 @@ in
 
         package = pkgs-unstable.forgejo;
 
+        user = "forge";
+        group = "forge";
+
         lfs.enable = true;
 
         settings = {
@@ -32,6 +35,7 @@ in
             DOMAIN = hostname;
             HTTP_PORT = port;
             ROOT_URL = "https://${hostname}";
+            SSH_PORT = 22;
           };
 
           service = {
@@ -63,6 +67,12 @@ in
 
       networking.firewall.allowedTCPPorts = [ port ];
 
+      users.users.forge = {
+        isSystemUser = true;
+        group = "forge";
+      };
+      users.groups.forge = { };
+
       sops = {
         secrets = {
           "planets/pollux/forgejo/runner" = { };
@@ -73,6 +83,25 @@ in
         '';
       };
     }
+  ];
+
+  users.users.forge = {
+    isSystemUser = true;
+    group = "forge";
+    shell = pkgs-unstable.bashInteractive;
+  };
+  users.groups.forge = { };
+
+  services.openssh.extraConfig = ''
+    Match User forge
+      AuthorizedKeysCommand /run/current-system/sw/bin/nixos-container run ${meta.container} -- sudo -u forge forgejo keys -e forge
+      AuthorizedKeysCommandUser root
+  '';
+
+  environment.systemPackages = [
+    (pkgs-unstable.writeShellScriptBin "forgejo" ''
+      exec /run/current-system/sw/bin/nixos-container run ${meta.container} -- sudo -u forge forgejo "$@"
+    '')
   ];
 
   services.traefik.dynamicConfigOptions.http =

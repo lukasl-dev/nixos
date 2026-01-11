@@ -1,5 +1,6 @@
 {
   imports = [
+    ./avante.nix
     ./blink-cmp.nix
     ./cellular-automaton.nix
     ./copilot.nix

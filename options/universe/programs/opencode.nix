@@ -130,7 +130,7 @@ in
               - **Frontmatter**: YAML with `aliases:` list
               - **Tags**: After frontmatter (`#search`, `#linux`)
               - **Callouts**: `[!def]`, `[!theorem]`, `[!proof]`, `[!axiom]`, `[!intuition]`, `[!idea]`, `[!obs]`, `[!abstract]`
-              - **Links**: ALWAYS `[[Knowledge/Path|lowercase alias]]`. Never bare links.
+              - **Links**: ALWAYS `[[Knowledge/Path|lowercase alias]]`. Never bare links. Wikilink pipes have to be escaped in tables, i.e. "\|".
               - **Math**: LaTeX (`$`, `$$`)
               - **Tone**: Academic, concise, British spelling
 
@@ -187,10 +187,10 @@ in
             session_child_cycle = "<leader>right";
             session_child_cycle_reverse = "<leader>left";
             session_parent = "<leader>up";
-            messages_page_up = "pageup";
-            messages_page_down = "pagedown";
-            messages_half_page_up = "ctrl+alt+u,ctrl+b";
-            messages_half_page_down = "ctrl+alt+d,ctrl+f";
+            messages_page_up = "ctrl+b";
+            messages_page_down = "ctrl+f";
+            messages_half_page_up = "none";
+            messages_half_page_down = "none";
             messages_first = "<leader>g,home";
             messages_last = "<leader>shift+g,end";
             messages_next = "none";

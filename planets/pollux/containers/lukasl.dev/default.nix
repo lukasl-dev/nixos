@@ -13,6 +13,7 @@ in
     ./box.nix
     ./cloud.nix
     ./fin.nix
+    ./forge.nix
     ./kitchen.nix
     ./metrics.nix
     ./ntfy.nix

@@ -17,7 +17,6 @@
     ./services/booklore.nix
     ./services/capTUre.nix
     # ./services/firefly.nix
-    ./services/forgejo.nix
     ./services/freshrss.nix
     # ./services/homebox.nix
     ./services/jellyfin.nix
