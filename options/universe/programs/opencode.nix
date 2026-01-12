@@ -7,6 +7,7 @@
 }:
 
 let
+  inherit (config.universe) user;
   inherit (pkgs.stdenv.hostPlatform) system;
 
   inherit (config) sops;
@@ -34,6 +35,7 @@ let
           --add-flags "--blacklist=${pkgs-unstable.sops}/bin/sops" \
           --add-flags "--blacklist=${pkgs.sops}/bin/sops" \
           --add-flags "--blacklist=${sops.age.keyFile}" \
+          --add-flags "--blacklist=/home/${user.name}/nixos/dns/creds.json" \
           --add-flags "--" \
           --add-flags "${pkg}/bin/opencode"
         sed -i 's|${pkgs.firejail}/bin/firejail|/run/wrappers/bin/firejail|' $out/bin/opencode
