@@ -12,6 +12,7 @@
 
     # ./services/anki-sync-server.nix
     ./services/attic.nix
+    ./services/forgejo.nix
     ./services/authelia.nix
     ./services/blog.nix
     ./services/booklore.nix

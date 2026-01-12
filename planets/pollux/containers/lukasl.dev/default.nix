@@ -13,8 +13,9 @@ in
     ./box.nix
     ./cloud.nix
     ./fin.nix
-    ./forge.nix
+    # ./forge.nix
     ./kitchen.nix
+    ./marks.nix
     ./metrics.nix
     ./ntfy.nix
     ./waka.nix
@@ -27,6 +28,7 @@ in
     reloadServices = [
       "traefik.service"
       "maddy.service"
+      "container@lukasl.dev.service"
     ];
   };
 
