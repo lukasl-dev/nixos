@@ -19,5 +19,13 @@ in
 
   config = lib.mkIf config.planet.programs.obsidian.enable {
     environment.systemPackages = [ pkgs-unstable.obsidian ];
+
+    universe.hm = [
+      {
+        xdg.mimeApps.defaultApplications = {
+          "x-scheme-handler/obsidian" = "obsidian.desktop";
+        };
+      }
+    ];
   };
 }
