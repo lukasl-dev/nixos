@@ -18,6 +18,7 @@ in
     ./marks.nix
     ./metrics.nix
     ./ntfy.nix
+    ./pdf.nix
     ./waka.nix
     ./yam.nix
   ];
