@@ -22,6 +22,7 @@
     ./ntfy.nix
     ./nvim.nix
     ./opencode.nix
+    ./perf.nix
     ./ripgrep.nix
     ./speedtest.nix
     ./television.nix

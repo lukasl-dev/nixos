@@ -1,9 +1,5 @@
 { pkgs, ... }:
 
 {
-  universe.hm = [
-    {
-      home.packages = [ pkgs.hyperfine ];
-    }
-  ];
+  environment.systemPackages = with pkgs; [ hyperfine ];
 }
