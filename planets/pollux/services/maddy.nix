@@ -77,6 +77,10 @@ in
           reject 550 5.1.1 "bot does not accept mail"
         }
 
+        destination "komputah@$(primary_domain)" {
+          deliver_to &local_mailboxes
+        }
+
         destination postmaster $(local_domains) {
           modify { replace_rcpt &rcpt_rewrites }
           deliver_to &local_mailboxes
