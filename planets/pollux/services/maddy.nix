@@ -17,10 +17,12 @@ in
     ensureAccounts = [
       "me@${domain}"
       "bot@${domain}"
+      "komputah@${domain}"
     ];
     ensureCredentials = {
       "me@${domain}".passwordFile = config.sops.secrets."planets/pollux/maddy/me".path;
       "bot@${domain}".passwordFile = config.sops.secrets."planets/pollux/maddy/bot".path;
+      "komputah@${domain}".passwordFile = config.sops.secrets."planets/pollux/maddy/komputah".path;
     };
 
     tls = {
@@ -121,6 +123,7 @@ in
             user_to_email static {
               entry "me@$(primary_domain)" "$(primary_domain)"
               entry "bot@$(primary_domain)" "bot@$(primary_domain)"
+              entry "komputah@$(primary_domain)" "komputah@$(primary_domain)"
             }
           }
         }
@@ -207,6 +210,9 @@ in
       owner = "maddy";
     };
     "planets/pollux/maddy/bot" = {
+      owner = "maddy";
+    };
+    "planets/pollux/maddy/komputah" = {
       owner = "maddy";
     };
   };
