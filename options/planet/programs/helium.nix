@@ -20,30 +20,19 @@ in
   };
 
   config = lib.mkIf helium.enable {
-    universe.hm = [
-      {
-        programs.chromium = {
-          enable = true;
-          package = pkgs.nur.repos.Ev357.helium;
-          extensions = [
-            "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
-            "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
-            "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
-            "gppongmhjkpfnbhagpmjfkannfbllamg" # Wappalyzer
-            "hkgfoiooedgoejojocmhlaklaeopbecg" # Picture-in-Picture
-            "egnjhciaieeiiohknchakcodbpgjnchh" # Tab Wrangler
-            "gebbhagfogifgggkldgodflihgfeippi" # Return YouTube Dislike
-            "oldceeleldhonbafppcapldpdifcinji" # LanguageTool
-            "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-            "dbepggeogbaibhgnhhndojpepiihcmeb" # Vimium
-            "iiikidmnimlpahbeknmkeonmemajpccj" # Button Stealer
-            "cimpffimgeipdhnhjohpbehjkcdpjolg" # Watch2Gether
-            "pljfkbaipkidhmaljaaakibigbcmmpnc" # Atom Material Icons
-            "ncpjnjohbcgocheijdaafoidjnkpajka" # Tags for Google Calendar
-          ];
-          commandLineArgs = lib.mkIf hyprland.enable [ "--enable-features=WaylandLinuxDrmSyncobj" ];
-        };
-      }
+    environment.systemPackages = [
+      (pkgs.symlinkJoin {
+        name = "helium";
+        paths = [ pkgs.nur.repos.Ev357.helium ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/helium \
+            --add-flags "--enable-unsafe-webgpu" \
+            --add-flags "--ozone-platform=x11" \
+            --add-flags "--use-angle=vulkan" \
+            --add-flags "--enable-features=Vulkan,VulkanFromANGLE${lib.optionalString hyprland.enable ",WaylandLinuxDrmSyncobj"}"
+        '';
+      })
     ];
   };
 }
