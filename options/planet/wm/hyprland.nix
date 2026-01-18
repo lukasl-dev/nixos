@@ -104,32 +104,6 @@ in
       ];
     };
 
-    home.pointerCursor = {
-      gtk.enable = true;
-      package = pkgs.catppuccin-cursors.mochaLight;
-      name = "Catppuccin-Mocha-Light-Cursors";
-      size = 26;
-    };
-
-    # gtk = {
-    #   enable = true;
-    #
-    #   theme = {
-    #     package = pkgs.flat-remix-gtk;
-    #     name = "Flat-Remix-GTK-Grey-Darkest";
-    #   };
-    #
-    #   iconTheme = {
-    #     package = pkgs.adwaita-icon-theme;
-    #     name = "Adwaita";
-    #   };
-    #
-    #   font = {
-    #     name = "Sans";
-    #     size = 11;
-    #   };
-    # };
-
     hardware.graphics = {
       enable = true;
       package = hypr-nixpkgs.mesa;
@@ -143,6 +117,32 @@ in
     universe.hm = [
       {
         imports = [ inputs.hyprland.homeManagerModules.default ];
+
+        home.pointerCursor = {
+          gtk.enable = true;
+          package = pkgs.catppuccin-cursors.mochaLight;
+          name = "Catppuccin-Mocha-Light-Cursors";
+          size = 26;
+        };
+
+        # gtk = {
+        #   enable = true;
+        #
+        #   theme = {
+        #     package = pkgs.flat-remix-gtk;
+        #     name = "Flat-Remix-GTK-Grey-Darkest";
+        #   };
+        #
+        #   iconTheme = {
+        #     package = pkgs.adwaita-icon-theme;
+        #     name = "Adwaita";
+        #   };
+        #
+        #   font = {
+        #     name = "Sans";
+        #     size = 11;
+        #   };
+        # };
 
         # hyprland settings
         wayland.windowManager.hyprland = {
