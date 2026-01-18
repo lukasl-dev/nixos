@@ -45,6 +45,7 @@ D(
   CNAME("pdf", "pollux.planets.lukasl.dev."),
   CNAME("waka", "pollux.planets.lukasl.dev."),
   CNAME("yam", "pollux.planets.lukasl.dev."),
+  CNAME("rspamd", "pollux.planets.lukasl.dev."),
 
   // iconolatry
   CNAME("icons", "cname.vercel-dns.com."),

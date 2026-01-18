@@ -219,6 +219,9 @@ in
     "planets/pollux/maddy/komputah" = {
       owner = "maddy";
     };
+    "planets/pollux/rspamd/password" = {
+      owner = config.services.rspamd.user;
+    };
   };
 
   services.go-autoconfig = {
@@ -257,7 +260,18 @@ in
         autolearn = true;
       '';
     };
+    workers.controller.includes = [
+      config.sops.templates."planets/pollux/rspamd/worker-controller.inc".path
+    ];
   };
+
+  sops.templates."planets/pollux/rspamd/worker-controller.inc" = {
+    owner = config.services.rspamd.user;
+    content = ''
+      password = "${config.sops.placeholder."planets/pollux/rspamd/password"}";
+    '';
+  };
+
   systemd.services.rspamd.serviceConfig.SupplementaryGroups = [ "maddy" ];
 
   services.redis.servers.rspamd = {
@@ -276,6 +290,18 @@ in
       loadBalancer.servers = [
         {
           url = "http://localhost${config.services.go-autoconfig.settings.service_addr}";
+        }
+      ];
+    };
+    routers.rspamd = {
+      rule = "Host(`rspamd.${config.universe.domain}`)";
+      entryPoints = [ "websecure" ];
+      service = "rspamd";
+    };
+    services.rspamd = {
+      loadBalancer.servers = [
+        {
+          url = "http://127.0.0.1:11334";
         }
       ];
     };
