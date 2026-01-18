@@ -44,13 +44,15 @@ in
       enable = true;
 
       package = hyprland;
-      # NOTE: portalPackage is handled here. We avoid a separate xdg.portal block
-      # to prevent conflicts on NixOS 25.05+, as the module handles this automatically.
       portalPackage = xdg-desktop-portal-hyprland;
 
       xwayland.enable = true;
       withUWSM = false;
     };
+
+    # Add GTK portal for OpenURI, file chooser, etc.
+    # Don't set xdg.portal.config - let configPackages from Hyprland handle it
+    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
     environment = {
       sessionVariables = {
@@ -74,10 +76,8 @@ in
         pkgs-unstable.egl-wayland
         pkgs-unstable.wl-clipboard
 
-        pkgs-unstable.hyprcursor
-        pkgs.catppuccin-cursors.mochaMauve
-
-        pkgs.xdg-desktop-portal-gtk
+        # pkgs-unstable.hyprcursor
+        # pkgs.catppuccin-cursors.mochaMauve
 
         pkgs.grim
         pkgs.slurp
@@ -104,6 +104,32 @@ in
       ];
     };
 
+    home.pointerCursor = {
+      gtk.enable = true;
+      package = pkgs.catppuccin-cursors.mochaLight;
+      name = "Catppuccin-Mocha-Light-Cursors";
+      size = 26;
+    };
+
+    # gtk = {
+    #   enable = true;
+    #
+    #   theme = {
+    #     package = pkgs.flat-remix-gtk;
+    #     name = "Flat-Remix-GTK-Grey-Darkest";
+    #   };
+    #
+    #   iconTheme = {
+    #     package = pkgs.adwaita-icon-theme;
+    #     name = "Adwaita";
+    #   };
+    #
+    #   font = {
+    #     name = "Sans";
+    #     size = 11;
+    #   };
+    # };
+
     hardware.graphics = {
       enable = true;
       package = hypr-nixpkgs.mesa;
@@ -121,7 +147,10 @@ in
         # hyprland settings
         wayland.windowManager.hyprland = {
           enable = true;
-          package = hyprland;
+
+          # https://wiki.hypr.land/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
+          package = null;
+          portalPackage = null;
 
           sourceFirst = true;
           xwayland.enable = true;
@@ -152,8 +181,8 @@ in
                 "XDG_SESSION_TYPE,wayland"
                 "ELECTRON_OZONE_PLATFORM_HINT,auto"
 
-                "HYPRCURSOR_SIZE,26"
-                "HYPRCURSOR_THEME,Catppuccin-Mocha-Light-Cursors"
+                # "HYPRCURSOR_SIZE,26"
+                # "HYPRCURSOR_THEME,Catppuccin-Mocha-Light-Cursors"
               ];
 
               exec-once = builtins.concatLists [
@@ -454,12 +483,12 @@ in
             };
         };
 
-        # cursor icons
-        home.file.".icons" = {
-          enable = true;
-          source = "${pkgs.catppuccin-cursors.mochaLight}/share/icons/";
-          target = ".icons";
-        };
+        # # cursor icons
+        # home.file.".icons" = {
+        #   enable = true;
+        #   source = "${pkgs.catppuccin-cursors.mochaLight}/share/icons/";
+        #   target = ".icons";
+        # };
 
         # wallpapers
         # services.wpaperd = {

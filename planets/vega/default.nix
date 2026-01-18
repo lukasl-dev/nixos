@@ -56,6 +56,7 @@
 
     services = {
       mullvad.enable = true;
+      flatpak.enable = true;
     };
 
     gaming = {
