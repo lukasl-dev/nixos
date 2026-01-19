@@ -6,7 +6,7 @@
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
 in
 {
   options.planet.programs.obsidian = {

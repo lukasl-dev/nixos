@@ -15,6 +15,7 @@
     ./localsend.nix
     ./mpv.nix
     ./obsidian.nix
+    ./poppler-utils.nix
     ./seahorse.nix
     ./sioyek.nix
     ./thunderbird.nix
