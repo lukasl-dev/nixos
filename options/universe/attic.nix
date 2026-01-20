@@ -11,11 +11,9 @@ let
 
   client = pkgs-unstable.attic-client;
   cache = "universe";
-
-  netrc-file = "/etc/nix/netrc";
 in
 {
-  nix.settings.netrc-file = netrc-file;
+  nix.settings.netrc-file = "/etc/nix/netrc";
 
   environment.systemPackages = lib.mkBefore [ client ];
 
@@ -27,6 +25,9 @@ in
         export HOME=${lib.escapeShellArg "/home/${user.name}"}
         export XDG_CONFIG_HOME="$HOME/.config"
 
+        token="$(cat ${config.sops.secrets."universe/attic/token".path})"
+
+        ${client}/bin/attic login --set-default attic "https://cache.${domain}" "$token"
         ${client}/bin/attic use attic:${cache}
       '';
     in
@@ -55,14 +56,14 @@ in
         path = "/home/${user.name}/.config/attic/config.toml";
       };
 
-      "universe/attic/netrc" = {
+      "nix-netrc" = {
         content = ''
-          machine cache.${domain} password "${config.sops.placeholder."universe/attic/token"}"
+          machine cache.${domain} password ${config.sops.placeholder."universe/attic/token"}
         '';
         owner = "root";
-        group = "root";
-        mode = "0400";
-        path = netrc-file;
+        group = "users";
+        mode = "0440";
+        path = "/etc/nix/netrc";
       };
     };
   };

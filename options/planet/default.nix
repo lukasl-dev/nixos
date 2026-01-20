@@ -11,7 +11,7 @@
     ./virtualisation
     ./wm
 
-    ./attic.nix
+    # ./attic.nix
     ./fonts.nix
     ./name.nix
     ./stateVersion.nix
