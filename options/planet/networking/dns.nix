@@ -16,7 +16,7 @@ in
         "cloudflare"
         "google"
       ];
-      description = "A list of DNS providers to use.";
+      description = "DNS providers used as fallback when VPN is disconnected.";
       example = [
         "cloudflare"
         "google"
@@ -24,21 +24,24 @@ in
     };
   };
 
-  config.networking = {
-    networkmanager = {
+  config = {
+    networking.networkmanager = {
       enable = lib.mkDefault true;
-      dns = "none";
+      dns = "systemd-resolved";
     };
 
-    nameservers = builtins.concatLists [
-      (lib.optionals (lib.elem "cloudflare" dns.providers) [
-        "1.1.1.1"
-        "1.0.0.1"
-      ])
-      (lib.optionals (lib.elem "google" dns.providers) [
-        "8.8.8.8"
-        "8.8.4.4"
-      ])
-    ];
+    services.resolved = {
+      enable = true;
+      fallbackDns = builtins.concatLists [
+        (lib.optionals (lib.elem "cloudflare" dns.providers) [
+          "1.1.1.1"
+          "1.0.0.1"
+        ])
+        (lib.optionals (lib.elem "google" dns.providers) [
+          "8.8.8.8"
+          "8.8.4.4"
+        ])
+      ];
+    };
   };
 }
