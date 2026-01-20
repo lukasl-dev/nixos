@@ -9,3 +9,6 @@ switch:
 
 cache:
     nix-store -qR --include-outputs $(nix-store -qd /run/current-system) | xargs nix run nixpkgs#attic-client -- push universe
+
+forge-diff from to:
+    @echo https://forge.lukasl.dev/lukas/nixos/compare/{{ from }}...{{ to }}
