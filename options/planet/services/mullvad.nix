@@ -35,28 +35,25 @@ in
     #
     # IMPORTANT: Mullvad's content-blocking DNS uses 100.64.0.0/24, which overlaps
     # with Tailscale's CGNAT range. We must exclude that range from the bypass.
-    networking.nftables = lib.mkIf config.services.tailscale.enable {
-      enable = true;
-      tables.mullvad-tailscale = {
-        family = "inet";
-        content = ''
-          chain output {
-            type route hook output priority -100; policy accept;
-            # Skip Mullvad's DNS range (100.64.0.0/24) - let it go through the tunnel
-            ip daddr 100.64.0.0/24 return;
-            # Mark Tailscale traffic to bypass Mullvad
-            ip daddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
-          }
+    networking.nftables.tables.mullvad-tailscale = lib.mkIf config.services.tailscale.enable {
+      family = "inet";
+      content = ''
+        chain output {
+          type route hook output priority -100; policy accept;
+          # Skip Mullvad's DNS range (100.64.0.0/24) - let it go through the tunnel
+          ip daddr 100.64.0.0/24 return;
+          # Mark Tailscale traffic to bypass Mullvad
+          ip daddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+        }
 
-          chain input {
-            type filter hook input priority -100; policy accept;
-            # Skip Mullvad's DNS range
-            ip saddr 100.64.0.0/24 return;
-            # Mark Tailscale traffic to bypass Mullvad
-            ip saddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
-          }
-        '';
-      };
+        chain input {
+          type filter hook input priority -100; policy accept;
+          # Skip Mullvad's DNS range
+          ip saddr 100.64.0.0/24 return;
+          # Mark Tailscale traffic to bypass Mullvad
+          ip saddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+        }
+      '';
     };
 
     systemd.services.tailscaled.serviceConfig.ExecStartPost =
