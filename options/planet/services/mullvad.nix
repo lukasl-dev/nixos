@@ -61,5 +61,19 @@ in
         [
           "-${pkgs-unstable.mullvad-vpn}/bin/mullvad split-tunnel add $MAINPID"
         ];
+
+    # ensure mullvad uses default dns (not content-blocking dns)
+    # content-blocking dns uses 100.64.0.x which conflicts with tailscale's cgnat range
+    systemd.services.mullvad-dns-fix = lib.mkIf config.services.tailscale.enable {
+      description = "Configure Mullvad DNS for Tailscale compatibility";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "mullvad-daemon.service" ];
+      requires = [ "mullvad-daemon.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs-unstable.mullvad-vpn}/bin/mullvad dns set default";
+        RemainAfterExit = true;
+      };
+    };
   };
 }
