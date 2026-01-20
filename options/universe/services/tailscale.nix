@@ -6,7 +6,7 @@
     openFirewall = true;
     extraUpFlags = [
       "--ssh"
-      "--accept-dns=false"
+      "--accept-dns=true"
     ];
     authKeyFile = config.sops.secrets."universe/tailscale/auth_key".path;
   };
