@@ -6,9 +6,10 @@
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
+  inherit (wm) hyprland;
 
-  discord = config.planet.programs.discord;
+  inherit (config.planet.programs) discord;
 in
 {
   options.planet.programs.discord = {
@@ -25,7 +26,22 @@ in
       {
         programs.vesktop = {
           enable = true;
-          package = pkgs-unstable.vesktop;
+          package =
+            if hyprland.enable then
+              (pkgs-unstable.vesktop.override { }).overrideAttrs (old: {
+                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs-unstable.makeWrapper ];
+                postFixup = (old.postFixup or "") + ''
+                  wrapProgram $out/bin/vesktop \
+                    --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
+                    --add-flags "--disable-gpu-memory-buffer-video-frames" \
+                    --add-flags "--ignore-gpu-blocklist" \
+                    --add-flags "--enable-gpu-rasterization" \
+                    --add-flags "--enable-zero-copy" \
+                    --add-flags "--disable-gpu-sandbox"
+                '';
+              })
+            else
+              pkgs-unstable.vesktop;
 
           vencord.settings = {
             autoUpdate = true;
