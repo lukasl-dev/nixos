@@ -10,6 +10,7 @@ let
   inherit (wm) hyprland;
 
   inherit (config.planet.programs) discord;
+  inherit (config.planet.services) mullvad;
 in
 {
   options.planet.programs.discord = {
@@ -24,6 +25,22 @@ in
   config = lib.mkIf discord.enable {
     universe.hm = [
       {
+        xdg.desktopEntries = lib.mkIf mullvad.enable {
+          vesktop = {
+            name = "Vesktop";
+            exec = "mullvad-exclude vesktop %U";
+            icon = "vesktop";
+            comment = "Vesktop (Mullvad-excluded)";
+            categories = [
+              "Network"
+              "InstantMessaging"
+              "Chat"
+            ];
+            terminal = false;
+            mimeType = [ "x-scheme-handler/discord" ];
+          };
+        };
+
         programs.vesktop = {
           enable = true;
           package =
