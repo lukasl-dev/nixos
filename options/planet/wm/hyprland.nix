@@ -253,11 +253,11 @@ in
             # XDG Desktop Portal
             # ========= ========= ========= ========= ========= =========
 
-            "float,initialClass:(xdg-desktop-portal-gtk)"
-            "pin,initialClass:(xdg-desktop-portal-gtk)"
-            "opacity 0.8,initialClass:(xdg-desktop-portal-gtk)"
-            "center 1,initialClass:(xdg-desktop-portal-gtk)"
-            "size 934 489,initialClass:(xdg-desktop-portal-gtk)"
+            "float,initialClass:(Xdg-desktop-portal-gtk)"
+            "pin,initialClass:(Xdg-desktop-portal-gtk)"
+            "opacity 0.8,initialClass:(Xdg-desktop-portal-gtk)"
+            "center 1,initialClass:(Xdg-desktop-portal-gtk)"
+            "size 934 489,initialClass:(Xdg-desktop-portal-gtk)"
 
             # ========= ========= ========= ========= ========= =========
             # Steam
