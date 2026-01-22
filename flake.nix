@@ -33,7 +33,7 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    opencode.url = "github:MBanucu/opencode/fix/bun-version-pin";
+    opencode.url = "github:anomalyco/opencode";
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";
   };
