@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    ./caelestia.nix
+    ./noctalia.nix
     ./gtk.nix
     ./hyprland.nix
     ./qt.nix

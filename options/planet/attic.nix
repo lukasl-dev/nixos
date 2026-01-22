@@ -6,10 +6,8 @@
 }:
 
 let
-  domain = config.universe.domain;
-  user = config.universe.user;
-
-  attic = config.planet.attic;
+  inherit (config.universe) domain user;
+  inherit (config.planet) attic;
 
   cacheModule = lib.types.submodule (
     { name, ... }:

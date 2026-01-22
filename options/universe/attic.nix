@@ -40,31 +40,44 @@ in
       };
     };
 
-  sops = {
-    secrets."universe/attic/token" = { };
+  sops =
+    let
+      inherit (config.sops) placeholder;
+    in
+    {
+      secrets = {
+        "universe/attic/token" = { };
 
-    templates = {
-      "universe/attic/config" = {
-        content = ''
-          default-server = "attic"
-
-          [servers.attic]
-          endpoint = "https://cache.${domain}"
-          token = "${config.sops.placeholder."universe/attic/token"}"
-        '';
-        owner = user.name;
-        path = "/home/${user.name}/.config/attic/config.toml";
+        # TODO: remove
+        "universe/github/username" = { };
+        "universe/github/password" = { };
       };
 
-      "nix-netrc" = {
-        content = ''
-          machine cache.${domain} password ${config.sops.placeholder."universe/attic/token"}
-        '';
-        owner = "root";
-        group = "users";
-        mode = "0440";
-        path = "/etc/nix/netrc";
+      templates = {
+        "universe/attic/config" = {
+          content = ''
+            default-server = "attic"
+
+            [servers.attic]
+            endpoint = "https://cache.${domain}"
+            token = "${placeholder."universe/attic/token"}"
+          '';
+          owner = user.name;
+          path = "/home/${user.name}/.config/attic/config.toml";
+        };
+
+        "nix-netrc" = {
+          content = ''
+            machine cache.${domain} password ${placeholder."universe/attic/token"}
+            machine api.github.com login "${placeholder."universe/github/username"}" password "${
+              placeholder."universe/github/password"
+            }"
+          '';
+          owner = "root";
+          group = "users";
+          mode = "0440";
+          path = "/etc/nix/netrc";
+        };
       };
     };
-  };
 }

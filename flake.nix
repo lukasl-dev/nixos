@@ -29,12 +29,10 @@
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
     capTUre.url = "github:lukasl-dev/capTUre";
     nur.url = "github:nix-community/NUR";
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
-      # TODO: resolve issue
-      # inputs.nixpkgs.follows = "nixpkgs";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    # codex.url = "github:openai/codex";
     opencode.url = "github:MBanucu/opencode/fix/bun-version-pin";
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";

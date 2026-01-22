@@ -91,13 +91,12 @@ in
 
           bind = builtins.concatLists [
             [
-              # "${mainMod}, Space, exec, rofi -show drun -show-icons"
-              "${mainMod}, Space, exec, caelestia shell drawers toggle launcher"
+              "${mainMod}, Space, exec, noctalia-shell ipc call launcher toggle"
               # "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
-              "${mainMod}, Backspace, exec, caelestia shell drawers toggle launcher"
+              "${mainMod}, Backspace, exec, noctalia-shell ipc call launcher toggle"
               "${mainMod}, E, exec, bemoji"
               # ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
-              "${mainMod}, C, exec, caelestia clipboard"
+              "${mainMod}, C, exec, noctalia-shell ipc call appLauncher toggleClipboard"
               # "${mainMod}, p, exec, swaync-client -t"
               "${mainMod}, p, exec, obsidian"
               ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
