@@ -159,134 +159,140 @@ in
             (windowBinding ", mouse:273, resizewindow")
           ];
 
-          windowrulev2 = [
+          windowrule = [
             # ========= ========= ========= ========= ========= =========
             # Clipse
             # ========= ========= ========= ========= ========= =========
 
-            "float,class:(clipse.clipse)"
-            "center,class:(clipse.clipse)"
-            "size 622 652,class:(clipse.clipse)"
+            "float on, match:class clipse.clipse"
+            "center on, match:class clipse.clipse"
+            "size 622 652, match:class clipse.clipse"
 
             # ========= ========= ========= ========= ========= =========
             # 1Password
             # ========= ========= ========= ========= ========= =========
 
-            "float,class:(1Password)"
-            "center,class:(1Password)"
-            "opacity 0.8,class:(1Password)"
-            "size 1309 783,class:(1Password)"
+            "float on, match:class 1Password"
+            "center on, match:class 1Password"
+            "opacity 0.8, match:class 1Password"
+            "size 1309 783, match:class 1Password"
 
             # ========= ========= ========= ========= ========= =========
             # Bitwarden
             # ========= ========= ========= ========= ========= =========
 
             # Desktop App
-            "float,title:(Bitwarden)"
-            "center,title:(Bitwarden)"
-            "opacity 0.8,title:(Bitwarden)"
-            "size 1309 783,title:(Bitwarden)"
+            "float on, match:title Bitwarden"
+            "center on, match:title Bitwarden"
+            "opacity 0.8, match:title Bitwarden"
+            "size 1309 783, match:title Bitwarden"
 
             # Bitwarden Brave Popups
-            "float,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
-            "center,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
-            "opacity 0.8,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
-            "size 581 783,initialClass:(brave-nngceckbapebfimnlniiiahkandclblb-Default)"
+            "float on, match:initial_class brave-nngceckbapebfimnlniiiahkandclblb-Default"
+            "center on, match:initial_class brave-nngceckbapebfimnlniiiahkandclblb-Default"
+            "opacity 0.8, match:initial_class brave-nngceckbapebfimnlniiiahkandclblb-Default"
+            "size 581 783, match:initial_class brave-nngceckbapebfimnlniiiahkandclblb-Default"
 
             # Bitwarden Vivaldi Popups
-            "float,initialTitle:(Bitwarden - Vivaldi)"
-            "center,initialTitle:(Bitwarden - Vivaldi)"
-            "opacity 0.8,initialTitle:(Bitwarden - Vivaldi)"
-            "size 581 783,initialTitle:(Bitwarden - Vivaldi)"
+            "float on, match:initial_title Bitwarden - Vivaldi"
+            "center on, match:initial_title Bitwarden - Vivaldi"
+            "opacity 0.8, match:initial_title Bitwarden - Vivaldi"
+            "size 581 783, match:initial_title Bitwarden - Vivaldi"
 
             # ========= ========= ========= ========= ========= =========
             # Brave
             # ========= ========= ========= ========= ========= =========
 
-            "float,center,title:(Sign in – Google accounts - Brave)"
+            "float on, match:title Sign in – Google accounts - Brave"
+            "center on, match:title Sign in – Google accounts - Brave"
 
             # ========= ========= ========= ========= ========= =========
             # Vesktop
             # ========= ========= ========= ========= ========= =========
 
-            "renderunfocused, initialClass:(vesktop)"
+            "render_unfocused on, match:initial_class vesktop"
 
             # Desktop App
-            "workspace 1,initialClass:(vesktop)"
-            "noinitialfocus,initialClass:(vesktop)"
+            "workspace 1, match:initial_class vesktop"
+            "no_initial_focus on, match:initial_class vesktop"
 
             # File Download
-            "float,initialTitle:(https://discord.com/*)"
-            "pin,initialTitle:(https://discord.com/*)"
-            "opacity 0.8,initialTitle:(https://discord.com/*)"
-            "center 1,initialTitle:(https://discord.com/*)"
-            "size 934 489,initialTitle:(https://discord.com/*)"
+            "float on, match:initial_title https://discord.com/.*"
+            "pin on, match:initial_title https://discord.com/.*"
+            "opacity 0.8, match:initial_title https://discord.com/.*"
+            "center on, match:initial_title https://discord.com/.*"
+            "size 934 489, match:initial_title https://discord.com/.*"
 
             # ========= ========= ========= ========= ========= =========
             # Minecraft
             # ========= ========= ========= ========= ========= =========
 
-            "noanim,initialClass:^(Minecraft\*\s1\.20\.6)$"
-            "noblur,initialClass:^(Minecraft\*\s1\.20\.6)$"
+            "no_anim on, match:initial_class ^Minecraft\\*\\s1\\.20\\.6$"
+            "no_blur on, match:initial_class ^Minecraft\\*\\s1\\.20\\.6$"
 
             # ========= ========= ========= ========= ========= =========
             # Picture-in-picture (PiP)
             # ========= ========= ========= ========= ========= =========
 
-            "float,initialTitle:(Picture-in-picture)"
-            "pin,initialTitle:(Picture-in-picture)"
+            "float on, match:initial_title Picture-in-picture"
+            "pin on, match:initial_title Picture-in-picture"
 
-            "float,initialTitle:(Picture-in-Picture)"
-            "pin,initialTitle:(Picture-in-Picture)"
+            "float on, match:initial_title Picture-in-Picture"
+            "pin on, match:initial_title Picture-in-Picture"
 
-            "float,initialTitle:(Picture in picture)"
-            "pin,initialTitle:(Picture in picture)"
+            "float on, match:initial_title Picture in picture"
+            "pin on, match:initial_title Picture in picture"
 
             # ========= ========= ========= ========= ========= =========
             # YouTube Music
             # ========= ========= ========= ========= ========= =========
 
-            "workspace 1,initialClass:(YouTube.Music)"
+            "workspace 1, match:initial_class YouTube.Music"
 
             # ========= ========= ========= ========= ========= =========
             # XDG Desktop Portal
             # ========= ========= ========= ========= ========= =========
 
-            "float,initialClass:(Xdg-desktop-portal-gtk)"
-            "pin,initialClass:(Xdg-desktop-portal-gtk)"
-            "opacity 0.8,initialClass:(Xdg-desktop-portal-gtk)"
-            "center 1,initialClass:(Xdg-desktop-portal-gtk)"
-            "size 934 489,initialClass:(Xdg-desktop-portal-gtk)"
+            "float on, match:initial_class Xdg-desktop-portal-gtk"
+            "pin on, match:initial_class Xdg-desktop-portal-gtk"
+            "opacity 0.8, match:initial_class Xdg-desktop-portal-gtk"
+            "center on, match:initial_class Xdg-desktop-portal-gtk"
+            "size 934 489, match:initial_class Xdg-desktop-portal-gtk"
 
             # ========= ========= ========= ========= ========= =========
             # Steam
             # ========= ========= ========= ========= ========= =========
 
             # Friend List
-            "float,initialClass:(steam),initialTitle:(Friends List)"
-            "center,initialClass:(steam),initialTitle:(Friends List)"
-            "size 524 706,initialClass:(steam),initialTitle:(Friends List)"
+            "float on, match:initial_class steam, match:initial_title Friends List"
+            "center on, match:initial_class steam, match:initial_title Friends List"
+            "size 524 706, match:initial_class steam, match:initial_title Friends List"
 
-            "renderunfocused, initialClass:(steam_app_2622380)"
+            "render_unfocused on, match:initial_class steam_app_2622380"
 
             # ========= ========= ========= ========= ========= =========
             # Obsidian
             # ========= ========= ========= ========= ========= =========
-            "workspace 10,initialClass:(obsidian)"
-            # "noinitialfocus,initialClass:(obsidian)"
+            "workspace 10, match:initial_class obsidian"
+            # "no_initial_focus on, match:initial_class obsidian"
 
             # ========= ========= ========= ========= ========= =========
             # Zen
             # ========= ========= ========= ========= ========= =========
-            "float,initialClass:(zen-beta),title:^(Extension:.*)$"
-            "center,initialClass:(zen-beta),title:^(Extension:.*)$"
-            "size 524 706,initialClass:(zen-beta),title:^(Extension:.*)$"
+            "float on, match:initial_class zen-beta, match:title ^Extension:.*$"
+            "center on, match:initial_class zen-beta, match:title ^Extension:.*$"
+            "size 524 706, match:initial_class zen-beta, match:title ^Extension:.*$"
 
             # ========= ========= ========= ========= ========= =========
             # Mullvad VPN
             # ========= ========= ========= ========= ========= =========
-            "float,initialTitle:(Mullvad VPN)"
-            "pin,initialTitle:(Mullvad VPN)"
+            "float on, match:initial_title Mullvad VPN"
+            "pin on, match:initial_title Mullvad VPN"
+
+            # ========= ========= ========= ========= ========= =========
+            # Sioyek
+            # ========= ========= ========= ========= ========= =========
+            "tile on, match:class sioyek"
           ];
 
           cursor = {
