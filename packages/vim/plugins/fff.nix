@@ -9,6 +9,9 @@
           prompt = '> ',
           title = 'Find files',
           max_threads = 8,
+          layout = {
+            prompt_position = "top";
+          },
           preview = {
               line_numbers = true,
               show_file_info = false,
