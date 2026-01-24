@@ -5,6 +5,7 @@ let
   brave = config.planet.programs.brave;
   zen = config.planet.programs.zen;
   helium = config.planet.programs.helium;
+  sioyek = config.planet.programs.sioyek;
 
   defaultApps = config.planet.xdg.defaultApps;
 in
@@ -26,8 +27,9 @@ in
         "zen"
         "brave"
         "helium"
+        "sioyek"
       ];
-      default = "helium";
+      default = "sioyek";
       description = "Default pdf viewer";
       example = "zen";
     };
@@ -60,6 +62,10 @@ in
         assertion = defaultApps.pdf != "helium" || helium.enable;
         message = "🌍 To use helium as default pdf viewer, you must `planet.programs.helium.enable = true;`";
       }
+      {
+        assertion = defaultApps.pdf != "sioyek" || sioyek.enable;
+        message = "🌍 To use sioyek as default pdf viewer, you must `planet.programs.sioyek.enable = true;`";
+      }
     ];
 
     universe.hm = [
@@ -81,6 +87,7 @@ in
                   brave = "brave.desktop";
                   zen = "zen-beta.desktop";
                   helium = "helium.desktop";
+                  sioyek = "sioyek.desktop";
                 };
                 browser = desktopFiles.${defaultApps.browser};
                 pdf = desktopFiles.${defaultApps.pdf};
