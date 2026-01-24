@@ -254,7 +254,7 @@ in
 
           plugin = [
             # "opencode-openai-codex-auth@4.2.0"
-            "opencode-gemini-auth@1.3.6"
+            "opencode-gemini-auth@1.3.8"
             "opencode-wakatime@1.1.0"
             "opencode-anthropic-auth@0.0.9"
           ];
