@@ -34,6 +34,12 @@ in
 
         initContent = ''
           source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+          function zvm_after_init() {
+            zvm_bindkey viins '^R' fzf-history-widget
+            zvm_bindkey vicmd '^R' fzf-history-widget
+          }
+
           bindkey "''${key[Up]}" up-line-or-search
         '';
       };
