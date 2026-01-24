@@ -9,6 +9,7 @@
     ./element.nix
     ./espanso.nix
     ./feh.nix
+    ./gh-dash.nix
     ./ghostty.nix
     ./helium.nix
     ./jellyfin.nix
