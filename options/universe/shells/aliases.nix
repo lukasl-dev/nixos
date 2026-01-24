@@ -33,6 +33,8 @@
   o = "xdg-open";
   oc = "opencode";
 
+  novpn = "mullvad-exclude";
+
   s = "nix-shell --run zsh -p ";
 
   ld_cc = ''LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib}/lib'';
