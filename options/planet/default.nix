@@ -1,6 +1,7 @@
 {
   imports = [
     ./audio
+    ./battery
     ./caches
     ./gaming
     ./hardware
