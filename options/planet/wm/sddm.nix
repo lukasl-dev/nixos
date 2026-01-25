@@ -12,13 +12,17 @@ let
   where-is-my-sddm-theme = inputs.catppuccin-where-is-my-sddm-theme.packages.${system}.default;
 in
 lib.mkIf config.planet.wm.enable {
-  services.displayManager.sddm = {
-    enable = true;
+  services.displayManager = {
+    defaultSession = lib.mkIf config.planet.wm.hyprland.enable "hyprland-uwsm";
 
-    wayland.enable = config.planet.wm.hyprland.enable;
+    sddm = {
+      enable = true;
 
-    theme = "where_is_my_sddm_theme";
-    package = pkgs.kdePackages.sddm;
+      wayland.enable = config.planet.wm.hyprland.enable;
+
+      theme = "where_is_my_sddm_theme";
+      package = pkgs.kdePackages.sddm;
+    };
   };
 
   catppuccin.sddm.enable = false;

@@ -79,7 +79,6 @@ in
               "keyctl link @u @s"
 
               # TODO: only start these if the corresponding service is enabled
-              "clipse --listen"
               # "wpaperd -d"
               "vesktop"
               "element-desktop"
@@ -95,7 +94,7 @@ in
               # "${mainMod}, Backspace, exec, rofi -show drun -show-icons"
               "${mainMod}, Backspace, exec, noctalia-shell ipc call launcher toggle"
               "${mainMod}, E, exec, bemoji"
-              # ''${mainMod}, C, exec, ghostty --class="clipse.clipse" --command="clipse"''
+
               "${mainMod}, C, exec, noctalia-shell ipc call appLauncher toggleClipboard"
               # "${mainMod}, p, exec, swaync-client -t"
               "${mainMod}, p, exec, obsidian"
@@ -160,14 +159,6 @@ in
           ];
 
           windowrule = [
-            # ========= ========= ========= ========= ========= =========
-            # Clipse
-            # ========= ========= ========= ========= ========= =========
-
-            "float on, match:class clipse.clipse"
-            "center on, match:class clipse.clipse"
-            "size 622 652, match:class clipse.clipse"
-
             # ========= ========= ========= ========= ========= =========
             # 1Password
             # ========= ========= ========= ========= ========= =========

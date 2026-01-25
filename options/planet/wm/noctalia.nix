@@ -102,7 +102,7 @@ lib.mkIf config.planet.wm.enable {
           };
 
           appLauncher = {
-            enableClipboardHistory = true;
+            enableClipboardHistory = false;
           };
         };
 
@@ -119,11 +119,11 @@ lib.mkIf config.planet.wm.enable {
               enabled = true;
               sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
             };
-            "network-indicator" = {
+            network-indicator = {
               enabled = true;
               sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
             };
-            "privacy-indicator" = {
+            privacy-indicator = {
               enabled = true;
               sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
             };
