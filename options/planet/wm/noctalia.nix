@@ -47,6 +47,13 @@ lib.mkIf config.planet.wm.enable {
               }
               { id = "plugin:catwalk"; }
               { id = "plugin:network-indicator"; }
+              {
+                displayMode = "onhover";
+                id = "VPN";
+              }
+              {
+                id = "plugin:tailscale";
+              }
             ];
             center = [
               {
@@ -105,6 +112,14 @@ lib.mkIf config.planet.wm.enable {
           appLauncher = {
             enableClipboardHistory = false;
           };
+
+          dock = {
+            enabled = false;
+          };
+
+          nightLight = {
+            enabled = true;
+          };
         };
 
         plugins = {
@@ -128,6 +143,10 @@ lib.mkIf config.planet.wm.enable {
               enabled = true;
               sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
             };
+            tailscale = {
+              enabled = true;
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+            };
           };
           version = 1;
         };
@@ -136,6 +155,9 @@ lib.mkIf config.planet.wm.enable {
           catwalk = {
             minimumThreshold = 25;
             hideBackground = true;
+          };
+          tailscale = {
+            compactMode = true;
           };
         };
 
