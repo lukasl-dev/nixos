@@ -54,6 +54,7 @@ lib.mkIf config.planet.wm.enable {
                 characterCount = 2;
                 showApplications = true;
                 showLabelsOnlyWhenOccupied = true;
+                colorizeIcons = true;
               }
             ];
             right = [
