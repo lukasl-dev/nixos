@@ -119,6 +119,7 @@
 
     services = {
       mullvad.enable = true;
+      upower.enable = true;
     };
 
     development = {

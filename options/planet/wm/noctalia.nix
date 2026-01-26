@@ -17,7 +17,7 @@ lib.mkIf config.planet.wm.enable {
         settings = {
           settingsVersion = 43;
 
-          # general.avatarImage = "/home/lukas/.face";
+          general.avatarImage = "${../../../avatar.png}";
 
           ui = {
             fontDefault = "Adwaita Sans";
@@ -48,8 +48,8 @@ lib.mkIf config.planet.wm.enable {
               { id = "plugin:catwalk"; }
               { id = "plugin:network-indicator"; }
               {
-                displayMode = "onhover";
                 id = "VPN";
+                displayMode = "onhover";
               }
               {
                 id = "plugin:tailscale";
