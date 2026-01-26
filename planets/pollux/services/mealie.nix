@@ -1,4 +1,5 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   domain = config.universe.domain;
@@ -6,7 +7,7 @@ in
 {
   services.mealie = {
     enable = true;
-    package = pkgs-unstable.mealie;
+    package = pkgs.unstable.mealie;
 
     port = 1989;
     credentialsFile = config.sops.templates."planets/pollux/mealie/credentials".path;

@@ -1,4 +1,5 @@
-{ pkgs-unstable, lib, ... }:
+{
+  pkgs, lib, ... }:
 
 {
   options.planet.development.tex = {
@@ -6,7 +7,7 @@
   };
 
   config = {
-    environment.systemPackages = with pkgs-unstable; [
+    environment.systemPackages = with pkgs.unstable; [
       texliveFull
       graphviz
       librsvg

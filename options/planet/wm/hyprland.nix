@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -389,12 +388,12 @@ in
       };
 
       systemPackages = [
-        pkgs-unstable.hyprpicker
+        pkgs.unstable.hyprpicker
 
-        pkgs-unstable.egl-wayland
-        pkgs-unstable.wl-clipboard
+        pkgs.unstable.egl-wayland
+        pkgs.unstable.wl-clipboard
 
-        # pkgs-unstable.hyprcursor
+        # pkgs.unstable.hyprcursor
         # pkgs.catppuccin-cursors.mochaMauve
 
         pkgs.grim

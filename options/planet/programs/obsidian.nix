@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -22,8 +22,8 @@ in
     environment.systemPackages = [
       (
         if hyprland.enable then
-          pkgs-unstable.obsidian.overrideAttrs (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs-unstable.makeWrapper ];
+          pkgs.unstable.obsidian.overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
             postFixup = (old.postFixup or "") + ''
               wrapProgram $out/bin/obsidian \
                 --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
@@ -35,7 +35,7 @@ in
             '';
           })
         else
-          pkgs-unstable.obsidian
+          pkgs.unstable.obsidian
       )
     ];
 

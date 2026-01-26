@@ -1,4 +1,5 @@
-{ pkgs-unstable, lib, ... }:
+{
+  pkgs, lib, ... }:
 
 {
   options.planet.development.go = {
@@ -6,7 +7,7 @@
   };
 
   config = {
-    environment.systemPackages = with pkgs-unstable; [
+    environment.systemPackages = with pkgs.unstable; [
       delve
       gopls
       nilaway
@@ -18,7 +19,7 @@
       {
         programs.go = {
           enable = true;
-          package = pkgs-unstable.go_1_24;
+          package = pkgs.unstable.go_1_24;
         };
       }
     ];

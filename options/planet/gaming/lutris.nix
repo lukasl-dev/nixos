@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -14,6 +14,6 @@ in
   };
 
   config = lib.mkIf lutris.enable {
-    environment.systemPackages = [ pkgs-unstable.lutris ];
+    environment.systemPackages = [ pkgs.unstable.lutris ];
   };
 }

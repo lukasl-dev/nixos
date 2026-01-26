@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -14,6 +14,6 @@ in
   };
 
   config = lib.mkIf bottles.enable {
-    environment.systemPackages = [ pkgs-unstable.bottles ];
+    environment.systemPackages = [ pkgs.unstable.bottles ];
   };
 }

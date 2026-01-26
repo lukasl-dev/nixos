@@ -23,28 +23,28 @@ in
   config = lib.mkIf nvidia.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    boot.initrd.kernelModules = [
-      "nvidia"
-      "nvidia_modeset"
-      "nvidia_uvm"
-      "nvidia_drm"
-    ];
+    boot = {
+      initrd.kernelModules = [
+        "nvidia"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+      ];
 
-    boot.kernelParams = [
-      # use the nvidia framebuffer device
-      "nvidia_drm.fbdev=1"
+      kernelParams = [
+        # use the nvidia framebuffer device
+        "nvidia_drm.fbdev=1"
 
-      # required for stable suspend/resume
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+        # required for stable suspend/resume
+        "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 
-      # save vram to disk instead of ram (tmpfs) to prevent resume failures
-      "nvidia.NVreg_TemporaryFilePath=/var/tmp"
-    ];
+        # save vram to disk instead of ram (tmpfs) to prevent resume failures
+        "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+      ];
 
-    # boot.kernelModules = [ "nvidia" ];
-    boot.blacklistedKernelModules = [ "nouveau" ];
-
-    nixpkgs.config.cudaSupport = nvidia.cuda;
+      # boot.kernelModules = [ "nvidia" ];
+      blacklistedKernelModules = [ "nouveau" ];
+    };
 
     hardware.nvidia = {
       modesetting.enable = true;

@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -24,11 +23,11 @@ in
 
   config = lib.mkIf gaming.enable {
     environment.systemPackages = [
-      pkgs-unstable.gamescope
-      pkgs-unstable.gamescope-wsi
-      pkgs-unstable.protonplus
-      pkgs-unstable.protonup-qt
-      pkgs-unstable.gamemode
+      pkgs.unstable.gamescope
+      pkgs.unstable.gamescope-wsi
+      pkgs.unstable.protonplus
+      pkgs.unstable.protonup-qt
+      pkgs.unstable.gamemode
     ];
 
     programs.gamemode = {

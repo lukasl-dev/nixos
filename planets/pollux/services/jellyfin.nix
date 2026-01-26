@@ -1,4 +1,5 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   inherit (config.universe) domain;
@@ -9,13 +10,13 @@ in
   services.jellyfin = {
     enable = true;
 
-    package = pkgs-unstable.jellyfin;
+    package = pkgs.unstable.jellyfin;
   };
 
   environment.systemPackages = [
-    pkgs-unstable.jellyfin
-    pkgs-unstable.jellyfin-web
-    pkgs-unstable.jellyfin-ffmpeg
+    pkgs.unstable.jellyfin
+    pkgs.unstable.jellyfin-web
+    pkgs.unstable.jellyfin-ffmpeg
   ];
 
   services.traefik.dynamicConfigOptions.http = {

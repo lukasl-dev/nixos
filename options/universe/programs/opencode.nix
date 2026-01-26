@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  pkgs-unstable,
   config,
   ...
 }:
@@ -12,7 +11,7 @@ let
 
   inherit (config) sops;
 
-  inherit (pkgs-unstable) github-mcp-server;
+  inherit (pkgs.unstable) github-mcp-server;
 
   github-mcp-server-wrapped = pkgs.writeShellScriptBin "github-mcp-server" ''
     source ${config.sops.templates."universe/opencode/env".path}
@@ -32,7 +31,7 @@ let
         makeWrapper ${pkgs.firejail}/bin/firejail $out/bin/opencode \
           --add-flags "--noprofile" \
           --add-flags "--blacklist=sops" \
-          --add-flags "--blacklist=${pkgs-unstable.sops}/bin/sops" \
+          --add-flags "--blacklist=${pkgs.unstable.sops}/bin/sops" \
           --add-flags "--blacklist=${pkgs.sops}/bin/sops" \
           --add-flags "--blacklist=${sops.age.keyFile}" \
           --add-flags "--blacklist=/home/${user.name}/nixos/dns/creds.json" \

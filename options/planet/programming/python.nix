@@ -1,6 +1,6 @@
 {
+  pkgs,
   config,
-  pkgs-unstable,
   lib,
   ...
 }:
@@ -11,7 +11,7 @@
   };
 
   config = lib.mkIf config.planet.development.python.enable {
-    environment.systemPackages = with pkgs-unstable; [
+    environment.systemPackages = with pkgs.unstable; [
       python3
       uv
       python312Packages.grip

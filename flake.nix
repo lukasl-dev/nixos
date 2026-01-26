@@ -53,20 +53,9 @@
 
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
 
-      mkSpecialArgs =
-        system:
-        let
-          pkgs-unstable = import nixpkgs-unstable {
-            inherit system;
-
-            config = {
-              allowUnfree = true;
-            };
-          };
-        in
-        {
-          inherit self inputs pkgs-unstable;
-        };
+      mkSpecialArgs = system: {
+        inherit self inputs;
+      };
 
       mkNixosSystem =
         {

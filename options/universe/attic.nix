@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   lib,
   ...
 }:
@@ -9,7 +8,7 @@
 let
   inherit (config.universe) domain user;
 
-  client = pkgs-unstable.attic-client;
+  client = pkgs.unstable.attic-client;
   cache = "universe";
 in
 {

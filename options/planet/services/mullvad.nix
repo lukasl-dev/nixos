@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -18,12 +18,12 @@ in
   config = lib.mkIf mullvad.enable {
     services.mullvad-vpn = {
       enable = true;
-      package = lib.mkIf wm.enable pkgs-unstable.mullvad-vpn;
+      package = lib.mkIf wm.enable pkgs.unstable.mullvad-vpn;
     };
 
     environment.systemPackages = [
-      pkgs-unstable.mullvad-vpn
-      (lib.mkIf wm.enable pkgs-unstable.mullvad-browser)
+      pkgs.unstable.mullvad-vpn
+      (lib.mkIf wm.enable pkgs.unstable.mullvad-browser)
     ];
 
     # Tailscale + Mullvad compatibility
@@ -59,7 +59,7 @@ in
     systemd.services.tailscaled.serviceConfig.ExecStartPost =
       lib.mkIf config.services.tailscale.enable
         [
-          "-${pkgs-unstable.mullvad-vpn}/bin/mullvad split-tunnel add $MAINPID"
+          "-${pkgs.unstable.mullvad-vpn}/bin/mullvad split-tunnel add $MAINPID"
         ];
 
     # ensure mullvad uses default dns (not content-blocking dns)
@@ -71,7 +71,7 @@ in
       requires = [ "mullvad-daemon.service" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs-unstable.mullvad-vpn}/bin/mullvad dns set default";
+        ExecStart = "${pkgs.unstable.mullvad-vpn}/bin/mullvad dns set default";
         RemainAfterExit = true;
       };
     };

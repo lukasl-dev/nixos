@@ -1,5 +1,6 @@
-{ pkgs-unstable, ... }:
+{
+  pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs-unstable; [ stylua ];
+  environment.systemPackages = with pkgs.unstable; [ stylua ];
 }

@@ -1,10 +1,11 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   inherit (config.universe) domain user;
 in
 {
-  environment.systemPackages = [ pkgs-unstable.ntfy-sh ];
+  environment.systemPackages = [ pkgs.unstable.ntfy-sh ];
 
   sops = {
     secrets = {

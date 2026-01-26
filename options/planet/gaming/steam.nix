@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -22,12 +22,12 @@ in
       dedicatedServer.openFirewall = true;
       gamescopeSession.enable = true;
 
-      extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];
+      extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
     };
 
     universe.hm = lib.optionals mullvad.enable (
       let
-        baseDesktop = builtins.readFile "${pkgs-unstable.steam-unwrapped}/share/applications/steam.desktop";
+        baseDesktop = builtins.readFile "${pkgs.unstable.steam-unwrapped}/share/applications/steam.desktop";
         vpnDesktop =
           lib.replaceStrings
             [ "Name=Steam\n" "Exec=steam %U\n" ]

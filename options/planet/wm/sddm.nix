@@ -3,12 +3,11 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
 let
-  system = pkgs-unstable.stdenv.hostPlatform.system;
+  system = pkgs.unstable.stdenv.hostPlatform.system;
   where-is-my-sddm-theme = inputs.catppuccin-where-is-my-sddm-theme.packages.${system}.default;
 in
 lib.mkIf config.planet.wm.enable {

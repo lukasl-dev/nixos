@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -17,10 +17,10 @@ in
 
   config = lib.mkIf minecraft.enable {
     environment.systemPackages = [
-      pkgs-unstable.prismlauncher
-      pkgs-unstable.lunar-client
+      pkgs.unstable.prismlauncher
+      pkgs.unstable.lunar-client
 
-      (lib.mkIf hyprland.enable pkgs-unstable.glfw3-minecraft)
+      (lib.mkIf hyprland.enable pkgs.unstable.glfw3-minecraft)
     ];
   };
 

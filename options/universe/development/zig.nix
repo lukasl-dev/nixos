@@ -1,5 +1,6 @@
-{ pkgs-unstable, ... }:
+{
+  pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs-unstable; [ zig ];
+  environment.systemPackages = with pkgs.unstable; [ zig ];
 }

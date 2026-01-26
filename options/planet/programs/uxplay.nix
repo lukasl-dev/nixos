@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -16,10 +16,10 @@ in
   config = lib.mkIf uxplay.enable {
 
     environment.systemPackages = [
-      pkgs-unstable.uxplay
-      (pkgs-unstable.writeShellApplication {
+      pkgs.unstable.uxplay
+      (pkgs.unstable.writeShellApplication {
         name = "uxplay-toggle";
-        runtimeInputs = [ pkgs-unstable.uxplay ];
+        runtimeInputs = [ pkgs.unstable.uxplay ];
         text = ''
           PID_FILE="/tmp/uxplay.pid"
           if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null; then

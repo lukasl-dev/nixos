@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -45,8 +45,8 @@ in
           enable = true;
           package =
             if hyprland.enable then
-              (pkgs-unstable.vesktop.override { }).overrideAttrs (old: {
-                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs-unstable.makeWrapper ];
+              (pkgs.unstable.vesktop.override { }).overrideAttrs (old: {
+                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
                 postFixup = (old.postFixup or "") + ''
                   wrapProgram $out/bin/vesktop \
                     --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
@@ -58,7 +58,7 @@ in
                 '';
               })
             else
-              pkgs-unstable.vesktop;
+              pkgs.unstable.vesktop;
 
           vencord.settings = {
             autoUpdate = true;

@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -24,7 +24,7 @@ in
     services.ollama = {
       enable = true;
 
-      package = if nvidia.cuda then pkgs-unstable.ollama-cuda else pkgs-unstable.ollama;
+      package = if nvidia.cuda then pkgs.unstable.ollama-cuda else pkgs.unstable.ollama;
 
       acceleration = if nvidia.cuda then "cuda" else false;
       environmentVariables = {

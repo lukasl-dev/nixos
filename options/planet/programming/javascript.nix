@@ -1,4 +1,5 @@
-{ pkgs-unstable, lib, ... }:
+{
+  pkgs, lib, ... }:
 
 {
   options.planet.development.javascript = {
@@ -6,13 +7,13 @@
   };
 
   config = {
-    environment.systemPackages = with pkgs-unstable; [ nodejs ];
+    environment.systemPackages = with pkgs.unstable; [ nodejs ];
 
     universe.hm = [
       {
         programs.bun = {
           enable = true;
-          package = pkgs-unstable.bun;
+          package = pkgs.unstable.bun;
         };
       }
     ];

@@ -1,5 +1,6 @@
-{ pkgs-unstable, ... }:
+{
+  pkgs, ... }:
 
 {
-  environment.systemPackages = [ pkgs-unstable.devenv ];
+  environment.systemPackages = [ pkgs.unstable.devenv ];
 }

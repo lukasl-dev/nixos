@@ -1,6 +1,6 @@
 {
+  pkgs,
   config,
-  pkgs-unstable,
   lib,
   ...
 }:
@@ -19,7 +19,7 @@ in
       services.forgejo = {
         enable = true;
 
-        package = pkgs-unstable.forgejo;
+        package = pkgs.unstable.forgejo;
 
         user = "forge";
         group = "forge";
@@ -88,7 +88,7 @@ in
   users.users.forge = {
     isSystemUser = true;
     group = "forge";
-    shell = pkgs-unstable.bashInteractive;
+    shell = pkgs.unstable.bashInteractive;
   };
   users.groups.forge = { };
 
@@ -99,7 +99,7 @@ in
   '';
 
   environment.systemPackages = [
-    (pkgs-unstable.writeShellScriptBin "forgejo" ''
+    (pkgs.unstable.writeShellScriptBin "forgejo" ''
       exec /run/current-system/sw/bin/nixos-container run ${meta.container} -- sudo -u forge forgejo "$@"
     '')
   ];

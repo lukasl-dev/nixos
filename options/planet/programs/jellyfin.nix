@@ -1,5 +1,5 @@
 {
-  pkgs-unstable,
+  pkgs,
   lib,
   config,
   ...
@@ -21,7 +21,7 @@ in
   };
 
   config = lib.mkIf jellyfin.enable {
-    environment.systemPackages = [ pkgs-unstable.jellyfin-tui ];
+    environment.systemPackages = [ pkgs.unstable.jellyfin-tui ];
 
     sops = {
       secrets = {

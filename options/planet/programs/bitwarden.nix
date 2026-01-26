@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -22,8 +22,8 @@ in
 
   config = lib.mkIf bitwarden.enable {
     environment.systemPackages = [
-      pkgs-unstable.bitwarden-desktop
-      pkgs-unstable.bitwarden-cli
+      pkgs.unstable.bitwarden-desktop
+      pkgs.unstable.bitwarden-cli
     ];
   };
 }

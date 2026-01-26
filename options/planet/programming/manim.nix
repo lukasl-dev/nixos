@@ -1,6 +1,6 @@
 {
+  pkgs,
   config,
-  pkgs-unstable,
   lib,
   ...
 }:
@@ -11,6 +11,6 @@
   };
 
   config = lib.mkIf config.planet.development.manim.enable {
-    environment.systemPackages = with pkgs-unstable; [ manim ];
+    environment.systemPackages = with pkgs.unstable; [ manim ];
   };
 }

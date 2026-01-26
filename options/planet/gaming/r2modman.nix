@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -14,6 +14,6 @@ in
   };
 
   config = lib.mkIf r2modman.enable {
-    environment.systemPackages = [ pkgs-unstable.r2modman ];
+    environment.systemPackages = [ pkgs.unstable.r2modman ];
   };
 }

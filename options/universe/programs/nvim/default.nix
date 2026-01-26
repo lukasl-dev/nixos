@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -45,7 +44,7 @@ in
         viAlias = true;
         vimAlias = true;
 
-        extraPackages = with pkgs-unstable; [
+        extraPackages = with pkgs.unstable; [
           # tools
           sqlite
           gcc

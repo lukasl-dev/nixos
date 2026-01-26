@@ -1,4 +1,5 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   domain = config.universe.domain;
@@ -10,7 +11,7 @@ in
   services.freshrss = {
     enable = true;
 
-    package = pkgs-unstable.freshrss;
+    package = pkgs.unstable.freshrss;
 
     defaultUser = user.name;
     passwordFile = config.sops.secrets."planets/pollux/freshrss/password".path;

@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -13,7 +13,7 @@
   config = lib.mkIf config.planet.programs.wireshark.enable {
     programs.wireshark = {
       enable = true;
-      package = pkgs-unstable.wireshark;
+      package = pkgs.unstable.wireshark;
     };
   };
 }

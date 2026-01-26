@@ -1,13 +1,13 @@
 {
   inputs,
   config,
-  pkgs-unstable,
+  pkgs,
   lib,
   ...
 }:
 
 let
-  inherit (pkgs-unstable.stdenv.hostPlatform) system;
+  inherit (pkgs.stdenv.hostPlatform) system;
   inherit (config.universe) domain;
 
   tuwunelPort = 6167;

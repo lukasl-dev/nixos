@@ -1,11 +1,12 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   user = config.universe.user;
   homeDir = config.home-manager.users.${user.name}.home.homeDirectory;
 in
 {
-  environment.systemPackages = [ pkgs-unstable.dnscontrol ];
+  environment.systemPackages = [ pkgs.unstable.dnscontrol ];
 
   sops.secrets = {
     "universe/cloudflare/email" = { };

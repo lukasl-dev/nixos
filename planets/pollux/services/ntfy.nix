@@ -1,4 +1,5 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   inherit (config.universe) domain;
@@ -6,11 +7,11 @@ let
 in
 {
   disabledModules = [ "services/misc/ntfy-sh.nix" ];
-  imports = [ (pkgs-unstable.path + "/nixos/modules/services/misc/ntfy-sh.nix") ];
+  imports = [ (pkgs.unstable.path + "/nixos/modules/services/misc/ntfy-sh.nix") ];
 
   services.ntfy-sh = {
     enable = true;
-    package = pkgs-unstable.ntfy-sh;
+    package = pkgs.unstable.ntfy-sh;
 
     settings = {
       base-url = "https://ntfy.${domain}";

@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -43,14 +42,14 @@ in
             enable = true;
             qemu = {
               swtpm.enable = true;
-              # ovmf.packages = [ pkgs-unstable.OVMFFull.fd ];
+              # ovmf.packages = [ pkgs.unstable.OVMFFull.fd ];
             };
           };
           spiceUSBRedirection.enable = true;
         };
 
         environment = {
-          systemPackages = [ pkgs-unstable.libvirt ];
+          systemPackages = [ pkgs.unstable.libvirt ];
           variables.LIBVIRT_DEFAULT_URI = "qemu:///system";
         };
       }
@@ -101,8 +100,8 @@ in
       #           };
       #           script = ''
       #             set -eu
-      #             ${pkgs-unstable.libvirt}/bin/virsh define /etc/libvirt/qemu/${name}.xml
-      #             ${lib.optionalString dom.autostart "${pkgs-unstable.libvirt}/bin/virsh autostart ${name}"}
+      #             ${pkgs.unstable.libvirt}/bin/virsh define /etc/libvirt/qemu/${name}.xml
+      #             ${lib.optionalString dom.autostart "${pkgs.unstable.libvirt}/bin/virsh autostart ${name}"}
       #           '';
       #         };
       #       }

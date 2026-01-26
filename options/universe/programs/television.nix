@@ -1,4 +1,4 @@
-# { pkgs, pkgs-unstable, ... }:
+# { pkgs, ... }:
 #
 # let
 #   ns = pkgs.writeShellApplication {
@@ -34,7 +34,7 @@
   #     };
   #
   #     home.packages = [
-  #       pkgs-unstable.nix-search-tv
+  #       pkgs.unstable.nix-search-tv
   #       ns
   #     ];
   #   }

@@ -1,4 +1,5 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   domain = config.universe.domain;
@@ -8,7 +9,7 @@ in
 {
   services.firefly-iii = {
     enable = true;
-    package = pkgs-unstable.firefly-iii;
+    package = pkgs.unstable.firefly-iii;
 
     enableNginx = true;
     virtualHost = "fin.${domain}";

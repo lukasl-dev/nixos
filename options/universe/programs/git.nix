@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 
@@ -45,7 +44,7 @@ in
       }
     ];
 
-    environment.systemPackages = with pkgs-unstable; [
+    environment.systemPackages = with pkgs.unstable; [
       git-lfs
       git-filter-repo
     ];

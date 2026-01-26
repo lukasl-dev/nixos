@@ -4,6 +4,9 @@
   ...
 }:
 
+let
+  inherit (config.planet.hardware) nvidia;
+in
 {
   nix.settings = {
     experimental-features = [
@@ -12,17 +15,27 @@
     ];
     trusted-users = [
       "root"
-      (config.universe.user.name)
+      config.universe.user.name
     ];
   };
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
+  nixpkgs =
+    let
+      config = {
+        allowUnfree = true;
+        cudaSupport = nvidia.cuda;
+      };
+    in
+    {
+      inherit config;
+      overlays = [
+        inputs.nur.overlays.default
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            system = final.stdenv.hostPlatform.system;
+            inherit config;
+          };
+        })
+      ];
     };
-
-    overlays = [
-      inputs.nur.overlays.default
-    ];
-  };
 }

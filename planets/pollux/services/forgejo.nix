@@ -1,4 +1,5 @@
-{ config, pkgs-unstable, ... }:
+{
+  pkgs, config, ... }:
 
 let
   domain = config.universe.domain;
@@ -9,7 +10,7 @@ in
   services.forgejo = {
     enable = true;
 
-    package = pkgs-unstable.forgejo;
+    package = pkgs.unstable.forgejo;
 
     lfs.enable = true;
 

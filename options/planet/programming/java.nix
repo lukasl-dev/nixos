@@ -1,4 +1,5 @@
-{ pkgs-unstable, lib, ... }:
+{
+  pkgs, lib, ... }:
 
 {
   options.planet.development.java = {
@@ -8,7 +9,7 @@
   config = {
     programs.java = {
       enable = true;
-      package = pkgs-unstable.zulu21;
+      package = pkgs.unstable.zulu21;
     };
   };
 }

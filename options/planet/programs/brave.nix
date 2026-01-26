@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs-unstable,
   ...
 }:
 
@@ -23,7 +23,7 @@ in
       {
         programs.chromium = {
           enable = true;
-          package = pkgs-unstable.brave;
+          package = pkgs.unstable.brave;
           extensions = [
             "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
             "nngceckbapebfimnlniiiahkandclblb" # Bitwarden

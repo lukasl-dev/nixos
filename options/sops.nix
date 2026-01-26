@@ -1,4 +1,5 @@
-{ inputs, pkgs-unstable, ... }:
+{
+  pkgs, inputs, ... }:
 
 let
   sops = {
@@ -12,7 +13,7 @@ in
   sops = sops;
 
   environment = {
-    systemPackages = [ pkgs-unstable.sops ];
+    systemPackages = [ pkgs.unstable.sops ];
     variables.SOPS_AGE_KEY_FILE = sops.age.keyFile;
   };
 

@@ -1,4 +1,5 @@
-{ pkgs-unstable, lib, ... }:
+{
+  pkgs, lib, ... }:
 
 {
   options.planet.development.R = {
@@ -6,6 +7,6 @@
   };
 
   config = {
-    environment.systemPackages = with pkgs-unstable; [ R ];
+    environment.systemPackages = with pkgs.unstable; [ R ];
   };
 }
