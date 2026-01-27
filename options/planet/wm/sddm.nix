@@ -7,7 +7,8 @@
 }:
 
 let
-  system = pkgs.unstable.stdenv.hostPlatform.system;
+  inherit (pkgs.stdenv.hostPlatform) system;
+
   where-is-my-sddm-theme = inputs.catppuccin-where-is-my-sddm-theme.packages.${system}.default;
 in
 lib.mkIf config.planet.wm.enable {
@@ -33,7 +34,7 @@ lib.mkIf config.planet.wm.enable {
   environment.systemPackages = [
     where-is-my-sddm-theme
     (pkgs.catppuccin-sddm.override {
-      flavor = config.catppuccin.flavor;
+      inherit (config.catppuccin) flavor;
       font = "Noto Sans";
       fontSize = "9";
       background = "${../../../wallpapers/10.png}";
