@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   inherit (config.universe) domain;
@@ -9,6 +9,7 @@ in
   services = {
     woodpecker-server = {
       enable = true;
+      package = pkgs.unstable.woodpecker-server;
       environment = {
         WOODPECKER_HOST = "https://ci.${domain}";
         WOODPECKER_SERVER_ADDR = ":${toString port}";
@@ -24,6 +25,7 @@ in
     woodpecker-agents.agents = {
       docker = {
         enable = true;
+        package = pkgs.unstable.woodpecker-agent;
         extraGroups = [ "docker" ];
         environment = {
           WOODPECKER_SERVER = "localhost:9000";
