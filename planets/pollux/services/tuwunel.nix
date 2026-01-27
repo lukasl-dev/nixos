@@ -110,7 +110,7 @@ in
         port = elementCallPort;
       }
     ];
-    root = pkgs-unstable.element-call;
+    root = pkgs.unstable.element-call;
     # index = [ "index.html" ];
     extraConfig = ''
       autoindex off;
