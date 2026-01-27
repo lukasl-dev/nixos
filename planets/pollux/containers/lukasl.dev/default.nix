@@ -49,6 +49,13 @@ in
     };
   };
 
+  services.resolved.extraConfig = "DNSStubListenerExtra=${meta.address.host}";
+
+  networking.firewall.interfaces."ve-${meta.container}" = {
+    allowedUDPPorts = [ 53 ];
+    allowedTCPPorts = [ 53 ];
+  };
+
   containers.${meta.container} = {
     autoStart = true;
 
@@ -84,7 +91,8 @@ in
       networking = {
         hostName = meta.hostName;
         defaultGateway = meta.address.host;
-        nameservers = [ "1.1.1.1" ];
+        useHostResolvConf = false;
+        nameservers = [ meta.address.host ];
       };
 
       virtualisation = {
