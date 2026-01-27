@@ -16,7 +16,7 @@ in
 
         WOODPECKER_FORGEJO = "true";
         WOODPECKER_FORGEJO_URL = "https://forge.${domain}";
-        WOODPECKER_ADMIN = "lukas";
+        WOODPECKER_ADMIN = "lukas,lukasl-dev";
       };
       environmentFile = config.sops.templates."planets/pollux/woodpecker/env".path;
     };
