@@ -94,7 +94,7 @@ in
               "${mainMod}, Backspace, exec, noctalia-shell ipc call launcher toggle"
               "${mainMod}, E, exec, bemoji"
 
-              "${mainMod}, C, exec, noctalia-shell ipc call appLauncher toggleClipboard"
+              "${mainMod}, C, exec, noctalia-shell ipc call launcher clipboard"
               # "${mainMod}, p, exec, swaync-client -t"
               "${mainMod}, p, exec, obsidian"
               ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''

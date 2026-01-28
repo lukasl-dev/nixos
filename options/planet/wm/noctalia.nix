@@ -110,7 +110,7 @@ lib.mkIf config.planet.wm.enable {
           };
 
           appLauncher = {
-            enableClipboardHistory = false;
+            enableClipboardHistory = true;
           };
 
           dock = {
