@@ -40,6 +40,12 @@ in
 
     programs.hyprland = {
       enable = true;
+      package = inputs.hyprland.packages.${system}.hyprland.overrideAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.git ];
+        cmakeFlags = (old.cmakeFlags or [ ]) ++ [
+          "-DNO_HYPRPM=ON"
+        ];
+      });
 
       xwayland.enable = true;
       withUWSM = true;
@@ -201,8 +207,6 @@ in
             # ========= ========= ========= ========= ========= =========
 
             "render_unfocused on, match:initial_class vesktop"
-
-            # Desktop App
             "workspace 1, match:initial_class vesktop"
             "no_initial_focus on, match:initial_class vesktop"
 
@@ -212,6 +216,14 @@ in
             "opacity 0.8, match:initial_title https://discord.com/.*"
             "center on, match:initial_title https://discord.com/.*"
             "size 934 489, match:initial_title https://discord.com/.*"
+
+            # ========= ========= ========= ========= ========= =========
+            # Element
+            # ========= ========= ========= ========= ========= =========
+
+            "render_unfocused on, match:initial_class Element"
+            "workspace 1, match:initial_class Element"
+            "no_initial_focus on, match:initial_class Element"
 
             # ========= ========= ========= ========= ========= =========
             # Minecraft

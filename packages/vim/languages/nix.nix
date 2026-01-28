@@ -2,7 +2,7 @@
 
 {
   vim = {
-    extraPackages = with pkgs; [ nixfmt-rfc-style ];
+    extraPackages = with pkgs; [ nixfmt ];
 
     languages.nix.enable = true;
 

@@ -1,9 +1,11 @@
 {
-  pkgs, ... }:
+  pkgs,
+  ...
+}:
 
 {
   environment.systemPackages = with pkgs.unstable; [
     nixd
-    nixfmt-rfc-style
+    nixfmt
   ];
 }

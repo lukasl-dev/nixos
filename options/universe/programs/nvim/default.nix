@@ -55,7 +55,7 @@ in
 
           # nix
           nixd
-          nixfmt-rfc-style
+          nixfmt
 
           codex
 
