@@ -105,7 +105,10 @@ lib.mkIf config.planet.wm.enable {
 
           wallpaper = {
             overviewEnabled = true;
-            directory = "${../../../wallpapers}";
+            directory = "${lib.cleanSourceWith {
+              src = ../../../wallpapers;
+              filter = path: type: builtins.baseNameOf path != "README.md";
+            }}";
             automationEnabled = true;
           };
 
