@@ -1,4 +1,5 @@
 {
+
   config,
   inputs,
   ...
@@ -32,7 +33,7 @@ in
         inputs.nur.overlays.default
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable {
-            system = final.stdenv.hostPlatform.system;
+            inherit (final.stdenv.hostPlatform) system;
             inherit config;
           };
         })
