@@ -1732,11 +1732,11 @@
         "nixpkgs": "nixpkgs_12"
       },
       "locked": {
-        "lastModified": 1769964763,
-        "narHash": "sha256-ADWyyRulN7Bi+LN9pMO5JjcKqFnKWtCi4CCqMXlsHE4=",
+        "lastModified": 1769119495,
+        "narHash": "sha256-JQr3cl1TqcEe3SUPr1UjkvxP3IITJOB9VZ0odMi3HOI=",
         "owner": "anomalyco",
         "repo": "opencode",
-        "rev": "2c82e6c6ae2cd7472de3598c2bf3bb2a4e9560d2",
+        "rev": "c128579cfcbe4e177124e202251e95e412bd7e67",
         "type": "github"
       },
       "original": {

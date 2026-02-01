@@ -47,6 +47,7 @@ in
           secrets."planets/pollux/yamtrack/secret" = { };
           templates."planets/pollux/yamtrack/env".content = ''
             SECRET=${config.sops.placeholder."planets/pollux/yamtrack/secret"}
+            ADMIN_ENABLED=True
           '';
         };
 
