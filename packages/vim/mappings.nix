@@ -28,5 +28,12 @@
       silent = true;
       desc = "Move lines up";
     }
+    {
+      mode = "n";
+      key = "<leader>bd";
+      action = ":bdelete!";
+      silent = true;
+      desc = "Forcefully delete current buffer";
+    }
   ];
 }
