@@ -7,8 +7,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "Julian";
       repo = "lean.nvim";
-      rev = "6839dec855abf562a908abb00654b4a99156315f";
-      hash = "sha256-EZ9XBDoiPDwiN6Sm6wLFQlE2GXN6CnqSFiNSq7YqKtc=";
+      rev = "904dcc2787effac5e0394a46e78499b2c094a3df";
+      hash = "sha256-yfEEfzx8V00tAPc9q1Zqmd5JklfVHVDXqNpjo525i68=";
     };
     nvimSkipModules = [
       "proofwidgets.expr_presentation"
@@ -44,6 +44,7 @@ let
       "lean.widgets.Lean.Meta.Tactic.TryThis.tryThisWidget"
       "lean.widgets.llmstepTryThisWidget"
       "tui.html"
+      "lean.widgets.Lean.Meta.Hint.textInsertionWidget"
     ];
   };
 in

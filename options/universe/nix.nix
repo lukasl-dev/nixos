@@ -2,6 +2,7 @@
 
   config,
   inputs,
+  pkgs,
   ...
 }:
 
@@ -39,4 +40,8 @@ in
         })
       ];
     };
+
+  environment.systemPackages = with pkgs; [
+    nix-prefetch-github
+  ];
 }

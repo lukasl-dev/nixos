@@ -25,7 +25,7 @@
 
     lsp = {
       enable = true;
-      lspconfig.enable = true;
+      # lspconfig.enable = true;
     };
 
     languages = {
