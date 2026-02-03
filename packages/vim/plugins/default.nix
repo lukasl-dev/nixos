@@ -16,6 +16,7 @@
     ./neogit.nix
     ./nvim-autopairs.nix
     ./nvim-web-devicons.nix
+    ./obsidian.nix
     ./oil.nix
     ./otter-nvim.nix
     ./precognition.nix
