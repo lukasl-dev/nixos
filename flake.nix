@@ -34,7 +34,7 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    opencode.url = "github:anomalyco/opencode";
+    opencode.url = "github:anomalyco/opencode?ref=v1.1.48";
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";
   };

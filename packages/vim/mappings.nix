@@ -31,7 +31,7 @@
     {
       mode = "n";
       key = "<leader>bd";
-      action = ":bdelete!";
+      action = ":bdelete!<CR>";
       silent = true;
       desc = "Forcefully delete current buffer";
     }
