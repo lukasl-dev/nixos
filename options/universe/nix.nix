@@ -32,6 +32,7 @@ in
       inherit config;
       overlays = [
         inputs.nur.overlays.default
+        inputs.HyprQuickFrame.overlays.default
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable {
             inherit (final.stdenv.hostPlatform) system;

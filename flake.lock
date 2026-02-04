@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "HyprQuickFrame": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770226165,
+        "narHash": "sha256-ZMppV2YNpgddc/JlXJ+FdiaGjZhpaD099tGulaMiO0g=",
+        "owner": "Ronin-CK",
+        "repo": "HyprQuickFrame",
+        "rev": "9a625aad6e29bdde4630fd7478a40f97d3a0c7ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Ronin-CK",
+        "repo": "HyprQuickFrame",
+        "type": "github"
+      }
+    },
     "aquamarine": {
       "inputs": {
         "hyprutils": [
@@ -1830,6 +1850,7 @@
     },
     "root": {
       "inputs": {
+        "HyprQuickFrame": "HyprQuickFrame",
         "capTUre": "capTUre",
         "catppuccin": "catppuccin",
         "catppuccin-where-is-my-sddm-theme": "catppuccin-where-is-my-sddm-theme",

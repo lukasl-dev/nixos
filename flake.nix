@@ -37,6 +37,10 @@
     opencode.url = "github:anomalyco/opencode?ref=v1.1.48";
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";
+    HyprQuickFrame = {
+      url = "github:Ronin-CK/HyprQuickFrame";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -401,6 +401,7 @@ in
 
       systemPackages = [
         pkgs.unstable.hyprpicker
+        pkgs.hyprquickframe
 
         pkgs.unstable.egl-wayland
         pkgs.unstable.wl-clipboard
