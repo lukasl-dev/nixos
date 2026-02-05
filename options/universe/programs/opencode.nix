@@ -256,6 +256,7 @@ in
             "opencode-gemini-auth@1.3.8"
             "opencode-wakatime@1.1.0"
             "opencode-anthropic-auth@0.0.9"
+            "@franlol/opencode-md-table-formatter@0.0.3"
           ];
           provider = {
             # google = {

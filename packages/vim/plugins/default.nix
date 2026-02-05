@@ -20,7 +20,6 @@
     ./oil.nix
     ./otter-nvim.nix
     ./precognition.nix
-    ./sidekick.nix
     ./telescope.nix
     ./todo-comments.nix
     ./trouble.nix
