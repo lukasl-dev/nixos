@@ -69,7 +69,7 @@ in
       msgpipeline local_routing {
         check {
           rspamd {
-            api_path http://127.0.0.1:11334
+            api_path http://127.0.0.1:11333
           }
         }
 
@@ -258,6 +258,12 @@ in
       "classifier-bayes.conf".text = ''
         backend = "redis";
         autolearn = true;
+      '';
+
+      "options.inc".text = ''
+        dns {
+          nameserver = ["1.1.1.1:53", "8.8.8.8:53"];
+        }
       '';
     };
     workers.controller.includes = [
