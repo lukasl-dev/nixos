@@ -4,7 +4,7 @@
   imports = [ inputs.capTUre.nixosModules.capTUre ];
 
   services.capTUre = {
-    enable = true;
+    enable = false;
     schedule = {
       mo_08_stats = {
         weekday = "Monday";
