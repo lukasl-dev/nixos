@@ -6,11 +6,11 @@
     ./shells
     ./ssh
 
+    ./apparmor.nix
     ./appimage.nix
     ./attic.nix
     ./devenv.nix
     ./domain.nix
-    ./firejail.nix
     ./i18n.nix
     ./networking.nix
     ./nh.nix
