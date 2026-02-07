@@ -24,12 +24,13 @@ in
             config.adminpassFile = secrets."planets/pollux/nextcloud/password".path;
             config.dbtype = "sqlite";
 
-            # configureRedis = true;
-            # caching.apcu = true;
+            configureRedis = true;
+            caching.apcu = true;
+            caching.redis = true;
 
             settings = {
               overwriteprotocol = "https";
-              # "memcache.local" = "\\OC\\Memcache\\APCu";
+              "memcache.local" = "\\OC\\Memcache\\APCu";
             };
           };
 
