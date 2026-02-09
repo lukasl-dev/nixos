@@ -12,6 +12,11 @@ in
     openFirewall = true;
 
     primaryDomain = domain;
+    localDomains = [
+      domain
+      "memex.md"
+      "onyx.md"
+    ];
     hostname = "mail.${domain}";
 
     ensureAccounts = [
@@ -190,6 +195,8 @@ in
     info@${domain}: me@${domain}
     contact@${domain}: me@${domain}
     git@${domain}: me@${domain}
+    admin@memex.md: me@lukasl.dev
+    admin@onyx.md: me@lukasl.dev
   '';
 
   users = {
