@@ -114,6 +114,8 @@ lib.mkIf config.planet.wm.enable {
 
           appLauncher = {
             enableClipboardHistory = true;
+            customLaunchPrefixEnabled = true;
+            customLaunchPrefix = "systemd-run --user --scope --collect --quiet";
           };
 
           dock = {
