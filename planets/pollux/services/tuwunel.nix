@@ -23,7 +23,9 @@ let
   elementCallHost = "call.${domain}";
   elementCallPort = 8765;
   elementCallUpstream = "http://127.0.0.1:${toString elementCallPort}";
-  matrixFocusUrl = "https://${elementCallHost}/livekit";
+  matrixRtcJwtUrl = "https://${elementCallHost}/livekit/jwt";
+  turnHost = "turn.${domain}";
+  turnSecretFile = config.sops.secrets."planets/pollux/tuwunel/turn_secret".path;
   elementCallConfigJson = builtins.toJSON {
     default_server_config = {
       "m.homeserver" = {
@@ -31,7 +33,7 @@ let
         "server_name" = matrixServerName;
       };
     };
-    livekit.livekit_service_url = matrixFocusUrl;
+    livekit.livekit_service_url = matrixRtcJwtUrl;
   };
 
   livekitApiPort = 8080;
@@ -60,13 +62,19 @@ in
         port = [ tuwunelPort ];
         allow_registration = true;
         registration_token_file = config.sops.secrets."planets/pollux/tuwunel/registration_token".path;
+        turn_uris = [
+          "turn:${turnHost}?transport=udp"
+          "turn:${turnHost}?transport=tcp"
+          "turns:${turnHost}?transport=tcp"
+        ];
+        turn_secret_file = turnSecretFile;
         well_known = {
           client = matrixClientUrl;
           server = matrixWellKnownServer;
-          "org.matrix.msc4143.rtc_foci" = [
+          rtc_transports = [
             {
               type = "livekit";
-              livekit_service_url = matrixFocusUrl;
+              livekit_service_url = matrixRtcJwtUrl;
             }
           ];
         };
@@ -92,15 +100,40 @@ in
     openFirewall = true;
     settings = {
       port = livekitSfuPort;
+      room.auto_create = false;
+      rtc = {
+        port_range_start = 50000;
+        port_range_end = 51000;
+        use_external_ip = true;
+        tcp_port = 7881;
+      };
     };
   };
 
   services.lk-jwt-service = {
     enable = true;
-    livekitUrl = "wss://${elementCallHost}/livekit";
+    livekitUrl = "wss://${elementCallHost}/livekit/sfu";
     keyFile = config.services.livekit.keyFile;
     port = livekitApiPort;
   };
+
+  services.coturn = {
+    enable = true;
+    realm = domain;
+    use-auth-secret = true;
+    static-auth-secret-file = turnSecretFile;
+    no-cli = true;
+    cert = "/var/lib/acme/${domain}/fullchain.pem";
+    pkey = "/var/lib/acme/${domain}/key.pem";
+    min-port = 52000;
+    max-port = 55000;
+    extraConfig = ''
+      fingerprint
+      no-multicast-peers
+    '';
+  };
+
+  users.users.turnserver.extraGroups = [ "acme" ];
 
   services.nginx.virtualHosts.${elementCallHost} = {
     enableACME = false;
@@ -129,9 +162,12 @@ in
         '';
       };
 
-      "/livekit" = {
+      "^~ /livekit/sfu/" = {
         extraConfig = ''
           proxy_http_version 1.1;
+          proxy_send_timeout 300s;
+          proxy_read_timeout 300s;
+          proxy_buffering off;
           proxy_set_header Upgrade $http_upgrade;
           proxy_set_header Connection "upgrade";
           proxy_set_header Host $host;
@@ -142,40 +178,19 @@ in
         '';
       };
 
-      "/livekit/sfu/get" = {
-        extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_pass http://127.0.0.1:${toString livekitApiPort}/sfu/get;
-        '';
-      };
-
-      "/livekit/sfu/" = {
-        extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/sfu/;
-        '';
-      };
-
       "= /livekit/sfu" = {
         extraConfig = ''
           proxy_http_version 1.1;
+          proxy_send_timeout 300s;
+          proxy_read_timeout 300s;
+          proxy_buffering off;
           proxy_set_header Upgrade $http_upgrade;
           proxy_set_header Connection "upgrade";
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/sfu;
+          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/;
         '';
       };
 
@@ -206,6 +221,12 @@ in
     mode = "0400";
   };
 
+  sops.secrets."planets/pollux/tuwunel/turn_secret" = {
+    mode = "0440";
+    owner = "turnserver";
+    group = config.services.matrix-tuwunel.group;
+  };
+
   services.traefik = {
     staticConfigOptions.entryPoints.${traefikEntryPointName} = {
       address = ":${toString traefikEntryPointPort}";
@@ -225,13 +246,6 @@ in
             entryPoints = [ "websecure" ];
             service = "tuwunel";
             priority = 100;
-          };
-
-          tuwunel-livekit = {
-            rule = "Host(`${matrixHost}`) && (PathPrefix(`/_matrix/client/unstable/org.matrix.msc4143`) || PathPrefix(`/_matrix/client/v1/org.matrix.msc4143`))";
-            entryPoints = [ "websecure" ];
-            service = "lk-jwt-service";
-            priority = 200;
           };
 
           element-call = {
@@ -261,13 +275,6 @@ in
             };
           };
 
-          lk-jwt-service = {
-            loadBalancer.servers = [
-              {
-                url = "http://127.0.0.1:${toString livekitApiPort}";
-              }
-            ];
-          };
         };
       };
 
@@ -299,5 +306,21 @@ in
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ traefikEntryPointPort ];
+  networking.firewall.allowedTCPPorts = [
+    traefikEntryPointPort
+    7881
+    3478
+    5349
+  ];
+
+  networking.firewall.allowedUDPPorts = [
+    3478
+  ];
+
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 52000;
+      to = 55000;
+    }
+  ];
 }
