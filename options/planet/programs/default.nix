@@ -11,6 +11,7 @@
     ./feh.nix
     ./gh-dash.nix
     ./ghostty.nix
+    ./gpu-screen-recorder.nix
     ./helium.nix
     ./jellyfin.nix
     ./localsend.nix

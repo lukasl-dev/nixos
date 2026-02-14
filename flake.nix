@@ -11,7 +11,7 @@
     };
     sops-nix.url = "github:Mic92/sops-nix";
     nvf = {
-      url = "github:notashelf/nvf";
+      url = "github:notashelf/nvf?ref=v0.8";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
@@ -27,7 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tuwunel.url = "github:matrix-construct/tuwunel";
-    fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
     capTUre.url = "github:lukasl-dev/capTUre";
     nur.url = "github:nix-community/NUR";
     noctalia = {

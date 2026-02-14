@@ -87,6 +87,18 @@ lib.mkIf config.planet.wm.enable {
                 showUnreadBadge = true;
               }
               {
+                id = "plugin:screenshot";
+                defaultSettings = {
+                  mode = "region";
+                };
+              }
+              {
+                id = "plugin:screen-recorder";
+                defaultSettings = {
+                  copyToClipboard = true;
+                };
+              }
+              {
                 id = "Battery";
                 hideIfNotDetected = true;
                 warningThreshold = 30;
@@ -149,6 +161,14 @@ lib.mkIf config.planet.wm.enable {
               sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
             };
             tailscale = {
+              enabled = true;
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+            };
+            screenshot = {
+              enabled = true;
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+            };
+            screen-recorder = {
               enabled = true;
               sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
             };

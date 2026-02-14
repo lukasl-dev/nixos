@@ -1,8 +1,8 @@
-{ rinputs, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   vim.extraPlugins."fff.nvim" = {
-    package = rinputs.fff-nvim.packages.${pkgs.stdenv.hostPlatform.system}.fff-nvim;
+    package = pkgs.vimPlugins.fff-nvim;
     setup = # lua
       ''
         require("fff").setup {
