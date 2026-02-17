@@ -5,29 +5,29 @@
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1235", ATTR{idProduct}=="8219", TEST=="power/control", ATTR{power/control}="on"
   '';
 
-  systemd.services.focusrite-usb-reinit = {
-    description = "Reinitialize Focusrite Scarlett 2i2 on boot";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "systemd-udev-settle.service" ];
-    after = [ "systemd-udev-settle.service" ];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      set -eu
-
-      for device in /sys/bus/usb/devices/*; do
-        [ -f "$device/idVendor" ] || continue
-        [ -f "$device/idProduct" ] || continue
-        [ -w "$device/authorized" ] || continue
-
-        if [ "$(cat "$device/idVendor")" = "1235" ] && [ "$(cat "$device/idProduct")" = "8219" ]; then
-          echo "Resetting Focusrite device at $device"
-          echo 0 > "$device/authorized"
-          sleep 1
-          echo 1 > "$device/authorized"
-        fi
-      done
-    '';
-  };
+  # systemd.services.focusrite-usb-reinit = {
+  #   description = "Reinitialize Focusrite Scarlett 2i2 on boot";
+  #   wantedBy = [ "multi-user.target" ];
+  #   wants = [ "systemd-udev-settle.service" ];
+  #   after = [ "systemd-udev-settle.service" ];
+  #   serviceConfig.Type = "oneshot";
+  #   script = ''
+  #     set -eu
+  #
+  #     for device in /sys/bus/usb/devices/*; do
+  #       [ -f "$device/idVendor" ] || continue
+  #       [ -f "$device/idProduct" ] || continue
+  #       [ -w "$device/authorized" ] || continue
+  #
+  #       if [ "$(cat "$device/idVendor")" = "1235" ] && [ "$(cat "$device/idProduct")" = "8219" ]; then
+  #         echo "Resetting Focusrite device at $device"
+  #         echo 0 > "$device/authorized"
+  #         sleep 1
+  #         echo 1 > "$device/authorized"
+  #       fi
+  #     done
+  #   '';
+  # };
 
   boot = {
     kernelModules = [
