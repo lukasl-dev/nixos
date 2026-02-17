@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, rinputs, ... }:
 
 {
   vim.extraPlugins."fff.nvim" = {
-    package = pkgs.vimPlugins.fff-nvim;
+    package = rinputs.fff-nvim.packages.${pkgs.stdenv.hostPlatform.system}.fff-nvim;
     setup = # lua
       ''
         require("fff").setup {
@@ -29,6 +29,18 @@
           end
         '';
       desc = "Files [FFF]";
+    }
+    {
+      key = "<leader>fw";
+      mode = [ "n" ];
+      lua = true;
+      action = # lua
+        ''
+          function()
+            require("fff").live_grep({ grep = { modes = { "fuzzy", "plain" } } })
+          end
+        '';
+      desc = "Live grep [FFF]";
     }
   ];
 }

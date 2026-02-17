@@ -4,7 +4,7 @@
     setupOpts.defaults.color_devicons = true;
     mappings = {
       findFiles = null;
-      liveGrep = "<leader>fw";
+      liveGrep = null;
     };
   };
 }
