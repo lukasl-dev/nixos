@@ -404,7 +404,7 @@ in
         pkgs.hyprquickframe
 
         pkgs.unstable.egl-wayland
-        pkgs.unstable.wl-clipboard
+        pkgs.wl-clipboard
 
         # pkgs.unstable.hyprcursor
         # pkgs.catppuccin-cursors.mochaMauve

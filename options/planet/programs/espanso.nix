@@ -16,7 +16,7 @@ in
   options.planet.programs.espanso = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = wm.enable;
+      default = wm.enable && false; # TODO: fix clipboard
       description = "Enable espanso";
     };
   };

@@ -95,7 +95,7 @@ lib.mkIf config.planet.wm.enable {
               {
                 id = "plugin:screen-recorder";
                 defaultSettings = {
-                  copyToClipboard = true;
+                  copyToClipboard = false;
                 };
               }
               {
@@ -125,7 +125,7 @@ lib.mkIf config.planet.wm.enable {
           };
 
           appLauncher = {
-            enableClipboardHistory = true;
+            enableClipboardHistory = false;
             customLaunchPrefixEnabled = true;
             customLaunchPrefix = "systemd-run --user --scope --collect --quiet";
           };
