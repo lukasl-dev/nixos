@@ -10,16 +10,16 @@ let
   inherit (wm) hyprland;
   inherit (config.planet.programs) helium;
 
-  heliumVersion = "0.9.2.1";
+  heliumVersion = "0.9.3.1";
   heliumRelease =
     {
       x86_64-linux = {
         arch = "x86_64";
-        hash = "sha256-wDHs/FEoOkYUjKPUrM9QAPwsqNvURJhlP/RZteLL2gA=";
+        hash = "sha256-4c7tIra7SriBQe3ii4bLFTV1chLPQSNdOWNUR6dxfP0=";
       };
       aarch64-linux = {
         arch = "arm64";
-        hash = "sha256-r8BeVj7i6UphnB00ovRt8fXXvW899MvBl8qF5RkMKfs=";
+        hash = "sha256-ejqK6b/s3rENo29q1ivpQDcuaYWrSjVJp8H8iY0gn+8=";
       };
     }
     .${pkgs.stdenv.hostPlatform.system}
