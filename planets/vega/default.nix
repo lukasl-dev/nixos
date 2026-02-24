@@ -107,7 +107,10 @@
       R.enable = true;
     };
 
-    networking.vpn.tu.enable = true;
+    networking = {
+      dns.discoverable = true;
+      vpn.tu.enable = true;
+    };
 
     virtualisation = {
       libvirt = {

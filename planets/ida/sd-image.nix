@@ -10,7 +10,8 @@
 
   sdImage = {
     compressImage = false;
-    imageName = "ida.img";
     firmwareSize = 512;
   };
+
+  image.fileName = "ida.img";
 }

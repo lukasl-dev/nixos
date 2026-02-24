@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  dns = config.planet.networking.dns;
+  inherit (config.planet.networking) dns;
 in
 {
   options.planet.networking.dns = {
@@ -21,6 +21,12 @@ in
         "cloudflare"
         "google"
       ];
+    };
+
+    discoverable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Make this machine discoverable (hostname.local).";
     };
   };
 
@@ -42,6 +48,17 @@ in
           "8.8.4.4"
         ])
       ];
+    };
+
+    services.avahi = lib.mkIf dns.discoverable {
+      enable = true;
+      nssmdns4 = true;
+      publish = {
+        enable = true;
+        addresses = true;
+        workstation = true;
+        userServices = true;
+      };
     };
   };
 }

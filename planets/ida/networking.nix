@@ -24,17 +24,18 @@
     };
   };
 
+  # TODO: remove
   # expose ida.local
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    publish = {
-      enable = true;
-      addresses = true;
-      workstation = true;
-      userServices = true;
-    };
-  };
+  # services.avahi = {
+  #   enable = true;
+  #   nssmdns4 = true;
+  #   publish = {
+  #     enable = true;
+  #     addresses = true;
+  #     workstation = true;
+  #     userServices = true;
+  #   };
+  # };
 
   sops = {
     secrets."planets/ida/wireless/password" = { };

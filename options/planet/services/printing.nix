@@ -17,7 +17,7 @@ in
   config = lib.mkIf printing.enable {
     services.printing.enable = true;
 
-    # TODO:
+    # TODO: remove
     # services.avahi = {
     #   enable = true;
     #   nssmdns4 = true;

@@ -20,5 +20,7 @@
     stateVersion = "25.05";
 
     sudo.password = false;
+
+    networking.dns.discoverable = true;
   };
 }
