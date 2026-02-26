@@ -51,6 +51,20 @@ in
 
   universe.hm = [
     {
+      xdg.desktopEntries = {
+        ssh-pollux = {
+          name = "pollux";
+          exec = "ghostty -e env TERM=xterm-256color zsh -lic ssh-pollux";
+          icon = "utilities-terminal";
+          comment = "Open Ghostty and connect to pollux";
+          categories = [
+            "Network"
+            "TerminalEmulator"
+          ];
+          terminal = false;
+        };
+      };
+
       home.file.".ssh/id_ed25519.pub".source = ./id_ed25519.pub;
 
       programs.ssh = {
