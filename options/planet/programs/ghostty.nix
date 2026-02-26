@@ -19,10 +19,10 @@ in
 
   config = lib.mkIf config.planet.programs.ghostty.enable {
     nix.settings = {
-      substituters = [
+      extra-substituters = [
         "https://ghostty.cachix.org"
       ];
-      trusted-public-keys = [
+      extra-trusted-public-keys = [
         "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
       ];
     };

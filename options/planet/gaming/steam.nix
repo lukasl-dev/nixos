@@ -6,8 +6,8 @@
 }:
 
 let
-  steam = config.planet.gaming.steam;
-  mullvad = config.planet.services.mullvad;
+  inherit (config.planet.gaming) steam;
+  inherit (config.planet.services) mullvad;
 in
 {
   options.planet.gaming.steam = {
@@ -23,6 +23,13 @@ in
       gamescopeSession.enable = true;
 
       extraCompatPackages = [ pkgs.unstable.proton-ge-bin ];
+    };
+
+    programs.gamescope = {
+      enable = true;
+      package = pkgs.gamescope.overrideAttrs (old: {
+        NIX_CFLAGS_COMPILE = (old.NIX_CFLAGS_COMPILE or [ ]) ++ [ "-fno-fast-math" ];
+      });
     };
 
     universe.hm = lib.optionals mullvad.enable (
