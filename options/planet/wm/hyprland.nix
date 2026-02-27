@@ -82,15 +82,12 @@ in
 
               # https://discourse.nixos.org/t/keyctl-read-alloc-permission-denied/8667/4
               "keyctl link @u @s"
-
-              # TODO: only start these if the corresponding service is enabled
-              # "wpaperd -d"
-              "vesktop"
-              "element-desktop"
-              "bitwarden"
-              "mullvad-vpn"
-              # "waybar-toggle"
             ]
+
+            (lib.optional config.planet.programs.discord.enable config.planet.programs.discord.launch)
+            (lib.optional config.planet.programs.element.enable config.planet.programs.element.launch)
+            (lib.optional config.planet.programs.bitwarden.enable config.planet.programs.bitwarden.launch)
+            (lib.optional config.planet.services.mullvad.enable config.planet.services.mullvad.launch)
           ];
 
           bind = builtins.concatLists [

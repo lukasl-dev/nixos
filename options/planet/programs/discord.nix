@@ -20,6 +20,41 @@ in
       description = "Enable discord";
       example = "true";
     };
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default =
+        if hyprland.enable then
+          (pkgs.unstable.vesktop.override { }).overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
+            postFixup = (old.postFixup or "") + ''
+              wrapProgram $out/bin/vesktop \
+                --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
+                --add-flags "--disable-gpu-memory-buffer-video-frames" \
+                --add-flags "--ignore-gpu-blocklist" \
+                --add-flags "--enable-gpu-rasterization" \
+                --add-flags "--enable-zero-copy" \
+                --add-flags "--disable-gpu-sandbox"
+            '';
+          })
+        else
+          pkgs.unstable.vesktop;
+      description = "Package used for Vesktop.";
+      example = "pkgs.unstable.vesktop";
+    };
+
+    launch = lib.mkOption {
+      type = lib.types.str;
+      readOnly = true;
+      default =
+        if mullvad.enable then
+          "mullvad-exclude ${lib.getExe discord.package}"
+        else
+          lib.getExe discord.package;
+      description = "Command used to launch Vesktop.";
+      example = "mullvad-exclude vesktop";
+    };
   };
 
   config = lib.mkIf discord.enable {
@@ -28,7 +63,7 @@ in
         xdg.desktopEntries = lib.mkIf mullvad.enable {
           vesktop = {
             name = "Vesktop";
-            exec = "mullvad-exclude vesktop %U";
+            exec = "${discord.launch} %U";
             icon = "vesktop";
             comment = "Vesktop (Mullvad-excluded)";
             categories = [
@@ -43,22 +78,7 @@ in
 
         programs.vesktop = {
           enable = true;
-          package =
-            if hyprland.enable then
-              (pkgs.unstable.vesktop.override { }).overrideAttrs (old: {
-                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
-                postFixup = (old.postFixup or "") + ''
-                  wrapProgram $out/bin/vesktop \
-                    --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
-                    --add-flags "--disable-gpu-memory-buffer-video-frames" \
-                    --add-flags "--ignore-gpu-blocklist" \
-                    --add-flags "--enable-gpu-rasterization" \
-                    --add-flags "--enable-zero-copy" \
-                    --add-flags "--disable-gpu-sandbox"
-                '';
-              })
-            else
-              pkgs.unstable.vesktop;
+          package = discord.package;
 
           vencord.settings = {
             autoUpdate = true;

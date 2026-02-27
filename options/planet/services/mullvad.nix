@@ -13,16 +13,32 @@ in
 {
   options.planet.services.mullvad = {
     enable = lib.mkEnableOption "Enable mullvad vpn";
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = pkgs.unstable.mullvad-vpn;
+      description = "Package used for Mullvad VPN.";
+      example = "pkgs.unstable.mullvad-vpn";
+    };
+
+    launch = lib.mkOption {
+      type = lib.types.str;
+      readOnly = true;
+      default = lib.getExe mullvad.package;
+      description = "Command used to launch Mullvad VPN.";
+      example = "mullvad-vpn";
+    };
   };
 
   config = lib.mkIf mullvad.enable {
     services.mullvad-vpn = {
       enable = true;
-      package = lib.mkIf wm.enable pkgs.unstable.mullvad-vpn;
+      package = lib.mkIf wm.enable mullvad.package;
     };
 
     environment.systemPackages = [
-      pkgs.unstable.mullvad-vpn
+      mullvad.package
       (lib.mkIf wm.enable pkgs.unstable.mullvad-browser)
     ];
 
@@ -59,7 +75,7 @@ in
     systemd.services.tailscaled.serviceConfig.ExecStartPost =
       lib.mkIf config.services.tailscale.enable
         [
-          "-${pkgs.unstable.mullvad-vpn}/bin/mullvad split-tunnel add $MAINPID"
+          "-${mullvad.package}/bin/mullvad split-tunnel add $MAINPID"
         ];
 
     # ensure mullvad uses default dns (not content-blocking dns)
@@ -71,7 +87,7 @@ in
       requires = [ "mullvad-daemon.service" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.unstable.mullvad-vpn}/bin/mullvad dns set default";
+        ExecStart = "${mullvad.package}/bin/mullvad dns set default";
         RemainAfterExit = true;
       };
     };
