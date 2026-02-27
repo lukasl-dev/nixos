@@ -84,11 +84,11 @@ in
       default = wm.enable;
       description = "Enable helium browser";
     };
-  };
 
-  config = lib.mkIf helium.enable {
-    environment.systemPackages = [
-      (pkgs.symlinkJoin {
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = pkgs.symlinkJoin {
         name = "helium";
         paths = [ heliumPackage ];
         nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -101,7 +101,21 @@ in
             --add-flags "--enable-features=Vulkan,VulkanFromANGLE${lib.optionalString hyprland.enable ",WaylandLinuxDrmSyncobj"}"
             # --add-flags "--enable-unsafe-webgpu" \
         '';
-      })
+      };
+      description = "Package used for Helium browser.";
+      example = "pkgs.symlinkJoin { ... }";
+    };
+  };
+
+  config = lib.mkIf helium.enable {
+    environment.systemPackages = [ helium.package ];
+
+    planet.wm.hyprland.bindings = [
+      {
+        type = "exec";
+        keys = [ "B" ];
+        command = lib.getExe helium.package;
+      }
     ];
   };
 }

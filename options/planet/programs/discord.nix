@@ -58,6 +58,8 @@ in
   };
 
   config = lib.mkIf discord.enable {
+    planet.wm.hyprland.launch = [ discord.launch ];
+
     universe.hm = [
       {
         xdg.desktopEntries = lib.mkIf mullvad.enable {

@@ -6,11 +6,16 @@
 }:
 
 let
+  inherit (config.planet) wm;
   inherit (config.planet) audio;
 in
 {
   options.planet.audio = {
-    enable = lib.mkEnableOption "Enable pipewire";
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = wm.enable;
+      description = "Enable pipewire";
+    };
   };
 
   config = lib.mkIf audio.enable {
@@ -124,6 +129,19 @@ in
       pkgs.helvum
       pkgs.pwvucontrol
       pkgs.easyeffects
+    ];
+
+    planet.wm.hyprland.bindings = [
+      {
+        type = "exec";
+        keys = [ "I" ];
+        command = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+      }
+      {
+        type = "exec";
+        keys = [ "O" ];
+        command = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      }
     ];
   };
 }

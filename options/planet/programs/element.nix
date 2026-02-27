@@ -53,6 +53,8 @@ in
   };
 
   config = lib.mkIf element.enable {
+    planet.wm.hyprland.launch = [ element.launch ];
+
     universe.hm = [
       {
         programs.element-desktop = {

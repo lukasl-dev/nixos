@@ -32,6 +32,8 @@ in
   };
 
   config = lib.mkIf mullvad.enable {
+    planet.wm.hyprland.launch = [ mullvad.launch ];
+
     services.mullvad-vpn = {
       enable = true;
       package = lib.mkIf wm.enable mullvad.package;

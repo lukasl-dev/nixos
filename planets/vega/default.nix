@@ -78,8 +78,6 @@
       };
     };
 
-    audio.enable = true;
-
     programs = {
       anki.enable = true;
       uxplay.enable = true;

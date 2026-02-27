@@ -37,6 +37,8 @@ in
   };
 
   config = lib.mkIf bitwarden.enable {
+    planet.wm.hyprland.launch = [ bitwarden.launch ];
+
     environment.systemPackages = [
       bitwarden.package
       pkgs.unstable.bitwarden-cli

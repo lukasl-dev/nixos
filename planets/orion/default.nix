@@ -111,8 +111,6 @@
       };
     };
 
-    audio.enable = true;
-
     programs = {
       anki.enable = true;
     };

@@ -2,11 +2,13 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
-  wm = config.planet.wm;
+  inherit (config.planet) wm;
+  inherit (config.planet.programs) ghostty;
 in
 {
   options.planet.programs.ghostty = {
@@ -15,9 +17,17 @@ in
       default = wm.enable;
       description = "Enable ghostty";
     };
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      inherit (inputs.ghostty.packages.${pkgs.system}) default;
+      description = "Package used for Ghostty.";
+      example = "inputs.ghostty.packages.${pkgs.system}.default";
+    };
   };
 
-  config = lib.mkIf config.planet.programs.ghostty.enable {
+  config = lib.mkIf ghostty.enable {
     nix.settings = {
       extra-substituters = [
         "https://ghostty.cachix.org"
@@ -27,20 +37,20 @@ in
       ];
     };
 
-    # environment.systemPackages = [
-    #   inputs.ghostty.packages.x86_64-linux.default
-    # ];
-
-    # hjem.users.${user.name}.files.".config/ghostty/config".source = ./config;
+    planet.wm.hyprland.bindings = [
+      {
+        type = "exec";
+        keys = [ "T" ];
+        command = lib.getExe ghostty.package;
+      }
+    ];
 
     universe.hm = [
       {
-        # home.file.".config/ghostty/config".source = ./config;
-
         programs.ghostty = {
           enable = true;
 
-          package = inputs.ghostty.packages.x86_64-linux.default;
+          inherit (ghostty) package;
 
           enableBashIntegration = true;
           enableZshIntegration = true;

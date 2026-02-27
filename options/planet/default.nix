@@ -1,6 +1,5 @@
 {
   imports = [
-    ./audio
     ./caches
     ./gaming
     ./hardware
@@ -11,7 +10,7 @@
     ./virtualisation
     ./wm
 
-    # ./attic.nix
+    ./audio.nix
     ./fonts.nix
     ./name.nix
     ./stateVersion.nix

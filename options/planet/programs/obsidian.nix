@@ -8,6 +8,8 @@
 let
   inherit (config.planet) wm;
   inherit (wm) hyprland;
+
+  inherit (config.planet.programs) obsidian;
 in
 {
   options.planet.programs.obsidian = {
@@ -16,11 +18,11 @@ in
       default = wm.enable;
       description = "Enable obsidian";
     };
-  };
 
-  config = lib.mkIf config.planet.programs.obsidian.enable {
-    environment.systemPackages = [
-      (
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default =
         if hyprland.enable then
           pkgs.unstable.obsidian.overrideAttrs (old: {
             nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
@@ -35,9 +37,26 @@ in
             '';
           })
         else
-          pkgs.unstable.obsidian
-      )
-    ];
+          pkgs.unstable.obsidian;
+      description = "Package used for Obsidian.";
+      example = "pkgs.unstable.obsidian";
+    };
+  };
+
+  config = lib.mkIf obsidian.enable {
+    environment.systemPackages = [ obsidian.package ];
+
+    planet.wm.hyprland.bindings =
+      let
+        cmd = lib.getExe obsidian.package;
+      in
+      [
+        {
+          type = "exec";
+          keys = [ "P" ];
+          command = cmd;
+        }
+      ];
 
     universe.hm = [
       {
