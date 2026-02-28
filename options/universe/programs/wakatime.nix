@@ -6,25 +6,32 @@ in
 {
   environment.systemPackages = with pkgs; [ wakatime-cli ];
 
-  sops = {
-    secrets = {
-      "universe/wakatime/api_key" = {
-        owner = user.name;
-      };
+  age.secrets = {
+    "universe/wakatime/api_key" = {
+      rekeyFile = ../../../secrets/universe/wakatime/api_key.age;
+      intermediary = true;
     };
-    templates."universe/wakatime/cfg" = {
+
+    "universe/wakatime/cfg" = {
+      rekeyFile = ../../../secrets/universe/wakatime/cfg.age;
+      generator = {
+        dependencies = {
+          apiKey = config.age.secrets."universe/wakatime/api_key";
+        };
+        script =
+          { decrypt, deps, ... }:
+          ''
+            api_key="$(${decrypt} "${deps.apiKey.file}")"
+
+            cat <<EOF
+            [settings]
+            api_url = https://waka.${domain}/api
+            api_key = $api_key
+            EOF
+          '';
+      };
       path = "/home/${user.name}/.wakatime.cfg";
       owner = user.name;
-      content =
-        let
-          inherit (config.sops) placeholder;
-        in
-        # toml
-        ''
-          [settings]
-          api_url = https://waka.${domain}/api
-          api_key = ${placeholder."universe/wakatime/api_key"}
-        '';
     };
   };
 }

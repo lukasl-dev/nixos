@@ -51,9 +51,13 @@ in
       '')
     ];
 
-    sops.secrets = {
-      "universe/vpn/tu_vienna/username" = { };
-      "universe/vpn/tu_vienna/password" = { };
+    age.secrets = {
+      "universe/vpn/tu_vienna/username" = {
+        rekeyFile = ../../../secrets/universe/vpn/tu_vienna/username.age;
+      };
+      "universe/vpn/tu_vienna/password" = {
+        rekeyFile = ../../../secrets/universe/vpn/tu_vienna/password.age;
+      };
     };
 
     systemd.services.vpn-tu = {
@@ -64,11 +68,11 @@ in
         Type = "simple";
         ExecStart = pkgs.writeShellScript "tuvpn-connect" ''
           ${pkgs.openconnect}/bin/openconnect \
-            --user="$(cat ${config.sops.secrets."universe/vpn/tu_vienna/username".path})" \
+            --user="$(cat ${config.age.secrets."universe/vpn/tu_vienna/username".path})" \
             --authgroup="${cfg.group}" \
             --passwd-on-stdin \
             vpn.tuwien.ac.at \
-            < ${config.sops.secrets."universe/vpn/tu_vienna/password".path}
+            < ${config.age.secrets."universe/vpn/tu_vienna/password".path}
         '';
       };
     };

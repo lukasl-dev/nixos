@@ -9,6 +9,11 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix.url = "github:ryantm/agenix";
+    agenix-rekey = {
+      url = "github:oddlama/agenix-rekey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix.url = "github:Mic92/sops-nix";
     nvf = {
       url = "github:notashelf/nvf?ref=v0.8";
@@ -84,6 +89,12 @@
         };
     in
     {
+      agenix-rekey = inputs.agenix-rekey.configure {
+        userFlake = self;
+        nixosConfigurations = self.nixosConfigurations;
+        darwinConfigurations = { };
+      };
+
       nixosConfigurations = {
         orion = mkNixosSystem { module = ./planets/orion; };
         vega = mkNixosSystem { module = ./planets/vega; };

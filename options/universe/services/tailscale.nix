@@ -8,11 +8,13 @@
       "--ssh"
       "--accept-dns=true"
     ];
-    authKeyFile = config.sops.secrets."universe/tailscale/auth_key".path;
+    authKeyFile = config.age.secrets."universe/tailscale/auth_key".path;
   };
 
-  sops.secrets = {
-    "universe/tailscale/auth_key" = { };
+  age.secrets = {
+    "universe/tailscale/auth_key" = {
+      rekeyFile = ../../../secrets/universe/tailscale/auth_key.age;
+    };
   };
 
   networking.firewall.trustedInterfaces = lib.mkIf config.services.tailscale.enable [ "tailscale0" ];

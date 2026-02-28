@@ -1,5 +1,8 @@
 {
-  pkgs, config, ... }:
+  pkgs,
+  config,
+  ...
+}:
 
 let
   user = config.universe.user;
@@ -8,24 +11,49 @@ in
 {
   environment.systemPackages = [ pkgs.unstable.dnscontrol ];
 
-  sops.secrets = {
-    "universe/cloudflare/email" = { };
-    "universe/cloudflare/account_id" = { };
-    "universe/cloudflare/global_api_key" = { };
-  };
+  age.secrets = {
+    "universe/cloudflare/email" = {
+      rekeyFile = ../../../secrets/universe/cloudflare/email.age;
+      intermediary = true;
+    };
+    "universe/cloudflare/account_id" = {
+      rekeyFile = ../../../secrets/universe/cloudflare/account_id.age;
+      intermediary = true;
+    };
+    "universe/cloudflare/global_api_key" = {
+      rekeyFile = ../../../secrets/universe/cloudflare/global_api_key.age;
+      intermediary = true;
+    };
 
-  sops.templates."dnscontrol/creds.json" = {
-    path = "${homeDir}/nixos/dns/creds.json";
-    owner = user.name;
-    content = ''
-      {
-        "cloudflare": {
-          "TYPE": "CLOUDFLAREAPI",
-          "accountid": "${config.sops.placeholder."universe/cloudflare/account_id"}",
-          "apikey": "${config.sops.placeholder."universe/cloudflare/global_api_key"}",
-          "apiuser": "${config.sops.placeholder."universe/cloudflare/email"}"
-        }
-      }
-    '';
+    "dnscontrol/creds.json" = {
+      rekeyFile = ../../../secrets/dnscontrol/creds_json.age;
+      generator = {
+        dependencies = {
+          email = config.age.secrets."universe/cloudflare/email";
+          accountId = config.age.secrets."universe/cloudflare/account_id";
+          apiKey = config.age.secrets."universe/cloudflare/global_api_key";
+        };
+        script =
+          { decrypt, deps, ... }:
+          ''
+            email="$(${decrypt} "${deps.email.file}")"
+            account_id="$(${decrypt} "${deps.accountId.file}")"
+            api_key="$(${decrypt} "${deps.apiKey.file}")"
+
+            cat <<EOF
+            {
+              "cloudflare": {
+                "TYPE": "CLOUDFLAREAPI",
+                "accountid": "$account_id",
+                "apikey": "$api_key",
+                "apiuser": "$email"
+              }
+            }
+            EOF
+          '';
+      };
+      path = "${homeDir}/nixos/dns/creds.json";
+      owner = user.name;
+    };
   };
 }

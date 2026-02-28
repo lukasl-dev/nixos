@@ -114,7 +114,7 @@ in
       {
         type = "exec";
         keys = [ "B" ];
-        command = lib.getExe helium.package;
+        command = lib.getExe' helium.package "helium";
       }
     ];
   };

@@ -9,12 +9,12 @@ let
   inherit (config.universe) user;
   inherit (pkgs.stdenv.hostPlatform) system;
 
-  inherit (config) sops;
-
   inherit (pkgs.unstable) github-mcp-server;
 
   github-mcp-server-wrapped = pkgs.writeShellScriptBin "github-mcp-server" ''
-    source ${config.sops.templates."universe/opencode/env".path}
+    export GITHUB_PERSONAL_ACCESS_TOKEN="$(cat ${
+      config.age.secrets."universe/opencode/github_pat".path
+    })"
     exec ${github-mcp-server}/bin/github-mcp-server "$@"
   '';
 
@@ -41,27 +41,29 @@ in
 
         audit deny "${pkgs.unstable.sops}/bin/sops" x,
         audit deny "${pkgs.sops}/bin/sops" x,
-
-        audit deny "${sops.age.keyFile}" rwklm,
         audit deny "/etc/sops/age/**" rwklm,
         audit deny "/etc/sops/**" rwklm,
 
         audit deny "/home/${user.name}/nixos/dns/creds.json" rwklm,
+
         audit deny "/run/secrets/" r,
         audit deny "/run/secrets/**" r,
+
+        audit deny "/run/agenix/" r,
+        audit deny "/run/agenix/**" r,
+        audit deny "/run/agenix.d/" r,
+        audit deny "/run/agenix.d/**" r,
+
         audit deny "/home/${user.name}/nixos/secrets/**" rwklm,
         audit deny "/home/${user.name}/nixos/sops/**" rwklm,
       }
     '';
   };
 
-  sops = {
-    secrets."universe/opencode/github_pat" = { };
-    templates."universe/opencode/env" = {
-      owner = config.universe.user.name;
-      content = ''
-        export GITHUB_PERSONAL_ACCESS_TOKEN="${config.sops.placeholder."universe/opencode/github_pat"}"
-      '';
+  age.secrets = {
+    "universe/opencode/github_pat" = {
+      rekeyFile = ../../../secrets/universe/opencode/github_pat.age;
+      owner = user.name;
     };
   };
 
