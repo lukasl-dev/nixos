@@ -147,7 +147,6 @@ in
           dispatcher = "movetoworkspace";
           argument = "special";
         }
-
         {
           type = "dispatch";
           mods = windowMods;
@@ -160,7 +159,6 @@ in
           keys = [ "V" ];
           dispatcher = "centerwindow";
         }
-
         {
           type = "dispatch";
           mods = windowMods;
@@ -179,14 +177,12 @@ in
           keys = [ "F" ];
           dispatcher = "pseudo";
         }
-
         {
           type = "dispatch";
           mods = windowMods;
           keys = [ "W" ];
           dispatcher = "killactive";
         }
-
         {
           type = "dispatch";
           mods = windowMods;
@@ -229,7 +225,6 @@ in
           dispatcher = "movefocus";
           argument = "d";
         }
-
         {
           type = "dispatch";
           mods = windowMods;
@@ -300,7 +295,6 @@ in
           dispatcher = "workspace";
           argument = "10";
         }
-
         {
           type = "dispatch";
           mods = windowShiftMods;
@@ -371,7 +365,6 @@ in
           dispatcher = "movetoworkspace";
           argument = "10";
         }
-
         {
           type = "dispatch";
           mods = windowMods;
@@ -444,57 +437,6 @@ in
               throw "Unsupported Hyprland binding type: ${binding.type}"
           ) binding.mods
         ) config.planet.wm.hyprland.bindings;
-
-        # bind = builtins.concatLists [
-        #   [
-        #     ''${mainMod}, S, exec, grim -g "$(slurp -d)" - | wl-copy''
-        #
-        #     "${mainMod}, Q, togglespecialworkspace,"
-        #     "${mainMod} SHIFT, Q, movetoworkspace, special"
-        #   ]
-        #
-        #   (windowBinding ", V, togglefloating")
-        #   (windowBinding ", V, centerwindow")
-        #
-        #   (windowBinding ", R, togglesplit")
-        #   (windowBinding ", N, swapsplit")
-        #   (windowBinding ", F, pseudo")
-        #
-        #   (windowBinding ", W, killactive,")
-        #
-        #   (windowBinding ", M, fullscreen, 1")
-        #   (windowBinding "SHIFT, M, fullscreen,")
-        #
-        #   (windowBinding ", h, movefocus, l")
-        #   (windowBinding ", l, movefocus, r")
-        #   (windowBinding ", k, movefocus, u")
-        #   (windowBinding ", j, movefocus, d")
-        #
-        #   (windowBinding ", 1, workspace, 1")
-        #   (windowBinding ", 2, workspace, 2")
-        #   (windowBinding ", 3, workspace, 3")
-        #   (windowBinding ", 4, workspace, 4")
-        #   (windowBinding ", 5, workspace, 5")
-        #   (windowBinding ", 6, workspace, 6")
-        #   (windowBinding ", 7, workspace, 7")
-        #   (windowBinding ", 8, workspace, 8")
-        #   (windowBinding ", 9, workspace, 9")
-        #   (windowBinding ", 0, workspace, 10")
-        #
-        #   (windowBinding "SHIFT, 1, movetoworkspace, 1")
-        #   (windowBinding "SHIFT, 2, movetoworkspace, 2")
-        #   (windowBinding "SHIFT, 3, movetoworkspace, 3")
-        #   (windowBinding "SHIFT, 4, movetoworkspace, 4")
-        #   (windowBinding "SHIFT, 5, movetoworkspace, 5")
-        #   (windowBinding "SHIFT, 6, movetoworkspace, 6")
-        #   (windowBinding "SHIFT, 7, movetoworkspace, 7")
-        #   (windowBinding "SHIFT, 8, movetoworkspace, 8")
-        #   (windowBinding "SHIFT, 9, movetoworkspace, 9")
-        #   (windowBinding "SHIFT, 0, movetoworkspace, 10")
-        #
-        #   (windowBinding ", mouse_down, workspace, e+1")
-        #   (windowBinding ", mouse_up, workspace, e-1")
-        # ];
 
         bindm = [
           "SUPER, mouse:272, movewindow"

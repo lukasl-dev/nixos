@@ -15,7 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.53.3";
+      url = "github:hyprwm/Hyprland/v0.54.0";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin.url = "github:catppuccin/nix/release-25.11";
@@ -109,6 +109,24 @@
                 rinputs = inputs;
               };
             }).neovim;
+        }
+      );
+
+      devShells = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            packages =
+              with pkgs;
+              [
+                just
+                jq
+              ]
+              ++ (import ./packages/scripts { inherit pkgs; });
+          };
         }
       );
     };
