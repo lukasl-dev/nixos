@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  pkgs,
   ...
 }:
 
@@ -15,7 +14,7 @@ in
     inputs.agenix-rekey.nixosModules.default
   ];
 
-  fileSystems."/home/${user.name}/.ssh".neededForBoot = true;
+  # fileSystems."/home/${user.name}/.ssh".neededForBoot = true;
 
   age = {
     # TODO: don't use the same identity for decryption for all hosts
