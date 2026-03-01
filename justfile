@@ -12,3 +12,7 @@ cache:
 
 forge-diff from to:
     @echo https://forge.lukasl.dev/lukas/nixos/compare/{{ from }}...{{ to }}
+
+agenix:
+    agenix generate -a
+    agenix rekey -a

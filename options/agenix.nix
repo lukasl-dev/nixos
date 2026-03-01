@@ -8,17 +8,11 @@
 let
   inherit (config.universe) user;
   inherit (config.planet) name;
-
-  inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
   imports = [
     inputs.agenix.nixosModules.default
     inputs.agenix-rekey.nixosModules.default
-  ];
-
-  environment.systemPackages = [
-    inputs.agenix-rekey.packages.${system}.default
   ];
 
   fileSystems."/home/${user.name}/.ssh".neededForBoot = true;

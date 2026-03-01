@@ -135,6 +135,10 @@
               [
                 just
                 jq
+                sops
+              ]
+              ++ [
+                inputs.agenix-rekey.packages.${system}.default
               ]
               ++ (import ./packages/scripts { inherit pkgs; });
           };
