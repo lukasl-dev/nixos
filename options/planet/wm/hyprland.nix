@@ -392,9 +392,7 @@ in
       withUWSM = true;
 
       settings = {
-        monitor = config.planet.wm.hyprland.monitors ++ [
-          "Unknown-1,disable"
-        ];
+        monitor = config.planet.wm.hyprland.monitors ++ [ "Unknown-1,disable" ];
 
         "$mauve" = "rgb(cba6f7)";
         "$lavender" = "rgb(b4befe)";
