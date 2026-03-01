@@ -163,13 +163,15 @@ in
           type = "dispatch";
           mods = windowMods;
           keys = [ "R" ];
-          dispatcher = "togglesplit";
+          dispatcher = "layoutmsg";
+          argument = "toggle_split";
         }
         {
           type = "dispatch";
           mods = windowMods;
           keys = [ "N" ];
-          dispatcher = "swapsplit";
+          dispatcher = "layoutmsg";
+          argument = "swap_split";
         }
         {
           type = "dispatch";

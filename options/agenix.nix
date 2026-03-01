@@ -21,6 +21,8 @@ in
     inputs.agenix-rekey.packages.${system}.default
   ];
 
+  fileSystems."/home/${user.name}/.ssh".neededForBoot = true;
+
   age = {
     # TODO: don't use the same identity for decryption for all hosts
     identityPaths = [ "/home/${user.name}/.ssh/id_ed25519" ];
