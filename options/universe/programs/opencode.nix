@@ -68,6 +68,7 @@ in
       rekeyFile = ../../../secrets/universe/opencode/github_pat.age;
       owner = user.name;
       path = "/home/${user.name}/.config/opencode/github_pat";
+      symlink = false;
     };
   };
 
