@@ -1,16 +1,19 @@
 {
-  pkgs,
   config,
+  pkgs,
   lib,
   ...
 }:
 
+let
+  inherit (config.planet.dev) python;
+in
 {
-  options.planet.development.python = {
+  options.planet.dev.python = {
     enable = lib.mkEnableOption "Enable python";
   };
 
-  config = lib.mkIf config.planet.development.python.enable {
+  config = lib.mkIf python.enable {
     environment.systemPackages = with pkgs.unstable; [
       python3
       uv

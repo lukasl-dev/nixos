@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  inherit (config.planet) wm;
+in
 {
   options.planet.fonts = {
     packages = lib.mkOption {
@@ -15,7 +18,7 @@
     };
   };
 
-  config = {
+  config = lib.mkIf wm.enable {
     fonts = {
       enableDefaultPackages = true;
 

@@ -99,7 +99,7 @@
       r2modman.enable = true;
     };
 
-    development = {
+    dev = {
       lean.enable = true;
       python.enable = true;
       R.enable = true;

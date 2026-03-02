@@ -1,10 +1,10 @@
 {
   imports = [
     ./caches
+    ./dev
     ./gaming
     ./hardware
     ./networking
-    ./programming
     ./programs
     ./services
     ./virtualisation

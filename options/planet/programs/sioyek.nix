@@ -24,6 +24,7 @@ in
     universe.hm = [
       {
         # catppuccin.sioyek.enable = false;
+        # TODO: disable on headless devices
         programs.sioyek = {
           enable = true;
           package = pkgs.symlinkJoin {

@@ -5,12 +5,15 @@
   ...
 }:
 
+let
+  inherit (config.planet.dev) lean;
+in
 {
-  options.planet.development.lean = {
+  options.planet.dev.lean = {
     enable = lib.mkEnableOption "Enable lean";
   };
 
-  config = lib.mkIf config.planet.development.lean.enable {
+  config = lib.mkIf lean.enable {
     environment.systemPackages = with pkgs.unstable; [
       # lean4
       elan

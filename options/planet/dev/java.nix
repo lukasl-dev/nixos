@@ -1,12 +1,19 @@
 {
-  pkgs, lib, ... }:
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
+let
+  inherit (config.planet.dev) java;
+in
 {
-  options.planet.development.java = {
+  options.planet.dev.java = {
     enable = lib.mkEnableOption "Enable java";
   };
 
-  config = {
+  config = lib.mkIf java.enable {
     programs.java = {
       enable = true;
       package = pkgs.unstable.zulu21;

@@ -1,12 +1,19 @@
 {
-  pkgs, lib, ... }:
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
+let
+  inherit (config.planet.dev) tex;
+in
 {
-  options.planet.development.tex = {
+  options.planet.dev.tex = {
     enable = lib.mkEnableOption "Enable tex";
   };
 
-  config = {
+  config = lib.mkIf tex.enable {
     environment.systemPackages = with pkgs.unstable; [
       texliveFull
       graphviz

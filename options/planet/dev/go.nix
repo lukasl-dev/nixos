@@ -1,12 +1,19 @@
 {
-  pkgs, lib, ... }:
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
+let
+  inherit (config.planet.dev) go;
+in
 {
-  options.planet.development.go = {
+  options.planet.dev.go = {
     enable = lib.mkEnableOption "Enable go";
   };
 
-  config = {
+  config = lib.mkIf go.enable {
     environment.systemPackages = with pkgs.unstable; [
       delve
       gopls
