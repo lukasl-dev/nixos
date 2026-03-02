@@ -18,10 +18,10 @@ in
 
   age = {
     # TODO: don't use the same identity for decryption for all hosts
-    identityPaths = [ "/home/${user.name}/.ssh/id_ed25519" ];
+    identityPaths = [ "/etc/agenix/identity" ];
 
     rekey = {
-      masterIdentities = [ "/home/${user.name}/.ssh/id_ed25519" ];
+      masterIdentities = [ "/etc/agenix/identity" ];
       hostPubkey = builtins.readFile ./universe/ssh/id_ed25519.pub; # TODO: make host-specific
       storageMode = "local";
       localStorageDir = "${toString ../secrets/_}/${name}";

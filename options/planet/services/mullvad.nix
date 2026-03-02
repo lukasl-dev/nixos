@@ -82,16 +82,18 @@ in
 
     # ensure mullvad uses default dns (not content-blocking dns)
     # content-blocking dns uses 100.64.0.x which conflicts with tailscale's cgnat range
-    systemd.services.mullvad-dns-fix = lib.mkIf config.services.tailscale.enable {
-      description = "Configure Mullvad DNS for Tailscale compatibility";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "mullvad-daemon.service" ];
-      requires = [ "mullvad-daemon.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${mullvad.package}/bin/mullvad dns set default";
-        RemainAfterExit = true;
-      };
-    };
+    # systemd.services.mullvad-dns-fix = lib.mkIf config.services.tailscale.enable {
+    #   description = "Configure Mullvad DNS for Tailscale compatibility";
+    #   wantedBy = [ "multi-user.target" ];
+    #   after = [ "mullvad-daemon.service" ];
+    #   requires = [ "mullvad-daemon.service" ];
+    #   serviceConfig = {
+    #     Type = "oneshot";
+    #     ExecStartPre = "${mullvad.package}/bin/mullvad status";
+    #     ExecStart = "${mullvad.package}/bin/mullvad dns set default";
+    #     RemainAfterExit = true;
+    #     TimeoutStartSec = 30;
+    #   };
+    # };
   };
 }

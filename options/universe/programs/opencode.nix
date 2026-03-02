@@ -44,6 +44,9 @@ in
         audit deny "/etc/sops/age/**" rwklm,
         audit deny "/etc/sops/**" rwklm,
 
+        audit deny "/etc/agenix/identity" rwklm,
+        audit deny "/etc/agenix/**" rwklm,
+
         audit deny "/home/${user.name}/nixos/dns/creds.json" rwklm,
 
         audit deny "/run/secrets/" r,
