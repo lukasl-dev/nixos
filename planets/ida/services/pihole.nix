@@ -6,6 +6,10 @@ let
   webPort = 2718;
 in
 {
+  services.resolved.extraConfig = ''
+    DNSStubListener=no
+  '';
+
   services.pihole-ftl = {
     enable = true;
 
