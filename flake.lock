@@ -193,11 +193,11 @@
         "zls": "zls"
       },
       "locked": {
-        "lastModified": 1759937750,
-        "narHash": "sha256-vIDc7VafVHI0J7tC7I9Zrsf4vsrAo60p5v4tEZpI0vk=",
+        "lastModified": 1772576136,
+        "narHash": "sha256-JRo6ZAF7nEj/TzG+zybIRSfX0FV3NitY1MPgCX2W4pM=",
         "owner": "lukasl-dev",
         "repo": "capTUre",
-        "rev": "ad2df6361a19a0b6910cef355b1861076a6349fa",
+        "rev": "d8653901ad26d12b3891fe4f96047f6ee198aa0a",
         "type": "github"
       },
       "original": {
