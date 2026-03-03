@@ -17,6 +17,15 @@ in
         "8.8.4.4"
       ];
     };
+
+    lists = [
+      {
+        url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
+        type = "block";
+        enabled = true;
+        description = "hagezi blocklist";
+      }
+    ];
   };
 
   services.pihole-web = {
