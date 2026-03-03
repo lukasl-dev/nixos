@@ -16,10 +16,7 @@ in
     certs.${domain} = {
       inherit domain;
       extraDomainNames = [ "*.${domain}" ];
-      reloadServices = [
-        "traefik.service"
-        "maddy.service"
-      ];
+      reloadServices = [ "traefik.service" ];
     };
   };
 

@@ -1,9 +1,11 @@
 {
   imports = [
+    ./acme.nix
     ./boot.nix
     ./hardware-configuration.nix
     ./networking.nix
     ./sd-image.nix
+    ./traefik.nix
   ];
 
   # Match the working Pi4 example: let the initrd module closure tolerate

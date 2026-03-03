@@ -15,6 +15,7 @@ D(
 
   // planets
   A("pollux.planets", "185.245.61.227"),
+  CNAME("ida.planets", "ida.llama-court.ts.net."),
 
   // services
   CNAME("anki", "pollux.planets.lukasl.dev."),
