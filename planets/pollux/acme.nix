@@ -10,6 +10,7 @@ in
       email = "contact@${domain}";
       dnsProvider = "cloudflare";
       environmentFile = config.sops.templates."acme/env".path;
+      dnsResolver = "1.1.1.1:53";
     };
 
     # TODO: remove this
