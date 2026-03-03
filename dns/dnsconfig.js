@@ -50,6 +50,7 @@ D(
 
   // ida
   CNAME("proxy.ida", "ida.lukasl.dev."),
+  CNAME("dns", "ida.lukasl.dev."),
 
   // iconolatry
   CNAME("icons", "cname.vercel-dns.com."),

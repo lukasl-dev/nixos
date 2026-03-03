@@ -1,5 +1,7 @@
 {
   imports = [
+    ./services
+
     ./acme.nix
     ./boot.nix
     ./hardware-configuration.nix
