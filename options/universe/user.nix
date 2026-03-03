@@ -58,13 +58,17 @@ in
       };
     };
 
-    # universe.hm = [
-    #   {
-    #     home = {
-    #       username = user.name;
-    #       homeDirectory = "/home/${user.name}";
-    #     };
-    #   }
-    # ];
+    # ensure user-owned xdg base directories exist before home manager and
+    # secret materialisation touch files below them
+    systemd.tmpfiles.rules = [
+      "d /home/${user.name}/.config 0700 ${user.name} users - -"
+      "d /home/${user.name}/.local 0700 ${user.name} users - -"
+      "d /home/${user.name}/.local/cache 0700 ${user.name} users - -"
+
+      # fix ownership/mode if these directories were previously created by root
+      "z /home/${user.name}/.config 0700 ${user.name} users - -"
+      "z /home/${user.name}/.local 0700 ${user.name} users - -"
+      "z /home/${user.name}/.local/cache 0700 ${user.name} users - -"
+    ];
   };
 }
