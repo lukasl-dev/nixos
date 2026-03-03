@@ -44,13 +44,6 @@ in
         keyFile = "${acmeDir}/key.pem";
       }
     ];
-    http.routers = {
-      dashboard = {
-        rule = "Host(`proxy.${meta.domain}`)";
-        entryPoints = [ "websecure" ];
-        service = "api@internal";
-      };
-    };
   };
 
   services.resolved.extraConfig = "DNSStubListenerExtra=${meta.address.host}";
