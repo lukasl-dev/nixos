@@ -2,7 +2,7 @@
 
 let
   inherit (config.universe) domain;
-  host = "dns.${domain}";
+  host = "hole.${domain}";
   webPort = 2718;
 in
 {
@@ -14,12 +14,15 @@ in
     enable = true;
 
     settings = {
-      dns.upstreams = [
-        "1.1.1.1"
-        "1.0.0.1"
-        "8.8.8.8"
-        "8.8.4.4"
-      ];
+      dns = {
+        listeningMode = "ALL";
+        upstreams = [
+          "1.1.1.1"
+          "1.0.0.1"
+          "8.8.8.8"
+          "8.8.4.4"
+        ];
+      };
     };
 
     lists = [
