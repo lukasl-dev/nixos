@@ -4,7 +4,7 @@
   imports = [ inputs.capTUre.nixosModules.capTUre ];
 
   services.capTUre = {
-    enable = false;
+    enable = true;
     weekly = {
       tu_09_ea_quer = {
         weekday = "Tuesday";
