@@ -161,17 +161,37 @@ in
         }
         {
           type = "dispatch";
-          mods = windowMods;
-          keys = [ "R" ];
-          dispatcher = "layoutmsg";
-          argument = "toggle_split";
+          mods = windowShiftMods;
+          keys = [ "H" ];
+          dispatcher = "swapwindow";
+          argument = "l";
+        }
+        {
+          type = "dispatch";
+          mods = windowShiftMods;
+          keys = [ "J" ];
+          dispatcher = "swapwindow";
+          argument = "d";
+        }
+        {
+          type = "dispatch";
+          mods = windowShiftMods;
+          keys = [ "K" ];
+          dispatcher = "swapwindow";
+          argument = "u";
+        }
+        {
+          type = "dispatch";
+          mods = windowShiftMods;
+          keys = [ "L" ];
+          dispatcher = "swapwindow";
+          argument = "r";
         }
         {
           type = "dispatch";
           mods = windowMods;
           keys = [ "N" ];
-          dispatcher = "layoutmsg";
-          argument = "swap_split";
+          dispatcher = "swapnext";
         }
         {
           type = "dispatch";
