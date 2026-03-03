@@ -15,7 +15,10 @@ in
     # TODO: remove this
     certs.${domain} = {
       inherit domain;
-      extraDomainNames = [ "*.${domain}" ];
+      extraDomainNames = [
+        "*.${domain}"
+        "*.pollux.${domain}"
+      ];
       reloadServices = [
         "traefik.service"
         "maddy.service"

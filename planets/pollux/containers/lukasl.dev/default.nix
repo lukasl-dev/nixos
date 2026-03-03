@@ -37,15 +37,6 @@ in
     ];
   };
 
-  services.traefik.dynamicConfigOptions = {
-    tls.certificates = [
-      {
-        certFile = "${acmeDir}/fullchain.pem";
-        keyFile = "${acmeDir}/key.pem";
-      }
-    ];
-  };
-
   services.resolved.extraConfig = "DNSStubListenerExtra=${meta.address.host}";
 
   networking.firewall.interfaces."ve-${meta.container}" = {

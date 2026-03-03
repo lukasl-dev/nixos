@@ -2,6 +2,7 @@
 
 let
   inherit (config.universe) domain;
+  acmeDir = config.security.acme.certs.${domain}.directory;
   httpPort = 80;
   httpsPort = 443;
 in
@@ -40,6 +41,13 @@ in
       service = "api@internal";
       tls = { };
     };
+
+    dynamicConfigOptions.tls.certificates = [
+      {
+        certFile = "${acmeDir}/fullchain.pem";
+        keyFile = "${acmeDir}/key.pem";
+      }
+    ];
   };
 
   users.users.traefik.extraGroups = [ "acme" ];
