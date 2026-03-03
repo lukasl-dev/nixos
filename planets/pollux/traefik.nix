@@ -1,4 +1,7 @@
+{ config, ... }:
+
 let
+  inherit (config.universe) domain;
   httpPort = 80;
   httpsPort = 443;
 in
@@ -29,6 +32,13 @@ in
           };
         };
       };
+    };
+
+    dynamicConfigOptions.http.routers.dashboard = {
+      rule = "Host(`proxy.pollux.${domain}`)";
+      entryPoints = [ "websecure" ];
+      service = "api@internal";
+      tls = { };
     };
   };
 

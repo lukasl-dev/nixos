@@ -44,7 +44,7 @@ in
     (pkgs.writeShellApplication {
       name = "ssh-pollux";
       text = ''
-        ${lib.optionalString config.planet.services.mullvad.enable "mullvad-exclude "}ssh pollux.planets.${domain}
+        ${lib.optionalString config.planet.services.mullvad.enable "mullvad-exclude "}ssh pollux.${domain}
       '';
     })
   ];
