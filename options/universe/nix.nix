@@ -10,6 +10,8 @@ let
   inherit (config.planet.hardware) nvidia;
 in
 {
+  documentation.nixos.enable = false;
+
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -33,7 +35,7 @@ in
       overlays = [
         inputs.nur.overlays.default
         inputs.HyprQuickFrame.overlays.default
-        (final: prev: {
+        (final: _prev: {
           unstable = import inputs.nixpkgs-unstable {
             inherit (final.stdenv.hostPlatform) system;
             inherit config;

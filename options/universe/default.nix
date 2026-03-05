@@ -6,17 +6,22 @@
     ./shells
     ./ssh
 
+    ./agenix.nix
     ./apparmor.nix
     ./appimage.nix
     ./attic.nix
+    ./catppuccin.nix
     ./devenv.nix
     ./domain.nix
     ./i18n.nix
+    ./home-manager.nix
     ./networking.nix
     ./nh.nix
+    ./nix-ld.nix
     ./nix.nix
     ./packages.nix
     ./session-path.nix
+    ./sops.nix
     ./udisks2.nix
     ./user.nix
     ./wine.nix
