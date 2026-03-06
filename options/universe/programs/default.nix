@@ -4,6 +4,7 @@
     ./oh-my-posh
     ./tmux
 
+    ./ast-grep.nix
     ./bat.nix
     ./btop.nix
     ./delta.nix
