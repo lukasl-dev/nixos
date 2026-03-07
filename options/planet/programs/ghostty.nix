@@ -7,6 +7,8 @@
 }:
 
 let
+  inherit (pkgs.stdenv.hostPlatform) system;
+
   inherit (config.planet) wm;
   inherit (config.planet.programs) ghostty;
 in
@@ -21,9 +23,9 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      inherit (inputs.ghostty.packages.${pkgs.system}) default;
+      inherit (inputs.ghostty.packages.${system}) default;
       description = "Package used for Ghostty.";
-      example = "inputs.ghostty.packages.${pkgs.system}.default";
+      example = "inputs.ghostty.packages.${system}.default";
     };
   };
 

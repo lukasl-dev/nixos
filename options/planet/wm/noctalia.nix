@@ -7,6 +7,8 @@
 }:
 
 let
+  inherit (pkgs.stdenv.hostPlatform) system;
+
   inherit (config.planet.wm) noctalia;
 in
 {
@@ -14,9 +16,9 @@ in
     planet.wm.noctalia.package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      inherit (inputs.noctalia.packages.${pkgs.system}) default;
+      inherit (inputs.noctalia.packages.${system}) default;
       description = "Noctalia package";
-      example = "inputs.noctalia.packages.${pkgs.system}.default";
+      example = "inputs.noctalia.packages.${system}.default";
     };
   };
 
@@ -33,11 +35,6 @@ in
             "Backspace"
           ];
           command = "${cmd} ipc call launcher toggle";
-        }
-        {
-          type = "exec";
-          keys = [ "C" ];
-          command = "${cmd} ipc call launcher clipboard";
         }
         {
           type = "exec";
