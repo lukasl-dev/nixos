@@ -45,6 +45,12 @@ in
         keys = [ "T" ];
         command = lib.getExe ghostty.package;
       }
+      {
+        type = "exec";
+        mods = [ "SUPER SHIFT" ];
+        keys = [ "T" ];
+        command = "${lib.getExe ghostty.package} --command=zsh";
+      }
     ];
 
     universe.hm = [
