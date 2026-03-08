@@ -40,7 +40,7 @@ in
             EOF
           '';
       };
-      owner = "vikunja";
+
     };
   };
 
