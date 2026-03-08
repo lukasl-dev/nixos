@@ -59,6 +59,7 @@ in
         settings = {
           service = {
             timezone = "Europe/Berlin";
+            enableregistration = false;
           };
           mailer = {
             enabled = true;
