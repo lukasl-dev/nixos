@@ -18,6 +18,30 @@
         duration = 2 * 60;
         channel = "ei8";
       };
+      we_13_is_gm1 = {
+        weekday = "Wednesday";
+        start = "13:00";
+        duration = 2 * 60;
+        channel = "gm1";
+      };
+      th_14_is_gm1 = {
+        weekday = "Thursday";
+        start = "14:00";
+        duration = 2 * 60;
+        channel = "gm1";
+      };
+      tu_17_iq_ei4 = {
+        weekday = "Tuesday";
+        start = "17:00";
+        duration = 2 * 60;
+        channel = "ei4";
+      };
+      we_17_iq_ei3 = {
+        weekday = "Wednesday";
+        start = "17:00";
+        duration = 2 * 60;
+        channel = "ei3";
+      };
     };
     dates = {
       tu_2026_03_03_09_first_lecture = {
