@@ -1,3 +1,6 @@
 {
-  imports = [ ./pihole.nix ];
+  imports = [
+    ./pihole.nix
+    ./uptime-kuma.nix
+  ];
 }
