@@ -11,14 +11,14 @@ let
 in
 {
   age.secrets = {
-    ${secret "jwt"} = {
-      rekeyFile = ../../../../secrets/${secret "jwt"}.age;
-      generator.script = "alnum";
-    };
-
     "universe/mail/bot" = {
       rekeyFile = ../../../../secrets/universe/mail/bot.age;
       intermediary = true;
+    };
+
+    ${secret "jwt"} = {
+      rekeyFile = ../../../../secrets/${secret "jwt"}.age;
+      generator.script = "alnum";
     };
 
     ${secret "env"} = {
@@ -40,7 +40,7 @@ in
             EOF
           '';
       };
-      owner = config.services.vikunja.user;
+      owner = "vikunja";
     };
   };
 
@@ -49,7 +49,7 @@ in
       services.vikunja = {
         enable = true;
 
-        port = port;
+        inherit port;
         frontendHostname = host;
         frontendScheme = "https";
 
