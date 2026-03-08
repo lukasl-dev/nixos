@@ -16,8 +16,9 @@ lib.mkIf config.planet.wm.enable {
             "file:///home/${user.name}/Documents"
             "file:///home/${user.name}/Pictures"
             "file:///home/${user.name}/Music"
-            "file:///home/${user.name}/r"
+            "file:///home/${user.name}/nixos"
             "file:///home/${user.name}/notes"
+            "file:///home/${user.name}/r"
           ];
           extraConfig = {
             gtk-application-prefer-dark-theme = 1;

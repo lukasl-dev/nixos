@@ -1,3 +1,8 @@
+{ inputs, pkgs, ... }:
+
+let
+  inherit (pkgs.stdenv.hostPlatform) system;
+in
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -124,4 +129,6 @@
       };
     };
   };
+
+  environment.systemPackages = [ inputs.capTUre.packages.${system}.default ];
 }

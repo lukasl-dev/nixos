@@ -743,8 +743,6 @@ in
             fi
           '';
         })
-
-        inputs.capTUre.packages.${system}.default
       ];
     };
 
