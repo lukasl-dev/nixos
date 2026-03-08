@@ -35,6 +35,7 @@ D(
   CNAME("auth", "pollux.lukasl.dev."),
   CNAME("vault", "pollux.lukasl.dev."),
   CNAME("rss", "pollux.lukasl.dev."),
+  CNAME("todo", "pollux.lukasl.dev."),
   CNAME("kitchen", "pollux.lukasl.dev."),
   CNAME("media", "pollux.lukasl.dev."),
   CNAME("metrics", "pollux.lukasl.dev."),
