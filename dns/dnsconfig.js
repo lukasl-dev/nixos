@@ -24,6 +24,7 @@ D(
   CNAME("books", "pollux.lukasl.dev."),
   CNAME("blog", "pollux.lukasl.dev."),
   CNAME("cache", "pollux.lukasl.dev."),
+  CNAME("cal", "pollux.lukasl.dev."),
   CNAME("call", "pollux.lukasl.dev."),
   CNAME("ci", "pollux.lukasl.dev."),
   CNAME("cloud", "pollux.lukasl.dev."),

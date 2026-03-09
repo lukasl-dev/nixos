@@ -14,6 +14,7 @@ in
   imports = [
     ./anki.nix
     ./box.nix
+    ./cal.nix
     ./cloud.nix
     ./fin.nix
     # ./forge.nix
