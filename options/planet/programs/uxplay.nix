@@ -14,6 +14,12 @@ in
   };
 
   config = lib.mkIf uxplay.enable {
+    assertions = [
+      {
+        assertion = config.planet.networking.dns.discoverable;
+        message = "UxPlay requires planet.networking.dns.discoverable to be true for device discovery";
+      }
+    ];
 
     environment.systemPackages = [
       pkgs.unstable.uxplay
@@ -26,45 +32,13 @@ in
               kill "$(cat "$PID_FILE")"
               rm "$PID_FILE"
           else
+              sudo nixos-firewall-tool open tcp 4000
+              sudo nixos-firewall-tool open udp 5000
               uxplay -p tcp 4000 -p udp 5000 &> /dev/null & echo $! > "$PID_FILE"
           fi
         '';
       })
 
     ];
-
-    networking.firewall = {
-      allowedTCPPorts = [
-        7000
-        7100
-
-        4000
-        4001
-        4002
-      ];
-
-      allowedUDPPorts = [
-        5000
-        5001
-        5002
-
-        6000
-        6001
-        7011
-        5353
-      ];
-    };
-
-    # TODO: remove
-    # services.avahi = {
-    #   enable = true;
-    #   nssmdns4 = true;
-    #   publish = {
-    #     enable = true;
-    #     addresses = true;
-    #     workstation = true;
-    #     userServices = true;
-    #   };
-    # };
   };
 }
