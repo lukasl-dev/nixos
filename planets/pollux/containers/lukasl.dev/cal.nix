@@ -50,13 +50,6 @@ in
             htpasswd_encryption = "bcrypt";
           };
 
-          storage = {
-            filesystem_folder = "/var/lib/radicale/collections";
-          };
-
-          web = {
-            type = "internal";
-          };
         };
       };
 
