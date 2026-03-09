@@ -23,6 +23,7 @@ in
     ./metrics.nix
     ./ntfy.nix
     ./pdf.nix
+    ./term.nix
     ./todo.nix
     ./waka.nix
     ./yam.nix

@@ -32,6 +32,10 @@ in
             idleTimeout = "600s"; # keep idle conns longer
           };
         };
+
+        uptermd = {
+          address = ":2222";
+        };
       };
     };
 

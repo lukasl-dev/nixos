@@ -48,6 +48,7 @@ D(
   CNAME("waka", "pollux.lukasl.dev."),
   CNAME("yam", "pollux.lukasl.dev."),
   CNAME("rspamd", "pollux.lukasl.dev."),
+  CNAME("term", "pollux.lukasl.dev."),
 
   // ida
   CNAME("proxy.ida", "ida.lukasl.dev."),
