@@ -46,12 +46,11 @@ in
 
           auth = {
             type = "htpasswd";
-            htpasswd_filename = "/var/lib/radicale/collections/.htpasswd";
+            htpasswd_filename = "/var/lib/radicale/.htpasswd";
             htpasswd_encryption = "bcrypt";
           };
 
           storage = {
-            type = "filesystem";
             filesystem_folder = "/var/lib/radicale/collections";
           };
 
@@ -61,11 +60,11 @@ in
         };
       };
 
-      systemd.services.radicale.preStart = ''
-        install -m 600 -o radicale -g radicale ${
+      systemd.tmpfiles.rules = [
+        "C /var/lib/radicale/.htpasswd 0600 radicale radicale - ${
           config.age.secrets.${secret "htpasswd"}.path
-        } /var/lib/radicale/collections/.htpasswd
-      '';
+        }"
+      ];
 
       networking.firewall.allowedTCPPorts = [ port ];
     }
