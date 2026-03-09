@@ -46,7 +46,7 @@ in
 
           auth = {
             type = "htpasswd";
-            htpasswd_filename = config.age.secrets.${secret "htpasswd"}.path;
+            htpasswd_filename = "/var/lib/radicale/htpasswd";
             htpasswd_encryption = "bcrypt";
           };
 
@@ -60,6 +60,12 @@ in
           };
         };
       };
+
+      systemd.services.radicale.preStart = ''
+        install -m 600 -o radicale -g radicale ${
+          config.age.secrets.${secret "htpasswd"}.path
+        } /var/lib/radicale/htpasswd
+      '';
 
       networking.firewall.allowedTCPPorts = [ port ];
     }

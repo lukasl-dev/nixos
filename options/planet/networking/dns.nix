@@ -53,6 +53,7 @@ in
     services.avahi = lib.mkIf dns.discoverable {
       enable = true;
       nssmdns4 = true;
+      openFirewall = true;
       publish = {
         enable = true;
         addresses = true;

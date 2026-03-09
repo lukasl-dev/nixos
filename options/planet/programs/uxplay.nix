@@ -33,7 +33,11 @@ in
               rm "$PID_FILE"
           else
               sudo nixos-firewall-tool open tcp 4000
+              sudo nixos-firewall-tool open tcp 4001
+              sudo nixos-firewall-tool open tcp 4002
               sudo nixos-firewall-tool open udp 5000
+              sudo nixos-firewall-tool open udp 5001
+              sudo nixos-firewall-tool open udp 5002
               uxplay -p tcp 4000 -p udp 5000 &> /dev/null & echo $! > "$PID_FILE"
           fi
         '';
