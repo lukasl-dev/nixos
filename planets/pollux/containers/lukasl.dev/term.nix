@@ -1,5 +1,3 @@
-{ lib, ... }:
-
 let
   meta = import ./meta.nix;
 
@@ -23,7 +21,6 @@ in
           "--ssh-proxy-protocol"
         ];
       };
-
     }
   ];
 
@@ -44,6 +41,7 @@ in
           };
         };
         routers.${name} = {
+          rule = "HostSNI(`*`)";
           entryPoints = [ "uptermd" ];
           service = name;
         };
@@ -68,6 +66,4 @@ in
         };
       };
   };
-
-  networking.firewall.allowedTCPPorts = lib.mkAfter [ 2222 ];
 }
