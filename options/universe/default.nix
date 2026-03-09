@@ -23,6 +23,7 @@
     ./session-path.nix
     ./sops.nix
     ./udisks2.nix
+    ./upterm.nix
     ./user.nix
     ./wine.nix
   ];

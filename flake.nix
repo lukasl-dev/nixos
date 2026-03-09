@@ -65,7 +65,7 @@
 
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
 
-      mkSpecialArgs = system: {
+      mkSpecialArgs = {
         inherit self inputs;
       };
 
@@ -84,7 +84,7 @@
         in
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = mkSpecialArgs system;
+          specialArgs = mkSpecialArgs;
           modules = baseModules ++ extraModules;
         };
     in
@@ -112,6 +112,8 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
+          upterm = pkgs.callPackage ./packages/upterm { };
+
           vim =
             (nvf.lib.neovimConfiguration {
               inherit pkgs;
