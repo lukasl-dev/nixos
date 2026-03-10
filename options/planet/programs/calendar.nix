@@ -100,11 +100,12 @@ in
           todoman = {
             enable = true;
             extraConfig = ''
+              path = "/home/${user.name}/.local/share/calendars/${user.name}/*"
               date_format = "%d.%m.%Y"
               time_format = "%H:%M"
               datetime_format = "%d.%m.%Y %H:%M"
               list_format = "{start} {summary}"
-              default_list = "${user.name}"
+              default_list = "43a94c3f-3337-8381-be2d-c424f672ef7d"
             '';
           };
         };
