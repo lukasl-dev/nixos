@@ -83,27 +83,30 @@ in
           };
         };
 
-        programs.vdirsyncer.enable = true;
+        programs = {
+          vdirsyncer.enable = true;
 
-        programs.khal = {
-          enable = true;
-          locale = {
-            timeformat = "%H:%M";
-            dateformat = "%d.%m.%Y";
-            longdateformat = "%d.%m.%Y";
-            datetimeformat = "%d.%m.%Y %H:%M";
-            longdatetimeformat = "%d.%m.%Y %H:%M";
+          khal = {
+            enable = true;
+            locale = {
+              timeformat = "%H:%M";
+              dateformat = "%d.%m.%Y";
+              longdateformat = "%d.%m.%Y";
+              datetimeformat = "%d.%m.%Y %H:%M";
+              longdatetimeformat = "%d.%m.%Y %H:%M";
+            };
           };
-        };
 
-        programs.todoman = {
-          enable = true;
-          extraConfig = ''
-            date_format = "%d.%m.%Y"
-            time_format = "%H:%M"
-            datetime_format = "%d.%m.%Y %H:%M"
-            list_format = "{start} {summary}"
-          '';
+          todoman = {
+            enable = true;
+            extraConfig = ''
+              date_format = "%d.%m.%Y"
+              time_format = "%H:%M"
+              datetime_format = "%d.%m.%Y %H:%M"
+              list_format = "{start} {summary}"
+              default_list = "${user.name}"
+            '';
+          };
         };
       }
     ];
