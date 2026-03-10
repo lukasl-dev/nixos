@@ -98,7 +98,6 @@ in
 
         programs.todoman = {
           enable = true;
-          glob = "*.txt";
           extraConfig = ''
             date_format = "%d.%m.%Y"
             time_format = "%H:%M"
