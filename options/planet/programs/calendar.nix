@@ -8,7 +8,7 @@
 let
   inherit (config.planet) wm;
 
-  inherit (config.universe) user;
+  inherit (config.universe) domain user;
   inherit (config.planet.programs) calendar;
 in
 {
@@ -51,15 +51,15 @@ in
       {
         accounts.calendar.basePath = ".local/share/calendars";
 
-        accounts.calendar.accounts.lukas = {
-          name = "lukas";
+        accounts.calendar.accounts.${user.name} = {
+          inherit (user) name;
           primary = true;
-          primaryCollection = "43a94c3f-3337-8381-be2d-c424f672ef7d"; # "Personal" calendar
+          primaryCollection = "43a94c3f-3337-8381-be2d-c424f672ef7d"; # "Personal"
 
           remote = {
             type = "caldav";
-            url = "https://cal.lukasl.dev/";
-            userName = "lukas";
+            url = "https://cal.${domain}/";
+            userName = user.name;
             passwordCommand = [
               "cat"
               config.age.secrets."universe/cal/password".path
