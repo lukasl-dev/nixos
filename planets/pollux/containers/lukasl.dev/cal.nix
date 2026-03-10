@@ -11,8 +11,8 @@ let
 in
 {
   age.secrets = {
-    ${secret "password"} = {
-      rekeyFile = ../../../../secrets/${secret "password"}.age;
+    "universe/cal/password" = {
+      rekeyFile = ../../../../secrets/universe/cal/password.age;
       generator.script = "alnum";
       intermediary = true;
     };
@@ -22,7 +22,7 @@ in
       mode = "644";
       generator = {
         dependencies = {
-          password = config.age.secrets.${secret "password"};
+          password = config.age.secrets."universe/cal/password";
         };
         script =
           { decrypt, deps, ... }:

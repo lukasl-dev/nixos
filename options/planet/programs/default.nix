@@ -11,7 +11,7 @@
     ./feh.nix
     ./gh-dash.nix
     ./ghostty.nix
-    ./gnome-calendar.nix
+    ./calendar.nix
     ./gpu-screen-recorder.nix
     ./helium.nix
     ./jellyfin.nix
