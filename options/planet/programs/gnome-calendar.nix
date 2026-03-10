@@ -31,6 +31,7 @@ in
 
     environment.systemPackages = [
       pkgs.gnome-calendar
+      pkgs.evolution
       (pkgs.writeShellScriptBin "gnome-control-center" ''
         export XDG_CURRENT_DESKTOP=GNOME
         exec ${pkgs.gnome-control-center}/bin/gnome-control-center "$@"
