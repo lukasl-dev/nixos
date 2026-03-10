@@ -41,6 +41,7 @@ in
       pkgs.evolution
       pkgs.vdirsyncer
       pkgs.khal
+      pkgs.todoman
       (pkgs.writeShellScriptBin "gnome-control-center" ''
         export XDG_CURRENT_DESKTOP=GNOME
         exec ${pkgs.gnome-control-center}/bin/gnome-control-center "$@"
@@ -93,6 +94,17 @@ in
             datetimeformat = "%d.%m.%Y %H:%M";
             longdatetimeformat = "%d.%m.%Y %H:%M";
           };
+        };
+
+        programs.todoman = {
+          enable = true;
+          glob = "*.txt";
+          extraConfig = ''
+            date_format = "%d.%m.%Y"
+            time_format = "%H:%M"
+            datetime_format = "%d.%m.%Y %H:%M"
+            list_format = "{start} {summary}"
+          '';
         };
       }
     ];
