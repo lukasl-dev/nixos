@@ -48,6 +48,18 @@ in
       '')
     ];
 
+    systemd.tmpfiles.rules =
+      let
+        calDir = "/home/${user.name}/.local/share/calendars/${user.name}";
+      in
+      [
+        "f ${calDir}/43a94c3f-3337-8381-be2d-c424f672ef7d/displayname 0644 ${user.name} users Personal"
+        "f ${calDir}/194aace7-1ade-cc79-6fee-75bb65820b9b/displayname 0644 ${user.name} users Lectures"
+        "f ${calDir}/e604a983-0407-2e4e-eed0-869bab3de37b/displayname 0644 ${user.name} users Exercises"
+        "f ${calDir}/f3567492-3aae-8192-81a8-934ec0ff20f7/displayname 0644 ${user.name} users TISS"
+        "f ${calDir}/ff160e4e-7058-92da-5b50-1dea64032920/displayname 0644 ${user.name} users Exams"
+      ];
+
     universe.hm = [
       {
         accounts.calendar.basePath = ".local/share/calendars";
@@ -105,7 +117,7 @@ in
               time_format = "%H:%M"
               datetime_format = "%d.%m.%Y %H:%M"
               list_format = "{start} {summary}"
-              default_list = "43a94c3f-3337-8381-be2d-c424f672ef7d"
+              default_list = "Personal"
             '';
           };
         };
