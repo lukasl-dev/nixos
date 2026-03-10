@@ -51,6 +51,24 @@ in
           };
 
         };
+
+        rights = {
+          root = {
+            user = ".+";
+            collection = "";
+            permissions = "R";
+          };
+          principal = {
+            user = ".+";
+            collection = "{user}";
+            permissions = "RW";
+          };
+          calendars = {
+            user = ".+";
+            collection = "{user}/[^/]+";
+            permissions = "rw";
+          };
+        };
       };
 
       systemd.tmpfiles.rules = [
