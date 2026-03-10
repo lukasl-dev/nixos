@@ -55,7 +55,7 @@ in
         accounts.calendar.accounts.${user.name} = {
           inherit (user) name;
           primary = true;
-          primaryCollection = "43a94c3f-3337-8381-be2d-c424f672ef7d"; # "Personal"
+          primaryCollection = "Personal";
 
           remote = {
             type = "caldav";
