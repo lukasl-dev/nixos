@@ -59,6 +59,11 @@
         duration = 2 * 60;
         channel = "fav1";
       };
+      fr_2026_03_13_08_exercise_presentation = {
+        start = "2026-03-13 08:00:00";
+        duration = 2 * 60;
+        channel = "gm1";
+      };
     };
   };
 }
