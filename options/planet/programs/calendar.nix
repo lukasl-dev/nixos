@@ -58,6 +58,7 @@ in
         "f ${calDir}/e604a983-0407-2e4e-eed0-869bab3de37b/displayname 0644 ${user.name} users Exercises"
         "f ${calDir}/f3567492-3aae-8192-81a8-934ec0ff20f7/displayname 0644 ${user.name} users TISS"
         "f ${calDir}/ff160e4e-7058-92da-5b50-1dea64032920/displayname 0644 ${user.name} users Exams"
+        "f ${calDir}/412a1766-0d5b-bd1e-4ade-09f299fdc7ee/displayname 0644 ${user.name} users Tasks"
       ];
 
     universe.hm = [
