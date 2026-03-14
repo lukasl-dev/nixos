@@ -1,5 +1,9 @@
+{ pkgs, ... }:
+
 {
   vim = {
+    extraPackages = with pkgs; [ ruff ];
+
     languages.python = {
       enable = true;
       lsp.servers = [ "pyright" ];
