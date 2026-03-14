@@ -163,29 +163,15 @@ in
           type = "dispatch";
           mods = windowShiftMods;
           keys = [ "H" ];
-          dispatcher = "swapwindow";
-          argument = "l";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "J" ];
-          dispatcher = "swapwindow";
-          argument = "d";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "K" ];
-          dispatcher = "swapwindow";
-          argument = "u";
+          dispatcher = "layoutmsg";
+          argument = "swapcol l";
         }
         {
           type = "dispatch";
           mods = windowShiftMods;
           keys = [ "L" ];
-          dispatcher = "swapwindow";
-          argument = "r";
+          dispatcher = "layoutmsg";
+          argument = "swapcol r";
         }
         {
           type = "dispatch";
@@ -223,15 +209,15 @@ in
           type = "dispatch";
           mods = windowMods;
           keys = [ "h" ];
-          dispatcher = "movefocus";
-          argument = "l";
+          dispatcher = "layoutmsg";
+          argument = "focus l";
         }
         {
           type = "dispatch";
           mods = windowMods;
           keys = [ "l" ];
-          dispatcher = "movefocus";
-          argument = "r";
+          dispatcher = "layoutmsg";
+          argument = "focus r";
         }
         {
           type = "dispatch";
@@ -401,6 +387,49 @@ in
           dispatcher = "workspace";
           argument = "e-1";
         }
+        {
+          type = "dispatch";
+          mods = windowMods;
+          keys = [ "comma" ];
+          dispatcher = "layoutmsg";
+          argument = "move -col";
+        }
+        {
+          type = "dispatch";
+          mods = windowMods;
+          keys = [ "period" ];
+          dispatcher = "layoutmsg";
+          argument = "move +col";
+        }
+        {
+          type = "dispatch";
+          mods = [ "SUPER ALT" ];
+          keys = [ "minus" ];
+          dispatcher = "layoutmsg";
+          argument = "colresize -0.1";
+        }
+        {
+          type = "dispatch";
+          mods = [ "SUPER ALT" ];
+          keys = [ "equal" ];
+          dispatcher = "layoutmsg";
+          argument = "colresize +0.1";
+        }
+        {
+          type = "dispatch";
+          mods = windowMods;
+          keys = [ "minus" ];
+          dispatcher = "layoutmsg";
+          argument = "colresize -conf";
+        }
+        {
+          type = "dispatch";
+          mods = windowMods;
+          keys = [ "equal" ];
+          dispatcher = "layoutmsg";
+          argument = "colresize +conf";
+        }
+
       ];
 
     programs.hyprland = {
@@ -625,7 +654,7 @@ in
           "col.active_border" = "$mauve $lavender 45deg";
           "col.inactive_border" = "rgba(595959aa)";
 
-          layout = "dwindle";
+          layout = "scrolling";
 
           allow_tearing = false;
         };
@@ -658,9 +687,14 @@ in
           "workspaces, 1, 6, default"
         ];
 
-        dwindle = {
-          pseudotile = "yes";
-          preserve_split = "yes";
+        scrolling = {
+          fullscreen_on_one_column = true;
+          column_width = 0.5;
+          focus_fit_method = 1;
+          follow_focus = true;
+          follow_min_visible = 0.4;
+          explicit_column_widths = "0.333, 0.5, 0.667, 1.0";
+          direction = "right";
         };
 
         gestures = {
