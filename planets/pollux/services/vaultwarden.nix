@@ -1,13 +1,15 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
-  domain = config.universe.domain;
+  inherit (config.universe) domain;
 
-  vaultwarden = config.services.vaultwarden;
+  inherit (config.services) vaultwarden;
 in
 {
   services.vaultwarden = {
     enable = true;
+
+    package = pkgs.unstable.vaultwarden;
 
     config = {
       ROCKET_ADDRESS = "127.0.0.1";
