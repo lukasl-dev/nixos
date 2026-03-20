@@ -64,6 +64,11 @@
         duration = 2 * 60;
         channel = "gm1";
       };
+      th_2026_06_11_18_schachermayer = {
+        start = "2026-06-11 18:00:00";
+        duration = 60;
+        channel = "fh8";
+      };
     };
   };
 }
