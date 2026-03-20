@@ -24,6 +24,7 @@
     ./nvim.nix
     ./opencode.nix
     ./perf.nix
+    ./pi-mono.nix
     ./ripgrep.nix
     ./speedtest.nix
     ./television.nix

@@ -17,6 +17,7 @@ let
     })"
     exec ${github-mcp-server}/bin/github-mcp-server "$@"
   '';
+  rime = inputs.rime.packages.${system}.default;
 
   opencode = inputs.opencode.packages.${system}.default.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
@@ -24,8 +25,6 @@ let
         --replace-fail 'const expectedBunVersionRange = `^''${expectedBunVersion}`' 'const expectedBunVersionRange = ">=1.3.9"'
     '';
   });
-
-  rime = inputs.rime.packages.${system}.default;
 in
 {
   security.apparmor.policies.opencode = {
