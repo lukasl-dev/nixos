@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./assembly.nix
     ./bash.nix
     ./c.nix
     ./dafny.nix
