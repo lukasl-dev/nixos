@@ -9,16 +9,7 @@ let
   inherit (config.universe) user;
   inherit (pkgs.stdenv.hostPlatform) system;
 
-  # inherit (pkgs.unstable) github-mcp-server;
-  #
-  # github-mcp-server-wrapped = pkgs.writeShellScriptBin "github-mcp-server" ''
-  #   export GITHUB_PERSONAL_ACCESS_TOKEN="$(cat ${
-  #     config.age.secrets."universe/opencode/github_pat".path
-  #   })"
-  #   exec ${github-mcp-server}/bin/github-mcp-server "$@"
-  # '';
-  # rime = inputs.rime.packages.${system}.default;
-
+  # TODO: add opencode api key: https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/providers.md
   pi-mono = inputs.pi-mono.packages.${system}.coding-agent;
 in
 {

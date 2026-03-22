@@ -144,6 +144,12 @@
                 inputs.agenix-rekey.packages.${system}.default
               ]
               ++ (import ./packages/scripts { inherit pkgs; });
+
+            shellHook = ''
+              bash ${./options/universe/programs/pi-mono/extensions/setup-node-modules.sh} \
+                ${toString ./.} \
+                ${inputs.pi-mono.packages.${system}.coding-agent}
+            '';
           };
         }
       );
