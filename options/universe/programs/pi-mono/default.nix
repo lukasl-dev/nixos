@@ -49,4 +49,10 @@ in
   };
 
   environment.systemPackages = [ pi-mono ];
+
+  systemd.tmpfiles.rules = [
+    "d /home/${user.name}/.pi 0755 ${user.name} users - -"
+    "d /home/${user.name}/.pi/agent 0755 ${user.name} users - -"
+    "L+ /home/${user.name}/.pi/agent/skills - - - - ${./skills}"
+  ];
 }
