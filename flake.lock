@@ -1977,16 +1977,16 @@
         "systems": "systems_9"
       },
       "locked": {
-        "lastModified": 1774070070,
-        "narHash": "sha256-u0HDRQ09HCvuRoU80SiCuPbG8fN23VWXj64ew/N9bUU=",
+        "lastModified": 1774234663,
+        "narHash": "sha256-V7JHAPfxeFHTVwqP30jW21K1QXgeuFs7F/sXcBaSiqU=",
         "owner": "lukasl-dev",
         "repo": "pi-mono.nix",
-        "rev": "2e25cc2043ad786de0feaccdf3b059906c71a7e9",
+        "rev": "d8e6e2c0b515ef72cf3c0e259518986696d9af9d",
         "type": "github"
       },
       "original": {
         "owner": "lukasl-dev",
-        "ref": "v0.61.1",
+        "ref": "v0.62.0",
         "repo": "pi-mono.nix",
         "type": "github"
       }
