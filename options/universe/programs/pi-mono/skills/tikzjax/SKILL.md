@@ -16,6 +16,8 @@ Use this skill when you want the agent to **write TikZJax-compatible TikZ** for 
 This skill is about **producing compatible TikZ output**.
 It is **not** for explaining diagrams in general, analyzing existing figures, or discussing broad TikZ theory unless that is necessary to write the snippet.
 
+If you are editing TikZ inside an Obsidian vault, also load the `obsidian` skill so you can use the Obsidian CLI workflow for post-edit validation and console debugging.
+
 ## Core rule
 
 Write **small, self-contained figures** that are likely to render reliably in TikZJax.
