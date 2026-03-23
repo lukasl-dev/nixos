@@ -53,7 +53,7 @@ Returns a sorted JSON array of manual page paths relative to `docs/manual/`, wit
 
 ```bash
 ./scripts/read-manual.sh REF_NAME MANUAL_PATH
-./scripts/read-manual.sh main configuration/customizing
+./scripts/read-manual.sh main configuring/languages/lsp
 ```
 
 Returns the raw Markdown contents of `docs/manual/MANUAL_PATH.md`.

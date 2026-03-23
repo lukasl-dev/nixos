@@ -10,16 +10,13 @@ fi
 ref="$1"
 url="https://api.github.com/repos/NotAShelf/nvf/git/trees/${ref}?recursive=1"
 
-json=$(curl --fail --silent --show-error \
+curl --fail --silent --show-error \
   --header 'User-Agent: pi-mono/1.0 (+https://github.com/lukasl-dev/rime)' \
-  "$url")
-
-JSON_INPUT="$json" python3 -c '
+  "$url" | python3 -c '
 import json
-import os
 import sys
 
-data = json.loads(os.environ["JSON_INPUT"])
+data = json.load(sys.stdin)
 items = data.get("tree")
 if not isinstance(items, list):
     raise SystemExit("GitHub API response missing tree array")

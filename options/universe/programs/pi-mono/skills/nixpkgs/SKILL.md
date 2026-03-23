@@ -63,6 +63,16 @@ Returns JSON with details including:
 ./scripts/search-packages.sh nixos-unstable ripgrep
 ```
 
+This wraps `nix search github:NixOS/nixpkgs/REF_NAME QUERY`.
+
+Notes:
+
+- It searches package metadata in the selected nixpkgs ref.
+- It does not search NixOS options.
+- Output is the normal `nix search` text output, not JSON.
+- The displayed attribute names are often useful starting points, but may not always be the exact attr path you want to inspect further.
+- After finding a candidate, use `./scripts/show-package.sh REF_NAME ATTR_PATH` to inspect it more precisely.
+
 ### Inspect a package attribute
 
 ```bash
