@@ -60,6 +60,13 @@ Write TikZ using simple, compatible constructs such as:
 - direct labels via `node[...] { ... }`
 - simple fills and strokes
 
+Important compatibility rule:
+
+- some shapes or conveniences that look "basic" in full TikZ are actually provided by optional libraries
+- do not assume a shape is safe just because it is common in normal LaTeX usage
+- if a shape may depend on a library, prefer drawing it manually with paths
+- for example, prefer a manually drawn diamond over relying on a `diamond` node shape
+
 To improve compatibility, prefer:
 
 - explicit coordinates over complex layout logic
@@ -107,6 +114,7 @@ These may work in some setups but should generally be avoided unless specificall
 - clipping-heavy art
 - custom font packages
 - uncommon TikZ libraries
+- node shapes that may come from optional shape libraries rather than core TikZ
 
 If the user asks for one of these, warn briefly and provide a simpler fallback when possible.
 
