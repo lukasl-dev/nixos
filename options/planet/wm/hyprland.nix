@@ -440,7 +440,7 @@ in
       });
 
       xwayland.enable = true;
-      withUWSM = true;
+      withUWSM = false;
 
       settings = {
         monitor = config.planet.wm.hyprland.monitors ++ [ "Unknown-1,disable" ];

@@ -21,6 +21,7 @@
     ./hyperfine.nix
     ./imagemagick.nix
     ./jj.nix
+    ./lightpanda.nix
     ./ntfy.nix
     ./nvim.nix
     ./opencode.nix

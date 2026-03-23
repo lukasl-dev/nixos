@@ -46,6 +46,7 @@
       url = "github:dmtrKovalenko/fff.nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lightpanda.url = "github:lukasl-dev/browser";
     HyprQuickFrame = {
       url = "github:Ronin-CK/HyprQuickFrame";
       inputs.nixpkgs.follows = "nixpkgs";

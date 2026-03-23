@@ -23,25 +23,29 @@ in
   };
 
   config = lib.mkIf config.planet.wm.enable {
-    planet.wm.hyprland.bindings =
-      let
-        cmd = lib.getExe noctalia.package;
-      in
-      [
-        {
-          type = "exec";
-          keys = [
-            "Space"
-            "Backspace"
-          ];
-          command = "${cmd} ipc call launcher toggle";
-        }
-        {
-          type = "exec";
-          keys = [ "C" ];
-          command = "${cmd} ipc call launcher clipboard";
-        }
-      ];
+    planet.wm.hyprland = {
+      bindings =
+        let
+          cmd = lib.getExe noctalia.package;
+        in
+        [
+          {
+            type = "exec";
+            keys = [
+              "Space"
+              "Backspace"
+            ];
+            command = "${cmd} ipc call launcher toggle";
+          }
+          {
+            type = "exec";
+            keys = [ "C" ];
+            command = "${cmd} ipc call launcher clipboard";
+          }
+        ];
+
+      launch = lib.mkIf (!config.programs.hyprland.withUWSM) [ (lib.getExe noctalia.package) ];
+    };
 
     universe.hm = [
       {
@@ -49,7 +53,7 @@ in
 
         programs.noctalia-shell = {
           enable = true;
-          systemd.enable = true;
+          systemd.enable = config.programs.hyprland.withUWSM;
           inherit (noctalia) package;
 
           settings = {

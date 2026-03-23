@@ -13,7 +13,7 @@ let
 in
 lib.mkIf config.planet.wm.enable {
   services.displayManager = {
-    defaultSession = lib.mkIf config.planet.wm.hyprland.enable "hyprland-uwsm";
+    defaultSession = lib.mkIf config.planet.wm.hyprland.enable "hyprland";
 
     sddm = {
       enable = true;
