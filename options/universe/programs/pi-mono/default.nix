@@ -1,7 +1,8 @@
 {
   inputs,
-  pkgs,
   config,
+  pkgs,
+  lib,
   ...
 }:
 
@@ -11,6 +12,7 @@ let
 
   # TODO: add opencode api key: https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/providers.md
   pi-mono = inputs.pi-mono.packages.${system}.coding-agent;
+
 in
 {
   security.apparmor.policies.pi-mono = {
@@ -19,7 +21,7 @@ in
       abi <abi/4.0>,
       include <tunables/global>
 
-      profile pi-mono "${pi-mono}/bin/pi-mono" {
+      profile pi-mono "${lib.getExe pi-mono}" {
         include <abstractions/base>
 
         allow all,

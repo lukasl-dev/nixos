@@ -24,6 +24,7 @@ in
         export HOME=${lib.escapeShellArg "/home/${user.name}"}
         export XDG_CONFIG_HOME="$HOME/.config"
 
+        mkdir -p "$XDG_CONFIG_HOME/attic"
         token="$(cat ${config.age.secrets."universe/attic/token".path})"
 
         ${client}/bin/attic login --set-default attic "https://cache.${domain}" "$token"
@@ -53,30 +54,6 @@ in
     "universe/github/password" = {
       rekeyFile = ../../secrets/universe/github/password.age;
       intermediary = true;
-    };
-
-    "universe/attic/config" = {
-      rekeyFile = ../../secrets/universe/attic/config.age;
-      generator = {
-        dependencies = {
-          token = config.age.secrets."universe/attic/token";
-        };
-        script =
-          { decrypt, deps, ... }:
-          ''
-            token="$(${decrypt} ${lib.escapeShellArg deps.token.file})"
-
-            cat <<EOF
-            default-server = "attic"
-
-            [servers.attic]
-            endpoint = "https://cache.${domain}"
-            token = "$token"
-            EOF
-          '';
-      };
-      owner = user.name;
-      path = "/home/${user.name}/.config/attic/config.toml";
     };
 
     "universe/nix-netrc" = {
