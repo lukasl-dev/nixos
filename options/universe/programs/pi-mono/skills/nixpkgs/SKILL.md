@@ -1,6 +1,6 @@
 ---
 name: nixpkgs
-description: Search and inspect nixpkgs packages, NixOS options, and module definitions using nix commands and helper scripts. Use when you need authoritative information from a specific nixpkgs branch, tag, or commit.
+description: Search and inspect nixpkgs packages, NixOS options, and module definitions using nix commands and helper scripts. Use when you need authoritative information from a specific nixpkgs branch, tag, or commit. Always use this skill when working with Nix.
 compatibility: Requires nix with flakes enabled. Some commands require network access and use --impure.
 ---
 
