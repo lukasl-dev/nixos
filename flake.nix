@@ -147,8 +147,9 @@
               ++ (import ./packages/scripts { inherit pkgs; });
 
             shellHook = ''
+              repo_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || printf '%s\n' "$PWD")
               bash ${./options/universe/programs/pi-mono/extensions/setup-node-modules.sh} \
-                ${toString ./.} \
+                "$repo_root" \
                 ${inputs.pi-mono.packages.${system}.coding-agent}
             '';
           };
