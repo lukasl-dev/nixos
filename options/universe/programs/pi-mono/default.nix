@@ -10,6 +10,17 @@ let
   inherit (config.universe) user;
   inherit (pkgs.stdenv.hostPlatform) system;
 
+  extensions = builtins.path {
+    path = ./extensions;
+    name = "pi-mono-extensions";
+    filter =
+      path: type:
+      let
+        base = builtins.baseNameOf path;
+      in
+      base != "node_modules" && (type == "directory" || pkgs.lib.hasSuffix ".ts" base);
+  };
+
   # TODO: add opencode api key: https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/providers.md
   pi-mono = inputs.pi-mono.packages.${system}.coding-agent;
 
@@ -56,5 +67,6 @@ in
     "d /home/${user.name}/.pi 0755 ${user.name} users - -"
     "d /home/${user.name}/.pi/agent 0755 ${user.name} users - -"
     "L+ /home/${user.name}/.pi/agent/skills - - - - ${./skills}"
+    "L+ /home/${user.name}/.pi/agent/extensions - - - - ${extensions}"
   ];
 }

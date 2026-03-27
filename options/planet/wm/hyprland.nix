@@ -761,6 +761,8 @@ in
         pkgs.slurp
         pkgs.hyprshot
 
+        pkgs.libnotify
+
         (pkgs.writeShellApplication {
           name = "waybar-toggle";
           runtimeInputs = [
