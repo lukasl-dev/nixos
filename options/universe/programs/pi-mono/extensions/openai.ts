@@ -51,8 +51,10 @@ function formatWindow(label: string, window?: UsageWindow | null): string {
 async function fetchCodexUsage(
   accessToken: string,
   accountId: string,
+  signal?: AbortSignal,
 ): Promise<UsageResponse> {
   const response = await fetch("https://chatgpt.com/backend-api/wham/usage", {
+    signal,
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "ChatGPT-Account-Id": accountId,
@@ -90,7 +92,7 @@ export default function openaiExtension(pi: ExtensionAPI) {
           return;
         }
 
-        const usage = await fetchCodexUsage(accessToken, accountId);
+        const usage = await fetchCodexUsage(accessToken, accountId, ctx.signal);
         const lines = [
           `Plan: ${usage.plan_type ?? "unknown"}`,
           formatWindow("5h limit", usage.rate_limit?.primary_window),
@@ -106,6 +108,10 @@ export default function openaiExtension(pi: ExtensionAPI) {
             "Codex authorization has expired. Run the Codex CLI once (`codex`) so it can refresh/login again, then retry /oai-usage.",
             "warning",
           );
+          return;
+        }
+
+        if (message === "This operation was aborted" || message === "The operation was aborted") {
           return;
         }
 

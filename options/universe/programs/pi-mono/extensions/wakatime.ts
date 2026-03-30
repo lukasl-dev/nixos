@@ -5,7 +5,7 @@ import {
 	isWriteToolResult,
 } from "@mariozechner/pi-coding-agent";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 type TrackedFileChange = {
@@ -333,6 +333,10 @@ export default function wakatimeExtension(pi: ExtensionAPI) {
 	});
 
 	pi.on("agent_end", async () => {
+		await flushHeartbeats(pi, true);
+	});
+
+	pi.on("session_shutdown", async () => {
 		await flushHeartbeats(pi, true);
 	});
 

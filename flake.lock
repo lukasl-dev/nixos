@@ -2117,16 +2117,16 @@
         "systems": "systems_12"
       },
       "locked": {
-        "lastModified": 1774234663,
-        "narHash": "sha256-V7JHAPfxeFHTVwqP30jW21K1QXgeuFs7F/sXcBaSiqU=",
+        "lastModified": 1774890072,
+        "narHash": "sha256-t44VppGPVaTVyqCYi6cEGgROnt8h1pJCB4k0NIszMK0=",
         "owner": "lukasl-dev",
         "repo": "pi-mono.nix",
-        "rev": "d8e6e2c0b515ef72cf3c0e259518986696d9af9d",
+        "rev": "3fee574a919e8f81d4b9c66cabf77f3230c5311e",
         "type": "github"
       },
       "original": {
         "owner": "lukasl-dev",
-        "ref": "v0.62.0",
+        "ref": "v0.64.0",
         "repo": "pi-mono.nix",
         "type": "github"
       }
