@@ -24,13 +24,13 @@ in
   config = lib.mkIf config.planet.programs.espanso.enable {
     hardware.uinput.enable = true;
 
-    planet.wm.hyprland.bindings = lib.mkIf hyprland.enable [
-      {
-        type = "exec";
-        keys = [ "E" ];
-        command = ''sh -lc "systemctl --user is-active --quiet espanso.service && systemctl --user stop espanso.service || systemctl --user start espanso.service"'';
-      }
-    ];
+    # planet.wm.hyprland.bindings = lib.mkIf hyprland.enable [
+    #   {
+    #     type = "exec";
+    #     keys = [ "E" ];
+    #     command = ''sh -lc "systemctl --user is-active --quiet espanso.service && systemctl --user stop espanso.service || systemctl --user start espanso.service"'';
+    #   }
+    # ];
 
     users.users.${user.name}.extraGroups = lib.mkAfter [
       "uinput"
@@ -439,7 +439,7 @@ in
             After = [ "graphical-session.target" ];
             PartOf = [ "graphical-session.target" ];
           };
-          Install.WantedBy = lib.mkForce [ ];
+          Install.WantedBy = [ "graphical-session.target" ];
         };
       }
     ];
