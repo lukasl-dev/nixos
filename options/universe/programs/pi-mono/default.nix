@@ -77,8 +77,9 @@ in
   systemd.tmpfiles.rules = [
     "d /home/${user.name}/.pi 0755 ${user.name} users - -"
     "d /home/${user.name}/.pi/agent 0755 ${user.name} users - -"
-    "L+ /home/${user.name}/.pi/agent/skills - - - - ${./skills}"
     "L+ /home/${user.name}/.pi/agent/extensions - - - - ${extensions}"
+    "L+ /home/${user.name}/.pi/agent/skills - - - - ${./skills}"
     "L+ /home/${user.name}/.pi/agent/themes - - - - ${themes}"
+    "L+ /home/${user.name}/.pi/agent/AGENTS.md - - - - ${./AGENTS.md}"
   ];
 }

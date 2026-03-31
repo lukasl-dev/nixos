@@ -11,6 +11,12 @@ let
 
   inherit (config.planet.programs) discord;
   inherit (config.planet.services) mullvad;
+
+  ozoneFlag = "--ozone-platform=${toString wm.display}";
+
+  vesktopFeatures = builtins.concatStringsSep "," (
+    lib.optionals (hyprland.enable && wm.display == "wayland") [ "WaylandLinuxDrmSyncobj" ]
+  );
 in
 {
   options.planet.programs.discord = {
@@ -30,12 +36,11 @@ in
             nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
             postFixup = (old.postFixup or "") + ''
               wrapProgram $out/bin/vesktop \
-                --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
-                --add-flags "--disable-gpu-memory-buffer-video-frames" \
-                --add-flags "--ignore-gpu-blocklist" \
-                --add-flags "--enable-gpu-rasterization" \
-                --add-flags "--enable-zero-copy" \
-                --add-flags "--disable-gpu-sandbox"
+                --add-flags "${ozoneFlag}" ${
+                  lib.optionalString (
+                    vesktopFeatures != ""
+                  ) "\\\n                --add-flags \"--enable-features=${vesktopFeatures}\""
+                }
             '';
           })
         else

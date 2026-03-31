@@ -10,6 +10,18 @@ let
   inherit (wm) hyprland;
   inherit (config.planet.programs) helium;
 
+  ozoneFlag =
+    {
+      x11 = "--ozone-platform=x11";
+      wayland = "--ozone-platform=wayland";
+    }
+    .${wm.display};
+
+  heliumFeatures = builtins.concatStringsSep "," (
+    [ "Vulkan" "VulkanFromANGLE" ]
+    ++ lib.optionals (hyprland.enable && wm.display == "wayland") [ "WaylandLinuxDrmSyncobj" ]
+  );
+
   heliumVersion = "0.10.5.1";
   heliumRelease =
     {
@@ -96,9 +108,9 @@ in
           wrapProgram $out/bin/helium \
             --prefix LD_LIBRARY_PATH : "$out/lib/helium" \
             --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibraries}" \
-            --add-flags "--ozone-platform=x11" \
+            --add-flags "${ozoneFlag}" \
             --add-flags "--use-angle=vulkan" \
-            --add-flags "--enable-features=Vulkan,VulkanFromANGLE${lib.optionalString hyprland.enable ",WaylandLinuxDrmSyncobj"}"
+            --add-flags "--enable-features=${heliumFeatures}"
             # --add-flags "--enable-unsafe-webgpu" \
         '';
       };
