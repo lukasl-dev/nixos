@@ -123,6 +123,8 @@ in
             '';
           };
         };
+
+        services.vdirsyncer.enable = true;
       }
     ];
   };
