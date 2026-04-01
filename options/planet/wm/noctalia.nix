@@ -35,12 +35,12 @@ in
               "Space"
               "Backspace"
             ];
-            command = "${cmd} ipc call launcher toggle";
+            command = "${cmd} ipc --any-display call launcher toggle";
           }
           {
             type = "exec";
             keys = [ "C" ];
-            command = "${cmd} ipc call launcher clipboard";
+            command = "${cmd} ipc --any-display call launcher clipboard";
           }
         ];
 
