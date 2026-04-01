@@ -136,6 +136,12 @@ in
           command = ''grim -g "$(slurp -d)" - | wl-copy'';
         }
         {
+          type = "exec";
+          mods = [ "SUPER SHIFT" ];
+          keys = [ "S" ];
+          command = ''hyprshot -m window -m active --clipboard-only'';
+        }
+        {
           type = "dispatch";
           keys = [ "Q" ];
           dispatcher = "togglespecialworkspace";

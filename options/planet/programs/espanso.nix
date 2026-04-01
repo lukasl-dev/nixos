@@ -302,6 +302,26 @@ in
             math = {
               matches = [
                 {
+                  trigger = ";N;";
+                  replace = "ℕ";
+                }
+                {
+                  trigger = ";Z;";
+                  replace = "ℤ";
+                }
+                {
+                  trigger = ";Q;";
+                  replace = "ℚ";
+                }
+                {
+                  trigger = ";R;";
+                  replace = "ℝ";
+                }
+                {
+                  trigger = ";C;";
+                  replace = "ℂ";
+                }
+                {
                   trigger = ";forall;";
                   replace = "∀";
                 }

@@ -44,7 +44,6 @@ in
           }
         ];
 
-      launch = lib.mkIf (!config.programs.hyprland.withUWSM) [ (lib.getExe noctalia.package) ];
     };
 
     universe.hm = [
@@ -53,7 +52,7 @@ in
 
         programs.noctalia-shell = {
           enable = true;
-          systemd.enable = config.programs.hyprland.withUWSM;
+          systemd.enable = true;
           inherit (noctalia) package;
 
           settings = {
