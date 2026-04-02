@@ -39,6 +39,9 @@ in
       "nct6775"
       "coretemp"
     ];
+    kernel.sysctl = {
+      "user.max_user_namespaces" = 15000;
+    };
     loader = {
       efi.canTouchEfiVariables = true;
       limine = {
