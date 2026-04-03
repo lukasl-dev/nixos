@@ -280,7 +280,11 @@ async function flushHeartbeats(pi: ExtensionAPI, force = false): Promise<void> {
 }
 
 export default function wakatimeExtension(pi: ExtensionAPI) {
-	pi.on("session_start", async (_event, ctx) => {
+	pi.on("session_start", async (event, ctx) => {
+		if (event.reason === "new" || event.reason === "resume" || event.reason === "fork") {
+			await flushHeartbeats(pi, true);
+		}
+
 		currentProjectFolder = await resolveProjectFolder(pi, ctx.cwd);
 		pendingChanges = new Map();
 		await ensureCli(pi);
