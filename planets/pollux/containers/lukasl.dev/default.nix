@@ -13,6 +13,7 @@ in
 {
   imports = [
     ./anki.nix
+    ./books.nix
     ./box.nix
     ./cal.nix
     ./cloud.nix

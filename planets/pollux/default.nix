@@ -15,7 +15,7 @@
     ./services/forgejo.nix
     ./services/authelia.nix
     ./services/blog.nix
-    ./services/booklore.nix
+    # ./services/booklore.nix
     ./services/capTUre.nix
     # ./services/firefly.nix
     ./services/freshrss.nix
