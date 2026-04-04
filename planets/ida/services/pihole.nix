@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 let
   inherit (config.universe) domain;
@@ -6,6 +6,8 @@ let
   webPort = 2718;
 in
 {
+  services.tailscale.extraUpFlags = lib.mkForce [ "--ssh" ];
+
   services = {
     resolved.extraConfig = ''
       DNSStubListener=no
