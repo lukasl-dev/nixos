@@ -4,7 +4,10 @@ let
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./audio.nix
+    ./hardware-configuration.nix
+  ];
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1235", ATTR{idProduct}=="8219", TEST=="power/control", ATTR{power/control}="on"
