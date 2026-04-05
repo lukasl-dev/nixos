@@ -80,13 +80,15 @@ in
 
     services.libinput.enable = true;
 
-    environment.systemPackages = [
-      pkgs.helvum
-      pkgs.pwvucontrol
-      pkgs.easyeffects
+    environment.systemPackages = with pkgs; [
+      helvum
+      pwvucontrol
+      easyeffects
     ];
 
     planet.wm.hyprland = {
+      launch = [ "easyeffects --service-mode" ];
+
       bindings = [
         {
           type = "exec";
