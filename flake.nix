@@ -39,7 +39,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     opencode.url = "github:anomalyco/opencode?ref=v1.2.27";
-    pi-mono.url = "github:lukasl-dev/pi-mono.nix?ref=v0.65.0";
+    pi-mono.url = "github:lukasl-dev/pi-mono.nix";
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";
     fff-nvim = {

@@ -6,6 +6,7 @@
       name = "vega-mic1-volume";
       runtimeInputs = [
         pkgs.wireplumber
+        pkgs.pipewire
         pkgs.gnugrep
         pkgs.gnused
         pkgs.coreutils
@@ -22,7 +23,7 @@
 
             if [ -n "$source_id" ]; then
               wpctl set-default "$source_id"
-              pw-cli s "$source_id" Props '{ volume: 1.25, channelVolumes: [ 1.25 ], softVolumes: [ 1.25 ] }'
+              pw-cli s "$source_id" Props '{ volume: 1.35, channelVolumes: [ 1.35 ], softVolumes: [ 1.35 ] }'
               exit 0
             fi
 

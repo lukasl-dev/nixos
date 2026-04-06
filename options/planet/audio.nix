@@ -33,31 +33,27 @@ in
       jack.enable = true;
       wireplumber.enable = true;
 
-      # extraConfig = {
-      #   pipewire."10-clock-and-resample" = {
-      #     "context.properties" = {
-      #       "default.clock.rate" = 48000;
-      #       "default.clock.allowed-rates" = [
-      #         44100
-      #         48000
-      #         96000
-      #       ];
-      #       "default.clock.quantum" = 256;
-      #       "default.clock.min-quantum" = 128;
-      #       "default.clock.max-quantum" = 1024;
-      #       "resample.quality" = 10;
-      #     };
-      #   };
-      #
-      #   pipewire-pulse."10-pulse-quality" = {
-      #     "pulse.properties" = {
-      #       "flat-volumes" = false;
-      #     };
-      #     "stream.properties" = {
-      #       "resample.quality" = 10;
-      #     };
-      #   };
-      # };
+      extraConfig = {
+        pipewire."10-clock-and-resample" = {
+          "context.properties" = {
+            "default.clock.rate" = 48000;
+            "default.clock.allowed-rates" = [ 48000 ];
+            "default.clock.quantum" = 1024;
+            "default.clock.min-quantum" = 512;
+            "default.clock.max-quantum" = 2048;
+            "resample.quality" = 4;
+          };
+        };
+
+        pipewire-pulse."10-pulse-quality" = {
+          "pulse.properties" = {
+            "flat-volumes" = false;
+          };
+          "stream.properties" = {
+            "resample.quality" = 4;
+          };
+        };
+      };
 
       wireplumber.extraConfig = {
         "99-disable-suspend" = {
