@@ -32,9 +32,23 @@ let
       type == "directory" || pkgs.lib.hasSuffix ".json" base;
   };
 
-  # TODO: add opencode api key: https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/providers.md
-  pi-mono = inputs.pi-mono.packages.${system}.coding-agent;
+  pi-mono-real = inputs.pi-mono.packages.${system}.coding-agent;
 
+  pi-mono-models =
+    pkgs.runCommand "pi-mono-models.json"
+      {
+        nativeBuildInputs = [ pkgs.tsx ];
+      }
+      ''
+        tsx ${./models.mjs} \
+          ${pi-mono-real.src}/packages/ai/src/models.generated.ts \
+          opencode-go > $out
+      '';
+
+  pi-mono = pkgs.writeShellScriptBin "pi" ''
+    export OPENCODE_API_KEY="$(cat ${config.age.secrets."universe/pi-mono/opencode_api_key".path})"
+    exec ${lib.getExe pi-mono-real} "$@"
+  '';
 in
 {
   security.apparmor.policies.pi-mono = {
@@ -72,6 +86,15 @@ in
     '';
   };
 
+  age.secrets = {
+    "universe/pi-mono/opencode_api_key" = {
+      rekeyFile = ../../../../secrets/universe/pi-mono/opencode_api_key.age;
+      owner = user.name;
+      path = "/home/${user.name}/.pi/opencode_api_key";
+      symlink = false;
+    };
+  };
+
   environment.systemPackages = [ pi-mono ];
 
   systemd.tmpfiles.rules = [
@@ -80,6 +103,7 @@ in
     "L+ /home/${user.name}/.pi/agent/extensions - - - - ${extensions}"
     "L+ /home/${user.name}/.pi/agent/skills - - - - ${./skills}"
     "L+ /home/${user.name}/.pi/agent/themes - - - - ${themes}"
+    "L+ /home/${user.name}/.pi/agent/models.json - - - - ${pi-mono-models}"
     "L+ /home/${user.name}/.pi/agent/AGENTS.md - - - - ${./AGENTS.md}"
   ];
 }
