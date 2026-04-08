@@ -24,6 +24,8 @@ in
 
   config = lib.mkIf config.planet.wm.enable {
     planet.wm.hyprland = {
+      launch = [ "systemctl --user start --no-block noctalia-shell.service" ];
+
       bindings =
         let
           cmd = lib.getExe noctalia.package;
@@ -246,16 +248,7 @@ in
             mOnHover = "#cdd6f4";
           };
         };
-
-        systemd.user.services.noctalia-shell = {
-          Unit = {
-            After = [ "graphical-session.target" ];
-            PartOf = [ "graphical-session.target" ];
-          };
-          Install.WantedBy = [ "graphical-session.target" ];
-        };
       }
     ];
-
   };
 }
