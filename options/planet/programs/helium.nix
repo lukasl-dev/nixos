@@ -22,16 +22,16 @@ let
     ++ lib.optionals (hyprland.enable && wm.display == "wayland") [ "WaylandLinuxDrmSyncobj" ]
   );
 
-  heliumVersion = "0.10.5.1";
+  heliumVersion = "0.10.9.1";
   heliumRelease =
     {
       x86_64-linux = {
         arch = "x86_64";
-        hash = "sha256-3hOM9PfuwtdTyQUVOzpAydv6LQHGCKlfKm8TZsdJs20=";
+        hash = "sha256-ob1iSE+4IrsHthEpEypgSkZs2LT4H2YXknjD1FKn3sc=";
       };
       aarch64-linux = {
         arch = "arm64";
-        hash = "sha256-2h5CW+zhzDX9Uw4PlRGbXRMyhb7yJqPe6XkJ7VzzUJI=";
+        hash = "sha256-au43eOyC97cWMEqKj7EaNkT0N4G6odBv51/wJ0owT+U=";
       };
     }
     .${pkgs.stdenv.hostPlatform.system}
