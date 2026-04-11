@@ -95,7 +95,21 @@ in
     };
   };
 
-  environment.systemPackages = [ pi-mono ];
+  environment.systemPackages = [
+    pi-mono
+    (pkgs.writeShellScriptBin "?" ''
+      if [ "$#" -eq 0 ]; then
+        echo "usage: ? <prompt...>" >&2
+        exit 1
+      fi
+
+      exec ${lib.getExe pi-mono} \
+        -p "$*" \
+        --model gpt-5.4-mini \
+        --provider openai-codex \
+        --thinking medium 
+    '')
+  ];
 
   systemd.tmpfiles.rules = [
     "d /home/${user.name}/.pi 0755 ${user.name} users - -"

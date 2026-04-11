@@ -42,6 +42,10 @@ in
 
           bindkey "''${key[Up]}" up-line-or-search
 
+          # Allow the `?` prompt shortcut to be looked up as a command instead
+          # of failing as an unmatched glob.
+          setopt nonomatch
+
           autoload -Uz add-zsh-hook
 
           _tmux_auto_rename_window() {
