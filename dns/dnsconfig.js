@@ -56,6 +56,7 @@ D(
   CNAME("dns", "hole.lukasl.dev."),
   CNAME("hole", "ida.lukasl.dev."),
   CNAME("status", "ida.lukasl.dev."),
+  CNAME("restic", "ida.lukasl.dev."),
 
   // iconolatry
   CNAME("icons", "cname.vercel-dns.com."),

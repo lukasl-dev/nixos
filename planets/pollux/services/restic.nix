@@ -2,9 +2,9 @@
 
 {
   services.restic.backups = {
-    local = {
+    pollux = {
       initialize = true;
-      repository = "/var/backup/restic/local";
+      repository = "rest:https://restic.lukasl.dev/pollux";
       passwordFile = config.sops.secrets."planets/pollux/restic/secret".path;
       paths = [
         "/var/lib"
