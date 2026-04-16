@@ -10,17 +10,23 @@ let
   inherit (wm) hyprland;
   inherit (config.planet.programs) helium;
 
-  ozoneFlag =
+  mkOzoneFlag =
+    display:
     {
       x11 = "--ozone-platform=x11";
       wayland = "--ozone-platform=wayland";
     }
-    .${wm.display};
+    .${display};
 
-  heliumFeatures = builtins.concatStringsSep "," (
-    [ "Vulkan" "VulkanFromANGLE" ]
-    ++ lib.optionals (hyprland.enable && wm.display == "wayland") [ "WaylandLinuxDrmSyncobj" ]
-  );
+  mkHeliumFeatures =
+    {
+      display,
+      webgpu ? false,
+    }:
+    builtins.concatStringsSep "," (
+      lib.optionals webgpu [ "Vulkan" "VulkanFromANGLE" "DefaultANGLEVulkan" ]
+      ++ lib.optionals (hyprland.enable && display == "wayland") [ "WaylandLinuxDrmSyncobj" ]
+    );
 
   heliumVersion = "0.10.9.1";
   heliumRelease =
@@ -55,6 +61,9 @@ let
         mkdir -p $out/bin $out/lib/helium $out/share/applications $out/share/icons/hicolor/256x256/apps
         cp -r . $out/lib/helium
 
+        rm -f $out/lib/helium/libvulkan.so.1
+        ln -s ${lib.getLib pkgs.vulkan-loader}/lib/libvulkan.so.1 $out/lib/helium/libvulkan.so.1
+
         ln -s $out/lib/helium/helium $out/bin/helium
         install -Dm644 helium.desktop $out/share/applications/helium.desktop
         install -Dm644 product_logo_256.png $out/share/icons/hicolor/256x256/apps/helium.png
@@ -87,7 +96,62 @@ let
     pango
     systemd
     alsa-lib
+    libGL
+    vulkan-loader
+    pciutils
   ];
+
+  mkWrappedHeliumPackage =
+    {
+      name,
+      binName ? name,
+      display,
+      webgpu ? false,
+    }:
+    let
+      heliumFeatures = mkHeliumFeatures {
+        inherit display webgpu;
+      };
+
+      wrapperArgs = [
+        ''--prefix LD_LIBRARY_PATH : "$out/lib/helium"''
+        ''--suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibraries}"''
+        ''--add-flags "${mkOzoneFlag display}"''
+      ]
+      ++ lib.optionals (heliumFeatures != "") [ ''--add-flags "--enable-features=${heliumFeatures}"'' ]
+      ++ lib.optionals webgpu [
+        ''--add-flags "--use-angle=vulkan"''
+        ''--add-flags "--ignore-gpu-blocklist"''
+        ''--add-flags "--enable-unsafe-webgpu"''
+      ];
+    in
+    pkgs.symlinkJoin {
+      inherit name;
+      paths = [ heliumPackage ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        rm -f $out/bin/helium
+        makeWrapper ${heliumPackage}/bin/helium $out/bin/${binName} \
+          ${lib.concatStringsSep " \\\n          " wrapperArgs}
+      '';
+    };
+
+  heliumWaylandPackage = mkWrappedHeliumPackage {
+    name = "helium";
+    binName = "helium";
+    display = wm.display;
+  };
+
+  heliumWebgpuPackage = pkgs.writeShellScriptBin "helium-webgpu" ''
+    export LD_LIBRARY_PATH="${heliumPackage}/lib/helium:${lib.makeLibraryPath runtimeLibraries}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    exec ${heliumPackage}/bin/helium \
+      --ozone-platform=x11 \
+      --use-angle=vulkan \
+      --enable-features=${mkHeliumFeatures { display = "x11"; webgpu = true; }} \
+      --ignore-gpu-blocklist \
+      --enable-unsafe-webgpu \
+      "$@"
+  '';
 in
 {
   options.planet.programs.helium = {
@@ -100,27 +164,17 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = pkgs.symlinkJoin {
-        name = "helium";
-        paths = [ heliumPackage ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/helium \
-            --prefix LD_LIBRARY_PATH : "$out/lib/helium" \
-            --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibraries}" \
-            --add-flags "${ozoneFlag}" \
-            --add-flags "--use-angle=vulkan" \
-            --add-flags "--enable-features=${heliumFeatures}"
-            # --add-flags "--enable-unsafe-webgpu" \
-        '';
-      };
+      default = heliumWaylandPackage;
       description = "Package used for Helium browser.";
       example = "pkgs.symlinkJoin { ... }";
     };
   };
 
   config = lib.mkIf helium.enable {
-    environment.systemPackages = [ helium.package ];
+    environment.systemPackages = [
+      helium.package
+      heliumWebgpuPackage
+    ];
 
     planet.wm.hyprland.bindings = [
       {
