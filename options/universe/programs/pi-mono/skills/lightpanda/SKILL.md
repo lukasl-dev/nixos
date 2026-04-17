@@ -1,7 +1,7 @@
 ---
 name: lightpanda
-description: Fetch websites headlessly with Lightpanda. Use when you need page content rendered in a browser-like environment, especially for JavaScript-heavy pages.
-compatibility: Requires the `lightpanda` CLI. This skill is for fetching page content only, not browser automation beyond fetch output.
+description: ALWAYS use this skill for any website fetching, webpage retrieval, or page content extraction. Fetch websites headlessly with Lightpanda when you need page content rendered in a browser-like environment, especially for JavaScript-heavy pages.
+compatibility: Requires the `lightpanda` CLI. Mandatory for website fetching tasks. This skill is for fetching page content only, not browser automation beyond fetch output.
 ---
 
 # Lightpanda Skill
