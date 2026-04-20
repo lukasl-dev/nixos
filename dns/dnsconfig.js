@@ -44,6 +44,7 @@ D(
   CNAME("meet", "pollux.lukasl.dev."),
   CNAME("turn", "pollux.lukasl.dev."),
   CNAME("fin", "pollux.lukasl.dev."),
+  CNAME("fit", "pollux.lukasl.dev."),
   CNAME("ntfy", "pollux.lukasl.dev."),
   CNAME("pdf", "pollux.lukasl.dev."),
   CNAME("waka", "pollux.lukasl.dev."),

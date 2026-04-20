@@ -20,6 +20,7 @@ in
     ./fin.nix
     # ./forge.nix
     ./factorio.nix
+    ./fit.nix
     ./kitchen.nix
     ./marks.nix
     ./metrics.nix
