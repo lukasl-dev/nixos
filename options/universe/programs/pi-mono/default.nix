@@ -10,7 +10,7 @@ let
   inherit (config.universe) user;
   inherit (pkgs.stdenv.hostPlatform) system;
 
-  pi-mono-real = inputs.pi-mono.packages.${system}.coding-agent;
+  pi-mono = inputs.pi-mono.packages.${system}.coding-agent;
 
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
@@ -62,16 +62,9 @@ let
       }
       ''
         tsx ${./models.mjs} \
-          ${pi-mono-real.src}/packages/ai/src/models.generated.ts \
+          ${pi-mono.src}/packages/ai/src/models.generated.ts \
           opencode-go > $out
       '';
-
-  pi-mono = pkgs.writeShellScriptBin "pi" ''
-    export OPENCODE_API_KEY="$(cat ${config.age.secrets."universe/pi-mono/opencode_api_key".path})"
-    exec ${lib.getExe pi-mono-real} \
-      -e ${pi-fff}/packages/pi-fff/src/index.ts \
-      "$@"
-  '';
 in
 {
   imports = [ inputs.pi-mono.nixosModules.default ];
@@ -125,6 +118,7 @@ in
     package = pi-mono;
 
     rules = builtins.readFile ./AGENTS.md;
+    models = pi-mono-models;
 
     skills = [
       ./skills/github
@@ -140,14 +134,16 @@ in
     extensions = [
       ./extensions/openai.ts
       ./extensions/wakatime.ts
-      pi-fff
+      "${pi-fff}/packages/pi-fff/src/index.ts"
     ];
 
     themes = [
       ./themes/catppuccin-mocha.json
     ];
 
-    models = pi-mono-models;
+    environment = {
+      OPENCODE_API_KEY = config.age.secrets."universe/pi-mono/opencode_api_key".path;
+    };
   };
 
   environment.systemPackages = [
