@@ -10,28 +10,6 @@ let
   inherit (config.universe) user;
   inherit (pkgs.stdenv.hostPlatform) system;
 
-  extensions = builtins.path {
-    path = ./extensions;
-    name = "pi-mono-extensions";
-    filter =
-      path: type:
-      let
-        base = builtins.baseNameOf path;
-      in
-      base != "node_modules" && (type == "directory" || pkgs.lib.hasSuffix ".ts" base);
-  };
-
-  themes = builtins.path {
-    path = ./themes;
-    name = "pi-mono-themes";
-    filter =
-      path: type:
-      let
-        base = builtins.baseNameOf path;
-      in
-      type == "directory" || pkgs.lib.hasSuffix ".json" base;
-  };
-
   pi-mono-real = inputs.pi-mono.packages.${system}.coding-agent;
 
   pi-fff = pkgs.buildNpmPackage {
@@ -145,7 +123,31 @@ in
   programs.pi.coding-agent = {
     enable = true;
     package = pi-mono;
+
     rules = builtins.readFile ./AGENTS.md;
+
+    skills = [
+      ./skills/github
+      ./skills/home-manager
+      ./skills/lightpanda
+      ./skills/nixpkgs
+      ./skills/nvf
+      ./skills/obsidian
+      ./skills/tikzjax
+      ./skills/zig
+    ];
+
+    extensions = [
+      ./extensions/openai.ts
+      ./extensions/wakatime.ts
+      pi-fff
+    ];
+
+    themes = [
+      ./themes/catppuccin-mocha.json
+    ];
+
+    models = pi-mono-models;
   };
 
   environment.systemPackages = [
@@ -161,15 +163,5 @@ in
         --provider openai-codex \
         --thinking medium 
     '')
-  ];
-
-  systemd.tmpfiles.rules = [
-    "d /home/${user.name}/.pi 0755 ${user.name} users - -"
-    "d /home/${user.name}/.pi/agent 0755 ${user.name} users - -"
-    "L+ /home/${user.name}/.pi/agent/extensions - - - - ${extensions}"
-    "L+ /home/${user.name}/.pi/agent/skills - - - - ${./skills}"
-    "L+ /home/${user.name}/.pi/agent/themes - - - - ${themes}"
-    "L+ /home/${user.name}/.pi/agent/models.json - - - - ${pi-mono-models}"
-    "L+ /home/${user.name}/.pi/agent/AGENTS.md - - - - ${./AGENTS.md}"
   ];
 }

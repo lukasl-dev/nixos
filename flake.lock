@@ -2202,11 +2202,11 @@
         "systems": "systems_13"
       },
       "locked": {
-        "lastModified": 1776792378,
-        "narHash": "sha256-mlX20D+vzuOc/KImNjw5wxPK6xMJQ+ZrmqHxZDspEfs=",
+        "lastModified": 1776795640,
+        "narHash": "sha256-sr+TSCWFoQaRI58LGeYg9KOsnuQ641FzH+0PLpUGdno=",
         "owner": "lukasl-dev",
         "repo": "pi-mono.nix",
-        "rev": "7688175f7b7db432df95f52e12efd9ded16eb160",
+        "rev": "38a03d87390ff7abc4e6bd1807497b7bad50bebe",
         "type": "github"
       },
       "original": {
