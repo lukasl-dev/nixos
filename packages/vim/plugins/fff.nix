@@ -11,7 +11,6 @@
           max_threads = 8,
           preview = {
               line_numbers = true,
-              show_file_info = false,
           },
         }
       '';
