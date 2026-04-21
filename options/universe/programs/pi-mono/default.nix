@@ -34,6 +34,49 @@ let
 
   pi-mono-real = inputs.pi-mono.packages.${system}.coding-agent;
 
+  pi-fff = pkgs.buildNpmPackage {
+    pname = "pi-fff";
+    version = "0.6.0";
+    src = inputs.fff-nvim.outPath;
+    npmDepsHash = "sha256-mPoZ5fYcb2PQ/5aDdB5pTfDvfrMyVj2B9VlMfNQjae0=";
+    npmInstallFlags = [ "--include=optional" ];
+    npmRebuildFlags = [ "--ignore-scripts" ];
+    dontNpmBuild = true;
+
+    buildPhase = ''
+      runHook preBuild
+
+      npm run build --workspace packages/fff-node
+
+      mkdir -p packages/fff-node/bin
+      cp ${inputs.fff-nvim.packages.${system}.default}/lib/libfff_c.so packages/fff-node/bin/
+
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p \
+        $out/packages \
+        $out/target/release \
+        $out/node_modules \
+        $out/node_modules/@ff-labs \
+        $out/node_modules/@yuuang
+
+      cp -r packages/pi-fff $out/packages/
+      cp -r packages/fff-node $out/packages/
+      cp -r node_modules/ffi-rs $out/node_modules/
+      cp -r node_modules/@yuuang/* $out/node_modules/@yuuang/
+      ln -s ../../packages/fff-node $out/node_modules/@ff-labs/fff-node
+
+      cp packages/fff-node/bin/libfff_c.so $out/target/release/
+      touch $out/Cargo.toml
+
+      runHook postInstall
+    '';
+  };
+
   pi-mono-models =
     pkgs.runCommand "pi-mono-models.json"
       {
@@ -47,10 +90,14 @@ let
 
   pi-mono = pkgs.writeShellScriptBin "pi" ''
     export OPENCODE_API_KEY="$(cat ${config.age.secrets."universe/pi-mono/opencode_api_key".path})"
-    exec ${lib.getExe pi-mono-real} "$@"
+    exec ${lib.getExe pi-mono-real} \
+      -e ${pi-fff}/packages/pi-fff/src/index.ts \
+      "$@"
   '';
 in
 {
+  imports = [ inputs.pi-mono.nixosModules.default ];
+
   security.apparmor.policies.pi-mono = {
     state = "enforce";
     profile = ''
@@ -95,8 +142,13 @@ in
     };
   };
 
+  programs.pi.coding-agent = {
+    enable = true;
+    package = pi-mono;
+    rules = builtins.readFile ./AGENTS.md;
+  };
+
   environment.systemPackages = [
-    pi-mono
     (pkgs.writeShellScriptBin "?" ''
       if [ "$#" -eq 0 ]; then
         echo "usage: ? <prompt...>" >&2

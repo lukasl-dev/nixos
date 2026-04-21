@@ -24,7 +24,7 @@ in
 
   config = lib.mkIf config.planet.wm.enable {
     planet.wm.hyprland = {
-      launch = [ "systemctl --user start --no-block noctalia-shell.service" ];
+      launch = [ (lib.getExe noctalia.package) ];
 
       bindings =
         let
@@ -54,7 +54,6 @@ in
 
         programs.noctalia-shell = {
           enable = true;
-          systemd.enable = true;
           inherit (noctalia) package;
 
           settings = {
