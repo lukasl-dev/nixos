@@ -16,7 +16,7 @@ let
     pname = "pi-fff";
     version = "0.6.0";
     src = inputs.fff-nvim.outPath;
-    npmDepsHash = "sha256-mPoZ5fYcb2PQ/5aDdB5pTfDvfrMyVj2B9VlMfNQjae0=";
+    npmDepsHash = "sha256-BbGGN7Y7x9Yf5xXMjoGqJFLj7Hw1p19DcJRiG5lkkRw=";
     npmInstallFlags = [ "--include=optional" ];
     npmRebuildFlags = [ "--ignore-scripts" ];
     dontNpmBuild = true;
@@ -53,6 +53,13 @@ let
 
       runHook postInstall
     '';
+  };
+
+  pi-thinking-steps = pkgs.fetchFromGitHub {
+    owner = "fluxgear";
+    repo = "pi-thinking-steps";
+    rev = "v0.9.7";
+    hash = "sha256-6DPl87rxviXiM1qiEYnjjGhLSNlbyMsMqEMgxPqYAhY=";
   };
 
   pi-mono-models =
@@ -134,12 +141,11 @@ in
     extensions = [
       ./extensions/openai.ts
       ./extensions/wakatime.ts
-      "${pi-fff}/packages/pi-fff/src/index.ts"
+      "${pi-thinking-steps}"
+      "${pi-fff}/packages/pi-fff"
     ];
 
-    themes = [
-      ./themes/catppuccin-mocha.json
-    ];
+    themes = [ ./themes/catppuccin-mocha.json ];
 
     environment = {
       OPENCODE_API_KEY = config.age.secrets."universe/pi-mono/opencode_api_key".path;
