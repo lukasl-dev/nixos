@@ -2219,11 +2219,11 @@
         "systems": "systems_14"
       },
       "locked": {
-        "lastModified": 1776898371,
-        "narHash": "sha256-nD6KJnRBLqTKcN+Wlml9yzVCdgDfjTzk+Ugh1qna1PU=",
+        "lastModified": 1776999750,
+        "narHash": "sha256-CpuqkSxOBUHOMJgQyQd+G9Q9me09PQY3d/H3Ax/U3rQ=",
         "owner": "lukasl-dev",
         "repo": "pi-mono.nix",
-        "rev": "4bba5346bc7b07fda86d2d91c42cd7a3b60cc78c",
+        "rev": "2252ba0bff64104af043d47607930b1637834d43",
         "type": "github"
       },
       "original": {
