@@ -129,13 +129,14 @@ in
 
     skills = [
       ./skills/github
-      ./skills/home-manager
       ./skills/lightpanda
-      ./skills/nixpkgs
-      ./skills/nvf
       ./skills/obsidian
       ./skills/tikzjax
       ./skills/zig
+
+      "${inputs.firn}/home-manager"
+      "${inputs.firn}/nix"
+      "${inputs.firn}/nvf"
     ];
 
     extensions = [

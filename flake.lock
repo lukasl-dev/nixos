@@ -483,6 +483,22 @@
         "type": "github"
       }
     },
+    "firn": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777001345,
+        "narHash": "sha256-gQYK4PKupTZ4OAF9CZNgr9juXdBG5q4kDmsYD/ZxByw=",
+        "owner": "lukasl-dev",
+        "repo": "firn",
+        "rev": "d75e5af9194a7e700afa8deab0091016f931101c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lukasl-dev",
+        "repo": "firn",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -2325,6 +2341,7 @@
         "catppuccin": "catppuccin",
         "catppuccin-where-is-my-sddm-theme": "catppuccin-where-is-my-sddm-theme",
         "fff-nvim": "fff-nvim",
+        "firn": "firn",
         "ghostty": "ghostty",
         "home-manager": "home-manager_3",
         "hyprland": "hyprland",

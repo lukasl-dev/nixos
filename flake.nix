@@ -40,6 +40,10 @@
     };
     opencode.url = "github:anomalyco/opencode?ref=v1.2.27";
     pi-mono.url = "github:lukasl-dev/pi-mono.nix";
+    firn = {
+      url = "github:lukasl-dev/firn";
+      flake = false;
+    };
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";
     fff-nvim = {
