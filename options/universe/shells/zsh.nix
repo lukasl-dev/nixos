@@ -5,7 +5,7 @@
 }:
 
 let
-  user = config.universe.user;
+  inherit (config.universe) user;
 in
 {
   assertions = [
@@ -17,9 +17,12 @@ in
 
   programs.zsh.enable = true;
 
-  environment.pathsToLink = [ "/share/zsh" ];
-
   users.defaultUserShell = pkgs.zsh;
+
+  environment = {
+    pathsToLink = [ "/share/zsh" ];
+    variables.SHELL = "${pkgs.zsh}/bin/zsh";
+  };
 
   universe.hm = [
     {
