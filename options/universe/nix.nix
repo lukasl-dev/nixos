@@ -12,15 +12,21 @@ in
 {
   documentation.nixos.enable = false;
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    trusted-users = [
-      "root"
-      config.universe.user.name
-    ];
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        config.universe.user.name
+      ];
+    };
+    registry = {
+      nixpkgs.flake = inputs.nixpkgs;
+      nixpkgs-unstable.flake = inputs.nixpkgs-unstable;
+    };
   };
 
   nixpkgs =
@@ -44,7 +50,5 @@ in
       ];
     };
 
-  environment.systemPackages = with pkgs; [
-    nix-prefetch-github
-  ];
+  environment.systemPackages = with pkgs; [ nix-prefetch-github ];
 }
