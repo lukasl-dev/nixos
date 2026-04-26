@@ -1,10 +1,6 @@
 # To Do
 
 - [ ] Remove home manager for faster builds?
-- [ ] Only use nixpkgs-unstable
-- [ ] nvf
-- [ ] attic
-    - [ ] Use binary cache to reduce github action runtime
 - [ ] Improve Nix build/switch performance
     - [ ] Enable distributed builders in `nix.settings.builders`
     - [ ] Set `nix.settings.builders-use-substitutes = true`
@@ -17,6 +13,7 @@
     - [ ] Keep upstream package derivations cacheable
     - [ ] Rebuild one host and confirm cache hits improve
 - [ ] Rename repo to flake.nix or flake
+- [ ] Migrate to Hyprland lua
 
 ## pollux
 
