@@ -62,16 +62,12 @@ let
     hash = "sha256-6DPl87rxviXiM1qiEYnjjGhLSNlbyMsMqEMgxPqYAhY=";
   };
 
-  pi-mono-models =
-    pkgs.runCommand "pi-mono-models.json"
-      {
-        nativeBuildInputs = [ pkgs.tsx ];
-      }
-      ''
-        tsx ${./models.mjs} \
-          ${pi-mono.src}/packages/ai/src/models.generated.ts \
-          opencode-go > $out
-      '';
+  pi-usage-extension = pkgs.fetchFromGitHub {
+    owner = "tmustier";
+    repo = "pi-extensions";
+    rev = "a6839e57c0f0d8d534b01e646abce2d6530faf01";
+    hash = "sha256-ecS05kVnga1y+OoRoUH7/+WCrQsxgP/q/AcSWAPyO8o=";
+  };
 in
 {
   imports = [ inputs.pi-mono.nixosModules.default ];
@@ -125,7 +121,6 @@ in
     package = pi-mono;
 
     rules = builtins.readFile ./AGENTS.md;
-    models = pi-mono-models;
 
     skills = [
       ./skills/github
@@ -144,6 +139,7 @@ in
       ./extensions/wakatime.ts
       "${pi-thinking-steps}"
       "${pi-fff}/packages/pi-fff"
+      "${pi-usage-extension}/usage-extension"
     ];
 
     themes = [ ./themes/catppuccin-mocha.json ];
