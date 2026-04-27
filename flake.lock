@@ -2235,11 +2235,11 @@
         "systems": "systems_14"
       },
       "locked": {
-        "lastModified": 1777304689,
-        "narHash": "sha256-XlyiW1eD+Z4Ej8WDkselrhJQpBE9RPLO0GlnV0KpFd8=",
+        "lastModified": 1777332738,
+        "narHash": "sha256-OtJbHGu8AHQ+R/KNaemPIcPiGdCfWP7Jeq+78OME5Os=",
         "owner": "lukasl-dev",
         "repo": "pi-mono.nix",
-        "rev": "422d13922212dc0c8439153d573a283dedca9a19",
+        "rev": "e057ca7659e412eab12da8e646e3bbd17c8e7819",
         "type": "github"
       },
       "original": {
