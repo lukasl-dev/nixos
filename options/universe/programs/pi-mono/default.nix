@@ -14,7 +14,7 @@ let
 
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
-    version = "0.6.0";
+    version = "0.6.4";
     src = inputs.fff-nvim.outPath;
     npmDepsHash = "sha256-BbGGN7Y7x9Yf5xXMjoGqJFLj7Hw1p19DcJRiG5lkkRw=";
     npmInstallFlags = [ "--include=optional" ];
@@ -143,7 +143,7 @@ in
 
     extensions = [
       ./extensions/wakatime.ts
-      "${pi-thinking-steps}"
+      # "${pi-thinking-steps}"
       "${pi-fff}/packages/pi-fff"
       "${pi-usage-extension}/usage-extension"
       "${pi-openai}"

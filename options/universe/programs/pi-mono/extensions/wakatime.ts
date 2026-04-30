@@ -6,10 +6,11 @@ import {
 } from "@mariozechner/pi-coding-agent";
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 
 type TrackedFileChange = {
 	entity: string;
+	entityType?: "file" | "app";
 	lineChanges?: number;
 	isWrite?: boolean;
 };
@@ -26,6 +27,7 @@ type ProjectState = {
 };
 
 const HEARTBEAT_INTERVAL_SECONDS = 60;
+const HEARTBEAT_RETRY_SECONDS = 60;
 const STATE_PREFIX = "pi-mono-wakatime";
 const PI_VERSION = "0.1.0";
 const PLUGIN_NAME = `pi/${PI_VERSION} pi-mono-wakatime/${PI_VERSION}`;
@@ -34,6 +36,13 @@ let currentProjectFolder = process.cwd();
 let pendingChanges = new Map<string, TrackedFileChange>();
 let cliChecked = false;
 let cliAvailable = false;
+let cliStatus = "not checked";
+let lastActiveFile: string | undefined;
+let lastHeartbeatAttemptAt: number | undefined;
+let lastHeartbeatSentAt: number | undefined;
+let lastHeartbeatError: string | undefined;
+let agentActive = false;
+let activeHeartbeatTimer: ReturnType<typeof setInterval> | undefined;
 
 function getWakaHome(): string {
 	return process.env.WAKATIME_HOME || join(process.env.HOME || ".", ".wakatime");
@@ -67,14 +76,23 @@ function nowSeconds(): number {
 }
 
 function shouldSendHeartbeat(projectFolder: string, force: boolean): boolean {
+	const now = nowSeconds();
+	if (!force && lastHeartbeatAttemptAt && now - lastHeartbeatAttemptAt < HEARTBEAT_RETRY_SECONDS) return false;
 	if (force) return true;
 	const state = readProjectState(projectFolder);
 	const lastHeartbeatAt = state.lastHeartbeatAt ?? 0;
-	return nowSeconds() - lastHeartbeatAt >= HEARTBEAT_INTERVAL_SECONDS;
+	return now - lastHeartbeatAt >= HEARTBEAT_INTERVAL_SECONDS;
 }
 
 function markHeartbeatSent(projectFolder: string): void {
 	writeProjectState(projectFolder, { lastHeartbeatAt: nowSeconds() });
+}
+
+function sanitizeOutput(text: string): string {
+	return text
+		.replace(/(api[_-]?key\s*[=:]\s*)\S+/gi, "$1<redacted>")
+		.trim()
+		.slice(0, 1000);
 }
 
 async function ensureCli(pi: ExtensionAPI): Promise<boolean> {
@@ -82,10 +100,27 @@ async function ensureCli(pi: ExtensionAPI): Promise<boolean> {
 	cliChecked = true;
 
 	try {
-		const result = await pi.exec("wakatime-cli", ["--version"], { timeout: 5000 });
-		cliAvailable = result.code === 0;
-	} catch {
+		const version = await pi.exec("wakatime-cli", ["--version"], { timeout: 5000 });
+		const versionOutput = `${version.stdout}\n${version.stderr}`;
+		if (version.code !== 0 || /failed to parse config|permission denied/i.test(versionOutput)) {
+			cliAvailable = false;
+			cliStatus = sanitizeOutput(versionOutput) || `wakatime-cli --version exited with ${version.code}`;
+			return cliAvailable;
+		}
+
+		const config = await pi.exec("wakatime-cli", ["--config-read", "api_key"], { timeout: 5000 });
+		const configOutput = `${config.stdout}\n${config.stderr}`;
+		if (config.code !== 0 || /api key not found|api_key.*empty|failed to parse config|permission denied/i.test(configOutput)) {
+			cliAvailable = false;
+			cliStatus = sanitizeOutput(configOutput) || `wakatime-cli config check exited with ${config.code}`;
+			return cliAvailable;
+		}
+
+		cliAvailable = true;
+		cliStatus = "available and configured";
+	} catch (error) {
 		cliAvailable = false;
+		cliStatus = error instanceof Error ? error.message : String(error);
 	}
 
 	return cliAvailable;
@@ -216,38 +251,65 @@ function isProbablyFile(path: string): boolean {
 }
 
 function queueChange(change: TrackedFileChange): void {
-	if (!change.entity || !isProbablyFile(change.entity)) return;
+	const entityType = change.entityType ?? "file";
+	if (!change.entity || (entityType === "file" && !isProbablyFile(change.entity))) return;
+	if (entityType === "file") lastActiveFile = change.entity;
 
-	const existing = pendingChanges.get(change.entity);
+	const key = `${entityType}:${change.entity}`;
+	const existing = pendingChanges.get(key);
 	if (!existing) {
-		pendingChanges.set(change.entity, change);
+		pendingChanges.set(key, { ...change, entityType });
 		return;
 	}
 
-	pendingChanges.set(change.entity, {
+	pendingChanges.set(key, {
 		entity: change.entity,
+		entityType,
 		lineChanges: (existing.lineChanges ?? 0) + (change.lineChanges ?? 0),
 		isWrite: existing.isWrite || change.isWrite,
 	});
+}
+
+function projectName(projectFolder: string): string {
+	return basename(projectFolder) || "unknown";
+}
+
+function queueActiveHeartbeat(): void {
+	if (lastActiveFile) {
+		queueChange({ entity: lastActiveFile });
+		return;
+	}
+
+	// Before a tool touches a file, still log active AI-coding time against the project.
+	queueChange({ entity: "pi", entityType: "app" });
 }
 
 async function sendHeartbeat(
 	pi: ExtensionAPI,
 	projectFolder: string,
 	change: TrackedFileChange,
-): Promise<void> {
+): Promise<boolean> {
+	const entityType = change.entityType ?? "file";
 	const args = [
 		"--entity",
 		change.entity,
 		"--entity-type",
-		"file",
+		entityType,
 		"--category",
 		"ai coding",
 		"--plugin",
 		PLUGIN_NAME,
+		"--timeout",
+		"5",
 		"--project-folder",
 		projectFolder,
 	];
+
+	if (entityType === "app") {
+		args.push("--project", projectName(projectFolder));
+	} else {
+		args.push("--alternate-project", projectName(projectFolder));
+	}
 
 	if (typeof change.lineChanges === "number" && change.lineChanges !== 0) {
 		args.push("--ai-line-changes", String(change.lineChanges));
@@ -258,10 +320,37 @@ async function sendHeartbeat(
 	}
 
 	try {
-		await pi.exec("wakatime-cli", args, { timeout: 10000 });
-	} catch {
+		const result = await pi.exec("wakatime-cli", args, { timeout: 15000 });
+		const output = `${result.stdout}\n${result.stderr}`;
+		if (result.code !== 0 || /"level":"error"|failed to parse config|api key not found|permission denied/i.test(output)) {
+			lastHeartbeatError = sanitizeOutput(output) || `wakatime-cli exited with ${result.code}`;
+			return false;
+		}
+
+		lastHeartbeatSentAt = nowSeconds();
+		lastHeartbeatError = undefined;
+		return true;
+	} catch (error) {
 		// never break the session on heartbeat failures
+		lastHeartbeatError = error instanceof Error ? error.message : String(error);
+		return false;
 	}
+}
+
+function startActiveHeartbeatTimer(pi: ExtensionAPI): void {
+	if (activeHeartbeatTimer) return;
+
+	activeHeartbeatTimer = setInterval(() => {
+		if (!agentActive) return;
+		queueActiveHeartbeat();
+		void flushHeartbeats(pi, false);
+	}, HEARTBEAT_INTERVAL_SECONDS * 1000);
+}
+
+function stopActiveHeartbeatTimer(): void {
+	if (!activeHeartbeatTimer) return;
+	clearInterval(activeHeartbeatTimer);
+	activeHeartbeatTimer = undefined;
 }
 
 async function flushHeartbeats(pi: ExtensionAPI, force = false): Promise<void> {
@@ -269,14 +358,21 @@ async function flushHeartbeats(pi: ExtensionAPI, force = false): Promise<void> {
 	if (!(await ensureCli(pi))) return;
 	if (!shouldSendHeartbeat(currentProjectFolder, force)) return;
 
+	lastHeartbeatAttemptAt = nowSeconds();
 	const changes = Array.from(pendingChanges.values());
 	pendingChanges.clear();
 
+	let sentAny = false;
 	for (const change of changes) {
-		await sendHeartbeat(pi, currentProjectFolder, change);
+		const sent = await sendHeartbeat(pi, currentProjectFolder, change);
+		if (sent) {
+			sentAny = true;
+		} else {
+			queueChange(change);
+		}
 	}
 
-	markHeartbeatSent(currentProjectFolder);
+	if (sentAny) markHeartbeatSent(currentProjectFolder);
 }
 
 export default function wakatimeExtension(pi: ExtensionAPI) {
@@ -287,6 +383,9 @@ export default function wakatimeExtension(pi: ExtensionAPI) {
 
 		currentProjectFolder = await resolveProjectFolder(pi, ctx.cwd);
 		pendingChanges = new Map();
+		lastActiveFile = undefined;
+		agentActive = false;
+		stopActiveHeartbeatTimer();
 		await ensureCli(pi);
 	});
 
@@ -336,30 +435,50 @@ export default function wakatimeExtension(pi: ExtensionAPI) {
 		await flushHeartbeats(pi, false);
 	});
 
+	pi.on("agent_start", async () => {
+		agentActive = true;
+		startActiveHeartbeatTimer(pi);
+		queueActiveHeartbeat();
+		await flushHeartbeats(pi, true);
+	});
+
 	pi.on("agent_end", async () => {
+		agentActive = false;
+		stopActiveHeartbeatTimer();
+		queueActiveHeartbeat();
 		await flushHeartbeats(pi, true);
 	});
 
 	pi.on("session_shutdown", async () => {
+		agentActive = false;
+		stopActiveHeartbeatTimer();
 		await flushHeartbeats(pi, true);
 	});
 
 	pi.registerCommand("wakatime-status", {
 		description: "Show WakaTime extension status",
 		handler: async (_args, ctx) => {
+			cliChecked = false;
 			const hasCli = await ensureCli(pi);
 			const stateFile = getStateFile(currentProjectFolder);
 			const state = readProjectState(currentProjectFolder);
 			const lines = [
-				`wakatime-cli: ${hasCli ? "available" : "missing"}`,
+				`wakatime-cli: ${hasCli ? "ready" : "not ready"}`,
+				`status: ${cliStatus}`,
 				`project: ${currentProjectFolder}`,
+				`active: ${agentActive ? "yes" : "no"}`,
 				`pending entities: ${pendingChanges.size}`,
-				`last heartbeat: ${state.lastHeartbeatAt ? new Date(state.lastHeartbeatAt * 1000).toLocaleString() : "never"}`,
+				`last sent: ${lastHeartbeatSentAt ? new Date(lastHeartbeatSentAt * 1000).toLocaleString() : "never in this process"}`,
+				`last accepted interval: ${state.lastHeartbeatAt ? new Date(state.lastHeartbeatAt * 1000).toLocaleString() : "never"}`,
 				`state file: ${stateFile}`,
 			];
 
+			if (lastHeartbeatError) {
+				lines.push(`last error: ${lastHeartbeatError}`);
+			}
+
 			if (!hasCli) {
-				lines.push("Install wakatime-cli and configure ~/.wakatime.cfg to enable heartbeats.");
+				lines.push("Install/configure wakatime-cli and make sure ~/.wakatime.cfg is readable.");
 			}
 
 			ctx.ui.notify(lines.join("\n"), hasCli ? "info" : "warning");

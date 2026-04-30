@@ -6,12 +6,14 @@ return {
 
   opts = {
     -- UI dimensions and appearance
-    width = 0.8, -- Window width as fraction of screen
-    height = 0.8, -- Window height as fraction of screen
     prompt = " ", -- Input prompt symbol
+    layout = {
+      width = 0.8, -- Window width as fraction of screen
+      height = 0.8, -- Window height as fraction of screen
+      preview_size = 0.5,
+    },
     preview = {
       enabled = true,
-      width = 0.5,
       max_lines = 100,
       max_size = 1024 * 1024, -- 1MB
     },
