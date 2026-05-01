@@ -32,6 +32,7 @@ in
       };
       path = "/home/${user.name}/.wakatime.cfg";
       owner = user.name;
+      symlink = false;
     };
   };
 }
