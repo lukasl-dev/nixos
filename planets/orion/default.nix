@@ -106,7 +106,12 @@
       hyprland = {
         enable = true;
         monitors = [
-          "eDP-1, 1920x1080@144.02800, 0x0, 1"
+          {
+            output = "eDP-1";
+            mode = "1920x1080@144.02800";
+            position = "0x0";
+            scale = 1;
+          }
         ];
       };
     };

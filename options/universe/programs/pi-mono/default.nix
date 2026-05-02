@@ -75,6 +75,13 @@ let
     rev = "14b34130d219158762a27b460d6cc85a667a622e";
     hash = "sha256-Ivxl8/UaEiZtqQA4uM355IVjmgzh2doTdQuXQsfxeVg=";
   };
+
+  pi-exa = pkgs.fetchFromGitHub {
+    owner = "joemccann";
+    repo = "pi-exa";
+    rev = "efbfd05100547ed435f94d4bba1e77919cf9e681";
+    hash = "sha256-egzx2BXEbyiOr0F7iuPa8f3QXjkCOvWl4V3GTsA1vyk=";
+  };
 in
 {
   imports = [ inputs.pi-mono.nixosModules.default ];
@@ -121,6 +128,13 @@ in
       path = "/home/${user.name}/.pi/opencode_api_key";
       symlink = false;
     };
+
+    "universe/pi-mono/exa_api_key" = {
+      rekeyFile = ../../../../secrets/universe/pi-mono/exa_api_key.age;
+      owner = user.name;
+      path = "/home/${user.name}/.pi/exa_api_key";
+      symlink = false;
+    };
   };
 
   programs.pi.coding-agent = {
@@ -139,6 +153,8 @@ in
       "${inputs.firn}/home-manager"
       "${inputs.firn}/nix"
       "${inputs.firn}/nvf"
+
+      "${pi-exa}/skills/exa-search"
     ];
 
     extensions = [
@@ -147,12 +163,14 @@ in
       "${pi-fff}/packages/pi-fff"
       "${pi-usage-extension}/usage-extension"
       "${pi-openai}"
+      "${pi-exa}/extensions/index.ts"
     ];
 
     themes = [ ./themes/catppuccin-mocha.json ];
 
     environment = {
       OPENCODE_API_KEY = config.age.secrets."universe/pi-mono/opencode_api_key".path;
+      EXA_API_KEY = config.age.secrets."universe/pi-mono/exa_api_key".path;
     };
   };
 

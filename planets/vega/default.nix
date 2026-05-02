@@ -83,8 +83,18 @@ in
       hyprland = {
         enable = true;
         monitors = [
-          "DP-2, 1920x1080@239.96, 0x0, 1"
-          "HDMI-A-1, 1920x1080@74.973, 1920x0, 1"
+          {
+            output = "DP-2";
+            mode = "1920x1080@239.96";
+            position = "0x0";
+            scale = 1;
+          }
+          {
+            output = "HDMI-A-1";
+            mode = "1920x1080@74.973";
+            position = "1920x0";
+            scale = 1;
+          }
         ];
       };
     };
@@ -102,8 +112,8 @@ in
     gaming = {
       enable = true;
 
-      lutris.enable = true;
-      bottles.enable = true;
+      # lutris.enable = true;
+      # bottles.enable = true;
 
       steam.enable = true;
       minecraft.enable = true;

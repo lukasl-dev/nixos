@@ -9,6 +9,15 @@
 let
   inherit (pkgs.stdenv.hostPlatform) system;
   hypr-nixpkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system};
+
+  monitorToString =
+    monitor:
+    builtins.concatStringsSep ", " [
+      monitor.output
+      monitor.mode
+      monitor.position
+      (builtins.toString monitor.scale)
+    ];
 in
 {
   imports = [ inputs.hyprland.nixosModules.default ];
@@ -16,11 +25,212 @@ in
   options.planet.wm.hyprland = {
     enable = lib.mkEnableOption "Enable Hyprland";
 
-    monitors = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
+    lua = lib.mkOption {
+      type = lib.types.listOf lib.types.lines;
       default = [ ];
-      example = [ "eDP-1" ];
-      description = "List of monitors to use with Hyprland. Use the output of 'hyprctl monitors' to get the correct names.";
+      example = [
+        # lua
+        ''
+          local x = "hello"
+          print(x)
+        ''
+      ];
+      description = "Lua snippets to include in the generated Hyprland Lua config.";
+    };
+
+    monitors = lib.mkOption {
+      type =
+        with lib.types;
+        listOf (submodule {
+          options = {
+            output = lib.mkOption {
+              type = str;
+              description = "Monitor output name.";
+              example = "DP-1";
+            };
+            mode = lib.mkOption {
+              type = str;
+              description = "Monitor mode and refresh rate.";
+              example = "1920x1080@144";
+            };
+            position = lib.mkOption {
+              type = str;
+              description = "Monitor position.";
+              example = "0x0";
+            };
+            scale = lib.mkOption {
+              type = number;
+              description = "Monitor scale factor.";
+              example = 1;
+            };
+          };
+        });
+      default = [ ];
+      example = [
+        {
+          output = "DP-1";
+          mode = "1920x1080@144";
+          position = "0x0";
+          scale = 1;
+        }
+      ];
+      description = "List of Hyprland monitors.";
+    };
+
+    bind = lib.mkOption {
+      type =
+        with lib.types;
+        listOf (submodule {
+          options = {
+            keys = lib.mkOption {
+              type = listOf str;
+              description = "Key chord parts for the bind.";
+              example = [
+                "SUPER"
+                "SHIFT"
+                "Q"
+              ];
+            };
+
+            dispatcher = lib.mkOption {
+              type = submodule {
+                options = {
+                  exec_cmd = lib.mkOption {
+                    type = nullOr str;
+                    default = null;
+                    description = "Exec command payload.";
+                    example = "firefox";
+                  };
+
+                  lua = lib.mkOption {
+                    type = nullOr lines;
+                    default = null;
+                    description = "Lua expression or function payload.";
+                    example = ''
+                      function()
+                        -- some logic...
+                        hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+                      end
+                    '';
+                  };
+
+                  window = lib.mkOption {
+                    type = nullOr (submodule {
+                      options = {
+                        center = lib.mkOption {
+                          type = nullOr attrs;
+                          default = null;
+                          description = "Window.center payload.";
+                          example = { };
+                        };
+
+                        float = lib.mkOption {
+                          type = nullOr attrs;
+                          default = null;
+                          description = "Window.float payload.";
+                          example = {
+                            action = "toggle";
+                          };
+                        };
+                      };
+                    });
+                    default = null;
+                    description = "Window dispatcher payload.";
+                  };
+                };
+              };
+              default = { };
+              apply =
+                d:
+                let
+                  hasExec = d.exec_cmd != null;
+                  hasLua = d.lua != null;
+                  hasWindow = d.window != null;
+                in
+                if
+                  builtins.length (
+                    builtins.filter lib.id [
+                      hasExec
+                      hasLua
+                      hasWindow
+                    ]
+                  ) != 1
+                then
+                  throw "Hyprland bind.dispatcher must have exactly one of 'exec_cmd', 'lua', or 'window'"
+                else if hasWindow then
+                  let
+                    w = d.window;
+                    hasCenter = w.center != null;
+                    hasFloat = w.float != null;
+                  in
+                  if hasCenter == hasFloat then
+                    throw "Hyprland bind.dispatcher.window must have exactly one of 'center' or 'float'"
+                  else
+                    d
+                else
+                  d;
+              description = "Dispatcher payload for hl.bind.";
+              example = {
+                exec_cmd = "firefox";
+              };
+            };
+          };
+        });
+      default = [ ];
+      example = [
+        {
+          keys = [
+            "SUPER"
+            "SHIFT"
+            "Q"
+          ];
+          dispatcher = {
+            exec_cmd = "firefox";
+          };
+        }
+        {
+          keys = [
+            "SUPER"
+            "SHIFT"
+            "X"
+          ];
+          dispatcher = {
+            lua = ''
+              function()
+                -- some logic...
+                hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+              end
+            '';
+          };
+        }
+        {
+          keys = [
+            "SUPER"
+            "SHIFT"
+            "C"
+          ];
+          dispatcher = {
+            window = {
+              center = { };
+            };
+          };
+        }
+        {
+          keys = [
+            "SUPER"
+            "SHIFT"
+            "F"
+          ];
+          dispatcher = {
+            window = {
+              float = {
+                action = "toggle";
+              };
+            };
+          };
+        }
+      ];
+      description = "Lua bind declarations for later rendering.";
     };
 
     launch = lib.mkOption {
@@ -114,329 +324,610 @@ in
     };
 
     security.polkit.enable = true;
+
     # TODO: update and enable this:
     # services.hyprpolkitagent.enable = true;
 
-    planet.wm.hyprland.bindings =
-      let
-        windowMods = [
-          "SUPER"
-          "ALT"
+    planet.wm.hyprland = {
+      bind =
+        let
+          window = [ "SUPER" ];
+          windowShift = [
+            "SUPER"
+            "SHIFT"
+          ];
+        in
+        [
+          # screenshotting
+          {
+            keys = window ++ [ "S" ];
+            dispatcher.exec_cmd = ''grim -g "$(slurp -d)" - | wl-copy'';
+          }
+          {
+            keys = windowShift ++ [ "S" ];
+            dispatcher.exec_cmd = "hyprshot -m window -m active --clipboard-only";
+          }
+
+          # floating
+          {
+            keys = window ++ [ "V" ];
+            dispatcher.window.float = { };
+          }
+          {
+            keys = window ++ [ "V" ];
+            dispatcher.window.center = { };
+          }
+
+          # moving windows
+          {
+            keys = windowShift ++ [ "H" ];
+            dispatcher.layout = "swapcol l";
+          }
+          {
+            keys = windowShift ++ [ "L" ];
+            dispatcher.layout = "swapcol r";
+          }
+
+          # focus windows
+          {
+            keys = window ++ [ "H" ];
+            dispatcher.layout = "focus l";
+          }
+          {
+            keys = window ++ [ "L" ];
+            dispatcher.layout = "focus r";
+          }
+          {
+            keys = window ++ [ "K" ];
+            dispatcher.movefocus = {
+              direction = "u";
+            };
+          }
+          {
+            keys = window ++ [ "J" ];
+            dispatcher.movefocus = {
+              direction = "d";
+            };
+          }
+
+          # kill window
+          {
+            keys = window ++ [ "W" ];
+            dispatcher.kill = { };
+          }
+
+          # fullscreen
+          {
+            keys = window ++ [ "M" ];
+            dispatcher.fullscreen = {
+              mode = "maximized";
+            };
+          }
+          {
+            keys = windowShift ++ [ "M" ];
+            dispatcher.fullscreen = {
+              mode = "fullscreen";
+            };
+          }
+
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "1" ];
+          #   dispatcher = "workspace";
+          #   argument = "1";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "2" ];
+          #   dispatcher = "workspace";
+          #   argument = "2";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "3" ];
+          #   dispatcher = "workspace";
+          #   argument = "3";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "4" ];
+          #   dispatcher = "workspace";
+          #   argument = "4";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "5" ];
+          #   dispatcher = "workspace";
+          #   argument = "5";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "6" ];
+          #   dispatcher = "workspace";
+          #   argument = "6";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "7" ];
+          #   dispatcher = "workspace";
+          #   argument = "7";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "8" ];
+          #   dispatcher = "workspace";
+          #   argument = "8";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "9" ];
+          #   dispatcher = "workspace";
+          #   argument = "9";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "0" ];
+          #   dispatcher = "workspace";
+          #   argument = "10";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "1" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "1";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "2" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "2";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "3" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "3";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "4" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "4";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "5" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "5";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "6" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "6";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "7" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "7";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "8" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "8";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "9" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "9";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowShiftMods;
+          #   keys = [ "0" ];
+          #   dispatcher = "movetoworkspace";
+          #   argument = "10";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "mouse_down" ];
+          #   dispatcher = "workspace";
+          #   argument = "e+1";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "mouse_up" ];
+          #   dispatcher = "workspace";
+          #   argument = "e-1";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "comma" ];
+          #   dispatcher = "layoutmsg";
+          #   argument = "move -col";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "period" ];
+          #   dispatcher = "layoutmsg";
+          #   argument = "move +col";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = [ "SUPER ALT" ];
+          #   keys = [ "minus" ];
+          #   dispatcher = "layoutmsg";
+          #   argument = "colresize -0.1";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = [ "SUPER ALT" ];
+          #   keys = [ "equal" ];
+          #   dispatcher = "layoutmsg";
+          #   argument = "colresize +0.1";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "minus" ];
+          #   dispatcher = "layoutmsg";
+          #   argument = "colresize -conf";
+          # }
+          # {
+          #   type = "dispatch";
+          #   mods = windowMods;
+          #   keys = [ "equal" ];
+          #   dispatcher = "layoutmsg";
+          #   argument = "colresize +conf";
+          # }
         ];
 
-        windowShiftMods = [
-          "SUPER SHIFT"
-          "ALT SHIFT"
+      bindings =
+        let
+          windowMods = [
+            "SUPER"
+            "ALT"
+          ];
+
+          windowShiftMods = [
+            "SUPER SHIFT"
+            "ALT SHIFT"
+          ];
+        in
+        [
+          {
+            type = "exec";
+            keys = [ "S" ];
+            command = ''grim -g "$(slurp -d)" - | wl-copy'';
+          }
+          {
+            type = "exec";
+            mods = [ "SUPER SHIFT" ];
+            keys = [ "S" ];
+            command = "hyprshot -m window -m active --clipboard-only";
+          }
+          {
+            type = "dispatch";
+            keys = [ "Q" ];
+            dispatcher = "togglespecialworkspace";
+          }
+          {
+            type = "dispatch";
+            mods = [ "SUPER SHIFT" ];
+            keys = [ "Q" ];
+            dispatcher = "movetoworkspace";
+            argument = "special";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "V" ];
+            dispatcher = "togglefloating";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "V" ];
+            dispatcher = "centerwindow";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "H" ];
+            dispatcher = "layoutmsg";
+            argument = "swapcol l";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "L" ];
+            dispatcher = "layoutmsg";
+            argument = "swapcol r";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "N" ];
+            dispatcher = "swapnext";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "F" ];
+            dispatcher = "pseudo";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "W" ];
+            dispatcher = "killactive";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "M" ];
+            dispatcher = "fullscreen";
+            argument = "1";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "M" ];
+            dispatcher = "fullscreen";
+          }
+
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "h" ];
+            dispatcher = "layoutmsg";
+            argument = "focus l";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "l" ];
+            dispatcher = "layoutmsg";
+            argument = "focus r";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "k" ];
+            dispatcher = "movefocus";
+            argument = "u";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "j" ];
+            dispatcher = "movefocus";
+            argument = "d";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "1" ];
+            dispatcher = "workspace";
+            argument = "1";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "2" ];
+            dispatcher = "workspace";
+            argument = "2";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "3" ];
+            dispatcher = "workspace";
+            argument = "3";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "4" ];
+            dispatcher = "workspace";
+            argument = "4";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "5" ];
+            dispatcher = "workspace";
+            argument = "5";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "6" ];
+            dispatcher = "workspace";
+            argument = "6";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "7" ];
+            dispatcher = "workspace";
+            argument = "7";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "8" ];
+            dispatcher = "workspace";
+            argument = "8";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "9" ];
+            dispatcher = "workspace";
+            argument = "9";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "0" ];
+            dispatcher = "workspace";
+            argument = "10";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "1" ];
+            dispatcher = "movetoworkspace";
+            argument = "1";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "2" ];
+            dispatcher = "movetoworkspace";
+            argument = "2";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "3" ];
+            dispatcher = "movetoworkspace";
+            argument = "3";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "4" ];
+            dispatcher = "movetoworkspace";
+            argument = "4";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "5" ];
+            dispatcher = "movetoworkspace";
+            argument = "5";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "6" ];
+            dispatcher = "movetoworkspace";
+            argument = "6";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "7" ];
+            dispatcher = "movetoworkspace";
+            argument = "7";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "8" ];
+            dispatcher = "movetoworkspace";
+            argument = "8";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "9" ];
+            dispatcher = "movetoworkspace";
+            argument = "9";
+          }
+          {
+            type = "dispatch";
+            mods = windowShiftMods;
+            keys = [ "0" ];
+            dispatcher = "movetoworkspace";
+            argument = "10";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "mouse_down" ];
+            dispatcher = "workspace";
+            argument = "e+1";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "mouse_up" ];
+            dispatcher = "workspace";
+            argument = "e-1";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "comma" ];
+            dispatcher = "layoutmsg";
+            argument = "move -col";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "period" ];
+            dispatcher = "layoutmsg";
+            argument = "move +col";
+          }
+          {
+            type = "dispatch";
+            mods = [ "SUPER ALT" ];
+            keys = [ "minus" ];
+            dispatcher = "layoutmsg";
+            argument = "colresize -0.1";
+          }
+          {
+            type = "dispatch";
+            mods = [ "SUPER ALT" ];
+            keys = [ "equal" ];
+            dispatcher = "layoutmsg";
+            argument = "colresize +0.1";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "minus" ];
+            dispatcher = "layoutmsg";
+            argument = "colresize -conf";
+          }
+          {
+            type = "dispatch";
+            mods = windowMods;
+            keys = [ "equal" ];
+            dispatcher = "layoutmsg";
+            argument = "colresize +conf";
+          }
         ];
-      in
-      [
-        {
-          type = "exec";
-          keys = [ "S" ];
-          command = ''grim -g "$(slurp -d)" - | wl-copy'';
-        }
-        {
-          type = "exec";
-          mods = [ "SUPER SHIFT" ];
-          keys = [ "S" ];
-          command = ''hyprshot -m window -m active --clipboard-only'';
-        }
-        {
-          type = "dispatch";
-          keys = [ "Q" ];
-          dispatcher = "togglespecialworkspace";
-        }
-        {
-          type = "dispatch";
-          mods = [ "SUPER SHIFT" ];
-          keys = [ "Q" ];
-          dispatcher = "movetoworkspace";
-          argument = "special";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "V" ];
-          dispatcher = "togglefloating";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "V" ];
-          dispatcher = "centerwindow";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "H" ];
-          dispatcher = "layoutmsg";
-          argument = "swapcol l";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "L" ];
-          dispatcher = "layoutmsg";
-          argument = "swapcol r";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "N" ];
-          dispatcher = "swapnext";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "F" ];
-          dispatcher = "pseudo";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "W" ];
-          dispatcher = "killactive";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "M" ];
-          dispatcher = "fullscreen";
-          argument = "1";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "M" ];
-          dispatcher = "fullscreen";
-        }
-
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "h" ];
-          dispatcher = "layoutmsg";
-          argument = "focus l";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "l" ];
-          dispatcher = "layoutmsg";
-          argument = "focus r";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "k" ];
-          dispatcher = "movefocus";
-          argument = "u";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "j" ];
-          dispatcher = "movefocus";
-          argument = "d";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "1" ];
-          dispatcher = "workspace";
-          argument = "1";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "2" ];
-          dispatcher = "workspace";
-          argument = "2";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "3" ];
-          dispatcher = "workspace";
-          argument = "3";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "4" ];
-          dispatcher = "workspace";
-          argument = "4";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "5" ];
-          dispatcher = "workspace";
-          argument = "5";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "6" ];
-          dispatcher = "workspace";
-          argument = "6";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "7" ];
-          dispatcher = "workspace";
-          argument = "7";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "8" ];
-          dispatcher = "workspace";
-          argument = "8";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "9" ];
-          dispatcher = "workspace";
-          argument = "9";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "0" ];
-          dispatcher = "workspace";
-          argument = "10";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "1" ];
-          dispatcher = "movetoworkspace";
-          argument = "1";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "2" ];
-          dispatcher = "movetoworkspace";
-          argument = "2";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "3" ];
-          dispatcher = "movetoworkspace";
-          argument = "3";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "4" ];
-          dispatcher = "movetoworkspace";
-          argument = "4";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "5" ];
-          dispatcher = "movetoworkspace";
-          argument = "5";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "6" ];
-          dispatcher = "movetoworkspace";
-          argument = "6";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "7" ];
-          dispatcher = "movetoworkspace";
-          argument = "7";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "8" ];
-          dispatcher = "movetoworkspace";
-          argument = "8";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "9" ];
-          dispatcher = "movetoworkspace";
-          argument = "9";
-        }
-        {
-          type = "dispatch";
-          mods = windowShiftMods;
-          keys = [ "0" ];
-          dispatcher = "movetoworkspace";
-          argument = "10";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "mouse_down" ];
-          dispatcher = "workspace";
-          argument = "e+1";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "mouse_up" ];
-          dispatcher = "workspace";
-          argument = "e-1";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "comma" ];
-          dispatcher = "layoutmsg";
-          argument = "move -col";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "period" ];
-          dispatcher = "layoutmsg";
-          argument = "move +col";
-        }
-        {
-          type = "dispatch";
-          mods = [ "SUPER ALT" ];
-          keys = [ "minus" ];
-          dispatcher = "layoutmsg";
-          argument = "colresize -0.1";
-        }
-        {
-          type = "dispatch";
-          mods = [ "SUPER ALT" ];
-          keys = [ "equal" ];
-          dispatcher = "layoutmsg";
-          argument = "colresize +0.1";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "minus" ];
-          dispatcher = "layoutmsg";
-          argument = "colresize -conf";
-        }
-        {
-          type = "dispatch";
-          mods = windowMods;
-          keys = [ "equal" ];
-          dispatcher = "layoutmsg";
-          argument = "colresize +conf";
-        }
-
-      ];
+    };
 
     programs.hyprland = {
       enable = true;
@@ -449,7 +940,9 @@ in
       withUWSM = false;
 
       settings = {
-        monitor = config.planet.wm.hyprland.monitors ++ [ "Unknown-1,disable" ];
+        monitor = builtins.map monitorToString config.planet.wm.hyprland.monitors ++ [
+          "Unknown-1,disable"
+        ];
 
         "$mauve" = "rgb(cba6f7)";
         "$lavender" = "rgb(b4befe)";
