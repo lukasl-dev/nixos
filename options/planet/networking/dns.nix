@@ -2,6 +2,18 @@
 
 let
   inherit (config.planet.networking) dns;
+  inherit (config.planet.services) docker;
+
+  fallbackDns = builtins.concatLists [
+    (lib.optionals (lib.elem "cloudflare" dns.providers) [
+      "1.1.1.1"
+      "1.0.0.1"
+    ])
+    (lib.optionals (lib.elem "google" dns.providers) [
+      "8.8.8.8"
+      "8.8.4.4"
+    ])
+  ];
 in
 {
   options.planet.networking.dns = {
@@ -36,30 +48,25 @@ in
       dns = "systemd-resolved";
     };
 
-    services.resolved = {
-      enable = true;
-      fallbackDns = builtins.concatLists [
-        (lib.optionals (lib.elem "cloudflare" dns.providers) [
-          "1.1.1.1"
-          "1.0.0.1"
-        ])
-        (lib.optionals (lib.elem "google" dns.providers) [
-          "8.8.8.8"
-          "8.8.4.4"
-        ])
-      ];
-    };
-
-    services.avahi = lib.mkIf dns.discoverable {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-      publish = {
+    services = {
+      resolved = {
         enable = true;
-        addresses = true;
-        workstation = true;
-        userServices = true;
+        inherit fallbackDns;
+      };
+
+      avahi = lib.mkIf dns.discoverable {
+        enable = true;
+        nssmdns4 = true;
+        openFirewall = true;
+        publish = {
+          enable = true;
+          addresses = true;
+          workstation = true;
+          userServices = true;
+        };
       };
     };
+
+    virtualisation.docker.rootless.daemon.settings.dns = lib.mkIf docker.enable fallbackDns;
   };
 }
