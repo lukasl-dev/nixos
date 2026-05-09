@@ -2108,11 +2108,11 @@
         "noctalia-qs": "noctalia-qs"
       },
       "locked": {
-        "lastModified": 1777427472,
-        "narHash": "sha256-kqcfLdxb+CqTroMErCScvx6YQcZYJcf6X+z5I8kBJK8=",
+        "lastModified": 1778075743,
+        "narHash": "sha256-WB5zYuFT69KUGa1ou+aMGNGxV/9e5EaqxF3IltN6BxY=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "9f8dd48c8df5ab1f7f87ddf9842627e1e5682186",
+        "rev": "3bbf31945de508409e3a3ded08cc154f185c42fb",
         "type": "github"
       },
       "original": {
@@ -2131,11 +2131,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1777380063,
-        "narHash": "sha256-q5mWOEICcZzr+KnjIwDHV9EXiBxOC9cnBpxZbDAViU8=",
+        "lastModified": 1777773024,
+        "narHash": "sha256-pLU+KB84A0Jei/vTD6pOS4Ovkmq3QDfPQHg1MlKsRqM=",
         "owner": "noctalia-dev",
         "repo": "noctalia-qs",
-        "rev": "8742a7a748c43bf44eb6862a8ebd3591ed71502d",
+        "rev": "d3e26ccd9eecde9139be00caf5dc2d4260fb31ee",
         "type": "github"
       },
       "original": {
@@ -2229,22 +2229,22 @@
         "type": "github"
       }
     },
-    "pi-mono": {
+    "pi": {
       "inputs": {
         "nixpkgs": "nixpkgs_15",
         "systems": "systems_14"
       },
       "locked": {
-        "lastModified": 1777947142,
-        "narHash": "sha256-UP4rA9r6PCliyjkXFnjuSkpvhybKO8whsiRcmLlm8SQ=",
+        "lastModified": 1778351684,
+        "narHash": "sha256-y4qFXxU9a4m9ivN/3lndQ/COK/IiQIMGL8cL4vg1WVA=",
         "owner": "lukasl-dev",
-        "repo": "pi-mono.nix",
-        "rev": "aa6922587e07c9ae73799a3d63d26c33d212ac92",
+        "repo": "pi.nix",
+        "rev": "68fff98b422af249367957cdf54b6825da046ae5",
         "type": "github"
       },
       "original": {
         "owner": "lukasl-dev",
-        "repo": "pi-mono.nix",
+        "repo": "pi.nix",
         "type": "github"
       }
     },
@@ -2353,7 +2353,7 @@
         "nvf": "nvf",
         "opencode": "opencode",
         "outofbounds": "outofbounds",
-        "pi-mono": "pi-mono",
+        "pi": "pi",
         "rime": "rime",
         "sops-nix": "sops-nix",
         "systems": "systems_16",

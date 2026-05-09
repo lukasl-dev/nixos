@@ -39,7 +39,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     opencode.url = "github:anomalyco/opencode?ref=v1.2.27";
-    pi-mono.url = "github:lukasl-dev/pi-mono.nix";
+    pi.url = "github:lukasl-dev/pi.nix";
     firn = {
       url = "github:lukasl-dev/firn";
       flake = false;

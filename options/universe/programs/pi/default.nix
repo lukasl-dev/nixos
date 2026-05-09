@@ -10,7 +10,7 @@ let
   inherit (config.universe) user;
   inherit (pkgs.stdenv.hostPlatform) system;
 
-  pi-mono = inputs.pi-mono.packages.${system}.coding-agent;
+  pi = inputs.pi.packages.${system}.coding-agent;
 
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
@@ -84,7 +84,7 @@ let
   };
 in
 {
-  imports = [ inputs.pi-mono.nixosModules.default ];
+  imports = [ inputs.pi.nixosModules.default ];
 
   security.apparmor.policies.pi-mono = {
     state = "enforce";
@@ -92,7 +92,7 @@ in
       abi <abi/4.0>,
       include <tunables/global>
 
-      profile pi-mono "${lib.getExe pi-mono}" {
+      profile pi-mono "${lib.getExe pi}" {
         include <abstractions/base>
 
         allow all,
@@ -139,7 +139,7 @@ in
 
   programs.pi.coding-agent = {
     enable = true;
-    package = pi-mono;
+    package = pi;
 
     rules = builtins.readFile ./AGENTS.md;
 
@@ -181,7 +181,7 @@ in
         exit 1
       fi
 
-      exec ${lib.getExe pi-mono} \
+      exec ${lib.getExe pi} \
         -p "$*" \
         --model gpt-5.4-mini \
         --provider openai-codex \

@@ -2,7 +2,7 @@
   imports = [
     # ./nvim
     ./oh-my-posh
-    ./pi-mono
+    ./pi
     ./tmux
 
     ./ast-grep.nix
