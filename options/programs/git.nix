@@ -6,6 +6,7 @@
 }:
 
 let
+  inherit (config.planet) ssh;
   inherit (config.planet.programs) git;
 in
 {
@@ -77,7 +78,7 @@ in
 
               commit.gpgsign = true;
               gpg.format = "ssh";
-              user.signingkey = "~/.ssh/id_ed25519.pub";
+              user.signingkey = ssh.default.privateKey;
             };
           };
         };

@@ -35,12 +35,12 @@ in
           kb_variant = ",qwerty";
           follow_mouse = 1;
           touchpad = {
-            natural_scroll = "yes";
+            natural_scroll = true;
           };
           sensitivity = 0;
 
-          repeat_rate = 25;
-          repeat_delay = 500;
+          repeat_rate = 20;
+          repeat_delay = 700;
         };
 
         general = {
@@ -48,8 +48,16 @@ in
           gaps_out = 30;
           border_size = 2;
 
-          "col.active_border" = "rgb(cba6f7) rgb(b4befe) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
+          col = {
+            active_border = {
+              colors = [
+                "rgb(cba6f7)"
+                "rgb(b4befe)"
+              ];
+              angle = 45;
+            };
+            inactive_border = "rgba(595959aa)";
+          };
 
           layout = "scrolling";
 
@@ -68,11 +76,11 @@ in
         };
 
         animations = {
-          enabled = "yes";
+          enabled = true;
         };
 
         scrolling = {
-          fullscreen_on_one_column = true;
+          fullscreen_on_one_column = false;
           column_width = 0.5;
           focus_fit_method = 1;
           follow_focus = true;

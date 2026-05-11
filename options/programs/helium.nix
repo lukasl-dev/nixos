@@ -118,11 +118,15 @@ in
   config = lib.mkIf helium.enable {
     environment.systemPackages = [ helium.package ];
 
-    planet.display.hyprland.bind = lib.mkIf display.hyprland.enable [
-      {
-        keys = "SUPER + B";
-        dispatcher.execCmd = lib.getExe' helium.package "helium";
-      }
-    ];
+    planet.display.hyprland.lua =
+      let
+        exe = lib.getExe' helium.package "helium";
+      in
+      [
+        # lua
+        ''
+          hl.bind("SUPER + B", hl.dsp.exec_cmd("${exe}"))
+        ''
+      ];
   };
 }

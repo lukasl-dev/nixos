@@ -12,6 +12,12 @@ let
 
   inherit (pkgs.stdenv.hostPlatform) system;
 
+  piSecretPaths = builtins.filter (path: path != null) [
+    (pi.secrets.opencode or null)
+    (pi.secrets.exa or null)
+    # (config.planet.programs.wakatime.config or null)
+  ];
+
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
     version = "0.6.4";
@@ -137,7 +143,7 @@ in
           exit 1
         fi
 
-        exec ${lib.getExe config.programs.pi.coding-agent.package} \
+        exec pi \
           -p "$*" \
           --model gpt-5.4-mini \
           --provider openai-codex \
@@ -166,13 +172,14 @@ in
 
           audit deny "/home/${user.name}/nixos/dns/creds.json" rwklm,
 
+          ${lib.concatMapStringsSep "\n          " (
+            path: "allow ${builtins.toJSON (toString path)} r,"
+          ) piSecretPaths}
+
           audit deny "/run/secrets/" r,
-          audit deny "/run/secrets/**" r,
 
           audit deny "/run/agenix/" r,
-          audit deny "/run/agenix/**" r,
           audit deny "/run/agenix.d/" r,
-          audit deny "/run/agenix.d/**" r,
 
           audit deny "/home/${user.name}/nixos/secrets/**" rwklm,
           audit deny "/home/${user.name}/nixos/sops/**" rwklm,

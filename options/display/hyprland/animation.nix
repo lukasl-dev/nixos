@@ -19,13 +19,11 @@ let
     ;
 
   toLua = lib.generators.toLua { };
-
-  pointType = submodule {
-    options = {
-      x = lib.mkOption { type = float; };
-      y = lib.mkOption { type = float; };
-    };
-  };
+  numberType = oneOf [
+    int
+    float
+  ];
+  pointType = listOf numberType;
 
   curveType = submodule {
     options = {
@@ -40,17 +38,17 @@ let
         description = "Bezier control points.";
       };
       mass = lib.mkOption {
-        type = nullOr float;
+        type = nullOr numberType;
         default = null;
         description = "Spring mass.";
       };
       stiffness = lib.mkOption {
-        type = nullOr float;
+        type = nullOr numberType;
         default = null;
         description = "Spring stiffness.";
       };
       dampening = lib.mkOption {
-        type = nullOr float;
+        type = nullOr numberType;
         default = null;
         description = "Spring dampening.";
       };
@@ -70,10 +68,7 @@ let
         description = "Whether the animation is enabled.";
       };
       speed = lib.mkOption {
-        type = nullOr (oneOf [
-          int
-          float
-        ]);
+        type = nullOr numberType;
         default = null;
         description = "Animation speed.";
       };
@@ -134,14 +129,14 @@ in
         myBezier = {
           type = "bezier";
           points = [
-            {
-              x = 0.05;
-              y = 0.9;
-            }
-            {
-              x = 0.1;
-              y = 1.05;
-            }
+            [
+              0.05
+              0.9
+            ]
+            [
+              0.1
+              1.05
+            ]
           ];
         };
       };

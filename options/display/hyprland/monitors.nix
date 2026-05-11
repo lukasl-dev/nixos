@@ -65,6 +65,10 @@ in
             })
           '';
       in
-      map monitorToLua hyprland.monitors;
+      map monitorToLua hyprland.monitors
+      ++ [
+        # lua
+        ''hl.monitor({ output = "Unknown-1", disabled = true })''
+      ];
   };
 }

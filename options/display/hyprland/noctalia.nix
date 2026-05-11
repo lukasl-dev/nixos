@@ -220,23 +220,17 @@ in
     planet.display.hyprland = {
       autoStart = [ (lib.getExe package) ];
 
-      bind =
+      lua =
         let
           cmd = lib.getExe package;
         in
         [
-          {
-            keys = "SUPER + Space";
-            dispatcher.execCmd = "${cmd} ipc --any-display call launcher toggle";
-          }
-          {
-            keys = "SUPER + Backspace";
-            dispatcher.execCmd = "${cmd} ipc --any-display call launcher toggle";
-          }
-          {
-            keys = "SUPER + C";
-            dispatcher.execCmd = "${cmd} ipc --any-display call launcher clipboard";
-          }
+          # lua
+          ''
+            hl.bind("SUPER + Space", hl.dsp.exec_cmd("${cmd} ipc --any-display call launcher toggle"))
+            hl.bind("SUPER + Backspace", hl.dsp.exec_cmd("${cmd} ipc --any-display call launcher toggle"))
+            hl.bind("SUPER + C", hl.dsp.exec_cmd("${cmd} ipc --any-display call launcher clipboard"))
+          ''
         ];
     };
   };

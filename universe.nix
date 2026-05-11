@@ -2,6 +2,7 @@
 
 let
   inherit (config) age;
+  inherit (config.planet) user;
 
   secrets =
     let
@@ -130,9 +131,14 @@ in
     ${secrets.user.password}.rekeyFile = ./secrets/universe/user/password.age;
 
     # ssh
-    ${secrets.ssh.default.privateKey}.rekeyFile = ./secrets/universe/ssh/default/privateKey.age;
-    ${secrets.ssh.g0_complang_tuwien_ac_at.privateKey}.rekeyFile =
-      ./secrets/universe/ssh/g0.complang.tuwien.ac.at/privateKey.age;
+    ${secrets.ssh.default.privateKey} = {
+      rekeyFile = ./secrets/universe/ssh/default/privateKey.age;
+      owner = user.name;
+    };
+    ${secrets.ssh.g0_complang_tuwien_ac_at.privateKey} = {
+      rekeyFile = ./secrets/universe/ssh/g0.complang.tuwien.ac.at/privateKey.age;
+      owner = user.name;
+    };
 
     # attic
     ${secrets.attic.token}.rekeyFile = ./secrets/universe/attic/token.age;

@@ -41,42 +41,45 @@ in
       ];
     };
 
-    planet.display.hyprland.bind = lib.mkIf display.hyprland.enable [
-      {
-        keys = "SUPER + T";
-        dispatcher.execCmd = lib.getExe ghostty.package;
-      }
-      {
-        keys = "SUPER + SHIFT + T";
-        dispatcher.execCmd = "${lib.getExe ghostty.package} --command=zsh";
-      }
-    ];
+    planet = {
+      display.hyprland.lua =
+        let
+          exe = lib.getExe ghostty.package;
+        in
+        [
+          # lua
+          ''
+            hl.bind("SUPER + T", hl.dsp.exec_cmd("${exe}"))
+            hl.bind("SUPER + SHIFT + T", hl.dsp.exec_cmd("${exe} --command=zsh"))
+          ''
+        ];
 
-    planet.hm = [
-      {
-        programs.ghostty = {
-          enable = true;
+      hm = [
+        {
+          programs.ghostty = {
+            enable = true;
 
-          inherit (ghostty) package;
+            inherit (ghostty) package;
 
-          enableBashIntegration = true;
-          enableZshIntegration = true;
+            enableBashIntegration = true;
+            enableZshIntegration = true;
 
-          settings = {
-            window-decoration = false;
-            window-padding-x = 8;
-            window-padding-y = 8;
+            settings = {
+              window-decoration = false;
+              window-padding-x = 8;
+              window-padding-y = 8;
 
-            command = "tmux attach-session || tmux new-session";
+              command = "tmux attach-session || tmux new-session";
 
-            confirm-close-surface = false;
+              confirm-close-surface = false;
 
-            font-family = "Geist Mono";
-            font-style = "Semibold";
-            font-size = 12;
+              font-family = "Geist Mono";
+              font-style = "Semibold";
+              font-size = 12;
+            };
           };
-        };
-      }
-    ];
+        }
+      ];
+    };
   };
 }

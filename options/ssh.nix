@@ -13,11 +13,11 @@ in
       default = {
         publicKey = lib.mkOption {
           type = lib.types.str;
-          description = "Public SSH key file path. Path values are copied to the Nix store.";
+          description = "Public SSH key content.";
         };
 
         privateKey = lib.mkOption {
-          default = lib.types.path;
+          type = lib.types.path;
           description = "Private SSH key file path. Path values are copied to the Nix store.";
           example = lib.literalExpression "./id_ed25519";
         };
@@ -63,6 +63,8 @@ in
             };
           };
         };
+
+        home.file.".ssh/id_ed25519.pub".text = ssh.default.publicKey;
       }
     ];
 

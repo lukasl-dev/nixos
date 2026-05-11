@@ -83,18 +83,15 @@ in
       easyeffects
     ];
 
-    planet.display.hyprland = lib.mkIf display.hyprland.enable {
+    planet.display.hyprland = {
       autoStart = [ "easyeffects --service-mode" ];
 
-      bind = [
-        {
-          keys = "SUPER + I";
-          dispatcher.execCmd = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-        }
-        {
-          keys = "SUPER + O";
-          dispatcher.execCmd = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        }
+      lua = [
+        # lua
+        ''
+          hl.bind("SUPER + I", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
+          hl.bind("SUPER + O", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+        ''
       ];
     };
   };

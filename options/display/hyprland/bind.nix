@@ -1,301 +1,82 @@
 {
-  config,
-  lib,
-  ...
-}:
+  planet.display.hyprland.lua = [
+    # lua
+    ''
+      hl.bind("SUPER + W", hl.dsp.window.close())
+      hl.bind("SUPER + SHIFT + W", hl.dsp.window.kill())
 
-let
-  inherit (config.planet.display) hyprland;
+      hl.bind("SUPER + H", hl.dsp.focus({ direction = "l" }))
+      hl.bind("ALT + H", hl.dsp.focus({ direction = "l" }))
+      hl.bind("SUPER + J", hl.dsp.focus({ direction = "d" }))
+      hl.bind("ALT + J", hl.dsp.focus({ direction = "d" }))
+      hl.bind("SUPER + K", hl.dsp.focus({ direction = "u" }))
+      hl.bind("ALT + K", hl.dsp.focus({ direction = "u" }))
+      hl.bind("SUPER + L", hl.dsp.focus({ direction = "r" }))
+      hl.bind("ALT + L", hl.dsp.focus({ direction = "r" }))
 
-  valueType =
-    with lib.types;
-    nullOr (oneOf [
-      bool
-      int
-      float
-      str
-      path
-      (attrsOf valueType)
-      (listOf valueType)
-    ]);
+      hl.bind("SUPER + SHIFT + H", hl.dsp.window.move({ direction = "l" }))
+      hl.bind("ALT + SHIFT + H", hl.dsp.window.move({ direction = "l" }))
+      hl.bind("SUPER + SHIFT + J", hl.dsp.window.move({ direction = "d" }))
+      hl.bind("ALT + SHIFT + J", hl.dsp.window.move({ direction = "d" }))
+      hl.bind("SUPER + SHIFT + K", hl.dsp.window.move({ direction = "u" }))
+      hl.bind("ALT + SHIFT + K", hl.dsp.window.move({ direction = "u" }))
+      hl.bind("SUPER + SHIFT + L", hl.dsp.window.move({ direction = "r" }))
+      hl.bind("ALT + SHIFT + L", hl.dsp.window.move({ direction = "r" }))
 
-  methods = {
-    general = [
-      "exec_raw"
-      "focus"
-      "exit"
-      "submap"
-      "pass"
-      "send_shortcut"
-      "send_key_state"
-      "layout"
-      "dpms"
-      "event"
-      "global"
-      "force_idle"
-      "no_op"
-    ];
+      hl.bind("SUPER + CONTROL + H", hl.dsp.window.swap({ direction = "l" }))
+      hl.bind("ALT + CONTROL + H", hl.dsp.window.swap({ direction = "l" }))
+      hl.bind("SUPER + CONTROL + J", hl.dsp.window.swap({ direction = "d" }))
+      hl.bind("ALT + CONTROL + J", hl.dsp.window.swap({ direction = "d" }))
+      hl.bind("SUPER + CONTROL + K", hl.dsp.window.swap({ direction = "u" }))
+      hl.bind("ALT + CONTROL + K", hl.dsp.window.swap({ direction = "u" }))
+      hl.bind("SUPER + CONTROL + L", hl.dsp.window.swap({ direction = "r" }))
+      hl.bind("ALT + CONTROL + L", hl.dsp.window.swap({ direction = "r" }))
 
-    window = [
-      "close"
-      "kill"
-      "signal"
-      "float"
-      "fullscreen"
-      "fullscreen_state"
-      "pseudo"
-      "move"
-      "swap"
-      "center"
-      "cycle_next"
-      "tag"
-      "clear_tags"
-      "toggle_swallow"
-      "pin"
-      "alter_zorder"
-      "set_prop"
-      "deny_from_group"
-      "drag"
-      "resize"
-    ];
+      hl.bind("SUPER + 1", hl.dsp.focus({ workspace = "1" }))
+      hl.bind("SUPER + 2", hl.dsp.focus({ workspace = "2" }))
+      hl.bind("SUPER + 3", hl.dsp.focus({ workspace = "3" }))
+      hl.bind("SUPER + 4", hl.dsp.focus({ workspace = "4" }))
+      hl.bind("SUPER + 5", hl.dsp.focus({ workspace = "5" }))
+      hl.bind("SUPER + 6", hl.dsp.focus({ workspace = "6" }))
+      hl.bind("SUPER + 7", hl.dsp.focus({ workspace = "7" }))
+      hl.bind("SUPER + 8", hl.dsp.focus({ workspace = "8" }))
+      hl.bind("SUPER + 9", hl.dsp.focus({ workspace = "9" }))
+      hl.bind("SUPER + 0", hl.dsp.focus({ workspace = "0" }))
 
-    workspace = [
-      "rename"
-      "move"
-      "swap_monitors"
-      "toggle_special"
-    ];
+      hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = "1" }))
+      hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = "2" }))
+      hl.bind("SUPER + SHIFT + 3", hl.dsp.window.move({ workspace = "3" }))
+      hl.bind("SUPER + SHIFT + 4", hl.dsp.window.move({ workspace = "4" }))
+      hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = "5" }))
+      hl.bind("SUPER + SHIFT + 6", hl.dsp.window.move({ workspace = "6" }))
+      hl.bind("SUPER + SHIFT + 7", hl.dsp.window.move({ workspace = "7" }))
+      hl.bind("SUPER + SHIFT + 8", hl.dsp.window.move({ workspace = "8" }))
+      hl.bind("SUPER + SHIFT + 9", hl.dsp.window.move({ workspace = "9" }))
+      hl.bind("SUPER + SHIFT + 0", hl.dsp.window.move({ workspace = "0" }))
 
-    group = [
-      "toggle"
-      "next"
-      "prev"
-      "active"
-      "move_window"
-      "lock"
-      "lock_active"
-    ];
+      hl.bind("SUPER + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+      hl.bind("SUPER + SHIFT + M", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
-    cursor = [
-      "move_to_corner"
-      "move"
-    ];
-  };
+      hl.bind("SUPER + MINUS", hl.dsp.layout("colresize -conf"))
+      hl.bind("SUPER + EQUAL", hl.dsp.layout("colresize +conf"))
 
-  categories = builtins.attrNames methods;
-
-  categoryOption =
-    category:
-    lib.mkOption {
-      type = lib.types.attrsOf valueType;
-      default = { };
-      example = {
-        close = null;
-        float = { };
-      };
-      description = "${category} dispatchers. Keys must be valid hl.dsp.${
-        lib.optionalString (category != "general") "${category}."
-      }<method> names.";
-    };
-
-  dispatcherLeaves =
-    dispatcher:
-    lib.concatMap (
-      category:
-      map (name: {
-        inherit category name;
-        value = dispatcher.${category}.${name};
-      }) (builtins.attrNames dispatcher.${category})
-    ) categories;
-
-  dispatcherChoices =
-    dispatcher:
-    lib.optional (dispatcher.lua != null) dispatcher.lua
-    ++ lib.optional (dispatcher.execCmd != null) dispatcher.execCmd
-    ++ dispatcherLeaves dispatcher;
-
-  unknownMethods =
-    dispatcher:
-    builtins.filter (leaf: !(builtins.elem leaf.name methods.${leaf.category})) (
-      dispatcherLeaves dispatcher
-    );
-
-  showMethod =
-    leaf: if leaf.category == "general" then leaf.name else "${leaf.category}.${leaf.name}";
-
-  toLua = lib.generators.toLua { };
-  renderArg = value: if value == null then "" else toLua value;
-  renderLeaf =
-    leaf:
-    let
-      prefix = lib.optionalString (leaf.category != "general") "${leaf.category}.";
-    in
-    "hl.dsp.${prefix}${leaf.name}(${renderArg leaf.value})";
-
-  renderDispatcher =
-    bind:
-    let
-      dispatcher = bind.dispatcher;
-      leaves = dispatcherLeaves dispatcher;
-    in
-    if dispatcher.execCmd != null then
-      "hl.dsp.exec_cmd(${builtins.toJSON dispatcher.execCmd})"
-    else if dispatcher.lua != null then
-      dispatcher.lua
-    else if leaves != [ ] then
-      renderLeaf (builtins.head leaves)
-    else
-      "nil";
-
-  bind = keys: dispatcher: { inherit keys dispatcher; };
-  dsp = category: method: value: { ${category}.${method} = value; };
-  general = dsp "general";
-  window = dsp "window";
-  workspace = dsp "workspace";
-
-  expand =
-    mods: keys: dispatcher:
-    lib.concatMap (mod: map (key: bind "${mod} + ${key}" dispatcher) keys) mods;
-
-  windowMods = [
-    "SUPER"
-    "ALT"
+      hl.bind("SUPER + V", function() 
+        hl.dispatch(hl.dsp.window.float())
+        hl.dispatch(hl.dsp.window.center())
+      end)
+    ''
   ];
-
-  windowShiftMods = [
-    "SUPER + SHIFT"
-    "ALT + SHIFT"
-  ];
-
-  workspaceKeys = map (workspace: {
-    inherit workspace;
-    key = if workspace == "10" then "0" else workspace;
-  }) (map builtins.toString (lib.range 1 10));
-
-  defaultBinds = [
-    (bind "SUPER + Q" (workspace "toggle_special" "special"))
-    (bind "SUPER + SHIFT + Q" (window "move" { workspace = "special"; }))
-  ]
-  ++ expand windowMods [ "V" ] (window "float" { })
-  ++ expand windowMods [ "V" ] (window "center" { })
-  ++ expand windowShiftMods [ "H" ] (general "layout" "swapcol l")
-  ++ expand windowShiftMods [ "L" ] (general "layout" "swapcol r")
-  ++ expand windowMods [ "N" ] (window "swap" { next = true; })
-  ++ expand windowMods [ "F" ] (window "pseudo" { })
-  ++ expand windowMods [ "W" ] (window "close" null)
-  ++ expand windowMods [ "M" ] (window "fullscreen" { mode = "maximized"; })
-  ++ expand windowShiftMods [ "M" ] (window "fullscreen" { })
-  ++ expand windowMods [ "h" ] (general "layout" "focus l")
-  ++ expand windowMods [ "l" ] (general "layout" "focus r")
-  ++ expand windowMods [ "k" ] (general "focus" { direction = "u"; })
-  ++ expand windowMods [ "j" ] (general "focus" { direction = "d"; })
-  ++ lib.concatMap (
-    w: expand windowMods [ w.key ] (general "focus" { inherit (w) workspace; })
-  ) workspaceKeys
-  ++ lib.concatMap (
-    w: expand windowShiftMods [ w.key ] (window "move" { inherit (w) workspace; })
-  ) workspaceKeys
-  ++ expand windowMods [ "mouse_down" ] (general "focus" { workspace = "e+1"; })
-  ++ expand windowMods [ "mouse_up" ] (general "focus" { workspace = "e-1"; })
-  ++ expand windowMods [ "comma" ] (general "layout" "move -col")
-  ++ expand windowMods [ "period" ] (general "layout" "move +col")
-  ++ expand [ "SUPER + ALT" ] [ "minus" ] (general "layout" "colresize -0.1")
-  ++ expand [ "SUPER + ALT" ] [ "equal" ] (general "layout" "colresize +0.1")
-  ++ expand windowMods [ "minus" ] (general "layout" "colresize -conf")
-  ++ expand windowMods [ "equal" ] (general "layout" "colresize +conf");
-in
-{
-  options.planet.display.hyprland.bind = lib.mkOption {
-    type =
-      with lib.types;
-      listOf (submodule {
-        options = {
-          keys = lib.mkOption {
-            type = str;
-            example = "SUPER + Q";
-            description = "Hyprland bind keys.";
-          };
-
-          dispatcher = {
-            lua = lib.mkOption {
-              type = nullOr lines;
-              default = null;
-              example = # lua
-                ''hl.dsp.exec_cmd("firefox")'';
-              description = "Lua dispatcher expression passed as second argument to hl.bind.";
-            };
-
-            execCmd = lib.mkOption {
-              type = nullOr str;
-              default = null;
-              example = "firefox";
-              description = "Command to execute via hl.dsp.exec_cmd.";
-            };
-
-            general = categoryOption "general";
-            window = categoryOption "window";
-            workspace = categoryOption "workspace";
-            group = categoryOption "group";
-            cursor = categoryOption "cursor";
-          };
-        };
-      });
-    default = [ ];
-    example = [
-      {
-        keys = "SUPER + Return";
-        dispatcher.execCmd = "ghostty";
-      }
-      {
-        keys = "SUPER, Q";
-        dispatcher.window.close = null;
-      }
-      {
-        keys = "SUPER, V";
-        dispatcher.window.float = { };
-      }
-      {
-        keys = "SUPER, 1";
-        dispatcher.general.focus = {
-          workspace = "1";
-        };
-      }
-      {
-        keys = "SUPER, X";
-        dispatcher.lua = # lua
-          ''
-            function()
-              hl.dispatch(hl.dsp.no_op())
-            end
-          '';
-      }
-    ];
-    description = "Hyprland binds generated as hl.bind(keys, dispatcher).";
-  };
-
-  config = lib.mkIf hyprland.enable {
-    assertions = lib.concatMap (
-      bind:
-      let
-        unknown = unknownMethods bind.dispatcher;
-      in
-      [
-        {
-          assertion = builtins.length (dispatcherChoices bind.dispatcher) == 1;
-          message = "🪐 Hyprland bind '${bind.keys}' must define exactly one dispatcher.";
-        }
-        {
-          assertion = unknown == [ ];
-          message = "🪐 Hyprland bind '${bind.keys}' has unknown dispatcher methods: ${lib.concatStringsSep ", " (map showMethod unknown)}.";
-        }
-      ]
-    ) hyprland.bind;
-
-    planet.display.hyprland = {
-      bind = defaultBinds;
-      lua = map (bind: ''
-        hl.bind(${builtins.toJSON bind.keys}, ${renderDispatcher bind})
-      '') hyprland.bind;
-    };
-  };
 }
+#   type = "dispatch";
+#   mods = windowMods;
+#   keys = [ "minus" ];
+#   dispatcher = "layoutmsg";
+#   argument = "colresize -conf";
+# }
+# {
+#   type = "dispatch";
+#   mods = windowMods;
+#   keys = [ "equal" ];
+#   dispatcher = "layoutmsg";
+#   argument = "colresize +conf";
+# }

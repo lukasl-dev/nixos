@@ -48,19 +48,25 @@ in
   config = lib.mkIf obsidian.enable {
     environment.systemPackages = [ obsidian.package ];
 
-    planet.display.hyprland.bind = lib.mkIf hyprland.enable [
-      {
-        keys = "SUPER + P";
-        dispatcher.execCmd = lib.getExe obsidian.package;
-      }
-    ];
+    planet = {
+      display.hyprland.lua =
+        let
+          exe = lib.getExe obsidian.package;
+        in
+        [
+          # lua
+          ''
+            hl.bind("SUPER + P", hl.dsp.exec_cmd("${exe}"))
+          ''
+        ];
 
-    planet.hm = [
-      {
-        xdg.mimeApps.defaultApplications = {
-          "x-scheme-handler/obsidian" = "obsidian.desktop";
-        };
-      }
-    ];
+      hm = [
+        {
+          xdg.mimeApps.defaultApplications = {
+            "x-scheme-handler/obsidian" = "obsidian.desktop";
+          };
+        }
+      ];
+    };
   };
 }
