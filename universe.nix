@@ -30,6 +30,12 @@ let
           ];
         };
       };
+      attic = {
+        token = s [
+          "attic"
+          "token"
+        ];
+      };
       tailscale = {
         authKey = s [
           "tailscale"
@@ -80,6 +86,10 @@ in
       };
     };
 
+    attic = {
+      token = age.secrets.${secrets.attic.token}.path;
+    };
+
     programs = {
       git = {
         user = {
@@ -123,6 +133,9 @@ in
     ${secrets.ssh.default.privateKey}.rekeyFile = ./secrets/universe/ssh/default/privateKey.age;
     ${secrets.ssh.g0_complang_tuwien_ac_at.privateKey}.rekeyFile =
       ./secrets/universe/ssh/g0.complang.tuwien.ac.at/privateKey.age;
+
+    # attic
+    ${secrets.attic.token}.rekeyFile = ./secrets/universe/attic/token.age;
 
     # programs
     ${secrets.tailscale.authKey}.rekeyFile = ./secrets/universe/tailscale/authKey.age;

@@ -173,7 +173,7 @@ let
   }) (map builtins.toString (lib.range 1 10));
 
   defaultBinds = [
-    (bind "SUPER + Q" (workspace "toggle_special" null))
+    (bind "SUPER + Q" (workspace "toggle_special" "special"))
     (bind "SUPER + SHIFT + Q" (window "move" { workspace = "special"; }))
   ]
   ++ expand windowMods [ "V" ] (window "float" { })

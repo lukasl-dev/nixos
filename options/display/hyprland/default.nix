@@ -14,6 +14,7 @@ in
   imports = [
     inputs.hyprland.nixosModules.default
 
+    ./animation.nix
     ./autoStart.nix
     ./bind.nix
     ./config.nix

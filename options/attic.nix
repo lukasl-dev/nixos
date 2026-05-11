@@ -12,8 +12,6 @@ in
 {
   options.planet = {
     attic = {
-      enable = lib.mkEnableOption "Enable attic";
-
       cache = lib.mkOption {
         type = lib.types.str;
         description = "Attic cache";
@@ -33,7 +31,7 @@ in
     };
   };
 
-  config = lib.mkIf attic.enable {
+  config = {
     environment.systemPackages = [ attic-client ];
 
     systemd.user.services."attic-use-${attic.cache}" =
