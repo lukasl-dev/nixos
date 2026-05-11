@@ -1,6 +1,32 @@
 {
   imports = [
-    ./planet
-    ./universe
+    ./display
+    ./gaming
+    ./hardware
+    ./networking
+    ./programs
+    ./services
+    ./virtualisation
+
+    ./agenix.nix
+    ./apparmor.nix
+    ./attic.nix
+    ./catppuccin.nix
+    ./domain.nix
+    ./fonts.nix
+    ./home-manager.nix
+    ./i18n.nix
+    ./name.nix
+    ./netrc.nix
+    ./nix-ld.nix
+    ./nix.nix
+    ./packages.nix
+    ./shell.nix
+    ./ssh.nix
+    ./stateVersion.nix
+    ./sudo.nix
+    ./time.nix
+    ./users.nix
+    ./xdg.nix
   ];
 }

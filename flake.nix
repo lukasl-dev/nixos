@@ -14,7 +14,6 @@
       url = "github:oddlama/agenix-rekey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    sops-nix.url = "github:Mic92/sops-nix";
     nvf = {
       url = "github:notashelf/nvf?ref=v0.8";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +37,6 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    opencode.url = "github:anomalyco/opencode?ref=v1.2.27";
     pi.url = "github:lukasl-dev/pi.nix";
     firn = {
       url = "github:lukasl-dev/firn";
@@ -51,10 +49,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lightpanda.url = "github:lukasl-dev/browser";
-    HyprQuickFrame = {
-      url = "github:Ronin-CK/HyprQuickFrame";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -102,14 +96,14 @@
       };
 
       nixosConfigurations = {
-        orion = mkNixosSystem { module = ./planets/orion; };
+        # orion = mkNixosSystem { module = ./planets/orion; };
         vega = mkNixosSystem { module = ./planets/vega; };
-        pollux = mkNixosSystem { module = ./planets/pollux; };
+        # pollux = mkNixosSystem { module = ./planets/pollux; };
 
-        ida = mkNixosSystem {
-          system = "aarch64-linux";
-          module = ./planets/ida;
-        };
+        # ida = mkNixosSystem {
+        #   system = "aarch64-linux";
+        #   module = ./planets/ida;
+        # };
       };
 
       packages = forEachSystem (
@@ -143,7 +137,6 @@
               [
                 just
                 jq
-                sops
               ]
               ++ [
                 inputs.agenix-rekey.packages.${system}.default
@@ -152,9 +145,9 @@
 
             shellHook = ''
               repo_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || printf '%s\n' "$PWD")
-              bash ${./options/universe/programs/pi-mono/extensions/setup-node-modules.sh} \
+              bash ${./options/programs/pi/extensions/setup-node-modules.sh} \
                 "$repo_root" \
-                ${inputs.pi-mono.packages.${system}.coding-agent}
+                ${inputs.pi.packages.${system}.coding-agent}
             '';
           };
         }

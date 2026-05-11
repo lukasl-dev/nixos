@@ -1,0 +1,53 @@
+{
+  imports = [
+    ./oh-my-posh
+    ./pi
+    ./tmux
+
+    ./anki.nix
+    ./appimage.nix
+    ./bat.nix
+    ./bitwarden.nix
+    ./btop.nix
+    ./delta.nix
+    ./direnv.nix
+    ./discord.nix
+    ./espanso.nix
+    ./eza.nix
+    ./fastfetch.nix
+    ./feh.nix
+    ./ffmpeg.nix
+    ./fzf.nix
+    ./gh-dash.nix
+    ./gh.nix
+    ./ghostty.nix
+    ./git.nix
+    ./gpg.nix
+    ./helium.nix
+    ./hyperfine.nix
+    ./imagemagick.nix
+    ./jj.nix
+    ./lightpanda.nix
+    ./localsend.nix
+    ./mpv.nix
+    ./nh.nix
+    ./nvim.nix
+    ./obsidian.nix
+    ./perf.nix
+    ./poppler-utils.nix
+    ./ripgrep.nix
+    ./seahorse.nix
+    ./sioyek.nix
+    ./speedtest.nix
+    ./thunderbird.nix
+    ./upterm.nix
+    ./uxplay.nix
+    ./wakatime.nix
+    ./wireshark.nix
+    ./yazi.nix
+    ./yt-dlp.nix
+    ./zen.nix
+    ./zip.nix
+    ./zoxide.nix
+  ];
+}

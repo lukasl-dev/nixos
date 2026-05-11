@@ -1,3 +1,0 @@
-{
-  imports = [ ./nix-community.nix ];
-}
