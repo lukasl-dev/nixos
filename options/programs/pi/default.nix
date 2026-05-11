@@ -12,11 +12,18 @@ let
 
   inherit (pkgs.stdenv.hostPlatform) system;
 
-  piSecretPaths = builtins.filter (path: path != null) [
-    (pi.secrets.opencode or null)
-    (pi.secrets.exa or null)
-    # (config.planet.programs.wakatime.config or null)
+  allowedPiSecretPaths = map toString [
+    pi.secrets.opencode
+    pi.secrets.exa
   ];
+
+  deniedAgeSecretPaths = lib.filter (path: !(builtins.elem path allowedPiSecretPaths)) (
+    lib.mapAttrsToList (_: secret: toString secret.path) config.age.secrets
+  );
+
+  deniedAgeSecretRules = lib.concatMapStringsSep "\n" (
+    path: ''audit deny "${path}" rwklm, ''
+  ) deniedAgeSecretPaths;
 
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
@@ -172,14 +179,12 @@ in
 
           audit deny "/home/${user.name}/nixos/dns/creds.json" rwklm,
 
-          ${lib.concatMapStringsSep "\n          " (
-            path: "allow ${builtins.toJSON (toString path)} r,"
-          ) piSecretPaths}
-
           audit deny "/run/secrets/" r,
 
           audit deny "/run/agenix/" r,
           audit deny "/run/agenix.d/" r,
+
+          ${deniedAgeSecretRules}
 
           audit deny "/home/${user.name}/nixos/secrets/**" rwklm,
           audit deny "/home/${user.name}/nixos/sops/**" rwklm,

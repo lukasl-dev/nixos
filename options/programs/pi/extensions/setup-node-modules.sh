@@ -8,18 +8,18 @@ extensions_dir="$repo_root/options/planet/programs/pi/extensions"
 node_modules_dir="$extensions_dir/node_modules"
 
 mkdir -p \
-  "$node_modules_dir/@mariozechner" \
+  "$node_modules_dir/@earendil-works" \
   "$node_modules_dir/@sinclair"
 
 ln -sfn \
-  "$pkg_root/lib/node_modules/@mariozechner/pi-coding-agent" \
-  "$node_modules_dir/@mariozechner/pi-coding-agent"
+  "$pkg_root/lib/node_modules/@earendil-works/pi-coding-agent" \
+  "$node_modules_dir/@earendil-works/pi-coding-agent"
 ln -sfn \
-  "$pkg_root/lib/node_modules/@mariozechner/pi-ai" \
-  "$node_modules_dir/@mariozechner/pi-ai"
+  "$pkg_root/lib/node_modules/@earendil-works/pi-ai" \
+  "$node_modules_dir/@earendil-works/pi-ai"
 ln -sfn \
-  "$pkg_root/lib/node_modules/@mariozechner/pi-tui" \
-  "$node_modules_dir/@mariozechner/pi-tui"
+  "$pkg_root/lib/node_modules/@earendil-works/pi-tui" \
+  "$node_modules_dir/@earendil-works/pi-tui"
 ln -sfn \
   "$pkg_root/lib/node_modules/@sinclair/typebox" \
   "$node_modules_dir/@sinclair/typebox"

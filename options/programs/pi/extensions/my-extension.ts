@@ -1,7 +1,7 @@
 import {
   isToolCallEventType,
   type ExtensionAPI,
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 
 export default function (pi: ExtensionAPI) {
   pi.on("tool_call", async (event, ctx) => {

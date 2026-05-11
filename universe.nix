@@ -145,8 +145,14 @@ in
 
     # programs
     ${secrets.tailscale.authKey}.rekeyFile = ./secrets/universe/tailscale/authKey.age;
-    ${secrets.opencode.apiKey}.rekeyFile = ./secrets/universe/opencode/apiKey.age;
-    ${secrets.exa.apiKey}.rekeyFile = ./secrets/universe/exa/apiKey.age;
+    ${secrets.opencode.apiKey} = {
+      rekeyFile = ./secrets/universe/opencode/apiKey.age;
+      owner = user.name;
+    };
+    ${secrets.exa.apiKey} = {
+      rekeyFile = ./secrets/universe/exa/apiKey.age;
+      owner = user.name;
+    };
 
     ${secrets.anki.username}.rekeyFile = ./secrets/universe/anki/username.age;
     ${secrets.anki.key}.rekeyFile = ./secrets/universe/anki/key.age;
