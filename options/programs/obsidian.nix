@@ -48,18 +48,12 @@ in
   config = lib.mkIf obsidian.enable {
     environment.systemPackages = [ obsidian.package ];
 
-    # TODO:
-    # planet.wm.hyprland.bindings =
-    #   let
-    #     cmd = lib.getExe obsidian.package;
-    #   in
-    #   [
-    #     {
-    #       type = "exec";
-    #       keys = [ "P" ];
-    #       command = cmd;
-    #     }
-    #   ];
+    planet.display.hyprland.bind = lib.mkIf hyprland.enable [
+      {
+        keys = "SUPER + P";
+        dispatcher.execCmd = lib.getExe obsidian.package;
+      }
+    ];
 
     planet.hm = [
       {

@@ -217,30 +217,27 @@ in
       }
     ];
 
-    # TODO:
-    # planet.wm.hyprland = {
-    #   launch = [ (lib.getExe noctalia.package) ];
-    #
-    #   bindings =
-    #     let
-    #       cmd = lib.getExe noctalia.package;
-    #     in
-    #     [
-    #       {
-    #         type = "exec";
-    #         keys = [
-    #           "Space"
-    #           "Backspace"
-    #         ];
-    #         command = "${cmd} ipc --any-display call launcher toggle";
-    #       }
-    #       {
-    #         type = "exec";
-    #         keys = [ "C" ];
-    #         command = "${cmd} ipc --any-display call launcher clipboard";
-    #       }
-    #     ];
-    #
-    # };
+    planet.display.hyprland = {
+      autoStart = [ (lib.getExe package) ];
+
+      bind =
+        let
+          cmd = lib.getExe package;
+        in
+        [
+          {
+            keys = "SUPER + Space";
+            dispatcher.execCmd = "${cmd} ipc --any-display call launcher toggle";
+          }
+          {
+            keys = "SUPER + Backspace";
+            dispatcher.execCmd = "${cmd} ipc --any-display call launcher toggle";
+          }
+          {
+            keys = "SUPER + C";
+            dispatcher.execCmd = "${cmd} ipc --any-display call launcher clipboard";
+          }
+        ];
+    };
   };
 }

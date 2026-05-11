@@ -53,8 +53,7 @@ in
   };
 
   config = lib.mkIf element.enable {
-    # TODO:
-    # planet.wm.hyprland.launch = [ element.launch ];
+    planet.display.hyprland.autoStart = lib.mkIf hyprland.enable [ element.launch ];
 
     planet.hm = [
       {

@@ -60,9 +60,6 @@ in
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   nix.settings.extra-platforms = [ "aarch64-linux" ];
 
-  # # TODO: requires avahi
-  # services.printing.enable = true;
-
   planet = {
     name = "vega";
     timeZone = "Europe/Vienna";

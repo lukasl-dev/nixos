@@ -7,34 +7,10 @@
 
 let
   inherit (config.planet) display;
-  inherit (config.planet.display) hyprland;
-
   inherit (config.planet.programs) helium;
 
-  mkOzoneFlag =
-    display:
-    {
-      x11 = "--ozone-platform=x11";
-      wayland = "--ozone-platform=wayland";
-    }
-    .${display};
-
-  mkHeliumFeatures =
-    {
-      display,
-      webgpu ? false,
-    }:
-    builtins.concatStringsSep "," (
-      lib.optionals webgpu [
-        "Vulkan"
-        "VulkanFromANGLE"
-        "DefaultANGLEVulkan"
-      ]
-      ++ lib.optionals (hyprland.enable && display == "wayland") [ "WaylandLinuxDrmSyncobj" ]
-    );
-
-  heliumVersion = "0.11.7.1";
-  heliumRelease =
+  version = "0.11.7.1";
+  release =
     {
       x86_64-linux = {
         arch = "x86_64";
@@ -48,16 +24,16 @@ let
     .${pkgs.stdenv.hostPlatform.system}
       or (throw "planet.programs.helium: unsupported system ${pkgs.stdenv.hostPlatform.system}");
 
-  heliumPackage = pkgs.stdenvNoCC.mkDerivation {
+  package = pkgs.stdenvNoCC.mkDerivation {
     pname = "helium";
-    version = heliumVersion;
+    version = version;
 
     src = pkgs.fetchurl {
-      url = "https://github.com/imputnet/helium-linux/releases/download/${heliumVersion}/helium-${heliumVersion}-${heliumRelease.arch}_linux.tar.xz";
-      inherit (heliumRelease) hash;
+      url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-${release.arch}_linux.tar.xz";
+      inherit (release) hash;
     };
 
-    sourceRoot = "helium-${heliumVersion}-${heliumRelease.arch}_linux";
+    sourceRoot = "helium-${version}-${release.arch}_linux";
 
     installPhase = # bash
       ''
@@ -77,7 +53,7 @@ let
       '';
   };
 
-  runtimeLibraries = with pkgs; [
+  runtimeLibs = with pkgs; [
     glib
     nspr
     nss
@@ -106,63 +82,7 @@ let
     pciutils
   ];
 
-  mkWrappedHeliumPackage =
-    {
-      name,
-      binName ? name,
-      display,
-      webgpu ? false,
-    }:
-    let
-      heliumFeatures = mkHeliumFeatures {
-        inherit display webgpu;
-      };
-
-      wrapperArgs = [
-        ''--prefix LD_LIBRARY_PATH : "$out/lib/helium"''
-        ''--suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibraries}"''
-        ''--add-flags "${mkOzoneFlag display}"''
-      ]
-      ++ lib.optionals (heliumFeatures != "") [ ''--add-flags "--enable-features=${heliumFeatures}"'' ]
-      ++ lib.optionals webgpu [
-        ''--add-flags "--use-angle=vulkan"''
-        ''--add-flags "--ignore-gpu-blocklist"''
-        ''--add-flags "--enable-unsafe-webgpu"''
-      ];
-    in
-    pkgs.symlinkJoin {
-      inherit name;
-      paths = [ heliumPackage ];
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        rm -f $out/bin/helium
-        makeWrapper ${heliumPackage}/bin/helium $out/bin/${binName} \
-          ${lib.concatStringsSep " \\\n          " wrapperArgs}
-      '';
-    };
-
-  heliumWaylandPackage = mkWrappedHeliumPackage {
-    name = "helium";
-    binName = "helium";
-    display = display.type;
-  };
-
-  # TODO:
-  # heliumWebgpuPackage = pkgs.writeShellScriptBin "helium-webgpu" ''
-  #   export LD_LIBRARY_PATH="${heliumPackage}/lib/helium:${lib.makeLibraryPath runtimeLibraries}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-  #   exec ${heliumPackage}/bin/helium \
-  #     --ozone-platform=x11 \
-  #     --use-angle=vulkan \
-  #     --enable-features=${
-  #       mkHeliumFeatures {
-  #         display = "x11";
-  #         webgpu = true;
-  #       }
-  #     } \
-  #     --ignore-gpu-blocklist \
-  #     --enable-unsafe-webgpu \
-  #     "$@"
-  # '';
+  features = lib.optionalString (display.type == "wayland") "WaylandLinuxDrmSyncobj";
 in
 {
   options.planet.programs = {
@@ -176,7 +96,19 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default = heliumWaylandPackage;
+        default = pkgs.symlinkJoin {
+          name = "helium";
+          paths = [ package ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            rm -f $out/bin/helium
+            makeWrapper ${package}/bin/helium $out/bin/helium \
+              --prefix LD_LIBRARY_PATH : "$out/lib/helium" \
+              --suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}" \
+              --add-flags "--ozone-platform=${display.type}" \
+              ${lib.optionalString (features != "") ''--add-flags "--enable-features=${features}"''}
+          '';
+        };
         description = "Package used for Helium browser.";
         example = "pkgs.symlinkJoin { ... }";
       };
@@ -184,18 +116,13 @@ in
   };
 
   config = lib.mkIf helium.enable {
-    environment.systemPackages = [
-      helium.package
-      # heliumWebgpuPackage
-    ];
+    environment.systemPackages = [ helium.package ];
 
-    # TODO:
-    # planet.wm.hyprland.bindings = [
-    #   {
-    #     type = "exec";
-    #     keys = [ "B" ];
-    #     command = lib.getExe' helium.package "helium";
-    #   }
-    # ];
+    planet.display.hyprland.bind = lib.mkIf display.hyprland.enable [
+      {
+        keys = "SUPER + B";
+        dispatcher.execCmd = lib.getExe' helium.package "helium";
+      }
+    ];
   };
 }

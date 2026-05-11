@@ -62,8 +62,7 @@ in
   };
 
   config = lib.mkIf discord.enable {
-    # TODO:
-    # planet.wm.hyprland.launch = [ discord.launch ];
+    planet.display.hyprland.autoStart = lib.mkIf hyprland.enable [ discord.launch ];
 
     planet.hm = [
       {

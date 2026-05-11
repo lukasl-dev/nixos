@@ -19,8 +19,6 @@ in
     };
   };
 
-  # TODO: hyprland autostarts
-
   config = lib.mkIf audio.enable {
     security.rtkit.enable = true;
 
@@ -84,5 +82,20 @@ in
       pwvucontrol
       easyeffects
     ];
+
+    planet.display.hyprland = lib.mkIf display.hyprland.enable {
+      autoStart = [ "easyeffects --service-mode" ];
+
+      bind = [
+        {
+          keys = "SUPER + I";
+          dispatcher.execCmd = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+        }
+        {
+          keys = "SUPER + O";
+          dispatcher.execCmd = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        }
+      ];
+    };
   };
 }

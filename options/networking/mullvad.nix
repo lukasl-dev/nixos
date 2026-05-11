@@ -33,8 +33,7 @@ in
   };
 
   config = lib.mkIf mullvad.enable {
-    # TODO:
-    # planet.wm.hyprland.launch = [ mullvad.launch ];
+    planet.display.hyprland.autoStart = lib.mkIf display.hyprland.enable [ mullvad.launch ];
 
     planet.shell.aliases.novpn = "mullvad-exclude";
 

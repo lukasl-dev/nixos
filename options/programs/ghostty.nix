@@ -41,20 +41,16 @@ in
       ];
     };
 
-    # TODO:
-    # planet.wm.hyprland.bindings = [
-    #   {
-    #     type = "exec";
-    #     keys = [ "T" ];
-    #     command = lib.getExe ghostty.package;
-    #   }
-    #   {
-    #     type = "exec";
-    #     mods = [ "SUPER SHIFT" ];
-    #     keys = [ "T" ];
-    #     command = "${lib.getExe ghostty.package} --command=zsh";
-    #   }
-    # ];
+    planet.display.hyprland.bind = lib.mkIf display.hyprland.enable [
+      {
+        keys = "SUPER + T";
+        dispatcher.execCmd = lib.getExe ghostty.package;
+      }
+      {
+        keys = "SUPER + SHIFT + T";
+        dispatcher.execCmd = "${lib.getExe ghostty.package} --command=zsh";
+      }
+    ];
 
     planet.hm = [
       {
