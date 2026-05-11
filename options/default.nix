@@ -11,6 +11,7 @@
     ./agenix.nix
     ./apparmor.nix
     ./attic.nix
+    ./audio.nix
     ./catppuccin.nix
     ./domain.nix
     ./fonts.nix
