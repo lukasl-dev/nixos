@@ -24,6 +24,7 @@
     ./telescope.nix
     ./todo-comments.nix
     ./trouble.nix
+    ./vim-tptp.nix
     ./wakatime.nix
     ./whichKey.nix
   ];
