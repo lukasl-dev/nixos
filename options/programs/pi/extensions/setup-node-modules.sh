@@ -4,7 +4,7 @@ set -euo pipefail
 repo_root=${1:?missing repo root}
 pkg_root=${2:?missing pi package path}
 
-extensions_dir="$repo_root/options/planet/programs/pi/extensions"
+extensions_dir="$repo_root/options/programs/pi/extensions"
 node_modules_dir="$extensions_dir/node_modules"
 
 mkdir -p \
