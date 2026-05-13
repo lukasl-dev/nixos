@@ -27,9 +27,9 @@ let
 
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
-    version = "0.6.4";
+    version = "0.7.2";
     src = inputs.fff-nvim.outPath;
-    npmDepsHash = "sha256-BbGGN7Y7x9Yf5xXMjoGqJFLj7Hw1p19DcJRiG5lkkRw=";
+    npmDepsHash = "sha256-+uk57NmH4I3mHIdNE4xfSPilwWefni5B51jVxxS3OD0=";
     npmInstallFlags = [ "--include=optional" ];
     npmRebuildFlags = [ "--ignore-scripts" ];
     dontNpmBuild = true;

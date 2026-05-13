@@ -9,16 +9,16 @@ let
   inherit (config.planet) display;
   inherit (config.planet.programs) helium;
 
-  version = "0.11.7.1";
+  version = "0.12.1.1";
   release =
     {
       x86_64-linux = {
         arch = "x86_64";
-        hash = "sha256-V0drAliKB8HFkxDG9I+bPThLH0I/cJpG92v3aORaX/Y=";
+        hash = "sha256-LQTffKZUf5HMm/Dgy8UlbLtGldz3ptQm2qPx4fXzY54=";
       };
       aarch64-linux = {
         arch = "arm64";
-        hash = "sha256-RE/OIBzzYO5q9xCugUUM46rk65elljI4mCVJ5JwBE+Q=";
+        hash = "sha256-DxFgHHGlvzLo/UdpaCAx5trKwY6APFyH8FhRPaaCtME=";
       };
     }
     .${pkgs.stdenv.hostPlatform.system}
