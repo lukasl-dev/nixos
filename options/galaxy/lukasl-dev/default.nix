@@ -18,6 +18,7 @@ in
     ./books.nix
     ./factorio.nix
     ./notes.nix
+    ./waka.nix
     ./www.nix
   ];
 
