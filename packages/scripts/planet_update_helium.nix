@@ -14,7 +14,7 @@ pkgs.writeShellApplication {
     ''
       set -euo pipefail
 
-      file="options/programs/helium.nix"
+      file="options/planet/programs/helium.nix"
 
       release_json="$(gh api repos/imputnet/helium-linux/releases/latest)"
       tag="$(jq -r '.tag_name' <<< "''${release_json}")"

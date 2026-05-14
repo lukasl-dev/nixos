@@ -112,9 +112,9 @@ in
 
         rekey = {
           masterIdentities = [ agenixIdentity ];
-          hostPubkey = builtins.readFile ../../../../options/universe/ssh/id_ed25519.pub;
+          hostPubkey = builtins.readFile ../../../../../options/universe/ssh/id_ed25519.pub;
           storageMode = "local";
-          localStorageDir = "${toString ../../../../secrets/_}/${name}";
+          localStorageDir = "${toString ../../../../../secrets/_}/${name}";
         };
       };
     };

@@ -145,7 +145,7 @@
 
             shellHook = ''
               repo_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || printf '%s\n' "$PWD")
-              bash ${./options/programs/pi/extensions/setup-node-modules.sh} \
+              bash ${./options/planet/programs/pi/extensions/setup-node-modules.sh} \
                 "$repo_root" \
                 ${inputs.pi.packages.${system}.coding-agent}
             '';

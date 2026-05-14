@@ -21,7 +21,7 @@ in
       masterIdentities = [ "/etc/agenix/identity" ];
       hostPubkey = ssh.default.publicKey;
       storageMode = "local";
-      localStorageDir = "${toString ../secrets/_}/${name}";
+      localStorageDir = "${toString ../../secrets/_}/${name}";
     };
   };
 }

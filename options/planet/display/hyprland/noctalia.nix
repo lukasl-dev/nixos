@@ -26,7 +26,7 @@ in
           settings = {
             settingsVersion = 43;
 
-            general.avatarImage = "${../../../avatar.png}";
+            general.avatarImage = "${../../../../avatar.png}";
 
             ui = {
               fontDefault = "Adwaita Sans";
@@ -127,7 +127,7 @@ in
             wallpaper = {
               overviewEnabled = true;
               directory = "${lib.cleanSourceWith {
-                src = ../../../wallpapers;
+                src = ../../../../wallpapers;
                 filter = path: _type: builtins.baseNameOf path != "README.md";
               }}";
               automationEnabled = true;
