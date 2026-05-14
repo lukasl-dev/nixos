@@ -12,12 +12,22 @@ let
 in
 {
   imports = [
+    ./proxy.nix
+
     ./anki.nix
+    ./notes.nix
+    ./www.nix
   ];
 
   options.galaxy = {
     lukasl-dev = {
       enable = lib.mkEnableOption "Join the lukasl-dev galaxy";
+
+      host = lib.mkOption {
+        type = lib.types.str;
+        default = "lukasl.dev";
+        readOnly = true;
+      };
 
       modules = lib.mkOption {
         type = lib.types.listOf lib.types.deferredModule;

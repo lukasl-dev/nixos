@@ -38,7 +38,7 @@ in
   };
 
   config = lib.mkIf bitwarden.enable {
-    planet.display.hyprland.autoStart = lib.mkIf display.hyprland.enable [ bitwarden.launch ];
+    planet.display.hyprland.autoStart = [ bitwarden.launch ];
 
     environment.systemPackages = [
       bitwarden.package

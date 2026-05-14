@@ -2,40 +2,10 @@
 
 let
   inherit (config.galaxy) proxy;
-
-  httpsRules = lib.filter (rule: rule.type == "https") proxy.rules;
 in
 {
   options.galaxy.proxy = {
     enable = lib.mkEnableOption "Enable reverse proxy";
-
-    rules = lib.mkOption {
-      type = lib.types.listOf (
-        lib.types.submodule {
-          options = {
-            type = lib.mkOption {
-              type = lib.types.enum [ "https" ];
-            };
-
-            name = lib.mkOption {
-              type = lib.types.str;
-            };
-
-            http = lib.mkOption {
-              type = lib.types.submodule {
-                options = {
-                  to = lib.mkOption {
-                    type = lib.types.str;
-                  };
-                };
-              };
-            };
-          };
-        }
-      );
-      default = [ ];
-      description = "Reverse proxy rules.";
-    };
   };
 
   config = lib.mkIf proxy.enable (
@@ -74,32 +44,6 @@ in
             # uptermd = {
             #   address = ":2222";
             # };
-          };
-        };
-
-        dynamicConfigOptions = {
-          http = {
-            routers = lib.listToAttrs (
-              map (rule: {
-                inherit (rule) name;
-                value = {
-                  rule = "Host(`${rule.name}.lukasl.dev`)";
-                  entryPoints = [ "websecure" ];
-                  service = rule.name;
-                };
-              }) httpsRules
-            );
-
-            services = lib.listToAttrs (
-              map (rule: {
-                inherit (rule) name;
-                value = {
-                  loadBalancer.servers = [
-                    { url = rule.http.to; }
-                  ];
-                };
-              }) httpsRules
-            );
           };
         };
       };

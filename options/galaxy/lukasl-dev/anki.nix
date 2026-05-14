@@ -27,7 +27,7 @@ in
         rekeyFile = ../../../secrets/galaxy/lukasl-dev/anki/password.age;
       };
 
-      galaxy = {
+      galaxy.lukasl-dev = {
         proxy.rules = [
           {
             type = "https";
@@ -36,30 +36,29 @@ in
           }
         ];
 
-        lukasl-dev = {
-          bindMounts = [ age.secrets.${password}.path ];
+        bindMounts = [ age.secrets.${password}.path ];
 
-          modules = [
-            {
-              services.anki-sync-server = {
-                enable = true;
+        modules = [
+          {
+            services.anki-sync-server = {
+              enable = true;
 
-                address = addresses.local;
-                inherit (anki) port;
+              address = addresses.local;
+              inherit (anki) port;
 
-                users = [
-                  {
-                    username = "lukas";
-                    passwordFile = age.secrets.${password}.path;
-                  }
-                ];
-              };
+              users = [
+                {
+                  username = "lukas";
+                  passwordFile = age.secrets.${password}.path;
+                }
+              ];
+            };
 
-              networking.firewall.allowedTCPPorts = [ anki.port ];
-            }
-          ];
-        };
+            networking.firewall.allowedTCPPorts = [ anki.port ];
+          }
+        ];
       };
+
     }
   );
 }
