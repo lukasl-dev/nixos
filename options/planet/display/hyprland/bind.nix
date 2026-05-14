@@ -6,6 +6,9 @@ let
       hl.bind("${mod} + W", hl.dsp.window.close())
       hl.bind("${mod} + SHIFT + W", hl.dsp.window.kill())
 
+      hl.bind("${mod} + mouse:272", hl.dsp.window.drag(), { mouse = true })
+      hl.bind("${mod} + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
       hl.bind("${mod} + H", hl.dsp.focus({ direction = "l" }))
       hl.bind("${mod} + J", hl.dsp.focus({ direction = "d" }))
       hl.bind("${mod} + K", hl.dsp.focus({ direction = "u" }))
