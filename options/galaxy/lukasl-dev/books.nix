@@ -35,8 +35,8 @@ in
       modules =
         let
           dataDir = "audiobookshelf";
-
           libraryDir = "/var/lib/${dataDir}/library";
+
           audiobooksDir = "${libraryDir}/audiobooks";
           podcastsDir = "${libraryDir}/podcasts";
         in
@@ -47,6 +47,7 @@ in
               package = pkgs.unstable.audiobookshelf;
 
               inherit dataDir;
+
               inherit (books) port;
               host = addresses.local;
             };

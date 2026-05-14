@@ -16,6 +16,7 @@ in
 
     ./anki.nix
     ./books.nix
+    ./factorio.nix
     ./notes.nix
     ./www.nix
   ];

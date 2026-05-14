@@ -14,6 +14,8 @@
       enable = true;
 
       anki.enable = true;
+      books.enable = true;
+      factorio.enable = true;
       notes.enable = true;
       www.enable = true;
       # TODO:
