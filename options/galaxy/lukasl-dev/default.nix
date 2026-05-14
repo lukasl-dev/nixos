@@ -15,6 +15,7 @@ in
     ./proxy.nix
 
     ./anki.nix
+    ./books.nix
     ./notes.nix
     ./www.nix
   ];

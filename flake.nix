@@ -98,7 +98,7 @@
       nixosConfigurations = {
         # orion = mkNixosSystem { module = ./planets/orion; };
         vega = mkNixosSystem { module = ./planets/vega; };
-        # pollux = mkNixosSystem { module = ./planets/pollux; };
+        pollux = mkNixosSystem { module = ./planets/pollux; };
 
         # ida = mkNixosSystem {
         #   system = "aarch64-linux";
