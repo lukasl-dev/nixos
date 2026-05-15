@@ -24,12 +24,12 @@ in
     ];
 
     networking.firewall = {
-      allowedUDPPorts = [
+      allowedTCPPorts = [
         4000
         4001
         4002
       ];
-      allowedTCPPorts = [
+      allowedUDPPorts = [
         5000
         5001
         5002
@@ -46,7 +46,7 @@ in
               kill "$(cat "$PID_FILE")"
               rm "$PID_FILE"
           else
-              uxplay -p tcp 4000 -p udp 5000 &> /dev/null & echo $! > "$PID_FILE"
+              ${lib.getExe pkgs.unstable.uxplay} -p tcp 4000 -p udp 5000 &> /dev/null & echo $! > "$PID_FILE"
           fi
         '';
       })
