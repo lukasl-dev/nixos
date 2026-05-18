@@ -2164,11 +2164,11 @@
         "systems": "systems_14"
       },
       "locked": {
-        "lastModified": 1778977219,
-        "narHash": "sha256-sos11hKrsIaEeGmhvBqrHFUIv5JWi3urFZzLSN9yCJQ=",
+        "lastModified": 1779073574,
+        "narHash": "sha256-GW5dXb9cpeJQigS0MaYOlOn4ObpIuTi7nZKp5mAsmW0=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "5d6070f0d3082375cde6587c72c079894e05fe2f",
+        "rev": "a8cd94ee73495944dc6560cbd3cabba1190593ef",
         "type": "github"
       },
       "original": {
