@@ -39,8 +39,10 @@ in
           };
           sensitivity = 0;
 
+          # Only affects deliberate key holds, not switch chatter like a single
+          # press producing two separate "o" events.
           repeat_rate = 20;
-          repeat_delay = 700;
+          repeat_delay = 1000;
         };
 
         general = {

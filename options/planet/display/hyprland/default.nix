@@ -105,6 +105,8 @@ in
       systemPackages = with pkgs; [
         wl-clipboard
         libnotify
+        wev
+        evtest
       ];
     };
   };

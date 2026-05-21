@@ -92,8 +92,8 @@ let
   pi-codex-conversion-src = pkgs.fetchFromGitHub {
     owner = "IgorWarzocha";
     repo = "pi-codex-conversion";
-    rev = "d55bc98eae7d31559210128efe5baec6d0c677f9";
-    hash = "sha256-KNjGMPDHi9j/K1mLNpAGa+y/oZqycjjuFf6HiLuYXFk=";
+    rev = "06f1c934a586b785f06966114d743d72ad8d77b3";
+    hash = "sha256-hfKnwGSv9pbEmh/L3dgul9mCYyxGlTMqHstz+Myl7n4=";
   };
 
   pi-codex-conversion-apply-patch = pkgs.rustPlatform.buildRustPackage {
@@ -106,21 +106,23 @@ let
 
   pi-codex-conversion = pkgs.buildNpmPackage {
     pname = "pi-codex-conversion";
-    version = "1.5.1";
+    version = "1.5.7";
     src = pi-codex-conversion-src;
-    npmDepsHash = "sha256-H3fzvsitT14JX7ACQBVZYl4frTJww0CyKKiSSZSUxdI=";
+    npmDepsHash = "sha256-+wv6VNGqc38DJsj38xUGcXXEeVSBeyLULVSbKKBsGA4=";
 
     nativeBuildInputs = [ pkgs.python3 ];
     dontNpmBuild = true;
 
     installPhase =
       let
-        platformArch = {
-          x86_64-linux = "linux-x64";
-          aarch64-linux = "linux-arm64";
-          x86_64-darwin = "darwin-x64";
-          aarch64-darwin = "darwin-arm64";
-        }.${system} or (throw "Unsupported system: ${system}");
+        platformArch =
+          {
+            x86_64-linux = "linux-x64";
+            aarch64-linux = "linux-arm64";
+            x86_64-darwin = "darwin-x64";
+            aarch64-darwin = "darwin-arm64";
+          }
+          .${system} or (throw "Unsupported system: ${system}");
       in
       ''
         runHook preInstall
@@ -204,7 +206,7 @@ in
           -p "$*" \
           --model gpt-5.4-mini \
           --provider openai-codex \
-          --thinking medium 
+          --thinking medium
       '')
     ];
 
