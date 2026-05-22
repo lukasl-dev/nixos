@@ -12,8 +12,7 @@
     - [ ] Replace wrapper-style overrides with `makeWrapper`/launcher derivations where possible
     - [ ] Keep upstream package derivations cacheable
     - [ ] Rebuild one host and confirm cache hits improve
-- [ ] Rename repo to flake.nix or flake
-- [ ] Migrate to Hyprland lua
+- [ ] Replace woodpecker with forgejo actions for simplicity
 
 ## pollux
 
