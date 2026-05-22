@@ -19,6 +19,7 @@ in
     ./factorio.nix
     ./forge.nix
     ./notes.nix
+    ./term.nix
     ./waka.nix
     ./www.nix
   ];
