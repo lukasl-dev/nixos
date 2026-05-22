@@ -10,6 +10,7 @@
     ./bitwarden.nix
     ./btop.nix
     ./delta.nix
+    ./difftastic.nix
     ./direnv.nix
     ./discord.nix
     ./espanso.nix

@@ -2,7 +2,7 @@
   planet.hm = [
     {
       programs.delta = {
-        enable = true;
+        enable = false;
 
         enableGitIntegration = true;
         enableJujutsuIntegration = true;
