@@ -45,8 +45,10 @@ in
           if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null; then
               kill "$(cat "$PID_FILE")"
               rm "$PID_FILE"
+              echo "Uxplay stopped."
           else
               ${lib.getExe pkgs.unstable.uxplay} -p tcp 4000 -p udp 5000 &> /dev/null & echo $! > "$PID_FILE"
+              echo "Uxplay started."
           fi
         '';
       })

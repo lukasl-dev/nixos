@@ -1,6 +1,8 @@
 {
   imports = [
     ./hardware-configuration.nix
+
+    ./audio.nix
   ];
 
   boot = {
