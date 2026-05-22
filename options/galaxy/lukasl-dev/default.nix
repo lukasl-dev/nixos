@@ -17,6 +17,7 @@ in
     ./anki.nix
     ./books.nix
     ./factorio.nix
+    ./forge.nix
     ./notes.nix
     ./waka.nix
     ./www.nix
