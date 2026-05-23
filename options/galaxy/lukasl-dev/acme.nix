@@ -1,8 +1,8 @@
 { config, lib, ... }:
 
 let
+  inherit (config) age;
   inherit (config.galaxy.lukasl-dev) domain;
-  inherit (config.age) secrets;
 
   cf_email = "galaxy/lukasl-dev/acme/cf_email";
   cf_api_key = "galaxy/lukasl-dev/acme/cf_global_api_key";
@@ -25,11 +25,12 @@ in
         rekeyFile = ../../../secrets/galaxy/lukasl-dev/acme/env.age;
         generator = {
           dependencies = {
-            cf_email = secrets.${cf_email};
-            cf_api_key = secrets.${cf_api_key};
+            cf_email = age.secrets.${cf_email};
+            cf_api_key = age.secrets.${cf_api_key};
           };
           script =
             { decrypt, deps, ... }:
+            # bash
             ''
               cf_email="$(${decrypt} "${deps.cf_email.file}")"
               cf_api_key="$(${decrypt} "${deps.cf_api_key.file}")"
@@ -43,6 +44,6 @@ in
       };
     };
 
-    galaxy.acme.domains.${domain}.environmentFile = secrets.${cf_env}.path;
+    galaxy.acme.domains.${domain}.environmentFile = age.secrets.${cf_env}.path;
   };
 }

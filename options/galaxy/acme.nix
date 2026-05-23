@@ -3,7 +3,7 @@
 let
   inherit (config.galaxy) acme proxy;
 
-  hostEntries = lib.unique (
+  proxyHosts = lib.unique (
     lib.flatten (
       lib.mapAttrsToList (
         domain: rules:
@@ -14,6 +14,14 @@ let
       ) proxy.rules
     )
   );
+
+  extraHosts = lib.unique (
+    lib.flatten (
+      lib.mapAttrsToList (domain: cfg: map (host: { inherit host domain; }) cfg.hosts) acme.domains
+    )
+  );
+
+  allHosts = proxyHosts ++ extraHosts;
 in
 {
   options.galaxy.acme = {
@@ -44,6 +52,18 @@ in
               type = lib.types.path;
               description = "Path to the environment file with DNS provider credentials.";
             };
+
+            hosts = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [ ];
+              description = "Additional hosts needing certificates (e.g. mail, not routed through traefik).";
+            };
+
+            reloadServices = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [ ];
+              description = "Extra services to reload on certificate renewal for this domain.";
+            };
           };
         }
       );
@@ -64,11 +84,11 @@ in
           {
             name = host;
             value = {
-              reloadServices = [ "traefik.service" ];
+              reloadServices = [ "traefik.service" ] ++ acme.domains.${domain}.reloadServices;
               inherit (acme.domains.${domain}) environmentFile;
             };
           }
-        ) hostEntries
+        ) allHosts
       );
     };
 
@@ -78,6 +98,6 @@ in
         certFile = "/var/lib/acme/${host}/fullchain.pem";
         keyFile = "/var/lib/acme/${host}/key.pem";
       }
-    ) hostEntries;
+    ) proxyHosts;
   };
 }

@@ -13,18 +13,10 @@
     # ./services/anki-sync-server.nix
     ./services/attic.nix
     ./services/forgejo.nix
-    ./services/authelia.nix
     ./services/blog.nix
-    # ./services/booklore.nix
-    ./services/capTUre.nix
     # ./services/firefly.nix
     ./services/freshrss.nix
-    # ./services/homebox.nix
-    ./services/jellyfin.nix
     ./services/maddy.nix
-    # ./services/mealie.nix
-    # ./services/nextcloud.nix
-    # ./services/ntfy.nix
     ./services/outofbounds.nix
     ./services/nginx.nix
     ./services/notes.nix

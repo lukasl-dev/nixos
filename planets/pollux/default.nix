@@ -1,5 +1,9 @@
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+
+    ./mail.nix
+  ];
 
   planet = {
     name = "pollux";

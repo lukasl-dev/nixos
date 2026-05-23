@@ -17,6 +17,8 @@ in
 
     ./anki.nix
     ./books.nix
+    ./box.nix
+    ./cal.nix
     ./factorio.nix
     ./forge.nix
     ./notes.nix
