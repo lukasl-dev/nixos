@@ -3,18 +3,14 @@
 let
   inherit (config.galaxy) acme proxy;
 
-  # Host+domain pairs from all proxy rules, deduplicated
   hostEntries = lib.unique (
     lib.flatten (
       lib.mapAttrsToList (
         domain: rules:
-        map (
-          rule:
-          {
-            host = if rule.from != null then rule.from else "${rule.name}.${domain}";
-            inherit domain;
-          }
-        ) rules
+        map (rule: {
+          host = if rule.from != null then rule.from else "${rule.name}.${domain}";
+          inherit domain;
+        }) rules
       ) proxy.rules
     )
   );
@@ -60,9 +56,7 @@ in
     security.acme = {
       acceptTerms = true;
       defaults = {
-        email = acme.email;
-        dnsProvider = acme.dnsProvider;
-        dnsResolver = acme.dnsResolver;
+        inherit (acme) email dnsProvider dnsResolver;
       };
       certs = lib.listToAttrs (
         map (
@@ -71,20 +65,19 @@ in
             name = host;
             value = {
               reloadServices = [ "traefik.service" ];
-              environmentFile = acme.domains.${domain}.environmentFile;
+              inherit (acme.domains.${domain}) environmentFile;
             };
           }
         ) hostEntries
       );
     };
 
-    services.traefik.dynamicConfigOptions.tls.certificates =
-      map (
-        { host }:
-        {
-          certFile = "/var/lib/acme/${host}/fullchain.pem";
-          keyFile = "/var/lib/acme/${host}/key.pem";
-        }
-      ) hostEntries;
+    services.traefik.dynamicConfigOptions.tls.certificates = map (
+      { host }:
+      {
+        certFile = "/var/lib/acme/${host}/fullchain.pem";
+        keyFile = "/var/lib/acme/${host}/key.pem";
+      }
+    ) hostEntries;
   };
 }
