@@ -10,6 +10,11 @@
   };
 
   galaxy = {
+    acme = {
+      enable = true;
+      email = "contact@lukasl.dev";
+    };
+
     lukasl-dev = {
       enable = true;
 

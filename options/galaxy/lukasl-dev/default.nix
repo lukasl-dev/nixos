@@ -12,6 +12,7 @@ let
 in
 {
   imports = [
+    ./acme.nix
     ./proxy.nix
 
     ./anki.nix
@@ -28,7 +29,7 @@ in
     lukasl-dev = {
       enable = lib.mkEnableOption "Join the lukasl-dev galaxy";
 
-      host = lib.mkOption {
+      domain = lib.mkOption {
         type = lib.types.str;
         default = "lukasl.dev";
         readOnly = true;

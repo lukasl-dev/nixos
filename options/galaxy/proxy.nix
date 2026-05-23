@@ -2,10 +2,51 @@
 
 let
   inherit (config.galaxy) proxy;
+
+  allRules = lib.flatten (
+    lib.mapAttrsToList (
+      domain: rules: map (rule: rule // { inherit domain; }) (lib.filter (r: r.type == "https") rules)
+    ) proxy.rules
+  );
 in
 {
   options.galaxy.proxy = {
     enable = lib.mkEnableOption "Enable reverse proxy";
+
+    rules = lib.mkOption {
+      type = lib.types.attrsOf (
+        lib.types.listOf (
+          lib.types.submodule {
+            options = {
+              type = lib.mkOption {
+                type = lib.types.enum [ "https" ];
+              };
+
+              name = lib.mkOption {
+                type = lib.types.str;
+              };
+
+              from = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+              };
+
+              http = lib.mkOption {
+                type = lib.types.submodule {
+                  options = {
+                    to = lib.mkOption {
+                      type = lib.types.str;
+                    };
+                  };
+                };
+              };
+            };
+          }
+        )
+      );
+      default = { };
+      description = "Per-domain reverse proxy rules.";
+    };
   };
 
   config = lib.mkIf proxy.enable (
@@ -14,8 +55,6 @@ in
       httpsPort = 443;
     in
     {
-      # TODO: acme
-
       services.traefik = {
         enable = true;
 
@@ -40,10 +79,39 @@ in
                 idleTimeout = "600s";
               };
             };
+          };
+        };
 
-            # uptermd = {
-            #   address = ":2222";
-            # };
+        dynamicConfigOptions = {
+          http = {
+            routers = lib.listToAttrs (
+              map (
+                rule:
+                let
+                  host = if (rule.from != null) then rule.from else "${rule.name}.${rule.domain}";
+                in
+                {
+                  inherit (rule) name;
+                  value = {
+                    rule = "Host(`${host}`)";
+                    entryPoints = [ "websecure" ];
+                    service = rule.name;
+                  };
+                }
+              ) allRules
+            );
+
+            services = lib.listToAttrs (
+              map (rule: {
+                inherit (rule) name;
+                value = {
+                  passHostHeader = true;
+                  loadBalancer.servers = [
+                    { url = rule.http.to; }
+                  ];
+                };
+              }) allRules
+            );
           };
         };
       };
