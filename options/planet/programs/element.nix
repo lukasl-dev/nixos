@@ -59,7 +59,7 @@ in
 
     planet.hm = [
       {
-        programs.element = {
+        programs.element-desktop = {
           enable = true;
           inherit (element) package;
         };

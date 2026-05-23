@@ -13,6 +13,7 @@
     ./difftastic.nix
     ./direnv.nix
     ./discord.nix
+    ./element.nix
     ./espanso.nix
     ./eza.nix
     ./fastfetch.nix
