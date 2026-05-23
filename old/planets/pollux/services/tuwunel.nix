@@ -44,79 +44,6 @@ in
   #   (pkgs-unstable.path + "/nixos/modules/services/matrix/tuwunel.nix")
   # ];
 
-  systemd.services = {
-    livekit.serviceConfig.Restart = lib.mkForce "always";
-    lk-jwt-service = {
-      serviceConfig.Restart = lib.mkForce "always";
-      environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = matrixServerName;
-    };
-  };
-
-  services.matrix-tuwunel = {
-    enable = true;
-    package = inputs.tuwunel.packages.${system}.default;
-    settings = {
-      global = {
-        server_name = matrixServerName;
-        address = [ "127.0.0.1" ];
-        port = [ tuwunelPort ];
-        allow_registration = true;
-        registration_token_file = config.sops.secrets."planets/pollux/tuwunel/registration_token".path;
-        turn_uris = [
-          "turn:${turnHost}?transport=udp"
-          "turn:${turnHost}?transport=tcp"
-          "turns:${turnHost}?transport=tcp"
-        ];
-        turn_secret_file = turnSecretFile;
-        well_known = {
-          client = matrixClientUrl;
-          server = matrixWellKnownServer;
-          rtc_transports = [
-            {
-              type = "livekit";
-              livekit_service_url = matrixRtcJwtUrl;
-            }
-          ];
-        };
-        url_preview_domain_contains_allowlist = [ "*" ];
-        # url_preview_domain_explicit_allowlist = [
-        #   "youtube.com"
-        #   "www.youtube.com"
-        #   "m.youtube.com"
-        #   "consent.youtube.com"
-        #   "youtu.be"
-        #   "ytimg.com"
-        #   "github.com"
-        #   "wikipedia.org"
-        # ];
-        url_preview_check_root_domain = true;
-      };
-    };
-  };
-
-  services.livekit = {
-    enable = true;
-    keyFile = config.sops.secrets."planets/pollux/livekit/keys".path;
-    openFirewall = true;
-    settings = {
-      port = livekitSfuPort;
-      room.auto_create = false;
-      rtc = {
-        port_range_start = 50000;
-        port_range_end = 51000;
-        use_external_ip = true;
-        tcp_port = 7881;
-      };
-    };
-  };
-
-  services.lk-jwt-service = {
-    enable = true;
-    livekitUrl = "wss://${elementCallHost}/livekit/sfu";
-    keyFile = config.services.livekit.keyFile;
-    port = livekitApiPort;
-  };
-
   services.coturn = {
     enable = true;
     realm = domain;
@@ -135,83 +62,83 @@ in
 
   users.users.turnserver.extraGroups = [ "acme" ];
 
-  services.nginx.virtualHosts.${elementCallHost} = {
-    enableACME = false;
-    listen = [
-      {
-        addr = "127.0.0.1";
-        port = elementCallPort;
-      }
-    ];
-    root = pkgs.unstable.element-call;
-    # index = [ "index.html" ];
-    extraConfig = ''
-      autoindex off;
-    '';
-    locations = {
-      "/" = {
-        extraConfig = ''
-          try_files $uri /index.html;
-        '';
-      };
-
-      "= /config.json" = {
-        extraConfig = ''
-          default_type application/json;
-          return 200 '${elementCallConfigJson}';
-        '';
-      };
-
-      "^~ /livekit/sfu/" = {
-        extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_send_timeout 300s;
-          proxy_read_timeout 300s;
-          proxy_buffering off;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/;
-        '';
-      };
-
-      "= /livekit/sfu" = {
-        extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_send_timeout 300s;
-          proxy_read_timeout 300s;
-          proxy_buffering off;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_pass http://127.0.0.1:${toString livekitSfuPort}/;
-        '';
-      };
-
-      "^~ /livekit/jwt/" = {
-        extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_pass http://127.0.0.1:${toString livekitApiPort}/;
-        '';
-      };
-    };
-  };
-
-  services.nginx = {
-    enable = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
-  };
+  # services.nginx.virtualHosts.${elementCallHost} = {
+  #   enableACME = false;
+  #   listen = [
+  #     {
+  #       addr = "127.0.0.1";
+  #       port = elementCallPort;
+  #     }
+  #   ];
+  #   root = pkgs.unstable.element-call;
+  #   # index = [ "index.html" ];
+  #   extraConfig = ''
+  #     autoindex off;
+  #   '';
+  #   locations = {
+  #     "/" = {
+  #       extraConfig = ''
+  #         try_files $uri /index.html;
+  #       '';
+  #     };
+  #
+  #     "= /config.json" = {
+  #       extraConfig = ''
+  #         default_type application/json;
+  #         return 200 '${elementCallConfigJson}';
+  #       '';
+  #     };
+  #
+  #     "^~ /livekit/sfu/" = {
+  #       extraConfig = ''
+  #         proxy_http_version 1.1;
+  #         proxy_send_timeout 300s;
+  #         proxy_read_timeout 300s;
+  #         proxy_buffering off;
+  #         proxy_set_header Upgrade $http_upgrade;
+  #         proxy_set_header Connection "upgrade";
+  #         proxy_set_header Host $host;
+  #         proxy_set_header X-Real-IP $remote_addr;
+  #         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #         proxy_set_header X-Forwarded-Proto $scheme;
+  #         proxy_pass http://127.0.0.1:${toString livekitSfuPort}/;
+  #       '';
+  #     };
+  #
+  #     "= /livekit/sfu" = {
+  #       extraConfig = ''
+  #         proxy_http_version 1.1;
+  #         proxy_send_timeout 300s;
+  #         proxy_read_timeout 300s;
+  #         proxy_buffering off;
+  #         proxy_set_header Upgrade $http_upgrade;
+  #         proxy_set_header Connection "upgrade";
+  #         proxy_set_header Host $host;
+  #         proxy_set_header X-Real-IP $remote_addr;
+  #         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #         proxy_set_header X-Forwarded-Proto $scheme;
+  #         proxy_pass http://127.0.0.1:${toString livekitSfuPort}/;
+  #       '';
+  #     };
+  #
+  #     "^~ /livekit/jwt/" = {
+  #       extraConfig = ''
+  #         proxy_http_version 1.1;
+  #         proxy_set_header Host $host;
+  #         proxy_set_header X-Real-IP $remote_addr;
+  #         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #         proxy_set_header X-Forwarded-Proto $scheme;
+  #         proxy_pass http://127.0.0.1:${toString livekitApiPort}/;
+  #       '';
+  #     };
+  #   };
+  # };
+  #
+  # services.nginx = {
+  #   enable = true;
+  #   recommendedProxySettings = true;
+  #   recommendedTlsSettings = true;
+  # };
 
   sops.secrets."planets/pollux/tuwunel/registration_token" = {
     owner = config.services.matrix-tuwunel.user;

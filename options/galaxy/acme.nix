@@ -8,7 +8,7 @@ let
       lib.mapAttrsToList (
         domain: rules:
         map (rule: {
-          host = if rule.from != null then rule.from else "${rule.name}.${domain}";
+          host = if rule.from.host != null then rule.from.host else "${rule.name}.${domain}";
           inherit domain;
         }) rules
       ) proxy.rules

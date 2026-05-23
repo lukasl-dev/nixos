@@ -27,7 +27,29 @@ in
               };
 
               from = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
+                type = lib.types.submodule {
+                  options = {
+                    host = lib.mkOption {
+                      type = lib.types.nullOr lib.types.str;
+                      default = null;
+                    };
+
+                    path = lib.mkOption {
+                      type = lib.types.nullOr lib.types.str;
+                      default = null;
+                    };
+
+                    pathPrefix = lib.mkOption {
+                      type = lib.types.nullOr lib.types.str;
+                      default = null;
+                    };
+                  };
+                };
+                default = { };
+              };
+
+              priority = lib.mkOption {
+                type = lib.types.nullOr lib.types.int;
                 default = null;
               };
 
@@ -88,14 +110,20 @@ in
               map (
                 rule:
                 let
-                  host = if (rule.from != null) then rule.from else "${rule.name}.${rule.domain}";
+                  host = if (rule.from.host != null) then rule.from.host else "${rule.name}.${rule.domain}";
+                  matchers = [ "Host(`${host}`)" ]
+                    ++ lib.optional (rule.from.path != null) "Path(`${rule.from.path}`)"
+                    ++ lib.optional (rule.from.pathPrefix != null) "PathPrefix(`${rule.from.pathPrefix}`)";
                 in
                 {
                   inherit (rule) name;
                   value = {
-                    rule = "Host(`${host}`)";
+                    rule = lib.concatStringsSep " && " matchers;
                     entryPoints = [ "websecure" ];
                     service = rule.name;
+                  }
+                  // lib.optionalAttrs (rule.priority != null) {
+                    inherit (rule) priority;
                   };
                 }
               ) allRules

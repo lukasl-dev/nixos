@@ -15,6 +15,8 @@ in
     ./acme.nix
     ./proxy.nix
 
+    ./matrix
+
     ./anki.nix
     ./books.nix
     ./box.nix
