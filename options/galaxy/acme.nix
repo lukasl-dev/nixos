@@ -93,7 +93,7 @@ in
     };
 
     services.traefik.dynamicConfigOptions.tls.certificates = map (
-      { host }:
+      { host, ... }:
       {
         certFile = "/var/lib/acme/${host}/fullchain.pem";
         keyFile = "/var/lib/acme/${host}/key.pem";
