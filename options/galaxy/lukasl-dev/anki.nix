@@ -32,7 +32,7 @@ in
           {
             type = "https";
             name = "anki";
-            http.to = "http://${addresses.local}:${toString anki.port}";
+            to.http = "http://${addresses.local}:${toString anki.port}";
           }
         ];
 

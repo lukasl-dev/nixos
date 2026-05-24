@@ -31,7 +31,7 @@ in
           type = "https";
           name = "www";
           from.host = domain;
-          http.to = "http://${addresses.local}:${toString www.port}";
+          to.http = "http://${addresses.local}:${toString www.port}";
         }
       ];
 

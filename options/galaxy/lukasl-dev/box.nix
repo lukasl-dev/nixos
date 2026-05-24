@@ -23,7 +23,7 @@ in
         {
           type = "https";
           name = "box";
-          http.to = "http://${addresses.local}:${toString box.port}";
+          to.http = "http://${addresses.local}:${toString box.port}";
         }
       ];
 

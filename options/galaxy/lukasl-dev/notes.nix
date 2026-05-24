@@ -30,7 +30,7 @@ in
         {
           type = "https";
           name = "notes";
-          http.to = "http://${addresses.local}:${toString notes.port}";
+          to.http = "http://${addresses.local}:${toString notes.port}";
         }
       ];
 

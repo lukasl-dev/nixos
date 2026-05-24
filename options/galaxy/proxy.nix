@@ -53,10 +53,10 @@ in
                 default = null;
               };
 
-              http = lib.mkOption {
+              to = lib.mkOption {
                 type = lib.types.submodule {
                   options = {
-                    to = lib.mkOption {
+                    http = lib.mkOption {
                       type = lib.types.str;
                     };
                   };
@@ -135,7 +135,7 @@ in
                 value = {
                   passHostHeader = true;
                   loadBalancer.servers = [
-                    { url = rule.http.to; }
+                    { url = rule.to.http; }
                   ];
                 };
               }) allRules

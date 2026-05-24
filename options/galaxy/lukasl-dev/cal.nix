@@ -63,7 +63,7 @@ in
           {
             type = "https";
             name = "cal";
-            http.to = "http://${addresses.local}:${toString cal.port}";
+            to.http = "http://${addresses.local}:${toString cal.port}";
           }
         ];
 

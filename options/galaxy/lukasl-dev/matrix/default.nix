@@ -44,7 +44,7 @@ in
           {
             type = "https";
             name = "matrix";
-            http.to = "http://${addresses.local}:${toString matrix.port}";
+            to.http = "http://${addresses.local}:${toString matrix.port}";
           }
           {
             type = "https";
@@ -54,7 +54,7 @@ in
               pathPrefix = "/.well-known/matrix";
             };
             priority = 100;
-            http.to = "http://${addresses.local}:${toString matrix.port}";
+            to.http = "http://${addresses.local}:${toString matrix.port}";
           }
         ];
 

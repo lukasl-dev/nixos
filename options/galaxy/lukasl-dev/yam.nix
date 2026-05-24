@@ -75,7 +75,7 @@ in
           {
             type = "https";
             name = "yam";
-            http.to = "http://${addresses.local}:${toString yam.port}";
+            to.http = "http://${addresses.local}:${toString yam.port}";
           }
         ];
 

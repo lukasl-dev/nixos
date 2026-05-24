@@ -32,7 +32,7 @@ in
           {
             type = "https";
             name = "waka";
-            http.to = "http://${addresses.local}:${toString waka.port}";
+            to.http = "http://${addresses.local}:${toString waka.port}";
           }
         ];
 

@@ -24,7 +24,7 @@ in
       #   {
       #     type = "https";
       #     name = "term";
-      #     http.to = "http://${addresses.local}:${toString term.port}";
+      #     to.http = "http://${addresses.local}:${toString term.port}";
       #   }
       # ];
       # services.traefik.dynamicConfigOptions.tcp =

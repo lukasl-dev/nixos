@@ -39,7 +39,7 @@ in
           {
             type = "https";
             name = "forge";
-            http.to = "http://${addresses.local}:${toString forge.port}";
+            to.http = "http://${addresses.local}:${toString forge.port}";
           }
         ];
 

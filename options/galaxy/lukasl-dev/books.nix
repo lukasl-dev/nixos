@@ -28,7 +28,7 @@ in
         {
           type = "https";
           name = "books";
-          http.to = "http://${addresses.local}:${toString books.port}";
+          to.http = "http://${addresses.local}:${toString books.port}";
         }
       ];
 
