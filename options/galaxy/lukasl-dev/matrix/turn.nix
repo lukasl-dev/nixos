@@ -21,60 +21,65 @@ in
     };
   };
 
-  config = lib.mkIf matrix.enable {
-    galaxy = {
-      acme.domains.${domain} = {
-        hosts = [ matrix.turn.host ];
-        reloadServices = [ "coturn.service" ];
+  config = lib.mkMerge [
+    {
+      age.secrets.${matrix.turn.secret} = {
+        rekeyFile = ../../../../secrets/galaxy/lukasl-dev/matrix/turnSecret.age;
+        mode = "0444";
+      };
+    }
+
+    (lib.mkIf matrix.enable {
+      galaxy = {
+        acme.domains.${domain} = {
+          hosts = [ matrix.turn.host ];
+          reloadServices = [ "coturn.service" ];
+        };
+
+        lukasl-dev.bindMounts = [
+          age.secrets.${matrix.turn.secret}.path
+          "/var/lib/acme/${matrix.turn.host}/fullchain.pem"
+          "/var/lib/acme/${matrix.turn.host}/key.pem"
+        ];
       };
 
-      lukasl-dev.bindMounts = [
-        age.secrets.${matrix.turn.secret}.path
-        "/var/lib/acme/${matrix.turn.host}/fullchain.pem"
-        "/var/lib/acme/${matrix.turn.host}/key.pem"
-      ];
-    };
+      services.coturn = {
+        enable = true;
 
-    age.secrets.${matrix.turn.secret} = {
-      rekeyFile = ../../../../secrets/galaxy/lukasl-dev/matrix/turnSecret.age;
-    };
+        realm = domain;
+        cert = "/var/lib/acme/${matrix.turn.host}/fullchain.pem";
+        pkey = "/var/lib/acme/${matrix.turn.host}/key.pem";
 
-    services.coturn = {
-      enable = true;
+        no-cli = true;
 
-      realm = domain;
-      cert = "/var/lib/acme/${matrix.turn.host}/fullchain.pem";
-      pkey = "/var/lib/acme/${matrix.turn.host}/key.pem";
+        use-auth-secret = true;
+        static-auth-secret-file = age.secrets.${matrix.turn.secret}.path;
 
-      no-cli = true;
+        min-port = 52000;
+        max-port = 55000;
+        extraConfig = ''
+          fingerprint
+          no-multicast-peers
+        '';
+      };
 
-      use-auth-secret = true;
-      static-auth-secret-file = age.secrets.${matrix.turn.secret}.path;
+      users.users.turnserver.extraGroups = [ "acme" ];
 
-      min-port = 52000;
-      max-port = 55000;
-      extraConfig = ''
-        fingerprint
-        no-multicast-peers
-      '';
-    };
+      networking.firewall = {
+        allowedTCPPorts = [
+          3478
+          5349
+        ];
 
-    users.users.turnserver.extraGroups = [ "acme" ];
+        allowedUDPPorts = [ 3478 ];
 
-    networking.firewall = {
-      allowedTCPPorts = [
-        3478
-        5349
-      ];
-
-      allowedUDPPorts = [ 3478 ];
-
-      allowedUDPPortRanges = [
-        {
-          from = 52000;
-          to = 55000;
-        }
-      ];
-    };
-  };
+        allowedUDPPortRanges = [
+          {
+            from = 52000;
+            to = 55000;
+          }
+        ];
+      };
+    })
+  ];
 }

@@ -23,42 +23,47 @@ in
     };
   };
 
-  config = lib.mkIf factorio.enable (
+  config = lib.mkMerge (
     let
       serverSettings = "galaxy/lukasl-dev/factorio/serverSettings";
     in
-    {
-      age.secrets.${serverSettings} = {
-        rekeyFile = ../../../secrets/galaxy/lukasl-dev/factorio/serverSettings.age;
-      };
+    [
+      {
+        age.secrets.${serverSettings} = {
+          rekeyFile = ../../../secrets/galaxy/lukasl-dev/factorio/serverSettings.age;
+          mode = "0444";
+        };
+      }
 
-      containers.lukasl-dev.forwardPorts = [
-        {
-          protocol = "udp";
-          hostPort = factorio.port;
-          containerPort = factorio.port;
-        }
-      ];
-
-      galaxy.lukasl-dev = {
-        bindMounts = [ age.secrets.${serverSettings}.path ];
-
-        modules = [
+      (lib.mkIf factorio.enable {
+        containers.lukasl-dev.forwardPorts = [
           {
-            services.factorio = {
-              enable = true;
-              package = pkgs.unstable.factorio-headless;
-
-              openFirewall = true;
-              admins = [ "argsvl" ];
-
-              extraSettingsFile = age.secrets.${serverSettings}.path;
-            };
-
-            networking.firewall.allowedTCPPorts = [ factorio.port ];
+            protocol = "udp";
+            hostPort = factorio.port;
+            containerPort = factorio.port;
           }
         ];
-      };
-    }
+
+        galaxy.lukasl-dev = {
+          bindMounts = [ age.secrets.${serverSettings}.path ];
+
+          modules = [
+            {
+              services.factorio = {
+                enable = true;
+                package = pkgs.unstable.factorio-headless;
+
+                openFirewall = true;
+                admins = [ "argsvl" ];
+
+                extraSettingsFile = age.secrets.${serverSettings}.path;
+              };
+
+              networking.firewall.allowedUDPPorts = [ factorio.port ];
+            }
+          ];
+        };
+      })
+    ]
   );
 }

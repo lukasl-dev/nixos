@@ -92,8 +92,8 @@ let
   pi-codex-conversion-src = pkgs.fetchFromGitHub {
     owner = "IgorWarzocha";
     repo = "pi-codex-conversion";
-    rev = "06f1c934a586b785f06966114d743d72ad8d77b3";
-    hash = "sha256-hfKnwGSv9pbEmh/L3dgul9mCYyxGlTMqHstz+Myl7n4=";
+    rev = "c5e2a3335fae0097d4a2dd07bc19ace4316f7830";
+    hash = "sha256-oBt5F1M33ZGpgW5ecCvwDj0Yk684Egrc6rj6VENLVak=";
   };
 
   pi-codex-conversion-apply-patch = pkgs.rustPlatform.buildRustPackage {
@@ -106,12 +106,14 @@ let
 
   pi-codex-conversion = pkgs.buildNpmPackage {
     pname = "pi-codex-conversion";
-    version = "1.5.7";
+    version = "1.5.15";
     src = pi-codex-conversion-src;
-    npmDepsHash = "sha256-+wv6VNGqc38DJsj38xUGcXXEeVSBeyLULVSbKKBsGA4=";
+    npmDepsHash = "sha256-KRcXirOy39U6wWeilo7wWYz/7IW2THUH/mgCGyJg8kU=";
 
     nativeBuildInputs = [ pkgs.python3 ];
     dontNpmBuild = true;
+    makeCacheWritable = true;
+    npmFlags = [ "--legacy-peer-deps" ];
 
     installPhase =
       let

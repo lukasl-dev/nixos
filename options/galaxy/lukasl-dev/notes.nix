@@ -30,28 +30,37 @@ in
         {
           type = "https";
           name = "notes";
+          priority = 10;
           to.http = "http://${addresses.local}:${toString notes.port}";
         }
       ];
 
+      bindMounts = [ notes.root ];
+
       modules = [
         {
-          services.nginx.virtualHosts."notes.${domain}" = {
-            listen = [
-              {
-                addr = addresses.local;
-                inherit (notes) port;
-              }
-            ];
-            inherit (notes) root;
-            locations."/" = {
-              index = "index.html";
-              tryFiles = "$uri $uri.html $uri/ =404";
+          services.nginx = {
+            enable = true;
+
+            virtualHosts."notes.${domain}" = {
+              listen = [
+                {
+                  addr = addresses.local;
+                  inherit (notes) port;
+                }
+              ];
+              inherit (notes) root;
+              locations."/" = {
+                index = "index.html";
+                tryFiles = "$uri $uri.html $uri/ =404";
+              };
+              extraConfig = ''
+                error_page 404 /404.html;
+              '';
             };
-            extraConfig = ''
-              error_page 404 /404.html;
-            '';
           };
+
+          networking.firewall.allowedTCPPorts = [ notes.port ];
         }
       ];
     };

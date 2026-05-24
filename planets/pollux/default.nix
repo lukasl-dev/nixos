@@ -1,8 +1,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-
-    ./mail.nix
   ];
 
   planet = {
@@ -23,10 +21,20 @@
       enable = true;
 
       anki.enable = true;
+      attic.enable = true;
+      box.enable = true;
       books.enable = true;
+      cal.enable = true;
       factorio.enable = true;
+      forge.enable = true;
+      mail.enable = true;
+      matrix.enable = true;
       notes.enable = true;
+      term.enable = true;
+      vault.enable = true;
+      waka.enable = true;
       www.enable = true;
+      yam.enable = true;
       # TODO:
     };
   };

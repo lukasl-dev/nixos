@@ -7,7 +7,12 @@
 
 let
   inherit (config) age;
-  inherit (config.galaxy.lukasl-dev) domain addresses forge;
+  inherit (config.galaxy.lukasl-dev)
+    domain
+    addresses
+    forge
+    mail
+    ;
 in
 {
   options.galaxy.lukasl-dev = {
@@ -23,40 +28,36 @@ in
     };
   };
 
-  config = lib.mkIf forge.enable (
+  config = lib.mkMerge (
     let
-      mailPassword = "galaxy/lukasl-dev/mail/bot";
+      runner = "galaxy/lukasl-dev/forge/runner";
     in
-    {
-      age.secrets = {
-        ${mailPassword} = lib.mkDefault {
-          rekeyFile = ../../../secrets/galaxy/lukasl-dev/mail/bot.age;
+    [
+      {
+        age.secrets = {
+          ${runner} = {
+            rekeyFile = ../../../secrets/galaxy/lukasl-dev/forge/runner.age;
+            intermediary = true;
+          };
         };
-      };
+      }
 
-      galaxy.lukasl-dev = {
-        proxy.rules = [
-          {
-            type = "https";
-            name = "forge";
-            to.http = "http://${addresses.local}:${toString forge.port}";
-          }
-        ];
+      (lib.mkIf forge.enable {
+        galaxy.lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "forge";
+              to.http = "http://${addresses.local}:${toString forge.port}";
+            }
+          ];
 
-        modules =
-          let
-            user = "forge";
-            group = "forge";
-          in
-          [
+          modules = [
             {
               services.forgejo = {
                 enable = true;
 
                 package = pkgs.unstable.forgejo;
-
-                inherit user;
-                inherit group;
 
                 lfs.enable = true;
 
@@ -71,9 +72,9 @@ in
                     in
                     {
                       DOMAIN = hostname;
+                      HTTP_ADDR = addresses.local;
                       HTTP_PORT = forge.port;
                       ROOT_URL = "https://${hostname}";
-                      SSH_PORT = 22;
                     };
 
                   service = {
@@ -86,7 +87,7 @@ in
 
                   mailer = {
                     ENABLED = true;
-                    SMTP_ADDR = "mail.${domain}";
+                    SMTP_ADDR = mail.host;
                     FROM = "bot@${domain}";
                     USER = "bot@${domain}";
                   };
@@ -94,22 +95,16 @@ in
 
                 secrets = {
                   mailer = {
-                    PASSWD = age.secrets.${mailPassword}.path;
+                    PASSWD = age.secrets.${mail.accounts.bot}.path;
                   };
                 };
               };
 
               networking.firewall.allowedTCPPorts = [ forge.port ];
-
-              users.users.${forge} = {
-                isSystemUser = true;
-                inherit group;
-              };
-              users.groups.${group} = { };
             }
           ];
-      };
-
-    }
+        };
+      })
+    ]
   );
 }

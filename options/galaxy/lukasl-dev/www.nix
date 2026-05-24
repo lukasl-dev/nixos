@@ -10,7 +10,7 @@ in
 
       port = lib.mkOption {
         type = lib.types.port;
-        default = 5718;
+        default = 81;
         readOnly = true;
         description = "Port for the portfolio website";
       };
@@ -31,21 +31,30 @@ in
           type = "https";
           name = "www";
           from.host = domain;
+          priority = 10;
           to.http = "http://${addresses.local}:${toString www.port}";
         }
       ];
 
+      bindMounts = [ www.root ];
+
       modules = [
         {
-          services.nginx.virtualHosts.${domain} = {
-            listen = [
-              {
-                addr = addresses.local;
-                inherit (www) port;
-              }
-            ];
-            inherit (www) root;
+          services.nginx = {
+            enable = true;
+
+            virtualHosts.${domain} = {
+              listen = [
+                {
+                  addr = addresses.local;
+                  inherit (www) port;
+                }
+              ];
+              inherit (www) root;
+            };
           };
+
+          networking.firewall.allowedTCPPorts = [ www.port ];
         }
       ];
     };

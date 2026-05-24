@@ -152,5 +152,13 @@
           };
         }
       );
+
+      formatter = forEachSystem (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        pkgs.nixfmt
+      );
     };
 }

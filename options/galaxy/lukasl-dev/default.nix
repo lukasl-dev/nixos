@@ -18,13 +18,16 @@ in
     ./matrix
 
     ./anki.nix
+    ./attic.nix
     ./books.nix
     ./box.nix
     ./cal.nix
     ./factorio.nix
     ./forge.nix
+    ./mail.nix
     ./notes.nix
     ./term.nix
+    ./vault.nix
     ./waka.nix
     ./www.nix
   ];

@@ -18,47 +18,50 @@ in
     };
   };
 
-  config = lib.mkIf anki.enable (
+  config = lib.mkMerge (
     let
       password = "galaxy/lukasl-dev/anki/password";
     in
-    {
-      age.secrets.${password} = {
-        rekeyFile = ../../../secrets/galaxy/lukasl-dev/anki/password.age;
-      };
+    [
+      {
+        age.secrets.${password} = {
+          rekeyFile = ../../../secrets/galaxy/lukasl-dev/anki/password.age;
+        };
+      }
 
-      galaxy.lukasl-dev = {
-        proxy.rules = [
-          {
-            type = "https";
-            name = "anki";
-            to.http = "http://${addresses.local}:${toString anki.port}";
-          }
-        ];
+      (lib.mkIf anki.enable {
+        galaxy.lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "anki";
+              to.http = "http://${addresses.local}:${toString anki.port}";
+            }
+          ];
 
-        bindMounts = [ age.secrets.${password}.path ];
+          bindMounts = [ age.secrets.${password}.path ];
 
-        modules = [
-          {
-            services.anki-sync-server = {
-              enable = true;
+          modules = [
+            {
+              services.anki-sync-server = {
+                enable = true;
 
-              address = addresses.local;
-              inherit (anki) port;
+                address = addresses.local;
+                inherit (anki) port;
 
-              users = [
-                {
-                  username = "lukas";
-                  passwordFile = age.secrets.${password}.path;
-                }
-              ];
-            };
+                users = [
+                  {
+                    username = "lukas";
+                    passwordFile = age.secrets.${password}.path;
+                  }
+                ];
+              };
 
-            networking.firewall.allowedTCPPorts = [ anki.port ];
-          }
-        ];
-      };
-
-    }
+              networking.firewall.allowedTCPPorts = [ anki.port ];
+            }
+          ];
+        };
+      })
+    ]
   );
 }

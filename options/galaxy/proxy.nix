@@ -111,9 +111,11 @@ in
                 rule:
                 let
                   host = if (rule.from.host != null) then rule.from.host else "${rule.name}.${rule.domain}";
-                  matchers = [ "Host(`${host}`)" ]
-                    ++ lib.optional (rule.from.path != null) "Path(`${rule.from.path}`)"
-                    ++ lib.optional (rule.from.pathPrefix != null) "PathPrefix(`${rule.from.pathPrefix}`)";
+                  matchers = [
+                    "Host(`${host}`)"
+                  ]
+                  ++ lib.optional (rule.from.path != null) "Path(`${rule.from.path}`)"
+                  ++ lib.optional (rule.from.pathPrefix != null) "PathPrefix(`${rule.from.pathPrefix}`)";
                 in
                 {
                   inherit (rule) name;

@@ -18,53 +18,50 @@ in
   };
 
   config = lib.mkIf term.enable {
-    galaxy.lukasl-dev = {
-      # TODO: add TCP support
-      # proxy.rules = [
-      #   {
-      #     type = "https";
-      #     name = "term";
-      #     to.http = "http://${addresses.local}:${toString term.port}";
-      #   }
-      # ];
-      # services.traefik.dynamicConfigOptions.tcp =
-      #   let
-      #     name = meta.router sub;
-      #   in
-      #   {
-      #     services.${name} = {
-      #       loadBalancer = {
-      #         servers = [
-      #           {
-      #             address = "${meta.address.local}:${toString sshPort}";
-      #           }
-      #         ];
-      #         proxyProtocol.version = 2;
-      #       };
-      #     };
-      #     routers.${name} = {
-      #       rule = "HostSNI(`*`)";
-      #       entryPoints = [ "uptermd" ];
-      #       service = name;
-      #     };
-      #   };
-
-      modules = [
-        {
-          services.uptermd = {
-            enable = true;
-            inherit (term) port;
-            listenAddress = addresses.local;
-            openFirewall = true;
-            extraFlags = [
-              "--ssh-addr=${addresses.local}:${toString term.port}"
-              "--ssh-proxy-protocol"
-            ];
-          };
-
-          networking.firewall.allowedTCPPorts = [ term.port ];
-        }
-      ];
-    };
+    # services.traefik = {
+    #   staticConfigOptions.entryPoints.uptermd = {
+    #     address = ":${toString term.port}";
+    #   };
+    #
+    #   dynamicConfigOptions.tcp = {
+    #     services.term = {
+    #       loadBalancer = {
+    #         servers = [
+    #           {
+    #             address = "${addresses.local}:${toString term.port}";
+    #           }
+    #         ];
+    #         proxyProtocol.version = 2;
+    #       };
+    #     };
+    #
+    #     routers.term = {
+    #       rule = "HostSNI(`*`)";
+    #       entryPoints = [ "uptermd" ];
+    #       service = "term";
+    #     };
+    #   };
+    # };
+    #
+    # networking.firewall.allowedTCPPorts = [ term.port ];
+    #
+    # galaxy.lukasl-dev = {
+    #   modules = [
+    #     {
+    #       services.uptermd = {
+    #         enable = true;
+    #         inherit (term) port;
+    #         listenAddress = addresses.local;
+    #         openFirewall = true;
+    #         extraFlags = [
+    #           "--ssh-addr=${addresses.local}:${toString term.port}"
+    #           "--ssh-proxy-protocol"
+    #         ];
+    #       };
+    #
+    #       networking.firewall.allowedTCPPorts = [ term.port ];
+    #     }
+    #   ];
+    # };
   };
 }
