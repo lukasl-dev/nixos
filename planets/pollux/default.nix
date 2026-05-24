@@ -22,8 +22,8 @@
 
       anki.enable = true;
       attic.enable = true;
-      box.enable = true;
       books.enable = true;
+      box.enable = true;
       cal.enable = true;
       factorio.enable = true;
       forge.enable = true;
@@ -35,7 +35,6 @@
       waka.enable = true;
       www.enable = true;
       yam.enable = true;
-      # TODO:
     };
   };
 }
