@@ -30,6 +30,7 @@ in
     ./vault.nix
     ./waka.nix
     ./www.nix
+    ./yam.nix
   ];
 
   options.galaxy = {

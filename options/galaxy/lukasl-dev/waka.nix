@@ -25,7 +25,7 @@ in
     [
       {
         age.secrets.${salt} = {
-          rekeyFile = ../../../secrets/galaxy/lukasl-dev/wakapi/salt.age;
+          rekeyFile = ../../../secrets/galaxy/lukasl-dev/waka/salt.age;
           mode = "0444";
         };
       }

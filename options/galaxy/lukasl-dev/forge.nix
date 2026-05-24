@@ -30,15 +30,12 @@ in
 
   config = lib.mkMerge (
     let
-      runner = "galaxy/lukasl-dev/forge/runner";
+      # TODO:
     in
     [
       {
         age.secrets = {
-          ${runner} = {
-            rekeyFile = ../../../secrets/galaxy/lukasl-dev/forge/runner.age;
-            intermediary = true;
-          };
+          # TODO:
         };
       }
 
