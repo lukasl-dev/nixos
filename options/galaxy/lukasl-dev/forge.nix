@@ -172,6 +172,8 @@ in
                   jq
                   nix
                   nodejs
+                  bun
+                  deno
                   openssh
                   rsync
                   wget
