@@ -8,7 +8,7 @@
 
 let
   inherit (config) age;
-  inherit (config.planet) stateVersion;
+  inherit (config.planet) name stateVersion;
   inherit (config.galaxy) lukasl-dev;
 
   script = # bash
@@ -137,6 +137,7 @@ in
         networking = {
           hostName = "lukasl-dev";
           defaultGateway = lukasl-dev.addresses.host;
+          hosts.${lukasl-dev.addresses.host} = [ "${name}.${lukasl-dev.domain}" ];
           useHostResolvConf = false;
           nameservers = [ lukasl-dev.addresses.host ];
         };
