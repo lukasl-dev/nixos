@@ -49,6 +49,8 @@ in
             }
           ];
 
+          bindMounts = [ age.secrets.${mail.accounts.bot}.path ];
+
           modules = [
             {
               services.forgejo = {
