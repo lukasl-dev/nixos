@@ -22,6 +22,8 @@ let
   );
 
   allHosts = proxyHosts ++ extraHosts;
+
+  acmeServices = map ({ host, ... }: "acme-${host}.service") proxyHosts;
 in
 {
   options.galaxy.acme = {
@@ -99,5 +101,10 @@ in
         keyFile = "/var/lib/acme/${host}/key.pem";
       }
     ) proxyHosts;
+
+    systemd.services.traefik = {
+      wants = acmeServices;
+      after = acmeServices;
+    };
   };
 }
