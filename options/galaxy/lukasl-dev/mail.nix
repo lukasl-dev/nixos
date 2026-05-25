@@ -3,7 +3,7 @@
 let
   inherit (config) age;
   inherit (config.galaxy) lukasl-dev;
-  inherit (config.galaxy.lukasl-dev) mail;
+  inherit (config.galaxy.lukasl-dev) addresses mail;
   inherit (config.services) go-autoconfig;
 
   rspamdPassword = "galaxy/lukasl-dev/mail/rspamd/password";
@@ -83,20 +83,29 @@ in
 
     (lib.mkIf mail.enable {
       galaxy = {
-        lukasl-dev.proxy.rules = [
-          {
-            type = "https";
-            name = "maddy-autoconfig";
-            from.host = go-autoconfig.settings.domain;
-            to.http = "http://localhost${go-autoconfig.settings.service_addr}";
-          }
-          {
-            type = "https";
-            name = "rspamd";
-            from.host = "rspamd.${lukasl-dev.domain}";
-            to.http = "http://127.0.0.1:11334";
-          }
-        ];
+        lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "maddy-autoconfig";
+              from.host = go-autoconfig.settings.domain;
+              to.http = "http://localhost${go-autoconfig.settings.service_addr}";
+            }
+            {
+              type = "https";
+              name = "rspamd";
+              from.host = "rspamd.${lukasl-dev.domain}";
+              to.http = "http://127.0.0.1:11334";
+            }
+          ];
+
+          modules = [
+            {
+              networking.hosts.${addresses.host} = [ mail.host ];
+            }
+          ];
+        };
+
         acme.domains.${lukasl-dev.domain} = {
           hosts = [ hostname ];
           reloadServices = [ "maddy.service" ];

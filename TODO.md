@@ -14,7 +14,3 @@
     - [ ] Rebuild one host and confirm cache hits improve
 - [ ] Replace woodpecker with forgejo actions for simplicity
 
-## pollux
-
-- turn for matrix
-- [jitsi for element](https://github.com/element-hq/element-web/blob/develop/docs/jitsi.md)

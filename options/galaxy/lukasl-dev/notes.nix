@@ -39,26 +39,26 @@ in
 
       modules = [
         {
-          services.nginx = {
-            enable = true;
-
-            virtualHosts."notes.${domain}" = {
-              listen = [
-                {
-                  addr = addresses.local;
-                  inherit (notes) port;
-                }
-              ];
-              inherit (notes) root;
-              locations."/" = {
-                index = "index.html";
-                tryFiles = "$uri $uri.html $uri/ =404";
-              };
-              extraConfig = ''
-                error_page 404 /404.html;
-              '';
-            };
-          };
+          # services.nginx = {
+          #   enable = true;
+          #
+          #   virtualHosts."notes.${domain}" = {
+          #     listen = [
+          #       {
+          #         addr = addresses.local;
+          #         inherit (notes) port;
+          #       }
+          #     ];
+          #     inherit (notes) root;
+          #     locations."/" = {
+          #       index = "index.html";
+          #       tryFiles = "$uri $uri.html $uri/ =404";
+          #     };
+          #     extraConfig = ''
+          #       error_page 404 /404.html;
+          #     '';
+          #   };
+          # };
 
           networking.firewall.allowedTCPPorts = [ notes.port ];
         }

@@ -28,9 +28,23 @@ in
 
       sshPort = lib.mkOption {
         type = lib.types.port;
+        default = 22;
+        readOnly = true;
+        description = "External port for the forgejo SSH server.";
+      };
+
+      sshListenPort = lib.mkOption {
+        type = lib.types.port;
         default = 2222;
         readOnly = true;
-        description = "External and container port for the forgejo SSH server.";
+        description = "Container listen port for the forgejo SSH server.";
+      };
+
+      host = lib.mkOption {
+        type = lib.types.str;
+        default = "forge.${domain}";
+        readOnly = true;
+        description = "Public hostname for the forgejo server.";
       };
     };
   };
@@ -51,15 +65,18 @@ in
           {
             protocol = "tcp";
             hostPort = forge.sshPort;
-            containerPort = forge.sshPort;
+            containerPort = forge.sshListenPort;
           }
         ];
+
+        networking.firewall.allowedTCPPorts = [ forge.sshPort ];
 
         galaxy.lukasl-dev = {
           proxy.rules = [
             {
               type = "https";
               name = "forge";
+              from.host = forge.host;
               to.http = "http://${addresses.local}:${toString forge.port}";
             }
           ];
@@ -80,20 +97,16 @@ in
                     APP_NAME = "Lukas' Forge";
                   };
 
-                  server =
-                    let
-                      hostname = "forge.${domain}";
-                    in
-                    {
-                      DOMAIN = hostname;
-                      HTTP_ADDR = addresses.local;
-                      HTTP_PORT = forge.port;
-                      ROOT_URL = "https://${hostname}";
-                    SSH_DOMAIN = hostname;
+                  server = {
+                    DOMAIN = forge.host;
+                    HTTP_ADDR = addresses.local;
+                    HTTP_PORT = forge.port;
+                    ROOT_URL = "https://${forge.host}";
+                    SSH_DOMAIN = forge.host;
                     SSH_PORT = forge.sshPort;
-                    SSH_LISTEN_PORT = forge.sshPort;
+                    SSH_LISTEN_PORT = forge.sshListenPort;
                     START_SSH_SERVER = true;
-                    };
+                  };
 
                   service = {
                     DISABLE_REGISTRATION = true;
@@ -120,7 +133,7 @@ in
 
               networking.firewall.allowedTCPPorts = [
                 forge.port
-                forge.sshPort
+                forge.sshListenPort
               ];
             }
           ];

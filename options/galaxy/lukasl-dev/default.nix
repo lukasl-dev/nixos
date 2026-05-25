@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -9,6 +10,17 @@ let
   inherit (config) age;
   inherit (config.planet) stateVersion;
   inherit (config.galaxy) lukasl-dev;
+
+  script = # bash
+    ''
+      set -euo pipefail
+
+      if [ "$EUID" -eq 0 ]; then
+        exec ${pkgs.nixos-container}/bin/nixos-container run lukasl-dev -- "$@"
+      else
+        exec sudo ${pkgs.nixos-container}/bin/nixos-container run lukasl-dev -- "$@"
+      fi
+    '';
 in
 {
   imports = [
@@ -81,6 +93,11 @@ in
 
   config = lib.mkIf lukasl-dev.enable {
     galaxy.proxy.enable = true;
+
+    environment.systemPackages = [
+      (pkgs.writeShellScriptBin "gld" script)
+      (pkgs.writeShellScriptBin "g-lukasl-dev" script)
+    ];
 
     # DNS
     services.resolved.extraConfig = "DNSStubListenerExtra=${lukasl-dev.addresses.host}";

@@ -6,10 +6,33 @@
 
 let
   inherit (config.planet) ssh user;
+  inherit (config.galaxy.lukasl-dev) forge;
 in
 {
   options.planet = {
     ssh = {
+      ports = lib.mkOption {
+        type = lib.types.listOf lib.types.port;
+        default = [ 2222 ];
+        description = "Ports for the host OpenSSH server.";
+      };
+
+      pollux = {
+        host = lib.mkOption {
+          type = lib.types.str;
+          default = "pollux.lukasl.dev";
+          readOnly = true;
+          description = "Public hostname for Pollux administrative SSH.";
+        };
+
+        port = lib.mkOption {
+          type = lib.types.port;
+          default = 2222;
+          readOnly = true;
+          description = "Public port for Pollux administrative SSH.";
+        };
+      };
+
       default = {
         publicKey = lib.mkOption {
           type = lib.types.str;
@@ -36,6 +59,8 @@ in
   config = {
     services.openssh = {
       enable = true;
+      inherit (ssh) ports;
+
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
@@ -61,6 +86,19 @@ in
               identityFile = ssh."g0.complang.tuwien.ac.at".privateKey;
               identitiesOnly = true;
             };
+
+            "pollux" = {
+              hostname = ssh.pollux.host;
+              inherit (ssh.pollux) port;
+            };
+            ${ssh.pollux.host} = {
+              inherit (ssh.pollux) port;
+            };
+
+            ${forge.host} = {
+              user = "forgejo";
+              port = forge.sshPort;
+            };
           };
         };
 
@@ -68,7 +106,7 @@ in
       }
     ];
 
-    networking.firewall.allowedTCPPorts = [ 22 ];
+    networking.firewall.allowedTCPPorts = ssh.ports;
 
     users.users = {
       root.openssh.authorizedKeys.keys = [ ssh.default.publicKey ];
