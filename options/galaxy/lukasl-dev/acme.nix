@@ -38,7 +38,7 @@ in
 
                 cat <<EOF
                 CLOUDFLARE_EMAIL=$cf_email
-                CLOUDFLARE_API_KEY=cf_api_key
+                CLOUDFLARE_API_KEY=$cf_api_key
                 EOF
               '';
           };
