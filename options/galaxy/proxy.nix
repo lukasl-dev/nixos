@@ -135,10 +135,12 @@ in
               map (rule: {
                 inherit (rule) name;
                 value = {
-                  passHostHeader = true;
-                  loadBalancer.servers = [
-                    { url = rule.to.http; }
-                  ];
+                  loadBalancer = {
+                    passHostHeader = true;
+                    servers = [
+                      { url = rule.to.http; }
+                    ];
+                  };
                 };
               }) allRules
             );

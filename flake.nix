@@ -14,6 +14,7 @@
       url = "github:oddlama/agenix-rekey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    jail-nix.url = "sourcehut:~alexdavid/jail.nix";
     nvf = {
       url = "github:notashelf/nvf?ref=v0.8";
       inputs.nixpkgs.follows = "nixpkgs";
