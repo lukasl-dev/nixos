@@ -24,7 +24,7 @@
       enable = true;
 
       anki.enable = true;
-      attic.enable = true;
+      cache.enable = true;
       books.enable = true;
       box.enable = true;
       cal.enable = true;

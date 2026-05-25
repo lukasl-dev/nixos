@@ -2,17 +2,17 @@
 
 let
   inherit (config) age;
-  inherit (config.galaxy.lukasl-dev) domain attic;
+  inherit (config.galaxy.lukasl-dev) cache domain;
 
   inherit (config.services) atticd;
 
-  serverToken = "galaxy/lukasl-dev/attic/serverToken";
-  env = "galaxy/lukasl-dev/attic/env";
+  serverToken = "galaxy/lukasl-dev/cache/serverToken";
+  env = "galaxy/lukasl-dev/cache/env";
 in
 {
   options.galaxy.lukasl-dev = {
-    attic = {
-      enable = lib.mkEnableOption "Enable Attic cache server";
+    cache = {
+      enable = lib.mkEnableOption "Enable binary cache server";
 
       host = lib.mkOption {
         type = lib.types.str;
@@ -32,12 +32,12 @@ in
     {
       age.secrets = {
         ${serverToken} = {
-          rekeyFile = ../../../secrets/galaxy/lukasl-dev/attic/serverToken.age;
+          rekeyFile = ../../../secrets/galaxy/lukasl-dev/cache/serverToken.age;
           intermediary = true;
         };
 
         ${env} = {
-          rekeyFile = ../../../secrets/galaxy/lukasl-dev/attic/env.age;
+          rekeyFile = ../../../secrets/galaxy/lukasl-dev/cache/env.age;
           generator = {
             dependencies = {
               token = age.secrets.${serverToken};
@@ -57,13 +57,13 @@ in
       };
     }
 
-    (lib.mkIf attic.enable {
+    (lib.mkIf cache.enable {
       galaxy.lukasl-dev.proxy.rules = [
         {
           type = "https";
           name = "cache";
-          from.host = attic.host;
-          to.http = "http://localhost:${toString attic.port}";
+          from.host = cache.host;
+          to.http = "http://localhost:${toString cache.port}";
         }
       ];
 
@@ -75,7 +75,7 @@ in
         environmentFile = age.secrets.${env}.path;
 
         settings = {
-          listen = "[::]:${toString attic.port}";
+          listen = "[::]:${toString cache.port}";
 
           jwt = { };
 
@@ -101,7 +101,7 @@ in
         groups.${atticd.user} = { };
       };
 
-      planet.attic.endpoint = "https://${attic.host}";
+      planet.attic.endpoint = "https://${cache.host}";
     })
   ];
 }

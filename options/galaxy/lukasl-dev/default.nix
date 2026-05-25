@@ -30,7 +30,7 @@ in
     ./matrix
 
     ./anki.nix
-    ./attic.nix
+    ./cache.nix
     ./books.nix
     ./box.nix
     ./cal.nix
