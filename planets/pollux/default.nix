@@ -29,7 +29,10 @@
       box.enable = true;
       cal.enable = true;
       factorio.enable = true;
-      forge.enable = true;
+      forge = {
+        enable = true;
+        runner.enable = true;
+      };
       mail.enable = true;
       matrix.enable = true;
       notes.enable = true;
