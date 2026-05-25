@@ -157,7 +157,24 @@ in
 
                 labels = [
                   "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
+                  "nixos:host"
                   "native:host"
+                ];
+
+                hostPackages = with pkgs; [
+                  bash
+                  coreutils
+                  curl
+                  gawk
+                  gitFull
+                  git-lfs
+                  gnused
+                  jq
+                  nix
+                  nodejs
+                  openssh
+                  rsync
+                  wget
                 ];
               };
             };
