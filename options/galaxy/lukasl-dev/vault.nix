@@ -90,14 +90,36 @@ in
                 config = {
                   ROCKET_ADDRESS = addresses.local;
                   ROCKET_PORT = vault.port;
+                  RSA_KEY_FILENAME = "/var/lib/vaultwarden/rsa_key";
 
                   DOMAIN = "https://vault.${domain}";
                   SIGNUPS_ALLOWED = false;
-                  RSA_KEY_FILENAME = age.secrets.${rsaKey}.path;
                 };
 
                 environmentFile = age.secrets.${env}.path;
               };
+
+              systemd.services.vaultwarden.serviceConfig.ExecStartPre = [
+                ''
+                  +${pkgs.writeShellScript "vaultwarden-install-rsa-key" ''
+                    set -euo pipefail
+
+                    source=${lib.escapeShellArg age.secrets.${rsaKey}.path}
+                    target=/var/lib/vaultwarden/rsa_key.pem
+
+                    if [ -L "$target" ]; then
+                      rm -f "$target"
+                    fi
+
+                    if ! cmp -s "$source" "$target"; then
+                      install -D -o vaultwarden -g vaultwarden -m 0600 "$source" "$target"
+                    else
+                      chown vaultwarden:vaultwarden "$target"
+                      chmod 0600 "$target"
+                    fi
+                  ''}
+                ''
+              ];
 
               networking.firewall.allowedTCPPorts = [ vault.port ];
             }
