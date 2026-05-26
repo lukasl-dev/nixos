@@ -9,7 +9,13 @@
 let
   inherit (config) age;
   inherit (config.planet) name stateVersion;
-  inherit (config.galaxy) lukasl-dev;
+  inherit (config.galaxy) lukasl-dev proxy;
+
+  proxyHosts = lib.unique (
+    lib.map (
+      rule: if rule.from.host != null then rule.from.host else "${rule.name}.${lukasl-dev.domain}"
+    ) (proxy.rules.${lukasl-dev.domain} or [ ])
+  );
 
   script = # bash
     ''
@@ -137,7 +143,7 @@ in
         networking = {
           hostName = "lukasl-dev";
           defaultGateway = lukasl-dev.addresses.host;
-          hosts.${lukasl-dev.addresses.host} = [ "${name}.${lukasl-dev.domain}" ];
+          hosts.${lukasl-dev.addresses.host} = lib.unique ([ "${name}.${lukasl-dev.domain}" ] ++ proxyHosts);
           useHostResolvConf = false;
           nameservers = [ lukasl-dev.addresses.host ];
         };
