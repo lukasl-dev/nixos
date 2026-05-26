@@ -19,10 +19,11 @@ in
     ./bind.nix
     ./config.nix
     ./cursors.nix
+    ./dank.nix
     ./events.nix
     ./mesa.nix
     ./monitors.nix
-    ./noctalia.nix
+    # ./noctalia.nix
     ./polkit.nix
     ./screenshot.nix
   ];

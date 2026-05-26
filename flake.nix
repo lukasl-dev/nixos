@@ -38,6 +38,14 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     pi.url = "github:lukasl-dev/pi.nix";
     firn = {
       url = "github:lukasl-dev/firn";
@@ -59,16 +67,13 @@
       nixpkgs-unstable,
       systems,
       nvf,
+      jail-nix,
       ...
     }@inputs:
     let
       defaultSystem = "x86_64-linux";
 
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
-
-      mkSpecialArgs = {
-        inherit self inputs;
-      };
 
       mkNixosSystem =
         {
@@ -82,22 +87,26 @@
             ./universe.nix
           ];
           extraModules = (if module != null then [ module ] else [ ]) ++ modules;
+
+          pkgs = import nixpkgs { inherit system; };
+          jail = jail-nix.lib.init pkgs;
         in
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = mkSpecialArgs;
+          specialArgs = {
+            inherit self inputs jail;
+          };
           modules = baseModules ++ extraModules;
         };
     in
     {
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = self;
-        nixosConfigurations = self.nixosConfigurations;
+        inherit (self) nixosConfigurations;
         darwinConfigurations = { };
       };
 
       nixosConfigurations = {
-        # orion = mkNixosSystem { module = ./planets/orion; };
         vega = mkNixosSystem { module = ./planets/vega; };
         pollux = mkNixosSystem { module = ./planets/pollux; };
 

@@ -52,7 +52,7 @@ let
       hl.bind("${mod} + MINUS", hl.dsp.layout("colresize -conf"))
       hl.bind("${mod} + EQUAL", hl.dsp.layout("colresize +conf"))
 
-      hl.bind("${mod} + V", function() 
+      hl.bind("${mod} + E", function() 
         hl.dispatch(hl.dsp.window.float())
         hl.dispatch(hl.dsp.window.center())
       end)

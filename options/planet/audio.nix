@@ -85,14 +85,6 @@ in
 
     planet.display.hyprland = {
       autoStart = [ "easyeffects --service-mode" ];
-
-      lua = [
-        # lua
-        ''
-          hl.bind("SUPER + I", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
-          hl.bind("SUPER + O", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
-        ''
-      ];
     };
   };
 }

@@ -1,4 +1,5 @@
 {
+  jail,
   pkgs,
   config,
   lib,
@@ -16,6 +17,42 @@ let
   vesktopFeatures = builtins.concatStringsSep "," (
     lib.optionals (hyprland.enable && display.type == "wayland") [ "WaylandLinuxDrmSyncobj" ]
   );
+
+  wrapped =
+    if hyprland.enable then
+      (pkgs.unstable.vesktop.override { }).overrideAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
+        postFixup = (old.postFixup or "") + ''
+          wrapProgram $out/bin/vesktop \
+            --add-flags "${ozoneFlag}" ${
+              lib.optionalString (
+                vesktopFeatures != ""
+              ) "\\\n                --add-flags \"--enable-features=${vesktopFeatures}\""
+            }
+        '';
+      })
+    else
+      pkgs.unstable.vesktop;
+
+  jailed = jail "vesktop" wrapped (
+    with jail.combinators;
+    [
+      network
+      gui
+      gpu
+      (persist-home "vesktop")
+      notifications
+      open-urls-in-browser
+      (dbus {
+        talk = [
+          "org.freedesktop.portal.*"
+          "org.freedesktop.Notifications"
+          "org.mpris.*"
+          "org.kde.StatusNotifierItem.*"
+        ];
+      })
+    ]
+  );
 in
 {
   options.planet.programs.discord = {
@@ -29,21 +66,7 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default =
-        if hyprland.enable then
-          (pkgs.unstable.vesktop.override { }).overrideAttrs (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
-            postFixup = (old.postFixup or "") + ''
-              wrapProgram $out/bin/vesktop \
-                --add-flags "${ozoneFlag}" ${
-                  lib.optionalString (
-                    vesktopFeatures != ""
-                  ) "\\\n                --add-flags \"--enable-features=${vesktopFeatures}\""
-                }
-            '';
-          })
-        else
-          pkgs.unstable.vesktop;
+      default = jailed;
       description = "Package used for Vesktop.";
       example = "pkgs.unstable.vesktop";
     };
@@ -84,6 +107,7 @@ in
 
         programs.vesktop = {
           enable = true;
+
           inherit (discord) package;
 
           vencord.settings = {

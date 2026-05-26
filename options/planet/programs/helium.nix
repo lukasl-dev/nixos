@@ -1,4 +1,5 @@
 {
+  jail,
   config,
   lib,
   pkgs,
@@ -24,9 +25,9 @@ let
     .${pkgs.stdenv.hostPlatform.system}
       or (throw "planet.programs.helium: unsupported system ${pkgs.stdenv.hostPlatform.system}");
 
-  package = pkgs.stdenvNoCC.mkDerivation {
+  derivation = pkgs.stdenvNoCC.mkDerivation {
     pname = "helium";
-    version = version;
+    inherit version;
 
     src = pkgs.fetchurl {
       url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-${release.arch}_linux.tar.xz";
@@ -83,6 +84,39 @@ let
   ];
 
   features = lib.optionalString (display.type == "wayland") "WaylandLinuxDrmSyncobj";
+
+  wrapped = pkgs.symlinkJoin {
+    name = "helium";
+    paths = [ derivation ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      rm -f $out/bin/helium
+      makeWrapper ${derivation}/bin/helium $out/bin/helium \
+        --prefix LD_LIBRARY_PATH : "$out/lib/helium" \
+        --suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}" \
+        --add-flags "--ozone-platform=${toString display.type}" \
+        ${lib.optionalString (features != "") ''--add-flags "--enable-features=${features}"''}
+    '';
+  };
+
+  # jailed = jail "helium" wrapped (
+  #   with jail.combinators;
+  #   [
+  #     network
+  #     gui
+  #     gpu
+  #     (persist-home "helium")
+  #     camera
+  #     notifications
+  #     (dbus {
+  #       talk = [
+  #         "org.freedesktop.portal.*"
+  #         "org.freedesktop.Notifications"
+  #         "org.mpris.*"
+  #       ];
+  #     })
+  #   ]
+  # );
 in
 {
   options.planet.programs = {
@@ -96,21 +130,9 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default = pkgs.symlinkJoin {
-          name = "helium";
-          paths = [ package ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            rm -f $out/bin/helium
-            makeWrapper ${package}/bin/helium $out/bin/helium \
-              --prefix LD_LIBRARY_PATH : "$out/lib/helium" \
-              --suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}" \
-              --add-flags "--ozone-platform=${display.type}" \
-              ${lib.optionalString (features != "") ''--add-flags "--enable-features=${features}"''}
-          '';
-        };
+        default = wrapped;
         description = "Package used for Helium browser.";
-        example = "pkgs.symlinkJoin { ... }";
+        example = "jail \"helium\" (pkgs.symlinkJoin { ... }) [...];";
       };
     };
   };
