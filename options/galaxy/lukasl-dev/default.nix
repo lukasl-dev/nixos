@@ -46,6 +46,7 @@ in
     ./hole.nix
     ./mail.nix
     ./notes.nix
+    ./status.nix
     ./term.nix
     ./vault.nix
     ./waka.nix
