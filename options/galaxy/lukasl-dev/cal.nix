@@ -41,7 +41,7 @@ in
 
           ${htpasswd} = {
             rekeyFile = ../../../secrets/galaxy/lukasl-dev/cal/htpasswd.age;
-            mode = "644";
+            mode = "0444";
             generator = {
               dependencies = {
                 password = config.age.secrets.${password};
@@ -53,7 +53,8 @@ in
                 in
                 ''
                   password="$(${decrypt} "${deps.password.file}")"
-                  echo "${username}:$(echo "$password" | ${htpasswd} -niBC 10 ${username} | cut -d: -f2)"
+                  hash="$(printf '%s\n' "$password" | ${htpasswd} -niBC 10 ${username} | cut -d: -f2-)"
+                  printf '%s:%s\n' ${username} "$hash"
                 '';
             };
           };
@@ -84,7 +85,7 @@ in
 
                   auth = {
                     type = "htpasswd";
-                    htpasswd_filename = "/var/lib/radicale/.htpasswd";
+                    htpasswd_filename = age.secrets.${htpasswd}.path;
                     htpasswd_encryption = "bcrypt";
                   };
 
@@ -108,14 +109,6 @@ in
                   };
                 };
               };
-
-              systemd.tmpfiles.rules =
-                let
-                  inherit (age.secrets.${htpasswd}) path;
-                in
-                [
-                  "C /var/lib/radicale/.htpasswd 0600 radicale radicale - ${path}"
-                ];
 
               networking.firewall.allowedTCPPorts = [ cal.port ];
             }
