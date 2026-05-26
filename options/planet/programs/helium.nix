@@ -36,6 +36,18 @@ let
 
     sourceRoot = "helium-${version}-${release.arch}_linux";
 
+    nativeBuildInputs = [ pkgs.autoPatchelfHook ];
+    buildInputs = runtimeLibs;
+
+    autoPatchelfIgnoreMissingDeps = [
+      "libQt6Core.so.6"
+      "libQt6Gui.so.6"
+      "libQt6Widgets.so.6"
+      "libQt5Core.so.5"
+      "libQt5Gui.so.5"
+      "libQt5Widgets.so.5"
+    ];
+
     installPhase = # bash
       ''
         runHook preInstall
@@ -92,31 +104,30 @@ let
     postBuild = ''
       rm -f $out/bin/helium
       makeWrapper ${derivation}/bin/helium $out/bin/helium \
-        --prefix LD_LIBRARY_PATH : "$out/lib/helium" \
-        --suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath runtimeLibs}" \
         --add-flags "--ozone-platform=${toString display.type}" \
         ${lib.optionalString (features != "") ''--add-flags "--enable-features=${features}"''}
     '';
   };
 
-  # jailed = jail "helium" wrapped (
-  #   with jail.combinators;
-  #   [
-  #     network
-  #     gui
-  #     gpu
-  #     (persist-home "helium")
-  #     camera
-  #     notifications
-  #     (dbus {
-  #       talk = [
-  #         "org.freedesktop.portal.*"
-  #         "org.freedesktop.Notifications"
-  #         "org.mpris.*"
-  #       ];
-  #     })
-  #   ]
-  # );
+  jailed = jail "helium" wrapped (
+    with jail.combinators;
+    [
+      network
+      gui
+      gpu
+      (persist-home "helium")
+      (rw-bind (noescape "~/Downloads") (noescape "~/Downloads"))
+      camera
+      notifications
+      (dbus {
+        talk = [
+          "org.freedesktop.portal.*"
+          "org.freedesktop.Notifications"
+          "org.mpris.*"
+        ];
+      })
+    ]
+  );
 in
 {
   options.planet.programs = {
@@ -130,7 +141,7 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default = wrapped;
+        default = jailed;
         description = "Package used for Helium browser.";
         example = "jail \"helium\" (pkgs.symlinkJoin { ... }) [...];";
       };
