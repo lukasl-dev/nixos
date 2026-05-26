@@ -35,6 +35,8 @@ in
         }
       ];
 
+      backup.paths = [ notes.root ];
+
       bindMounts = [ notes.root ];
 
       modules = [

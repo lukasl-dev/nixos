@@ -27,6 +27,10 @@ in
         }
       ];
 
+      backup.paths = [
+        "/var/lib/nixos-containers/lukasl-dev/var/lib/homebox"
+      ];
+
       modules = [
         {
           services.homebox = {

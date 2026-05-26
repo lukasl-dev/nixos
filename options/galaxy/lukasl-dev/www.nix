@@ -36,6 +36,8 @@ in
         }
       ];
 
+      backup.paths = [ www.root ];
+
       bindMounts = [ www.root ];
 
       modules = [

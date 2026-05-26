@@ -71,6 +71,10 @@ in
             }
           ];
 
+          backup.paths = [
+            "/var/lib/nixos-containers/lukasl-dev/var/lib/radicale"
+          ];
+
           bindMounts = [ age.secrets.${htpasswd}.path ];
 
           modules = [

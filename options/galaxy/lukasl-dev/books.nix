@@ -32,6 +32,10 @@ in
         }
       ];
 
+      backup.paths = [
+        "/var/lib/nixos-containers/lukasl-dev/var/lib/audiobookshelf"
+      ];
+
       modules =
         let
           dataDir = "audiobookshelf";

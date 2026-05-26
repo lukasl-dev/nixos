@@ -45,6 +45,10 @@ in
         ];
 
         galaxy.lukasl-dev = {
+          backup.paths = [
+            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/factorio"
+          ];
+
           bindMounts = [ age.secrets.${serverSettings}.path ];
 
           modules = [

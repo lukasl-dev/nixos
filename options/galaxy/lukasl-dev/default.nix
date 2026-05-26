@@ -36,6 +36,7 @@ in
     ./matrix
 
     ./anki.nix
+    ./backup.nix
     ./cache.nix
     ./books.nix
     ./box.nix

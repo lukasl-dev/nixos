@@ -71,6 +71,11 @@ in
             }
           ];
 
+          backup.paths = [
+            "/var/lib/nixos-containers/lukasl-dev${stateDir}"
+            "/var/lib/nixos-containers/lukasl-dev${redisDir}"
+          ];
+
           bindMounts = [ age.secrets.${env}.path ];
 
           modules = [

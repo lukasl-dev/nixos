@@ -62,6 +62,10 @@ in
             }
           ];
 
+          backup.paths = [
+            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/tuwunel"
+          ];
+
           bindMounts = [ age.secrets.${registrationToken}.path ];
 
           modules = [

@@ -75,6 +75,10 @@ in
             }
           ];
 
+          backup.paths = [
+            "/var/lib/nixos-containers/lukasl-dev/var/lib/vaultwarden"
+          ];
+
           bindMounts = [
             age.secrets.${rsaKey}.path
             age.secrets.${env}.path

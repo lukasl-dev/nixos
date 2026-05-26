@@ -40,6 +40,10 @@ in
             }
           ];
 
+          backup.paths = [
+            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/wakapi"
+          ];
+
           bindMounts = [ age.secrets.${salt}.path ];
 
           modules = [

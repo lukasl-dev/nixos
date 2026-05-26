@@ -81,6 +81,10 @@ in
         }
       ];
 
+      backup.paths = [
+        "/var/lib/nixos-containers/lukasl-dev/var/lib/forgejo"
+      ];
+
       bindMounts = [
         age.secrets.${mail.accounts.bot}.path
       ];

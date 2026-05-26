@@ -39,6 +39,10 @@ in
             }
           ];
 
+          backup.paths = [
+            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/anki-sync-server"
+          ];
+
           bindMounts = [ age.secrets.${password}.path ];
 
           modules = [

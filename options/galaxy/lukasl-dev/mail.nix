@@ -99,6 +99,10 @@ in
             }
           ];
 
+          backup.paths = [
+            "/var/lib/maddy"
+          ];
+
           modules = [
             {
               networking.hosts.${addresses.host} = [ mail.host ];
