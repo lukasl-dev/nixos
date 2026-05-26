@@ -61,15 +61,30 @@ in
   };
 
   config = lib.mkIf forge.enable {
-    containers.lukasl-dev.forwardPorts = [
+    assertions = [
       {
-        protocol = "tcp";
-        hostPort = forge.sshPort;
-        containerPort = forge.sshListenPort;
+        assertion = !(lib.elem forge.sshPort config.planet.ssh.ports);
+        message = "Forgejo SSH port ${toString forge.sshPort} must not also be used by the host OpenSSH server.";
       }
     ];
 
     networking.firewall.allowedTCPPorts = [ forge.sshPort ];
+
+    systemd.sockets.forgejo-ssh-proxy = {
+      description = "Forgejo SSH proxy socket";
+      wantedBy = [ "sockets.target" ];
+      listenStreams = [ (toString forge.sshPort) ];
+    };
+
+    systemd.services.forgejo-ssh-proxy = {
+      description = "Proxy Forgejo SSH to the lukasl-dev container";
+      requires = [ "container@lukasl-dev.service" ];
+      after = [ "container@lukasl-dev.service" ];
+
+      serviceConfig = {
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd ${addresses.local}:${toString forge.sshListenPort}";
+      };
+    };
 
     galaxy.lukasl-dev = {
       proxy.rules = [
