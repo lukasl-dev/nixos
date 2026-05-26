@@ -27,6 +27,8 @@ jobs:
         run: |
           set -euo pipefail
 
+          export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+
           ssh_dir="$PWD/.ssh"
           mkdir -p "$ssh_dir"
           chmod 700 "$ssh_dir"
