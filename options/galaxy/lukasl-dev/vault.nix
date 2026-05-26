@@ -38,7 +38,6 @@ in
         age.secrets = {
           ${rsaKey} = {
             rekeyFile = ../../../secrets/galaxy/lukasl-dev/vault/rsaKey.age;
-            path = "/var/lib/vaultwarden/rsa_key.pem";
             mode = "0444";
           };
           ${env} = {
@@ -94,6 +93,7 @@ in
 
                   DOMAIN = "https://vault.${domain}";
                   SIGNUPS_ALLOWED = false;
+                  RSA_KEY_FILENAME = age.secrets.${rsaKey}.path;
                 };
 
                 environmentFile = age.secrets.${env}.path;
