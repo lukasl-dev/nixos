@@ -122,6 +122,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
+          helium = pkgs.callPackage ./packages/helium { };
           upterm = pkgs.callPackage ./packages/upterm { };
 
           vim =

@@ -1,4 +1,5 @@
 {
+  jail,
   pkgs,
   config,
   lib,
@@ -10,6 +11,44 @@ let
   inherit (config.planet.display) hyprland;
 
   inherit (config.planet.programs) element;
+
+  wrapped =
+    if hyprland.enable then
+      pkgs.unstable.element-desktop.overrideAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
+        postFixup = (old.postFixup or "") + ''
+          wrapProgram $out/bin/element-desktop \
+            --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
+            --add-flags "--disable-gpu-memory-buffer-video-frames" \
+            --add-flags "--ignore-gpu-blocklist" \
+            --add-flags "--enable-gpu-rasterization" \
+            --add-flags "--enable-zero-copy" \
+            --add-flags "--disable-gpu-sandbox"
+        '';
+      })
+    else
+      pkgs.unstable.element-desktop;
+
+  jailed = jail "element" wrapped (
+    with jail.combinators;
+    [
+      network
+      gui
+      gpu
+      (persist-home "element")
+      camera
+      notifications
+      open-urls-in-browser
+      (dbus {
+        talk = [
+          "org.freedesktop.portal.*"
+          "org.freedesktop.Notifications"
+          "org.mpris.*"
+          "org.kde.StatusNotifierItem.*"
+        ];
+      })
+    ]
+  );
 in
 {
   options.planet.programs = {
@@ -24,22 +63,10 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default =
-          if hyprland.enable then
-            pkgs.unstable.element-desktop.overrideAttrs (old: {
-              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.unstable.makeWrapper ];
-              postFixup = (old.postFixup or "") + ''
-                wrapProgram $out/bin/element-desktop \
-                  --add-flags "--enable-features=WaylandLinuxDrmSyncobj" \
-                  --add-flags "--disable-gpu-memory-buffer-video-frames" \
-                  --add-flags "--ignore-gpu-blocklist" \
-                  --add-flags "--enable-gpu-rasterization" \
-                  --add-flags "--enable-zero-copy" \
-                  --add-flags "--disable-gpu-sandbox"
-              '';
-            })
-          else
-            pkgs.unstable.element-desktop;
+        default = pkgs.symlinkJoin {
+          name = "element";
+          paths = [ jailed wrapped ];
+        };
         description = "Package used for Element.";
         example = "pkgs.unstable.element-desktop";
       };

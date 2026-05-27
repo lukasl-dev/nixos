@@ -1,5 +1,6 @@
 {
   jail,
+  self,
   config,
   lib,
   pkgs,
@@ -9,104 +10,24 @@
 let
   inherit (config.planet) display;
   inherit (config.planet.programs) helium;
+  inherit (pkgs.stdenv.hostPlatform) system;
 
-  version = "0.12.3.1";
-  release =
-    {
-      x86_64-linux = {
-        arch = "x86_64";
-        hash = "sha256-a4kcudN+bsOV253BSmTFsx0Tngmr/jbUd/A1gesc6QE=";
-      };
-      aarch64-linux = {
-        arch = "arm64";
-        hash = "sha256-GN/k/5mkazNPY1TGOGwJVYdM0YR805/2HHVGY6e1+9c=";
-      };
-    }
-    .${pkgs.stdenv.hostPlatform.system}
-      or (throw "planet.programs.helium: unsupported system ${pkgs.stdenv.hostPlatform.system}");
-
-  derivation = pkgs.stdenvNoCC.mkDerivation {
-    pname = "helium";
-    inherit version;
-
-    src = pkgs.fetchurl {
-      url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-${release.arch}_linux.tar.xz";
-      inherit (release) hash;
-    };
-
-    sourceRoot = "helium-${version}-${release.arch}_linux";
-
-    nativeBuildInputs = [ pkgs.autoPatchelfHook ];
-    buildInputs = runtimeLibs;
-
-    autoPatchelfIgnoreMissingDeps = [
-      "libQt6Core.so.6"
-      "libQt6Gui.so.6"
-      "libQt6Widgets.so.6"
-      "libQt5Core.so.5"
-      "libQt5Gui.so.5"
-      "libQt5Widgets.so.5"
-    ];
-
-    installPhase = # bash
-      ''
-        runHook preInstall
-
-        mkdir -p $out/bin $out/lib/helium $out/share/applications $out/share/icons/hicolor/256x256/apps
-        cp -r . $out/lib/helium
-
-        rm -f $out/lib/helium/libvulkan.so.1
-        ln -s ${lib.getLib pkgs.vulkan-loader}/lib/libvulkan.so.1 $out/lib/helium/libvulkan.so.1
-
-        ln -s $out/lib/helium/helium $out/bin/helium
-        install -Dm644 helium.desktop $out/share/applications/helium.desktop
-        install -Dm644 product_logo_256.png $out/share/icons/hicolor/256x256/apps/helium.png
-
-        runHook postInstall
-      '';
-  };
-
-  runtimeLibs = with pkgs; [
-    glib
-    nspr
-    nss
-    atk
-    at-spi2-atk
-    dbus
-    cups
-    expat
-    libxcb
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXrandr
-    libxkbcommon
-    at-spi2-core
-    libgbm
-    mesa
-    cairo
-    pango
-    systemd
-    alsa-lib
-    libGL
-    vulkan-loader
-    pciutils
-  ];
+  unwrapped = self.packages.${system}.helium;
 
   features = lib.optionalString (display.type == "wayland") "WaylandLinuxDrmSyncobj";
 
   wrapped = pkgs.symlinkJoin {
     name = "helium";
-    paths = [ derivation ];
+    paths = [ unwrapped ];
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       rm -f $out/bin/helium
-      makeWrapper ${derivation}/bin/helium $out/bin/helium \
+      makeWrapper ${lib.getExe unwrapped} $out/bin/helium \
+        --suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath unwrapped.runtimeLibs}" \
         --add-flags "--ozone-platform=${toString display.type}" \
         ${lib.optionalString (features != "") ''--add-flags "--enable-features=${features}"''}
     '';
+    inherit (unwrapped) meta;
   };
 
   jailed = jail "helium" wrapped (
@@ -115,14 +36,36 @@ let
       network
       gui
       gpu
+      (tmpfs "/dev/shm")
+      # Chromium's profile singleton socket lives below /tmp.  If each jail gets
+      # a private /tmp, a second `helium` invocation cannot talk to the already
+      # running instance and the shared profile opens half-broken.
+      (add-runtime "mkdir -p ~/.local/share/jail.nix/tmp/helium")
+      (rw-bind (noescape "~/.local/share/jail.nix/tmp/helium") "/tmp")
       (persist-home "helium")
+      (add-runtime "mkdir -p ~/Downloads")
       (rw-bind (noescape "~/Downloads") (noescape "~/Downloads"))
+      (unsafe-add-raw-args ''--bind-try "$XDG_RUNTIME_DIR/doc" "$XDG_RUNTIME_DIR/doc"'')
       camera
       notifications
+      (add-pkg-deps [ pkgs.xdg-utils ])
+      (add-runtime ''
+        for dev in /dev/nvidia*; do
+          [ -e "$dev" ] || continue
+          RUNTIME_ARGS+=(--dev-bind "$dev" "$dev")
+        done
+      '')
+      (wrap-entry (_: ''
+        exec ${lib.getExe' wrapped "helium"} \
+          --no-sandbox \
+          --disable-gpu-sandbox \
+          "$@"
+      ''))
       (dbus {
         talk = [
           "org.freedesktop.portal.*"
           "org.freedesktop.Notifications"
+          "org.freedesktop.secrets"
           "org.mpris.*"
         ];
       })
@@ -141,7 +84,14 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default = jailed;
+        default = pkgs.symlinkJoin {
+          name = "helium";
+          paths = [
+            jailed
+            wrapped
+          ];
+          inherit (unwrapped) meta;
+        };
         description = "Package used for Helium browser.";
         example = "jail \"helium\" (pkgs.symlinkJoin { ... }) [...];";
       };

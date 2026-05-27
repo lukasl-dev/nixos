@@ -1,4 +1,5 @@
 {
+  jail,
   pkgs,
   config,
   lib,
@@ -8,6 +9,32 @@
 let
   inherit (config.planet) display;
   inherit (config.planet.programs) bitwarden;
+
+  jailed = jail "bitwarden" pkgs.unstable.bitwarden-desktop (
+    with jail.combinators;
+    [
+      network
+      gui
+      gpu
+      (persist-home "bitwarden")
+      (readwrite "/run/dbus")
+      (add-pkg-deps [ pkgs.xdg-utils ])
+      (add-runtime ''
+        for dev in /dev/nvidia*; do
+          [ -e "$dev" ] || continue
+          RUNTIME_ARGS+=(--dev-bind "$dev" "$dev")
+        done
+      '')
+      notifications
+      (dbus {
+        talk = [
+          "org.freedesktop.Notifications"
+          "org.freedesktop.secrets"
+          "org.kde.StatusNotifierItem.*"
+        ];
+      })
+    ]
+  );
 in
 {
   options.planet.programs = {
@@ -22,7 +49,10 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default = pkgs.unstable.bitwarden-desktop;
+        default = pkgs.symlinkJoin {
+          name = "bitwarden";
+          paths = [ jailed pkgs.unstable.bitwarden-desktop ];
+        };
         description = "Package used for Bitwarden.";
         example = "pkgs.unstable.bitwarden-desktop";
       };

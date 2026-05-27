@@ -34,25 +34,26 @@ let
     else
       pkgs.unstable.vesktop;
 
-  jailed = jail "vesktop" wrapped (
-    with jail.combinators;
-    [
-      network
-      gui
-      gpu
-      (persist-home "vesktop")
-      notifications
-      open-urls-in-browser
-      (dbus {
-        talk = [
-          "org.freedesktop.portal.*"
-          "org.freedesktop.Notifications"
-          "org.mpris.*"
-          "org.kde.StatusNotifierItem.*"
-        ];
-      })
-    ]
-  );
+  # jailed = jail "vesktop" wrapped (
+  #   with jail.combinators;
+  #   [
+  #     network
+  #     gui
+  #     (share-ns "pid")
+  #     gpu
+  #     (persist-home "vesktop")
+  #     notifications
+  #     open-urls-in-browser
+  #     (dbus {
+  #       talk = [
+  #         "org.freedesktop.portal.*"
+  #         "org.freedesktop.Notifications"
+  #         "org.mpris.*"
+  #         "org.kde.StatusNotifierItem.*"
+  #       ];
+  #     })
+  #   ]
+  # );
 in
 {
   options.planet.programs.discord = {
@@ -66,7 +67,8 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = jailed;
+      default = wrapped;
+      # default = jailed;
       description = "Package used for Vesktop.";
       example = "pkgs.unstable.vesktop";
     };
