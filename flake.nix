@@ -16,8 +16,9 @@
     };
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
     nvf = {
-      url = "github:notashelf/nvf?ref=v0.8";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:notashelf/nvf";
+      # url = "github:notashelf/nvf?ref=v0.8";
+      # inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.55.0";

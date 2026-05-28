@@ -6,7 +6,11 @@
 
     languages.python = {
       enable = true;
-      lsp.servers = [ "pyright" ];
+      lsp.servers = [
+        # "ty"
+        "pyright"
+      ];
+      format.type = [ "ruff" ];
     };
 
     formatter.conform-nvim.setupOpts.formatters_by_ft.python = [ "ruff_format" ];

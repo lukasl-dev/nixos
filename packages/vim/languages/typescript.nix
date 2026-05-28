@@ -2,7 +2,7 @@
 
 {
   vim = {
-    languages.ts.enable = true;
+    languages.typescript.enable = true;
 
     extraPackages = [ pkgs.biome ];
 
