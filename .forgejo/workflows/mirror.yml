@@ -20,9 +20,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Push mirror
+        env:
+          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=accept-new
         run: |
           git remote add mirror git@github.com:lukasl-dev/nixos.git || true
           git push --mirror mirror
