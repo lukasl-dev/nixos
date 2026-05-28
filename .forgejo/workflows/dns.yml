@@ -1,0 +1,40 @@
+name: DNS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - dns/dnsconfig.js
+      - dns/creds.ci.json
+      - dns/types-dnscontrol.d.ts
+      - .forgejo/workflows/dns.yml
+  workflow_dispatch:
+
+jobs:
+  push:
+    name: Push dnsconfig.js
+    runs-on: nixos
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check DNS config
+        working-directory: dns
+        run: dnscontrol check --config dnsconfig.js
+
+      - name: Preview DNS changes
+        working-directory: dns
+        env:
+          CLOUDFLARE_API_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_API_ACCOUNT_ID }}
+          CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+          CLOUDFLARE_API_USER: ${{ secrets.CLOUDFLARE_API_USER }}
+        run: dnscontrol preview --creds creds.ci.json --config dnsconfig.js
+
+      - name: Push DNS changes
+        working-directory: dns
+        env:
+          CLOUDFLARE_API_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_API_ACCOUNT_ID }}
+          CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+          CLOUDFLARE_API_USER: ${{ secrets.CLOUDFLARE_API_USER }}
+        run: dnscontrol push --creds creds.ci.json --config dnsconfig.js

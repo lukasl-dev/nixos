@@ -184,6 +184,7 @@ in
                   bash
                   coreutils
                   curl
+                  dnscontrol
                   gawk
                   gitFull
                   git-lfs
