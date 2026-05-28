@@ -1,29 +1,29 @@
 { config, lib, ... }:
 
 let
-  inherit (config.galaxy.lukasl-dev) addresses domain fridge;
+  inherit (config.galaxy.lukasl-dev) addresses domain household;
 in
 {
   options.galaxy.lukasl-dev = {
-    fridge = {
+    household = {
       enable = lib.mkEnableOption "Enable Grocy";
 
       host = lib.mkOption {
         type = lib.types.str;
-        default = "fridge.${domain}";
+        default = "household.${domain}";
         readOnly = true;
         description = "Public hostname for Grocy.";
       };
     };
   };
 
-  config = lib.mkIf fridge.enable {
+  config = lib.mkIf household.enable {
     galaxy.lukasl-dev = {
       proxy.rules = [
         {
           type = "https";
-          name = "fridge";
-          from.host = fridge.host;
+          name = "household";
+          from.host = household.host;
           to.http = "http://${addresses.local}";
         }
       ];
@@ -36,7 +36,7 @@ in
         {
           services.grocy = {
             enable = true;
-            hostName = fridge.host;
+            hostName = household.host;
             nginx.enableSSL = false;
           };
 

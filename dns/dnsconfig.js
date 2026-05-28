@@ -31,7 +31,7 @@ D(
   CNAME("files", "pollux.lukasl.dev."),
   CNAME("git", "pollux.lukasl.dev."),
   CNAME("forge", "pollux.lukasl.dev."),
-  CNAME("fridge", "pollux.lukasl.dev."),
+  CNAME("household", "pollux.lukasl.dev."),
   CNAME("notes", "pollux.lukasl.dev."),
   CNAME("proxy.pollux", "pollux.lukasl.dev."),
   CNAME("auth", "pollux.lukasl.dev."),
