@@ -2,7 +2,7 @@ name: DNS
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - dns/dnsconfig.js
       - dns/creds.ci.json
