@@ -17,13 +17,14 @@ jobs:
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          export HOME="$GITHUB_WORKSPACE"
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
       - name: Push mirror
-        env:
-          GIT_SSH_COMMAND: ssh -o StrictHostKeyChecking=accept-new
         run: |
+          export HOME="$GITHUB_WORKSPACE"
+          export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new"
           git remote add mirror git@github.com:lukasl-dev/nixos.git || true
           git push --mirror mirror
