@@ -60,7 +60,7 @@ in
       launch = lib.mkOption {
         type = lib.types.str;
         readOnly = true;
-        default = lib.getExe bitwarden.package;
+        default = lib.getExe' bitwarden.package "bitwarden";
         description = "Command used to launch Bitwarden.";
         example = "bitwarden";
       };

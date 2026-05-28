@@ -74,7 +74,7 @@ in
       launch = lib.mkOption {
         type = lib.types.str;
         readOnly = true;
-        default = lib.getExe element.package;
+        default = lib.getExe' element.package "element-desktop";
         description = "Command used to launch Element.";
         example = "element-desktop";
       };

@@ -117,7 +117,7 @@ in
     planet = {
       display.hyprland.lua =
         let
-          exe = lib.getExe obsidian.package;
+          exe = lib.getExe' obsidian.package "obsidian";
         in
         [
           # lua
