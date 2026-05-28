@@ -33,6 +33,7 @@
         enable = true;
         runner.enable = true;
       };
+      fridge.enable = true;
       mail.enable = true;
       matrix.enable = true;
       notes.enable = true;
