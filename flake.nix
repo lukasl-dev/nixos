@@ -76,20 +76,33 @@
 
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
 
+      overlays = import ./overlays {
+        inherit inputs;
+        lib = nixpkgs.lib;
+      };
+
+      pkgsFor =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ overlays.default ];
+          config.allowUnfree = true;
+        };
+
       mkNixosSystem =
         {
           system ? defaultSystem,
-          module ? null,
-          modules ? [ ],
+          module,
         }:
         let
           baseModules = [
             ./options
             ./universe.nix
+            { nixpkgs.overlays = [ overlays.default ]; }
           ];
-          extraModules = (if module != null then [ module ] else [ ]) ++ modules;
+          extraModules = [ module ];
 
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = pkgsFor system;
           jail = jail-nix.lib.init pkgs;
         in
         nixpkgs.lib.nixosSystem {
@@ -101,6 +114,8 @@
         };
     in
     {
+      inherit overlays;
+
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = self;
         inherit (self) nixosConfigurations;
@@ -120,7 +135,7 @@
       packages = forEachSystem (
         system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = pkgsFor system;
         in
         {
           helium = pkgs.callPackage ./packages/helium { };
@@ -140,7 +155,7 @@
       devShells = forEachSystem (
         system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = pkgsFor system;
         in
         {
           default = pkgs.mkShell {
@@ -168,7 +183,7 @@
       formatter = forEachSystem (
         system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = pkgsFor system;
         in
         pkgs.nixfmt
       );
