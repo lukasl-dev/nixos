@@ -43,6 +43,7 @@ in
     ./cal.nix
     ./factorio.nix
     ./forge.nix
+    ./fridge.nix
     ./hole.nix
     ./mail.nix
     ./notes.nix
