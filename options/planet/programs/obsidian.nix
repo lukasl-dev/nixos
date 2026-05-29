@@ -42,33 +42,31 @@ let
       (rw-bind (noescape "~/.local/share/jail.nix/tmp/obsidian") "/tmp")
       (persist-home "obsidian")
       (rw-bind (noescape "~/notes") (noescape "~/notes"))
-      (try-rw-bind (noescape "~/.gitconfig") (noescape "~/.gitconfig"))
-      # Home Manager makes ~/.config/git/config and ~/.ssh/config symlinks into
-      # /nix/store. Materialize regular files in the persisted jail home: this
-      # keeps using the generated config without duplicating it here, avoids
-      # extra store-target binds, and satisfies OpenSSH's strict permission
-      # checks for ~/.ssh/config.
+      # Home Manager makes some config files symlinks into /nix/store.
+      # Materialize regular files in the persisted jail home: this keeps using
+      # the generated config without duplicating it here, avoids extra
+      # store-target binds, and satisfies OpenSSH's strict permission checks for
+      # ~/.ssh/config.
       (add-runtime ''
-        install -d -m 700 ~/.local/share/jail.nix/home/obsidian/.config/git
-        install -d -m 700 ~/.local/share/jail.nix/home/obsidian/.ssh
+        jail_home=~/.local/share/jail.nix/home/obsidian
 
-        if [ -e ~/.config/git/config ]; then
-          install -m 600 "$(realpath ~/.config/git/config)" ~/.local/share/jail.nix/home/obsidian/.config/git/config
-        fi
+        syncJailHomeFile() {
+          local src="$1"
+          local dst="$jail_home/$2"
 
-        if [ -e ~/.config/git/ignore ]; then
-          install -m 600 ~/.config/git/ignore ~/.local/share/jail.nix/home/obsidian/.config/git/ignore
-        fi
+          rm -f "$dst"
+          [ -e "$src" ] || return 0
+          install -D -m 600 "$(realpath "$src")" "$dst"
+        }
 
-        if [ -e ~/.ssh/config ]; then
-          install -m 600 "$(realpath ~/.ssh/config)" ~/.local/share/jail.nix/home/obsidian/.ssh/config
-        fi
+        install -d -m 700 "$jail_home/.config/git" "$jail_home/.ssh"
 
-        for file in known_hosts known_hosts2; do
-          if [ -e ~/.ssh/$file ]; then
-            install -m 600 ~/.ssh/$file ~/.local/share/jail.nix/home/obsidian/.ssh/$file
-          fi
-        done
+        syncJailHomeFile ~/.gitconfig .gitconfig
+        syncJailHomeFile ~/.config/git/config .config/git/config
+        syncJailHomeFile ~/.config/git/ignore .config/git/ignore
+        syncJailHomeFile ~/.ssh/config .ssh/config
+        syncJailHomeFile ~/.ssh/known_hosts .ssh/known_hosts
+        syncJailHomeFile ~/.ssh/known_hosts2 .ssh/known_hosts2
       '')
       (try-ro-bind (toString ssh.default.privateKey) (toString ssh.default.privateKey))
       (try-fwd-env "SSH_AUTH_SOCK")
