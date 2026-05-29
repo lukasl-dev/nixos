@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (config.planet) display;
+  inherit (config.planet) display ssh;
   inherit (config.planet.display) hyprland;
 
   inherit (config.planet.programs) obsidian;
@@ -43,11 +43,34 @@ let
       (persist-home "obsidian")
       (rw-bind (noescape "~/notes") (noescape "~/notes"))
       (try-rw-bind (noescape "~/.gitconfig") (noescape "~/.gitconfig"))
-      (try-rw-bind (noescape "~/.config/git") (noescape "~/.config/git"))
-      # Obsidian Git shells out to git/ssh. Keep the user's real ssh config and
-      # keys available for fetch/push/signing, and forward ssh-agent when one is
-      # active so passphrase-protected keys do not prompt from inside the jail.
-      (try-rw-bind (noescape "~/.ssh") (noescape "~/.ssh"))
+      # Home Manager makes ~/.config/git/config and ~/.ssh/config symlinks into
+      # /nix/store. Materialize regular files in the persisted jail home: this
+      # keeps using the generated config without duplicating it here, avoids
+      # extra store-target binds, and satisfies OpenSSH's strict permission
+      # checks for ~/.ssh/config.
+      (add-runtime ''
+        install -d -m 700 ~/.local/share/jail.nix/home/obsidian/.config/git
+        install -d -m 700 ~/.local/share/jail.nix/home/obsidian/.ssh
+
+        if [ -e ~/.config/git/config ]; then
+          install -m 600 "$(realpath ~/.config/git/config)" ~/.local/share/jail.nix/home/obsidian/.config/git/config
+        fi
+
+        if [ -e ~/.config/git/ignore ]; then
+          install -m 600 ~/.config/git/ignore ~/.local/share/jail.nix/home/obsidian/.config/git/ignore
+        fi
+
+        if [ -e ~/.ssh/config ]; then
+          install -m 600 "$(realpath ~/.ssh/config)" ~/.local/share/jail.nix/home/obsidian/.ssh/config
+        fi
+
+        for file in known_hosts known_hosts2; do
+          if [ -e ~/.ssh/$file ]; then
+            install -m 600 ~/.ssh/$file ~/.local/share/jail.nix/home/obsidian/.ssh/$file
+          fi
+        done
+      '')
+      (try-ro-bind (toString ssh.default.privateKey) (toString ssh.default.privateKey))
       (try-fwd-env "SSH_AUTH_SOCK")
       (add-runtime ''
         if [ -n "''${SSH_AUTH_SOCK-}" ] && [ -S "$SSH_AUTH_SOCK" ]; then
