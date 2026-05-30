@@ -72,6 +72,7 @@ in
               command = "tmux attach-session || tmux new-session";
 
               confirm-close-surface = false;
+              app-notifications = false;
 
               font-family = "Geist Mono";
               font-style = "Semibold";

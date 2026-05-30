@@ -34,26 +34,53 @@ let
     else
       pkgs.unstable.vesktop;
 
-  # jailed = jail "vesktop" wrapped (
-  #   with jail.combinators;
-  #   [
-  #     network
-  #     gui
-  #     (share-ns "pid")
-  #     gpu
-  #     (persist-home "vesktop")
-  #     notifications
-  #     open-urls-in-browser
-  #     (dbus {
-  #       talk = [
-  #         "org.freedesktop.portal.*"
-  #         "org.freedesktop.Notifications"
-  #         "org.mpris.*"
-  #         "org.kde.StatusNotifierItem.*"
-  #       ];
-  #     })
-  #   ]
-  # );
+  jailed = jail "vesktop" wrapped (
+    with jail.combinators;
+    [
+      network
+      gui # includes Wayland, Pulse, and PipeWire sockets
+      gpu
+      # xdg-desktop-portal identifies callers by pid.  Keeping Vesktop in the
+      # host pid namespace avoids portal/pidns confusion during screen sharing.
+      (share-ns "pid")
+      (tmpfs "/dev/shm")
+      # Chromium/Electron profile singleton sockets live below /tmp.  A stable
+      # per-app /tmp keeps follow-up launches from opening broken profiles.
+      (add-runtime "mkdir -p ~/.local/share/jail.nix/tmp/vesktop")
+      (rw-bind (noescape "~/.local/share/jail.nix/tmp/vesktop") "/tmp")
+      (persist-home "vesktop")
+      camera
+      notifications
+      open-urls-in-browser
+      # Needed by xdg-document-portal/file chooser and harmless for screencast.
+      (unsafe-add-raw-args ''--bind-try "$XDG_RUNTIME_DIR/doc" "$XDG_RUNTIME_DIR/doc"'')
+      # Let libdbus/system helpers see the session/system bus paths while the
+      # actual session bus traffic remains filtered by xdg-dbus-proxy below.
+      (readwrite "/run/dbus")
+      (add-pkg-deps [ pkgs.xdg-utils ])
+      (add-runtime ''
+        for dev in /dev/nvidia*; do
+          [ -e "$dev" ] || continue
+          RUNTIME_ARGS+=(--dev-bind "$dev" "$dev")
+        done
+      '')
+      (wrap-entry (_: ''
+        exec ${lib.getExe wrapped} \
+          --no-sandbox \
+          --disable-gpu-sandbox \
+          "$@"
+      ''))
+      (dbus {
+        talk = [
+          "org.freedesktop.portal.*"
+          "org.freedesktop.Notifications"
+          "org.freedesktop.secrets"
+          "org.mpris.*"
+          "org.kde.StatusNotifierItem.*"
+        ];
+      })
+    ]
+  );
 in
 {
   options.planet.programs.discord = {
@@ -68,7 +95,13 @@ in
       type = lib.types.package;
       readOnly = true;
       default = wrapped;
-      # default = jailed;
+      # default = pkgs.symlinkJoin {
+      #   name = "vesktop";
+      #   paths = [
+      #     jailed
+      #     wrapped
+      #   ];
+      # };
       description = "Package used for Vesktop.";
       example = "pkgs.unstable.vesktop";
     };

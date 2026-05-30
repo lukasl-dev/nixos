@@ -8,6 +8,7 @@
 
 let
   inherit (config.planet.display) hyprland;
+  inherit (config.planet.hardware) nvidia;
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
@@ -70,6 +71,19 @@ in
     # Add GTK portal for OpenURI, file chooser, etc.
     # Don't set xdg.portal.config - let configPackages from Hyprland handle it
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+    # On NVIDIA, xdph's DMA-BUF screencopy path can negotiate successfully while
+    # Chromium/Electron consumers still receive black frames. Force the portal to
+    # offer SHM buffers for WebRTC screen sharing instead.
+    planet.hm = lib.mkIf nvidia.enable [
+      {
+        xdg.configFile."hypr/xdph.conf".text = ''
+          screencopy {
+            force_shm = 1
+          }
+        '';
+      }
+    ];
 
     programs.dconf.profiles.user.databases = [
       {
