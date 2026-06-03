@@ -6,6 +6,7 @@
   ];
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     kernelModules = [
       "nct6775"
       "coretemp"

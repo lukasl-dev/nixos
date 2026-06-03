@@ -59,6 +59,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lightpanda.url = "github:lukasl-dev/browser";
+    nixos-anywhere = {
+      url = "github:nix-community/nixos-anywhere";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -166,6 +170,8 @@
               ]
               ++ [
                 inputs.agenix-rekey.packages.${system}.default
+                inputs.nixos-anywhere.packages.${system}.default
+                pkgs.nh
               ]
               ++ (import ./packages/scripts { inherit pkgs; });
 

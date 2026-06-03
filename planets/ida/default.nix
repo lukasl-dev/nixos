@@ -33,17 +33,14 @@
 
     lukasl-dev = {
       enable = true;
+      mode = "host";
 
       backup = {
         enable = true;
-        mode = "host";
         dataDir = "/mnt/external/restic";
       };
 
-      hole = {
-        enable = true;
-        mode = "host";
-      };
+      hole.enable = true;
     };
   };
 }
