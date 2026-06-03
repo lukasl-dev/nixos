@@ -182,6 +182,7 @@ in
 
       extensions = [
         ./extensions/wakatime.ts
+        ./extensions/opencode-free.ts
         "${pi-fff}/packages/pi-fff"
         "${pi-usage-extension}/usage-extension"
         "${pi-openai}"

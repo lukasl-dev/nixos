@@ -33,15 +33,15 @@
 }:
 
 let
-  version = "0.12.3.1";
+  version = "0.12.5.1";
   releases = {
     x86_64-linux = {
       arch = "x86_64";
-      hash = "sha256-a4kcudN+bsOV253BSmTFsx0Tngmr/jbUd/A1gesc6QE=";
+      hash = "sha256-tfiy1MkxXq9vOjp57R3ykHjleG0Viz/C2ttwXbHnPwA=";
     };
     aarch64-linux = {
       arch = "arm64";
-      hash = "sha256-GN/k/5mkazNPY1TGOGwJVYdM0YR805/2HHVGY6e1+9c=";
+      hash = "sha256-q6cCrvDh9eYQZwCLArKXZDpYkl0Zzi2g9gp9l+G+QIA=";
     };
   };
   release =

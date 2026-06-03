@@ -14,7 +14,7 @@ pkgs.writeShellApplication {
     ''
       set -euo pipefail
 
-      file="options/planet/programs/helium.nix"
+      file="packages/helium/default.nix"
 
       release_json="$(gh api repos/imputnet/helium-linux/releases/latest)"
       tag="$(jq -r '.tag_name' <<< "''${release_json}")"
@@ -45,7 +45,7 @@ pkgs.writeShellApplication {
 
       before="$(sha256sum "''${file}")"
 
-      sed -Ei "s#(heliumVersion = \")[^\"]+(\";)#\1''${tag}\2#" "''${file}"
+      sed -Ei "s#(version = \")[^\"]+(\";)#\1''${tag}\2#" "''${file}"
       sed -Ei "/x86_64-linux = \\{/,/\\};/ s#(hash = \")[^\"]+(\";)#\\1''${x86_hash}\\2#" "''${file}"
       sed -Ei "/aarch64-linux = \\{/,/\\};/ s#(hash = \")[^\"]+(\";)#\\1''${arm_hash}\\2#" "''${file}"
 

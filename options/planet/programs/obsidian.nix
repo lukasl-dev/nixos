@@ -35,11 +35,20 @@ let
       network
       gui
       gpu
+      # Obsidian/Electron's single-instance handoff stores the owner as
+      # "hostname-pid" (see SingletonLock below ~/.config/obsidian). With a
+      # private PID namespace every invocation becomes `jail-2`, so CLI-style
+      # invocations can no longer find the already-running Electron process.
+      (share-ns "pid")
       # Electron uses profile singleton sockets below /tmp to hand CLI/protocol
       # invocations to an already-running app.  A private /tmp per jail breaks
       # `obsidian obsidian://...` / desktop URI handoff.
       (add-runtime "mkdir -p ~/.local/share/jail.nix/tmp/obsidian")
       (rw-bind (noescape "~/.local/share/jail.nix/tmp/obsidian") "/tmp")
+      # The native `obsidian-cli` talks to the running Electron app through
+      # $XDG_RUNTIME_DIR/.obsidian-cli.sock. Let the jailed app create that
+      # socket in the host runtime dir so non-jailed CLI calls can connect.
+      (unsafe-add-raw-args ''--bind "$XDG_RUNTIME_DIR" "$XDG_RUNTIME_DIR"'')
       (persist-home "obsidian")
       (rw-bind (noescape "~/notes") (noescape "~/notes"))
       # Home Manager makes some config files symlinks into /nix/store.
@@ -119,13 +128,27 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default = pkgs.symlinkJoin {
-          name = "obsidian";
-          paths = [
-            jailed
-            wrapped
-          ];
-        };
+        default =
+          let
+            launcher = pkgs.writeShellScriptBin "obsidian" ''
+              case "''${1-}" in
+                dev:*|links|backlinks|unresolved|orphans|deadends|read|files|search|search:context|outline|vault=*)
+                  exec ${lib.getExe' wrapped "obsidian-cli"} "$@"
+                  ;;
+                *)
+                  exec ${lib.getExe' jailed "obsidian"} "$@"
+                  ;;
+              esac
+            '';
+          in
+          pkgs.symlinkJoin {
+            name = "obsidian";
+            paths = [
+              launcher
+              jailed
+              wrapped
+            ];
+          };
         description = "Package used for Obsidian.";
         example = "pkgs.unstable.obsidian";
       };
