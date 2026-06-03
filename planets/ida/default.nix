@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ./networking.nix
     ./sd-image.nix
+    ./storage.nix
   ];
 
   # match the working pi4 example: let the initrd module closure tolerate
