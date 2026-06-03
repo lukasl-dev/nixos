@@ -83,7 +83,12 @@ in
               token = age.secrets.${token};
             };
             script =
-              { decrypt, deps, ... }:
+              {
+                pkgs,
+                decrypt,
+                deps,
+                ...
+              }:
               let
                 htpasswd = lib.getExe' pkgs.apacheHttpd "htpasswd";
               in

@@ -125,11 +125,10 @@
       nixosConfigurations = {
         vega = mkNixosSystem { module = ./planets/vega; };
         pollux = mkNixosSystem { module = ./planets/pollux; };
-
-        # ida = mkNixosSystem {
-        #   system = "aarch64-linux";
-        #   module = ./planets/ida;
-        # };
+        ida = mkNixosSystem {
+          system = "aarch64-linux";
+          module = ./planets/ida;
+        };
       };
 
       packages = forEachSystem (

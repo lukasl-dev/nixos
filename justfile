@@ -14,5 +14,7 @@ forge-diff from to:
     @echo https://forge.lukasl.dev/lukas/nixos/compare/{{ from }}...{{ to }}
 
 agenix:
-    agenix generate -a
+    sudo agenix generate -a
+    sudo chown -R lukas:users .git secrets
     agenix rekey -a
+    sudo chown -R lukas:users .git secrets

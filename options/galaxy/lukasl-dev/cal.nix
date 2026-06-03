@@ -60,7 +60,12 @@ in
                 password = config.age.secrets.${password};
               };
               script =
-                { decrypt, deps, ... }:
+                {
+                  pkgs,
+                  decrypt,
+                  deps,
+                  ...
+                }:
                 let
                   htpasswd = lib.getExe' pkgs.apacheHttpd "htpasswd";
                 in
