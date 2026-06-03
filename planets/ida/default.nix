@@ -23,4 +23,26 @@
 
     networking.dns.discoverable = true;
   };
+
+  galaxy = {
+    acme = {
+      enable = true;
+      email = "contact@lukasl.dev";
+    };
+
+    lukasl-dev = {
+      enable = true;
+
+      backup = {
+        enable = true;
+        mode = "host";
+        dataDir = "/mnt/external/restic";
+      };
+
+      hole = {
+        enable = true;
+        mode = "host";
+      };
+    };
+  };
 }
