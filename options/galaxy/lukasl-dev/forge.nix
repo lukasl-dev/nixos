@@ -84,21 +84,13 @@ in
 
     networking.firewall.allowedTCPPorts = [ forge.sshPort ];
 
-    systemd.sockets.forgejo-ssh-proxy = lib.mkIf isGuest {
-      description = "Forgejo SSH proxy socket";
-      wantedBy = [ "sockets.target" ];
-      listenStreams = [ (toString forge.sshPort) ];
-    };
-
-    systemd.services.forgejo-ssh-proxy = lib.mkIf isGuest {
-      description = "Proxy Forgejo SSH to the lukasl-dev container";
-      requires = [ "container@lukasl-dev.service" ];
-      after = [ "container@lukasl-dev.service" ];
-
-      serviceConfig = {
-        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd ${listenAddress}:${toString sshListenPort}";
-      };
-    };
+    containers.lukasl-dev.forwardPorts = lib.mkIf isGuest [
+      {
+        protocol = "tcp";
+        hostPort = forge.sshPort;
+        containerPort = forge.sshListenPort;
+      }
+    ];
 
     galaxy.lukasl-dev = {
       proxy.rules = [
