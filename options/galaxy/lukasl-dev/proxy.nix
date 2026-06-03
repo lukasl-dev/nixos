@@ -3,8 +3,18 @@
 {
   imports = [
     (lib.doRename {
-      from = [ "galaxy" "lukasl-dev" "proxy" "rules" ];
-      to = [ "galaxy" "proxy" "rules" "lukasl.dev" ];
+      from = [
+        "galaxy"
+        "lukasl-dev"
+        "proxy"
+        "rules"
+      ];
+      to = [
+        "galaxy"
+        "proxy"
+        "rules"
+        "lukasl.dev"
+      ];
       visible = true;
       warn = false;
       use = x: x;

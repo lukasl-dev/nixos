@@ -2,11 +2,23 @@
 
 let
   inherit (config.galaxy.lukasl-dev) domain addresses notes;
+
+  isGuest = notes.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
 in
 {
   options.galaxy.lukasl-dev = {
     notes = {
       enable = lib.mkEnableOption "Enable notes website";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run the notes website in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -31,43 +43,47 @@ in
           type = "https";
           name = "notes";
           priority = 10;
-          to.http = "http://${addresses.local}:${toString notes.port}";
+          to.http = "http://${listenAddress}:${toString notes.port}";
         }
       ];
 
       backup.paths = [ notes.root ];
 
-      bindMounts = [ notes.root ];
+      bindMounts = lib.mkIf isGuest [ notes.root ];
 
       modules = [
         {
-          services.nginx = {
-            enable = true;
+          inherit (notes) mode;
 
-            virtualHosts."notes.${domain}" = {
-              listen = [
-                {
-                  addr = addresses.local;
-                  inherit (notes) port;
-                }
-              ];
+          module = {
+            services.nginx = {
+              enable = true;
 
-              inherit (notes) root;
+              virtualHosts."notes.${domain}" = {
+                listen = [
+                  {
+                    addr = listenAddress;
+                    inherit (notes) port;
+                  }
+                ];
 
-              locations."/" = {
-                index = "index.html";
-                tryFiles = "$uri $uri.html $uri/ =404";
+                inherit (notes) root;
+
+                locations."/" = {
+                  index = "index.html";
+                  tryFiles = "$uri $uri.html $uri/ =404";
+                };
+
+                extraConfig = ''
+                  absolute_redirect off;
+                  port_in_redirect off;
+                  error_page 404 /404.html;
+                '';
               };
-
-              extraConfig = ''
-                absolute_redirect off;
-                port_in_redirect off;
-                error_page 404 /404.html;
-              '';
             };
-          };
 
-          networking.firewall.allowedTCPPorts = [ notes.port ];
+            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ notes.port ];
+          };
         }
       ];
     };

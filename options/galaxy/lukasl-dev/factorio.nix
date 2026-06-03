@@ -8,11 +8,23 @@
 let
   inherit (config) age;
   inherit (config.galaxy.lukasl-dev) factorio;
+
+  isGuest = factorio.mode == "guest";
+  stateDir = "/var/lib/private/factorio";
 in
 {
   options.galaxy.lukasl-dev = {
     factorio = {
       enable = lib.mkEnableOption "Enable factorio server";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run the Factorio server in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -36,7 +48,7 @@ in
       }
 
       (lib.mkIf factorio.enable {
-        containers.lukasl-dev.forwardPorts = [
+        containers.lukasl-dev.forwardPorts = lib.mkIf isGuest [
           {
             protocol = "udp";
             hostPort = factorio.port;
@@ -46,24 +58,28 @@ in
 
         galaxy.lukasl-dev = {
           backup.paths = [
-            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/factorio"
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
           ];
 
-          bindMounts = [ age.secrets.${serverSettings}.path ];
+          bindMounts = lib.mkIf isGuest [ age.secrets.${serverSettings}.path ];
 
           modules = [
             {
-              services.factorio = {
-                enable = true;
-                package = pkgs.unstable.factorio-headless;
+              inherit (factorio) mode;
 
-                openFirewall = true;
-                admins = [ "argsvl" ];
+              module = {
+                services.factorio = {
+                  enable = true;
+                  package = pkgs.unstable.factorio-headless;
 
-                extraSettingsFile = age.secrets.${serverSettings}.path;
+                  openFirewall = true;
+                  admins = [ "argsvl" ];
+
+                  extraSettingsFile = age.secrets.${serverSettings}.path;
+                };
+
+                networking.firewall.allowedUDPPorts = lib.mkIf isGuest [ factorio.port ];
               };
-
-              networking.firewall.allowedUDPPorts = [ factorio.port ];
             }
           ];
         };

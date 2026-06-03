@@ -2,11 +2,24 @@
 
 let
   inherit (config.galaxy.lukasl-dev) domain addresses status;
+
+  isGuest = status.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/private/uptime-kuma";
 in
 {
   options.galaxy.lukasl-dev = {
     status = {
       enable = lib.mkEnableOption "Enable Uptime Kuma";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run Uptime Kuma in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -27,7 +40,7 @@ in
   config = lib.mkIf status.enable {
     galaxy.lukasl-dev = {
       backup.paths = [
-        "/var/lib/nixos-containers/lukasl-dev/var/lib/private/uptime-kuma"
+        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
       ];
 
       proxy.rules = [
@@ -35,21 +48,25 @@ in
           type = "https";
           name = "status";
           from.host = status.host;
-          to.http = "http://${addresses.local}:${toString status.port}";
+          to.http = "http://${listenAddress}:${toString status.port}";
         }
       ];
 
       modules = [
         {
-          services.uptime-kuma = {
-            enable = true;
-            settings = {
-              HOST = addresses.local;
-              PORT = toString status.port;
-            };
-          };
+          inherit (status) mode;
 
-          networking.firewall.allowedTCPPorts = [ status.port ];
+          module = {
+            services.uptime-kuma = {
+              enable = true;
+              settings = {
+                HOST = listenAddress;
+                PORT = toString status.port;
+              };
+            };
+
+            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ status.port ];
+          };
         }
       ];
     };

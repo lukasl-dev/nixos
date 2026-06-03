@@ -8,11 +8,24 @@
 let
   inherit (config) age;
   inherit (config.galaxy.lukasl-dev) addresses cal;
+
+  isGuest = cal.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/radicale";
 in
 {
   options.galaxy.lukasl-dev = {
     cal = {
       enable = lib.mkEnableOption "Enable radicale server";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run radicale in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -67,54 +80,58 @@ in
             {
               type = "https";
               name = "cal";
-              to.http = "http://${addresses.local}:${toString cal.port}";
+              to.http = "http://${listenAddress}:${toString cal.port}";
             }
           ];
 
           backup.paths = [
-            "/var/lib/nixos-containers/lukasl-dev/var/lib/radicale"
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
           ];
 
-          bindMounts = [ age.secrets.${htpasswd}.path ];
+          bindMounts = lib.mkIf isGuest [ age.secrets.${htpasswd}.path ];
 
           modules = [
             {
-              services.radicale = {
-                enable = true;
+              inherit (cal) mode;
 
-                settings = {
-                  server = {
-                    hosts = [ "${addresses.local}:${toString cal.port}" ];
+              module = {
+                services.radicale = {
+                  enable = true;
+
+                  settings = {
+                    server = {
+                      hosts = [ "${listenAddress}:${toString cal.port}" ];
+                    };
+
+                    auth = {
+                      type = "htpasswd";
+                      htpasswd_filename = age.secrets.${htpasswd}.path;
+                      htpasswd_encryption = "bcrypt";
+                    };
+
                   };
 
-                  auth = {
-                    type = "htpasswd";
-                    htpasswd_filename = age.secrets.${htpasswd}.path;
-                    htpasswd_encryption = "bcrypt";
+                  rights = {
+                    root = {
+                      user = ".+";
+                      collection = "";
+                      permissions = "R";
+                    };
+                    principal = {
+                      user = ".+";
+                      collection = "{user}";
+                      permissions = "RW";
+                    };
+                    calendars = {
+                      user = ".+";
+                      collection = "{user}/[^/]+";
+                      permissions = "rw";
+                    };
                   };
-
                 };
 
-                rights = {
-                  root = {
-                    user = ".+";
-                    collection = "";
-                    permissions = "R";
-                  };
-                  principal = {
-                    user = ".+";
-                    collection = "{user}";
-                    permissions = "RW";
-                  };
-                  calendars = {
-                    user = ".+";
-                    collection = "{user}/[^/]+";
-                    permissions = "rw";
-                  };
-                };
+                networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ cal.port ];
               };
-
-              networking.firewall.allowedTCPPorts = [ cal.port ];
             }
           ];
         };

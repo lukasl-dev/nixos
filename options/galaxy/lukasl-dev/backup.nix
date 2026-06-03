@@ -12,6 +12,9 @@ let
   inherit (config.galaxy) lukasl-dev;
   inherit (config.galaxy.lukasl-dev) addresses backup;
 
+  isGuest = backup.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+
   password = "galaxy/lukasl-dev/backup/password";
   token = "galaxy/lukasl-dev/backup/token";
   htpasswd = "galaxy/lukasl-dev/backup/htpasswd";
@@ -21,6 +24,15 @@ in
   options.galaxy.lukasl-dev = {
     backup = {
       enable = lib.mkEnableOption "Enable backup server";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run the restic REST server in the lukasl-dev container or on the host.";
+      };
 
       dataDir = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
@@ -115,33 +127,37 @@ in
     })
 
     (lib.mkIf (lukasl-dev.enable && backup.enable && backup.dataDir != null) {
-      containers.lukasl-dev.bindMounts.${backup.dataDir} = {
+      containers.lukasl-dev.bindMounts.${backup.dataDir} = lib.mkIf isGuest {
         hostPath = backup.dataDir;
         isReadOnly = false;
       };
 
       galaxy.lukasl-dev = {
-        bindMounts = [ age.secrets.${htpasswd}.path ];
+        bindMounts = lib.mkIf isGuest [ age.secrets.${htpasswd}.path ];
 
         proxy.rules = [
           {
             type = "https";
             name = "backup";
             from.host = backup.host;
-            to.http = "http://${addresses.local}:${toString backup.port}";
+            to.http = "http://${listenAddress}:${toString backup.port}";
           }
         ];
 
         modules = [
           {
-            services.restic.server = {
-              enable = true;
-              inherit (backup) dataDir;
-              listenAddress = "${addresses.local}:${toString backup.port}";
-              htpasswd-file = age.secrets.${htpasswd}.path;
-            };
+            inherit (backup) mode;
 
-            networking.firewall.allowedTCPPorts = [ backup.port ];
+            module = {
+              services.restic.server = {
+                enable = true;
+                inherit (backup) dataDir;
+                listenAddress = "${listenAddress}:${toString backup.port}";
+                htpasswd-file = age.secrets.${htpasswd}.path;
+              };
+
+              networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ backup.port ];
+            };
           }
         ];
       };

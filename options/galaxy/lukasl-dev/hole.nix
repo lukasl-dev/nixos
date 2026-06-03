@@ -2,11 +2,25 @@
 
 let
   inherit (config.galaxy.lukasl-dev) domain addresses hole;
+
+  isGuest = hole.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  etcDir = "/etc/pihole";
+  stateDir = "/var/lib/pihole";
 in
 {
   options.galaxy.lukasl-dev = {
     hole = {
       enable = lib.mkEnableOption "Enable Pi-hole";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run Pi-hole in the lukasl-dev container or on the host.";
+      };
 
       webPort = lib.mkOption {
         type = lib.types.port;
@@ -27,7 +41,7 @@ in
   config = lib.mkIf hole.enable {
     services.tailscale.extraUpFlags = lib.mkForce [ "--ssh" ];
 
-    containers.lukasl-dev.forwardPorts = [
+    containers.lukasl-dev.forwardPorts = lib.mkIf isGuest [
       {
         protocol = "tcp";
         hostPort = 53;
@@ -47,8 +61,8 @@ in
 
     galaxy.lukasl-dev = {
       backup.paths = [
-        "/var/lib/nixos-containers/lukasl-dev/etc/pihole"
-        "/var/lib/nixos-containers/lukasl-dev/var/lib/pihole"
+        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${etcDir}" else etcDir)
+        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
       ];
 
       proxy.rules = [
@@ -56,48 +70,52 @@ in
           type = "https";
           name = "hole";
           from.host = hole.host;
-          to.http = "http://${addresses.local}:${toString hole.webPort}";
+          to.http = "http://${listenAddress}:${toString hole.webPort}";
         }
       ];
 
       modules = [
         {
-          services = {
-            pihole-ftl = {
-              enable = true;
+          inherit (hole) mode;
 
-              openFirewallDNS = true;
+          module = {
+            services = {
+              pihole-ftl = {
+                enable = true;
 
-              settings = {
-                dns = {
-                  listeningMode = "ALL";
-                  upstreams = [
-                    "1.1.1.1"
-                    "1.0.0.1"
-                    "8.8.8.8"
-                    "8.8.4.4"
-                  ];
+                openFirewallDNS = true;
+
+                settings = {
+                  dns = {
+                    listeningMode = "ALL";
+                    upstreams = [
+                      "1.1.1.1"
+                      "1.0.0.1"
+                      "8.8.8.8"
+                      "8.8.4.4"
+                    ];
+                  };
                 };
+
+                lists = [
+                  {
+                    url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
+                    type = "block";
+                    enabled = true;
+                    description = "hagezi blocklist";
+                  }
+                ];
               };
 
-              lists = [
-                {
-                  url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
-                  type = "block";
-                  enabled = true;
-                  description = "hagezi blocklist";
-                }
-              ];
+              pihole-web = {
+                enable = true;
+                hostName = hole.host;
+                ports = [ hole.webPort ];
+              };
             };
 
-            pihole-web = {
-              enable = true;
-              hostName = hole.host;
-              ports = [ hole.webPort ];
-            };
+            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ hole.webPort ];
           };
-
-          networking.firewall.allowedTCPPorts = [ hole.webPort ];
         }
       ];
     };

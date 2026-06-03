@@ -3,11 +3,24 @@
 let
   inherit (config) age;
   inherit (config.galaxy.lukasl-dev) domain addresses waka;
+
+  isGuest = waka.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/private/wakapi";
 in
 {
   options.galaxy.lukasl-dev = {
     waka = {
       enable = lib.mkEnableOption "Enable wakapi server";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run wakapi in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -36,38 +49,42 @@ in
             {
               type = "https";
               name = "waka";
-              to.http = "http://${addresses.local}:${toString waka.port}";
+              to.http = "http://${listenAddress}:${toString waka.port}";
             }
           ];
 
           backup.paths = [
-            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/wakapi"
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
           ];
 
-          bindMounts = [ age.secrets.${salt}.path ];
+          bindMounts = lib.mkIf isGuest [ age.secrets.${salt}.path ];
 
           modules = [
             {
-              services.wakapi = {
-                enable = true;
+              inherit (waka) mode;
 
-                passwordSaltFile = age.secrets.${salt}.path;
+              module = {
+                services.wakapi = {
+                  enable = true;
 
-                settings = {
-                  server = {
-                    public_url = "https://waka.${domain}";
-                    listen_ipv4 = addresses.local;
-                    inherit (waka) port;
-                  };
+                  passwordSaltFile = age.secrets.${salt}.path;
 
-                  security = {
-                    insecure_cookies = false;
-                    allow_signup = false;
+                  settings = {
+                    server = {
+                      public_url = "https://waka.${domain}";
+                      listen_ipv4 = listenAddress;
+                      inherit (waka) port;
+                    };
+
+                    security = {
+                      insecure_cookies = false;
+                      allow_signup = false;
+                    };
                   };
                 };
-              };
 
-              networking.firewall.allowedTCPPorts = [ waka.port ];
+                networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ waka.port ];
+              };
             }
           ];
         };

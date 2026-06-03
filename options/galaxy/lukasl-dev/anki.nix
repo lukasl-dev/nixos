@@ -3,11 +3,43 @@
 let
   inherit (config) age;
   inherit (config.galaxy.lukasl-dev) addresses anki;
+
+  isGuest = anki.mode == "guest";
+
+  password = "galaxy/lukasl-dev/anki/password";
+  listenAddress = if anki.mode == "guest" then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/private/anki-sync-server";
+  module = {
+    services.anki-sync-server = {
+      enable = true;
+
+      address = listenAddress;
+      inherit (anki) port;
+
+      users = [
+        {
+          username = "lukas";
+          passwordFile = age.secrets.${password}.path;
+        }
+      ];
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ anki.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
     anki = {
       enable = lib.mkEnableOption "Enable Anki sync server";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run the Anki sync server in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -18,54 +50,38 @@ in
     };
   };
 
-  config = lib.mkMerge (
-    let
-      password = "galaxy/lukasl-dev/anki/password";
-    in
-    [
-      {
-        age.secrets.${password} = {
-          rekeyFile = ../../../secrets/galaxy/lukasl-dev/anki/password.age;
-        };
-      }
+  config = lib.mkMerge [
+    {
+      age.secrets.${password} = {
+        rekeyFile = ../../../secrets/galaxy/lukasl-dev/anki/password.age;
+      };
+    }
 
-      (lib.mkIf anki.enable {
-        galaxy.lukasl-dev = {
-          proxy.rules = [
-            {
-              type = "https";
-              name = "anki";
-              to.http = "http://${addresses.local}:${toString anki.port}";
-            }
-          ];
+    (lib.mkIf anki.enable {
+      galaxy.lukasl-dev = {
+        proxy.rules = [
+          {
+            type = "https";
+            name = "anki";
+            to.http = "http://${listenAddress}:${toString anki.port}";
+          }
+        ];
 
-          backup.paths = [
-            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/anki-sync-server"
-          ];
+        backup.paths = [
+          (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+        ];
 
-          bindMounts = [ age.secrets.${password}.path ];
+        bindMounts = lib.mkIf isGuest [ age.secrets.${password}.path ];
 
-          modules = [
-            {
-              services.anki-sync-server = {
-                enable = true;
+        modules = [
+          {
+            inherit (anki) mode;
+            inherit module;
+          }
+        ];
+      };
+    })
 
-                address = addresses.local;
-                inherit (anki) port;
-
-                users = [
-                  {
-                    username = "lukas";
-                    passwordFile = age.secrets.${password}.path;
-                  }
-                ];
-              };
-
-              networking.firewall.allowedTCPPorts = [ anki.port ];
-            }
-          ];
-        };
-      })
-    ]
-  );
+    (lib.mkIf (anki.enable && !isGuest) module)
+  ];
 }

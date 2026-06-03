@@ -3,7 +3,7 @@
 let
   inherit (config) age;
   inherit (config.galaxy) lukasl-dev;
-  inherit (config.galaxy.lukasl-dev) addresses mail;
+  inherit (config.galaxy.lukasl-dev) mail;
   inherit (config.services) go-autoconfig;
 
   rspamdPassword = "galaxy/lukasl-dev/mail/rspamd/password";
@@ -103,11 +103,6 @@ in
             "/var/lib/maddy"
           ];
 
-          modules = [
-            {
-              networking.hosts.${addresses.host} = [ mail.host ];
-            }
-          ];
         };
 
         acme.domains.${lukasl-dev.domain} = {

@@ -11,6 +11,10 @@ let
   inherit (pkgs.stdenv.hostPlatform) system;
 
   inherit (config.galaxy.lukasl-dev) domain addresses matrix;
+
+  isGuest = matrix.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/private/tuwunel";
 in
 {
   imports = [ ./turn.nix ];
@@ -18,6 +22,15 @@ in
   options.galaxy.lukasl-dev = {
     matrix = {
       enable = lib.mkEnableOption "Enable Matrix homeserver";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run the Matrix homeserver in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -48,7 +61,7 @@ in
             {
               type = "https";
               name = "matrix";
-              to.http = "http://${addresses.local}:${toString matrix.port}";
+              to.http = "http://${listenAddress}:${toString matrix.port}";
             }
             {
               type = "https";
@@ -58,49 +71,53 @@ in
                 pathPrefix = "/.well-known/matrix";
               };
               priority = 100;
-              to.http = "http://${addresses.local}:${toString matrix.port}";
+              to.http = "http://${listenAddress}:${toString matrix.port}";
             }
           ];
 
           backup.paths = [
-            "/var/lib/nixos-containers/lukasl-dev/var/lib/private/tuwunel"
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
           ];
 
-          bindMounts = [ age.secrets.${registrationToken}.path ];
+          bindMounts = lib.mkIf isGuest [ age.secrets.${registrationToken}.path ];
 
           modules = [
             {
-              services.matrix-tuwunel = {
-                enable = true;
-                package = inputs.tuwunel.packages.${system}.default;
-                settings = {
-                  global = {
-                    server_name = domain;
-                    address = [ addresses.local ];
-                    port = [ matrix.port ];
+              inherit (matrix) mode;
 
-                    allow_registration = true;
-                    registration_token_file = age.secrets.${registrationToken}.path;
+              module = {
+                services.matrix-tuwunel = {
+                  enable = true;
+                  package = inputs.tuwunel.packages.${system}.default;
+                  settings = {
+                    global = {
+                      server_name = domain;
+                      address = [ listenAddress ];
+                      port = [ matrix.port ];
 
-                    turn_uris = [
-                      "turn:${matrix.turn.host}?transport=udp"
-                      "turn:${matrix.turn.host}?transport=tcp"
-                      "turns:${matrix.turn.host}?transport=tcp"
-                    ];
-                    turn_secret_file = age.secrets.${matrix.turn.secret}.path;
+                      allow_registration = true;
+                      registration_token_file = age.secrets.${registrationToken}.path;
 
-                    well_known = {
-                      client = "https://matrix.${domain}";
-                      server = "matrix.${domain}:443";
+                      turn_uris = [
+                        "turn:${matrix.turn.host}?transport=udp"
+                        "turn:${matrix.turn.host}?transport=tcp"
+                        "turns:${matrix.turn.host}?transport=tcp"
+                      ];
+                      turn_secret_file = age.secrets.${matrix.turn.secret}.path;
+
+                      well_known = {
+                        client = "https://matrix.${domain}";
+                        server = "matrix.${domain}:443";
+                      };
+
+                      url_preview_domain_contains_allowlist = [ "*" ];
+                      url_preview_check_root_domain = true;
                     };
-
-                    url_preview_domain_contains_allowlist = [ "*" ];
-                    url_preview_check_root_domain = true;
                   };
                 };
-              };
 
-              networking.firewall.allowedTCPPorts = [ matrix.port ];
+                networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ matrix.port ];
+              };
             }
           ];
         };

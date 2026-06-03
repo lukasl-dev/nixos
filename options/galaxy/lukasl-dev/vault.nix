@@ -13,11 +13,24 @@ let
     vault
     mail
     ;
+
+  isGuest = vault.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/vaultwarden";
 in
 {
   options.galaxy.lukasl-dev = {
     vault = {
       enable = lib.mkEnableOption "Enable vaultwarden server";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run vaultwarden in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -71,61 +84,65 @@ in
             {
               type = "https";
               name = "vault";
-              to.http = "http://${addresses.local}:${toString vault.port}";
+              to.http = "http://${listenAddress}:${toString vault.port}";
             }
           ];
 
           backup.paths = [
-            "/var/lib/nixos-containers/lukasl-dev/var/lib/vaultwarden"
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
           ];
 
-          bindMounts = [
+          bindMounts = lib.mkIf isGuest [
             age.secrets.${rsaKey}.path
             age.secrets.${env}.path
           ];
 
           modules = [
             {
-              services.vaultwarden = {
-                enable = true;
+              inherit (vault) mode;
 
-                package = pkgs.unstable.vaultwarden;
+              module = {
+                services.vaultwarden = {
+                  enable = true;
 
-                config = {
-                  ROCKET_ADDRESS = addresses.local;
-                  ROCKET_PORT = vault.port;
-                  RSA_KEY_FILENAME = "/var/lib/vaultwarden/rsa_key";
+                  package = pkgs.unstable.vaultwarden;
 
-                  DOMAIN = "https://vault.${domain}";
-                  SIGNUPS_ALLOWED = false;
+                  config = {
+                    ROCKET_ADDRESS = listenAddress;
+                    ROCKET_PORT = vault.port;
+                    RSA_KEY_FILENAME = "/var/lib/vaultwarden/rsa_key";
+
+                    DOMAIN = "https://vault.${domain}";
+                    SIGNUPS_ALLOWED = false;
+                  };
+
+                  environmentFile = age.secrets.${env}.path;
                 };
 
-                environmentFile = age.secrets.${env}.path;
+                systemd.services.vaultwarden.serviceConfig.ExecStartPre = [
+                  ''
+                    +${pkgs.writeShellScript "vaultwarden-install-rsa-key" ''
+                      set -euo pipefail
+
+                      source=${lib.escapeShellArg age.secrets.${rsaKey}.path}
+                      target=/var/lib/vaultwarden/rsa_key.pem
+
+                      if [ -L "$target" ]; then
+                        rm -f "$target"
+                      fi
+
+                      if ! cmp -s "$source" "$target"; then
+                        install -D -o vaultwarden -g vaultwarden -m 0600 "$source" "$target"
+                      else
+                        chown vaultwarden:vaultwarden "$target"
+                        chmod 0600 "$target"
+                      fi
+                    ''}
+                  ''
+                ];
+
+                networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ vault.port ];
               };
-
-              systemd.services.vaultwarden.serviceConfig.ExecStartPre = [
-                ''
-                  +${pkgs.writeShellScript "vaultwarden-install-rsa-key" ''
-                    set -euo pipefail
-
-                    source=${lib.escapeShellArg age.secrets.${rsaKey}.path}
-                    target=/var/lib/vaultwarden/rsa_key.pem
-
-                    if [ -L "$target" ]; then
-                      rm -f "$target"
-                    fi
-
-                    if ! cmp -s "$source" "$target"; then
-                      install -D -o vaultwarden -g vaultwarden -m 0600 "$source" "$target"
-                    else
-                      chown vaultwarden:vaultwarden "$target"
-                      chmod 0600 "$target"
-                    fi
-                  ''}
-                ''
-              ];
-
-              networking.firewall.allowedTCPPorts = [ vault.port ];
             }
           ];
         };

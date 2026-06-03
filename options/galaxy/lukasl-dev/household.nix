@@ -2,11 +2,24 @@
 
 let
   inherit (config.galaxy.lukasl-dev) addresses domain household;
+
+  isGuest = household.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/grocy";
 in
 {
   options.galaxy.lukasl-dev = {
     household = {
       enable = lib.mkEnableOption "Enable Grocy";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run Grocy in the lukasl-dev container or on the host.";
+      };
 
       host = lib.mkOption {
         type = lib.types.str;
@@ -24,23 +37,27 @@ in
           type = "https";
           name = "household";
           from.host = household.host;
-          to.http = "http://${addresses.local}";
+          to.http = "http://${listenAddress}";
         }
       ];
 
       backup.paths = [
-        "/var/lib/nixos-containers/lukasl-dev/var/lib/grocy"
+        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
       ];
 
       modules = [
         {
-          services.grocy = {
-            enable = true;
-            hostName = household.host;
-            nginx.enableSSL = false;
-          };
+          inherit (household) mode;
 
-          networking.firewall.allowedTCPPorts = [ 80 ];
+          module = {
+            services.grocy = {
+              enable = true;
+              hostName = household.host;
+              nginx.enableSSL = false;
+            };
+
+            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ 80 ];
+          };
         }
       ];
     };

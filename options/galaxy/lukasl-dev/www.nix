@@ -2,11 +2,23 @@
 
 let
   inherit (config.galaxy.lukasl-dev) domain addresses www;
+
+  isGuest = www.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
 in
 {
   options.galaxy.lukasl-dev = {
     www = {
       enable = lib.mkEnableOption "Enable portfolio website";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run the portfolio website in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -32,31 +44,35 @@ in
           name = "www";
           from.host = domain;
           priority = 10;
-          to.http = "http://${addresses.local}:${toString www.port}";
+          to.http = "http://${listenAddress}:${toString www.port}";
         }
       ];
 
       backup.paths = [ www.root ];
 
-      bindMounts = [ www.root ];
+      bindMounts = lib.mkIf isGuest [ www.root ];
 
       modules = [
         {
-          services.nginx = {
-            enable = true;
+          inherit (www) mode;
 
-            virtualHosts.${domain} = {
-              listen = [
-                {
-                  addr = addresses.local;
-                  inherit (www) port;
-                }
-              ];
-              inherit (www) root;
+          module = {
+            services.nginx = {
+              enable = true;
+
+              virtualHosts.${domain} = {
+                listen = [
+                  {
+                    addr = listenAddress;
+                    inherit (www) port;
+                  }
+                ];
+                inherit (www) root;
+              };
             };
-          };
 
-          networking.firewall.allowedTCPPorts = [ www.port ];
+            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ www.port ];
+          };
         }
       ];
     };

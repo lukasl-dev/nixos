@@ -7,11 +7,24 @@
 
 let
   inherit (config.galaxy.lukasl-dev) addresses books;
+
+  isGuest = books.mode == "guest";
+  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  stateDir = "/var/lib/audiobookshelf";
 in
 {
   options.galaxy.lukasl-dev = {
     books = {
       enable = lib.mkEnableOption "Enable audiobookshelf";
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = config.galaxy.lukasl-dev.mode;
+        description = "Whether to run audiobookshelf in the lukasl-dev container or on the host.";
+      };
 
       port = lib.mkOption {
         type = lib.types.port;
@@ -28,12 +41,12 @@ in
         {
           type = "https";
           name = "books";
-          to.http = "http://${addresses.local}:${toString books.port}";
+          to.http = "http://${listenAddress}:${toString books.port}";
         }
       ];
 
       backup.paths = [
-        "/var/lib/nixos-containers/lukasl-dev/var/lib/audiobookshelf"
+        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
       ];
 
       modules =
@@ -46,23 +59,27 @@ in
         in
         [
           {
-            services.audiobookshelf = {
-              enable = true;
-              package = pkgs.unstable.audiobookshelf;
+            inherit (books) mode;
 
-              inherit dataDir;
+            module = {
+              services.audiobookshelf = {
+                enable = true;
+                package = pkgs.unstable.audiobookshelf;
 
-              inherit (books) port;
-              host = addresses.local;
+                inherit dataDir;
+
+                inherit (books) port;
+                host = listenAddress;
+              };
+
+              systemd.tmpfiles.rules = [
+                "d ${libraryDir} 0755 audiobookshelf audiobookshelf - -"
+                "d ${audiobooksDir} 0755 audiobookshelf audiobookshelf - -"
+                "d ${podcastsDir} 0755 audiobookshelf audiobookshelf - -"
+              ];
+
+              networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ books.port ];
             };
-
-            systemd.tmpfiles.rules = [
-              "d ${libraryDir} 0755 audiobookshelf audiobookshelf - -"
-              "d ${audiobooksDir} 0755 audiobookshelf audiobookshelf - -"
-              "d ${podcastsDir} 0755 audiobookshelf audiobookshelf - -"
-            ];
-
-            networking.firewall.allowedTCPPorts = [ books.port ];
           }
         ];
     };

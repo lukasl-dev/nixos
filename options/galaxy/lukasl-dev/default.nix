@@ -11,11 +11,29 @@ let
   inherit (config.planet) name stateVersion;
   inherit (config.galaxy) lukasl-dev proxy;
 
-  proxyHosts = lib.unique (
+  hostAliases = lib.unique (
     lib.map (
       rule: if rule.from.host != null then rule.from.host else "${rule.name}.${lukasl-dev.domain}"
     ) (proxy.rules.${lukasl-dev.domain} or [ ])
+    ++ lib.optionals lukasl-dev.mail.enable [ lukasl-dev.mail.host ]
   );
+
+  normalizeModule =
+    entry:
+    if entry ? module then
+      {
+        mode = entry.mode or lukasl-dev.mode;
+        inherit (entry) module;
+      }
+    else
+      {
+        mode = "guest";
+        module = entry;
+      };
+
+  modules = map normalizeModule lukasl-dev.modules;
+  guestModules = map (module: module.module) (lib.filter (module: module.mode == "guest") modules);
+  hasGuestModules = guestModules != [ ];
 
   script = # bash
     ''
@@ -66,9 +84,33 @@ in
       };
 
       modules = lib.mkOption {
-        type = lib.types.listOf lib.types.deferredModule;
+        type = lib.types.listOf lib.types.attrs;
         default = [ ];
-        description = "A list of NixOS modules to be imported within the container.";
+        description = ''
+          A list of NixOS modules for lukasl-dev services.
+
+          Entries can either be plain modules, which default to guest mode for
+          compatibility, or attribute sets of the shape { mode, module }.
+        '';
+        example = lib.literalExpression ''
+          [
+            {
+              mode = "host";
+              module = {
+                services.example.enable = true;
+              };
+            }
+          ]
+        '';
+      };
+
+      mode = lib.mkOption {
+        type = lib.types.enum [
+          "guest"
+          "host"
+        ];
+        default = "guest";
+        description = "Default placement for lukasl-dev service modules.";
       };
 
       bindMounts = lib.mkOption {
@@ -101,62 +143,68 @@ in
     };
   };
 
-  config = lib.mkIf lukasl-dev.enable {
-    galaxy.proxy.enable = true;
+  config = lib.mkIf lukasl-dev.enable (
+    lib.mkMerge [
+      {
+        galaxy.proxy.enable = true;
+      }
 
-    environment.systemPackages = [
-      (pkgs.writeShellScriptBin "gld" script)
-      (pkgs.writeShellScriptBin "g-lukasl-dev" script)
-    ];
+      (lib.mkIf hasGuestModules {
+        environment.systemPackages = [
+          (pkgs.writeShellScriptBin "gld" script)
+          (pkgs.writeShellScriptBin "g-lukasl-dev" script)
+        ];
 
-    # DNS
-    services.resolved.extraConfig = "DNSStubListenerExtra=${lukasl-dev.addresses.host}";
-    networking.firewall.interfaces."ve-lukasl-dev" = {
-      allowedUDPPorts = [ 53 ];
-      allowedTCPPorts = [ 53 ];
-    };
+        # DNS
+        services.resolved.extraConfig = "DNSStubListenerExtra=${lukasl-dev.addresses.host}";
+        networking.firewall.interfaces."ve-lukasl-dev" = {
+          allowedUDPPorts = [ 53 ];
+          allowedTCPPorts = [ 53 ];
+        };
 
-    containers.lukasl-dev = {
-      autoStart = true;
-      specialArgs = { inherit inputs; };
+        containers.lukasl-dev = {
+          autoStart = true;
+          specialArgs = { inherit inputs; };
 
-      privateNetwork = true;
-      hostAddress = lukasl-dev.addresses.host;
-      localAddress = lukasl-dev.addresses.local;
+          privateNetwork = true;
+          hostAddress = lukasl-dev.addresses.host;
+          localAddress = lukasl-dev.addresses.local;
 
-      # enable nesting to allow docker to run inside the container
-      additionalCapabilities = [ "all" ];
+          # enable nesting to allow docker to run inside the container
+          additionalCapabilities = [ "all" ];
 
-      bindMounts =
-        let
-          bindMount = path: {
-            name = path;
-            value = {
-              hostPath = path;
-              isReadOnly = true;
+          bindMounts =
+            let
+              bindMount = path: {
+                name = path;
+                value = {
+                  hostPath = path;
+                  isReadOnly = true;
+                };
+              };
+            in
+            lib.listToAttrs (map bindMount lukasl-dev.bindMounts);
+
+          config = {
+            imports = guestModules;
+
+            system.stateVersion = stateVersion;
+
+            networking = {
+              hostName = "lukasl-dev";
+              defaultGateway = lukasl-dev.addresses.host;
+              hosts.${lukasl-dev.addresses.host} = lib.unique ([ "${name}.${lukasl-dev.domain}" ] ++ hostAliases);
+              useHostResolvConf = false;
+              nameservers = [ lukasl-dev.addresses.host ];
+            };
+
+            virtualisation = {
+              docker.enable = true;
+              oci-containers.backend = "docker";
             };
           };
-        in
-        lib.listToAttrs (map bindMount lukasl-dev.bindMounts);
-
-      config = {
-        imports = lukasl-dev.modules;
-
-        system.stateVersion = stateVersion;
-
-        networking = {
-          hostName = "lukasl-dev";
-          defaultGateway = lukasl-dev.addresses.host;
-          hosts.${lukasl-dev.addresses.host} = lib.unique ([ "${name}.${lukasl-dev.domain}" ] ++ proxyHosts);
-          useHostResolvConf = false;
-          nameservers = [ lukasl-dev.addresses.host ];
         };
-
-        virtualisation = {
-          docker.enable = true;
-          oci-containers.backend = "docker";
-        };
-      };
-    };
-  };
+      })
+    ]
+  );
 }
