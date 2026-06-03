@@ -5,6 +5,36 @@ let
 
   isGuest = notes.mode == "guest";
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
+
+  module = {
+    services.nginx = {
+      enable = true;
+
+      virtualHosts."notes.${domain}" = {
+        listen = [
+          {
+            addr = listenAddress;
+            inherit (notes) port;
+          }
+        ];
+
+        inherit (notes) root;
+
+        locations."/" = {
+          index = "index.html";
+          tryFiles = "$uri $uri.html $uri/ =404";
+        };
+
+        extraConfig = ''
+          absolute_redirect off;
+          port_in_redirect off;
+          error_page 404 /404.html;
+        '';
+      };
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ notes.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -36,56 +66,31 @@ in
     };
   };
 
-  config = lib.mkIf notes.enable {
-    galaxy.lukasl-dev = {
-      proxy.rules = [
-        {
-          type = "https";
-          name = "notes";
-          priority = 10;
-          to.http = "http://${listenAddress}:${toString notes.port}";
-        }
-      ];
+  config = lib.mkIf notes.enable (
+    lib.mkMerge [
+      {
+        galaxy.lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "notes";
+              priority = 10;
+              to.http = "http://${listenAddress}:${toString notes.port}";
+            }
+          ];
 
-      backup.paths = [ notes.root ];
+          backup.paths = [ notes.root ];
 
-      bindMounts = lib.mkIf isGuest [ notes.root ];
+          bindMounts = lib.mkIf isGuest [ notes.root ];
 
-      modules = [
-        {
-          inherit (notes) mode;
-
-          module = {
-            services.nginx = {
-              enable = true;
-
-              virtualHosts."notes.${domain}" = {
-                listen = [
-                  {
-                    addr = listenAddress;
-                    inherit (notes) port;
-                  }
-                ];
-
-                inherit (notes) root;
-
-                locations."/" = {
-                  index = "index.html";
-                  tryFiles = "$uri $uri.html $uri/ =404";
-                };
-
-                extraConfig = ''
-                  absolute_redirect off;
-                  port_in_redirect off;
-                  error_page 404 /404.html;
-                '';
-              };
-            };
-
-            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ notes.port ];
+          modules.notes = {
+            inherit (notes) mode;
+            inherit module;
           };
-        }
-      ];
-    };
-  };
+        };
+      }
+
+      (lib.mkIf (!isGuest) module)
+    ]
+  );
 }

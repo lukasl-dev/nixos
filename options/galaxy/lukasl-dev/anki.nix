@@ -9,6 +9,7 @@ let
   password = "galaxy/lukasl-dev/anki/password";
   listenAddress = if anki.mode == "guest" then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/private/anki-sync-server";
+
   module = {
     services.anki-sync-server = {
       enable = true;
@@ -73,12 +74,10 @@ in
 
         bindMounts = lib.mkIf isGuest [ age.secrets.${password}.path ];
 
-        modules = [
-          {
-            inherit (anki) mode;
-            inherit module;
-          }
-        ];
+        modules.anki = {
+          inherit (anki) mode;
+          inherit module;
+        };
       };
     })
 

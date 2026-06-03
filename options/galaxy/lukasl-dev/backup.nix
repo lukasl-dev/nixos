@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (config) age;
@@ -19,6 +14,17 @@ let
   token = "galaxy/lukasl-dev/backup/token";
   htpasswd = "galaxy/lukasl-dev/backup/htpasswd";
   env = "galaxy/lukasl-dev/backup/env";
+
+  module = {
+    services.restic.server = {
+      enable = true;
+      inherit (backup) dataDir;
+      listenAddress = "${listenAddress}:${toString backup.port}";
+      htpasswd-file = age.secrets.${htpasswd}.path;
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ backup.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -131,42 +137,38 @@ in
       ];
     })
 
-    (lib.mkIf (lukasl-dev.enable && backup.enable && backup.dataDir != null) {
-      containers.lukasl-dev.bindMounts.${backup.dataDir} = lib.mkIf isGuest {
-        hostPath = backup.dataDir;
-        isReadOnly = false;
-      };
+    (lib.mkIf (lukasl-dev.enable && backup.enable && backup.dataDir != null) (
+      lib.mkMerge [
+        {
+          galaxy.lukasl-dev = {
+            bindMounts = lib.mkIf isGuest [ age.secrets.${htpasswd}.path ];
 
-      galaxy.lukasl-dev = {
-        bindMounts = lib.mkIf isGuest [ age.secrets.${htpasswd}.path ];
+            proxy.rules = [
+              {
+                type = "https";
+                name = "backup";
+                from.host = backup.host;
+                to.http = "http://${listenAddress}:${toString backup.port}";
+              }
+            ];
 
-        proxy.rules = [
-          {
-            type = "https";
-            name = "backup";
-            from.host = backup.host;
-            to.http = "http://${listenAddress}:${toString backup.port}";
-          }
-        ];
-
-        modules = [
-          {
-            inherit (backup) mode;
-
-            module = {
-              services.restic.server = {
-                enable = true;
-                inherit (backup) dataDir;
-                listenAddress = "${listenAddress}:${toString backup.port}";
-                htpasswd-file = age.secrets.${htpasswd}.path;
-              };
-
-              networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ backup.port ];
+            modules.backup = {
+              inherit (backup) mode;
+              inherit module;
             };
-          }
-        ];
-      };
-    })
+          };
+        }
+
+        (lib.mkIf isGuest {
+          containers.lukasl-dev.bindMounts.${backup.dataDir} = {
+            hostPath = backup.dataDir;
+            isReadOnly = false;
+          };
+        })
+
+        (lib.mkIf (!isGuest) module)
+      ]
+    ))
 
     (lib.mkIf (lukasl-dev.enable && backup.paths != [ ]) {
       services.restic.backups.${name} = {

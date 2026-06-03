@@ -6,6 +6,16 @@ let
   isGuest = household.mode == "guest";
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/grocy";
+
+  module = {
+    services.grocy = {
+      enable = true;
+      hostName = household.host;
+      nginx.enableSSL = false;
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ 80 ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -30,36 +40,31 @@ in
     };
   };
 
-  config = lib.mkIf household.enable {
-    galaxy.lukasl-dev = {
-      proxy.rules = [
-        {
-          type = "https";
-          name = "household";
-          from.host = household.host;
-          to.http = "http://${listenAddress}";
-        }
-      ];
+  config = lib.mkIf household.enable (
+    lib.mkMerge [
+      {
+        galaxy.lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "household";
+              from.host = household.host;
+              to.http = "http://${listenAddress}";
+            }
+          ];
 
-      backup.paths = [
-        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
-      ];
+          backup.paths = [
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+          ];
 
-      modules = [
-        {
-          inherit (household) mode;
-
-          module = {
-            services.grocy = {
-              enable = true;
-              hostName = household.host;
-              nginx.enableSSL = false;
-            };
-
-            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ 80 ];
+          modules.household = {
+            inherit (household) mode;
+            inherit module;
           };
-        }
-      ];
-    };
-  };
+        };
+      }
+
+      (lib.mkIf (!isGuest) module)
+    ]
+  );
 }

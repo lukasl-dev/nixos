@@ -6,6 +6,18 @@ let
   isGuest = status.mode == "guest";
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/private/uptime-kuma";
+
+  module = {
+    services.uptime-kuma = {
+      enable = true;
+      settings = {
+        HOST = listenAddress;
+        PORT = toString status.port;
+      };
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ status.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -37,38 +49,31 @@ in
     };
   };
 
-  config = lib.mkIf status.enable {
-    galaxy.lukasl-dev = {
-      backup.paths = [
-        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
-      ];
+  config = lib.mkIf status.enable (
+    lib.mkMerge [
+      {
+        galaxy.lukasl-dev = {
+          backup.paths = [
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+          ];
 
-      proxy.rules = [
-        {
-          type = "https";
-          name = "status";
-          from.host = status.host;
-          to.http = "http://${listenAddress}:${toString status.port}";
-        }
-      ];
+          proxy.rules = [
+            {
+              type = "https";
+              name = "status";
+              from.host = status.host;
+              to.http = "http://${listenAddress}:${toString status.port}";
+            }
+          ];
 
-      modules = [
-        {
-          inherit (status) mode;
-
-          module = {
-            services.uptime-kuma = {
-              enable = true;
-              settings = {
-                HOST = listenAddress;
-                PORT = toString status.port;
-              };
-            };
-
-            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ status.port ];
+          modules.status = {
+            inherit (status) mode;
+            inherit module;
           };
-        }
-      ];
-    };
-  };
+        };
+      }
+
+      (lib.mkIf (!isGuest) module)
+    ]
+  );
 }

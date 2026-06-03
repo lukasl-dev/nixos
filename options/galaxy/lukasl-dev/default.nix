@@ -18,21 +18,9 @@ let
     ++ lib.optionals lukasl-dev.mail.enable [ lukasl-dev.mail.host ]
   );
 
-  normalizeModule =
-    entry:
-    if entry ? module then
-      {
-        mode = entry.mode or lukasl-dev.mode;
-        inherit (entry) module;
-      }
-    else
-      {
-        mode = "guest";
-        module = entry;
-      };
-
-  modules = map normalizeModule lukasl-dev.modules;
+  modules = lib.attrValues lukasl-dev.modules;
   guestModules = map (module: module.module) (lib.filter (module: module.mode == "guest") modules);
+  hasModules = lukasl-dev.modules != { };
   hasGuestModules = guestModules != [ ];
 
   script = # bash
@@ -84,23 +72,42 @@ in
       };
 
       modules = lib.mkOption {
-        type = lib.types.listOf lib.types.attrs;
-        default = [ ];
-        description = ''
-          A list of NixOS modules for lukasl-dev services.
+        type = lib.types.attrsOf (
+          lib.types.submodule {
+            options = {
+              mode = lib.mkOption {
+                type = lib.types.enum [
+                  "guest"
+                  "host"
+                ];
+                default = lukasl-dev.mode;
+                description = "Whether to place this module in the lukasl-dev container or on the host.";
+              };
 
-          Entries can either be plain modules, which default to guest mode for
-          compatibility, or attribute sets of the shape { mode, module }.
+              module = lib.mkOption {
+                type = lib.types.deferredModule;
+                description = "NixOS module for this lukasl-dev service.";
+              };
+            };
+          }
+        );
+        default = { };
+        description = ''
+          Named NixOS modules for lukasl-dev services.
+
+          Guest modules are imported into the lukasl-dev container. Host modules
+          are registered here for placement/metadata, but should also be applied
+          directly by the service module to avoid recursive module evaluation.
         '';
         example = lib.literalExpression ''
-          [
-            {
+          {
+            example = {
               mode = "host";
               module = {
                 services.example.enable = true;
               };
-            }
-          ]
+            };
+          }
         '';
       };
 
@@ -143,68 +150,70 @@ in
     };
   };
 
-  config = lib.mkIf lukasl-dev.enable (
-    lib.mkMerge [
-      {
-        galaxy.proxy.enable = true;
-      }
+  config = lib.mkMerge [
+    (lib.mkIf lukasl-dev.enable (
+      lib.mkMerge [
+        {
+          galaxy.proxy.enable = lib.mkIf hasModules true;
+        }
 
-      (lib.mkIf hasGuestModules {
-        environment.systemPackages = [
-          (pkgs.writeShellScriptBin "gld" script)
-          (pkgs.writeShellScriptBin "g-lukasl-dev" script)
-        ];
+        (lib.mkIf hasGuestModules {
+          environment.systemPackages = [
+            (pkgs.writeShellScriptBin "gld" script)
+            (pkgs.writeShellScriptBin "g-lukasl-dev" script)
+          ];
 
-        # DNS
-        services.resolved.extraConfig = "DNSStubListenerExtra=${lukasl-dev.addresses.host}";
-        networking.firewall.interfaces."ve-lukasl-dev" = {
-          allowedUDPPorts = [ 53 ];
-          allowedTCPPorts = [ 53 ];
-        };
+          # DNS
+          services.resolved.extraConfig = "DNSStubListenerExtra=${lukasl-dev.addresses.host}";
+          networking.firewall.interfaces."ve-lukasl-dev" = {
+            allowedUDPPorts = [ 53 ];
+            allowedTCPPorts = [ 53 ];
+          };
 
-        containers.lukasl-dev = {
-          autoStart = true;
-          specialArgs = { inherit inputs; };
+          containers.lukasl-dev = {
+            autoStart = true;
+            specialArgs = { inherit inputs; };
 
-          privateNetwork = true;
-          hostAddress = lukasl-dev.addresses.host;
-          localAddress = lukasl-dev.addresses.local;
+            privateNetwork = true;
+            hostAddress = lukasl-dev.addresses.host;
+            localAddress = lukasl-dev.addresses.local;
 
-          # enable nesting to allow docker to run inside the container
-          additionalCapabilities = [ "all" ];
+            # enable nesting to allow docker to run inside the container
+            additionalCapabilities = [ "all" ];
 
-          bindMounts =
-            let
-              bindMount = path: {
-                name = path;
-                value = {
-                  hostPath = path;
-                  isReadOnly = true;
+            bindMounts =
+              let
+                bindMount = path: {
+                  name = path;
+                  value = {
+                    hostPath = path;
+                    isReadOnly = true;
+                  };
                 };
+              in
+              lib.listToAttrs (map bindMount lukasl-dev.bindMounts);
+
+            config = {
+              imports = guestModules;
+
+              system.stateVersion = stateVersion;
+
+              networking = {
+                hostName = "lukasl-dev";
+                defaultGateway = lukasl-dev.addresses.host;
+                hosts.${lukasl-dev.addresses.host} = lib.unique ([ "${name}.${lukasl-dev.domain}" ] ++ hostAliases);
+                useHostResolvConf = false;
+                nameservers = [ lukasl-dev.addresses.host ];
               };
-            in
-            lib.listToAttrs (map bindMount lukasl-dev.bindMounts);
 
-          config = {
-            imports = guestModules;
-
-            system.stateVersion = stateVersion;
-
-            networking = {
-              hostName = "lukasl-dev";
-              defaultGateway = lukasl-dev.addresses.host;
-              hosts.${lukasl-dev.addresses.host} = lib.unique ([ "${name}.${lukasl-dev.domain}" ] ++ hostAliases);
-              useHostResolvConf = false;
-              nameservers = [ lukasl-dev.addresses.host ];
-            };
-
-            virtualisation = {
-              docker.enable = true;
-              oci-containers.backend = "docker";
+              virtualisation = {
+                docker.enable = true;
+                oci-containers.backend = "docker";
+              };
             };
           };
-        };
-      })
-    ]
-  );
+        })
+      ]
+    ))
+  ];
 }

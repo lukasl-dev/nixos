@@ -5,6 +5,24 @@ let
 
   isGuest = www.mode == "guest";
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
+
+  module = {
+    services.nginx = {
+      enable = true;
+
+      virtualHosts.${domain} = {
+        listen = [
+          {
+            addr = listenAddress;
+            inherit (www) port;
+          }
+        ];
+        inherit (www) root;
+      };
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ www.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -36,45 +54,32 @@ in
     };
   };
 
-  config = lib.mkIf www.enable {
-    galaxy.lukasl-dev = {
-      proxy.rules = [
-        {
-          type = "https";
-          name = "www";
-          from.host = domain;
-          priority = 10;
-          to.http = "http://${listenAddress}:${toString www.port}";
-        }
-      ];
+  config = lib.mkIf www.enable (
+    lib.mkMerge [
+      {
+        galaxy.lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "www";
+              from.host = domain;
+              priority = 10;
+              to.http = "http://${listenAddress}:${toString www.port}";
+            }
+          ];
 
-      backup.paths = [ www.root ];
+          backup.paths = [ www.root ];
 
-      bindMounts = lib.mkIf isGuest [ www.root ];
+          bindMounts = lib.mkIf isGuest [ www.root ];
 
-      modules = [
-        {
-          inherit (www) mode;
-
-          module = {
-            services.nginx = {
-              enable = true;
-
-              virtualHosts.${domain} = {
-                listen = [
-                  {
-                    addr = listenAddress;
-                    inherit (www) port;
-                  }
-                ];
-                inherit (www) root;
-              };
-            };
-
-            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ www.port ];
+          modules.www = {
+            inherit (www) mode;
+            inherit module;
           };
-        }
-      ];
-    };
-  };
+        };
+      }
+
+      (lib.mkIf (!isGuest) module)
+    ]
+  );
 }

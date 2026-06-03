@@ -7,6 +7,30 @@ let
   isGuest = waka.mode == "guest";
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/private/wakapi";
+  salt = "galaxy/lukasl-dev/waka/salt";
+
+  module = {
+    services.wakapi = {
+      enable = true;
+
+      passwordSaltFile = age.secrets.${salt}.path;
+
+      settings = {
+        server = {
+          public_url = "https://waka.${domain}";
+          listen_ipv4 = listenAddress;
+          inherit (waka) port;
+        };
+
+        security = {
+          insecure_cookies = false;
+          allow_signup = false;
+        };
+      };
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ waka.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -31,64 +55,41 @@ in
     };
   };
 
-  config = lib.mkMerge (
-    let
-      salt = "galaxy/lukasl-dev/waka/salt";
-    in
-    [
-      {
-        age.secrets.${salt} = {
-          rekeyFile = ../../../secrets/galaxy/lukasl-dev/waka/salt.age;
-          mode = "0444";
-        };
-      }
+  config = lib.mkMerge [
+    {
+      age.secrets.${salt} = {
+        rekeyFile = ../../../secrets/galaxy/lukasl-dev/waka/salt.age;
+        mode = "0444";
+      };
+    }
 
-      (lib.mkIf waka.enable {
-        galaxy.lukasl-dev = {
-          proxy.rules = [
-            {
-              type = "https";
-              name = "waka";
-              to.http = "http://${listenAddress}:${toString waka.port}";
-            }
-          ];
+    (lib.mkIf waka.enable (
+      lib.mkMerge [
+        {
+          galaxy.lukasl-dev = {
+            proxy.rules = [
+              {
+                type = "https";
+                name = "waka";
+                to.http = "http://${listenAddress}:${toString waka.port}";
+              }
+            ];
 
-          backup.paths = [
-            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
-          ];
+            backup.paths = [
+              (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+            ];
 
-          bindMounts = lib.mkIf isGuest [ age.secrets.${salt}.path ];
+            bindMounts = lib.mkIf isGuest [ age.secrets.${salt}.path ];
 
-          modules = [
-            {
+            modules.waka = {
               inherit (waka) mode;
+              inherit module;
+            };
+          };
+        }
 
-              module = {
-                services.wakapi = {
-                  enable = true;
-
-                  passwordSaltFile = age.secrets.${salt}.path;
-
-                  settings = {
-                    server = {
-                      public_url = "https://waka.${domain}";
-                      listen_ipv4 = listenAddress;
-                      inherit (waka) port;
-                    };
-
-                    security = {
-                      insecure_cookies = false;
-                      allow_signup = false;
-                    };
-                  };
-                };
-
-                networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ waka.port ];
-              };
-            }
-          ];
-        };
-      })
-    ]
-  );
+        (lib.mkIf (!isGuest) module)
+      ]
+    ))
+  ];
 }

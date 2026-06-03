@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (config) age;
@@ -42,6 +37,44 @@ in
 
       password = "galaxy/lukasl-dev/cal/password";
       htpasswd = "galaxy/lukasl-dev/cal/htpasswd";
+      module = {
+        services.radicale = {
+          enable = true;
+
+          settings = {
+            server = {
+              hosts = [ "${listenAddress}:${toString cal.port}" ];
+            };
+
+            auth = {
+              type = "htpasswd";
+              htpasswd_filename = age.secrets.${htpasswd}.path;
+              htpasswd_encryption = "bcrypt";
+            };
+
+          };
+
+          rights = {
+            root = {
+              user = ".+";
+              collection = "";
+              permissions = "R";
+            };
+            principal = {
+              user = ".+";
+              collection = "{user}";
+              permissions = "RW";
+            };
+            calendars = {
+              user = ".+";
+              collection = "{user}/[^/]+";
+              permissions = "rw";
+            };
+          };
+        };
+
+        networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ cal.port ];
+      };
     in
     [
       {
@@ -79,68 +112,34 @@ in
         };
       }
 
-      (lib.mkIf cal.enable {
-        galaxy.lukasl-dev = {
-          proxy.rules = [
-            {
-              type = "https";
-              name = "cal";
-              to.http = "http://${listenAddress}:${toString cal.port}";
-            }
-          ];
+      (lib.mkIf cal.enable (
+        lib.mkMerge [
+          {
+            galaxy.lukasl-dev = {
+              proxy.rules = [
+                {
+                  type = "https";
+                  name = "cal";
+                  to.http = "http://${listenAddress}:${toString cal.port}";
+                }
+              ];
 
-          backup.paths = [
-            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
-          ];
+              backup.paths = [
+                (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+              ];
 
-          bindMounts = lib.mkIf isGuest [ age.secrets.${htpasswd}.path ];
+              bindMounts = lib.mkIf isGuest [ age.secrets.${htpasswd}.path ];
 
-          modules = [
-            {
-              inherit (cal) mode;
-
-              module = {
-                services.radicale = {
-                  enable = true;
-
-                  settings = {
-                    server = {
-                      hosts = [ "${listenAddress}:${toString cal.port}" ];
-                    };
-
-                    auth = {
-                      type = "htpasswd";
-                      htpasswd_filename = age.secrets.${htpasswd}.path;
-                      htpasswd_encryption = "bcrypt";
-                    };
-
-                  };
-
-                  rights = {
-                    root = {
-                      user = ".+";
-                      collection = "";
-                      permissions = "R";
-                    };
-                    principal = {
-                      user = ".+";
-                      collection = "{user}";
-                      permissions = "RW";
-                    };
-                    calendars = {
-                      user = ".+";
-                      collection = "{user}/[^/]+";
-                      permissions = "rw";
-                    };
-                  };
-                };
-
-                networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ cal.port ];
+              modules.cal = {
+                inherit (cal) mode;
+                inherit module;
               };
-            }
-          ];
-        };
-      })
+            };
+          }
+
+          (lib.mkIf (!isGuest) module)
+        ]
+      ))
     ]
   );
 }

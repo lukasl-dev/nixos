@@ -18,6 +18,134 @@ let
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
   sshListenPort = if isGuest then forge.sshListenPort else forge.sshPort;
   stateDir = "/var/lib/forgejo";
+
+  forgeModule = {
+    services.forgejo = {
+      enable = true;
+
+      package = pkgs.unstable.forgejo;
+
+      lfs.enable = true;
+
+      settings = {
+        DEFAULT = {
+          APP_NAME = "Lukas' Forge";
+        };
+
+        server = {
+          DOMAIN = forge.host;
+          HTTP_ADDR = listenAddress;
+          HTTP_PORT = forge.port;
+          ROOT_URL = "https://${forge.host}";
+          SSH_DOMAIN = forge.host;
+          SSH_PORT = forge.sshPort;
+          SSH_LISTEN_PORT = sshListenPort;
+          START_SSH_SERVER = true;
+        };
+
+        service = {
+          DISABLE_REGISTRATION = true;
+        };
+
+        metrics = {
+          ENABLED = true;
+        };
+
+        mailer = {
+          ENABLED = true;
+          SMTP_ADDR = mail.host;
+          FROM = "bot@${domain}";
+          USER = "bot@${domain}";
+        };
+      };
+
+      secrets.mailer.PASSWD = age.secrets.${mail.accounts.bot}.path;
+    };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [
+      forge.port
+      forge.sshListenPort
+    ];
+  };
+
+  forgejoStateDir = "/var/lib/forgejo";
+  forgejoCustomDir = "${forgejoStateDir}/custom";
+  runnerTokenFile = "${forgejoStateDir}/runner-token.env";
+
+  runnerModule = lib.mkIf forge.runner.enable {
+    services.gitea-actions-runner = {
+      package = pkgs.forgejo-runner;
+
+      instances.forge = {
+        enable = true;
+        inherit (forge.runner) name;
+        url = "http://${listenAddress}:${toString forge.port}";
+        tokenFile = runnerTokenFile;
+
+        labels = [
+          "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
+          "nixos:host"
+          "native:host"
+        ];
+
+        hostPackages = with pkgs; [
+          bash
+          coreutils
+          curl
+          dnscontrol
+          gawk
+          gitFull
+          git-lfs
+          gnused
+          jq
+          nix
+          nodejs
+          bun
+          deno
+          openssh
+          rsync
+          wget
+        ];
+      };
+    };
+
+    systemd.services.forgejo-runner-token = {
+      description = "Generate Forgejo Actions runner registration token";
+      after = [ "forgejo.service" ];
+      wants = [ "forgejo.service" ];
+      before = [ "gitea-runner-forge.service" ];
+
+      script = ''
+        set -euo pipefail
+
+        token="$(${lib.getExe pkgs.unstable.forgejo} \
+          --work-path ${lib.escapeShellArg forgejoStateDir} \
+          --config ${lib.escapeShellArg "${forgejoCustomDir}/conf/app.ini"} \
+          actions generate-runner-token)"
+
+        umask 077
+        printf 'TOKEN=%s\n' "$token" > ${lib.escapeShellArg runnerTokenFile}.tmp
+        mv ${lib.escapeShellArg runnerTokenFile}.tmp ${lib.escapeShellArg runnerTokenFile}
+      '';
+
+      serviceConfig = {
+        Type = "oneshot";
+        User = "forgejo";
+        Group = "forgejo";
+        WorkingDirectory = forgejoStateDir;
+        UMask = "0077";
+      };
+    };
+
+    systemd.services.gitea-runner-forge = {
+      after = [
+        "forgejo.service"
+        "forgejo-runner-token.service"
+      ];
+      wants = [ "forgejo.service" ];
+      requires = [ "forgejo-runner-token.service" ];
+    };
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -74,185 +202,62 @@ in
     };
   };
 
-  config = lib.mkIf forge.enable {
-    assertions = [
+  config = lib.mkIf forge.enable (
+    lib.mkMerge [
       {
-        assertion = !(lib.elem forge.sshPort config.planet.ssh.ports);
-        message = "Forgejo SSH port ${toString forge.sshPort} must not also be used by the host OpenSSH server.";
-      }
-    ];
+        assertions = [
+          {
+            assertion = !(lib.elem forge.sshPort config.planet.ssh.ports);
+            message = "Forgejo SSH port ${toString forge.sshPort} must not also be used by the host OpenSSH server.";
+          }
+        ];
 
-    networking.firewall.allowedTCPPorts = [ forge.sshPort ];
+        networking.firewall.allowedTCPPorts = [ forge.sshPort ];
 
-    containers.lukasl-dev.forwardPorts = lib.mkIf isGuest [
-      {
-        protocol = "tcp";
-        hostPort = forge.sshPort;
-        containerPort = forge.sshListenPort;
-      }
-    ];
+        galaxy.lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "forge";
+              from.host = forge.host;
+              to.http = "http://${listenAddress}:${toString forge.port}";
+            }
+          ];
 
-    galaxy.lukasl-dev = {
-      proxy.rules = [
-        {
-          type = "https";
-          name = "forge";
-          from.host = forge.host;
-          to.http = "http://${listenAddress}:${toString forge.port}";
-        }
-      ];
+          backup.paths = [
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+          ];
 
-      backup.paths = [
-        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
-      ];
+          bindMounts = lib.mkIf isGuest [
+            age.secrets.${mail.accounts.bot}.path
+          ];
 
-      bindMounts = lib.mkIf isGuest [
-        age.secrets.${mail.accounts.bot}.path
-      ];
-
-      modules = [
-        {
-          inherit (forge) mode;
-
-          module = {
-            services.forgejo = {
-              enable = true;
-
-              package = pkgs.unstable.forgejo;
-
-              lfs.enable = true;
-
-              settings = {
-                DEFAULT = {
-                  APP_NAME = "Lukas' Forge";
-                };
-
-                server = {
-                  DOMAIN = forge.host;
-                  HTTP_ADDR = listenAddress;
-                  HTTP_PORT = forge.port;
-                  ROOT_URL = "https://${forge.host}";
-                  SSH_DOMAIN = forge.host;
-                  SSH_PORT = forge.sshPort;
-                  SSH_LISTEN_PORT = sshListenPort;
-                  START_SSH_SERVER = true;
-                };
-
-                service = {
-                  DISABLE_REGISTRATION = true;
-                };
-
-                metrics = {
-                  ENABLED = true;
-                };
-
-                mailer = {
-                  ENABLED = true;
-                  SMTP_ADDR = mail.host;
-                  FROM = "bot@${domain}";
-                  USER = "bot@${domain}";
-                };
-              };
-
-              secrets = {
-                mailer = {
-                  PASSWD = age.secrets.${mail.accounts.bot}.path;
-                };
-              };
+          modules = {
+            forge = {
+              inherit (forge) mode;
+              module = forgeModule;
             };
 
-            networking.firewall.allowedTCPPorts = lib.mkIf isGuest [
-              forge.port
-              forge.sshListenPort
-            ];
+            forge-runner = {
+              inherit (forge) mode;
+              module = runnerModule;
+            };
           };
-        }
+        };
+      }
 
-        {
-          inherit (forge) mode;
+      (lib.mkIf isGuest {
+        containers.lukasl-dev.forwardPorts = [
+          {
+            protocol = "tcp";
+            hostPort = forge.sshPort;
+            containerPort = forge.sshListenPort;
+          }
+        ];
+      })
 
-          module =
-            { config, pkgs, ... }:
-            let
-              inherit (config.services) forgejo;
-              runnerTokenFile = "${forgejo.stateDir}/runner-token.env";
-            in
-            lib.mkIf forge.runner.enable {
-              services.gitea-actions-runner = {
-                package = pkgs.forgejo-runner;
-
-                instances.forge = {
-                  enable = true;
-                  inherit (forge.runner) name;
-                  url = "http://${listenAddress}:${toString forge.port}";
-                  tokenFile = runnerTokenFile;
-
-                  labels = [
-                    "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
-                    "nixos:host"
-                    "native:host"
-                  ];
-
-                  hostPackages = with pkgs; [
-                    bash
-                    coreutils
-                    curl
-                    dnscontrol
-                    gawk
-                    gitFull
-                    git-lfs
-                    gnused
-                    jq
-                    nix
-                    nodejs
-                    bun
-                    deno
-                    openssh
-                    rsync
-                    wget
-                  ];
-                };
-              };
-
-              systemd.services.forgejo-runner-token = {
-                description = "Generate Forgejo Actions runner registration token";
-                after = [ "forgejo.service" ];
-                wants = [ "forgejo.service" ];
-                before = [ "gitea-runner-forge.service" ];
-
-                script = ''
-                  set -euo pipefail
-
-                  token="$(${lib.getExe forgejo.package} \
-                    --work-path ${lib.escapeShellArg forgejo.stateDir} \
-                    --config ${lib.escapeShellArg "${forgejo.customDir}/conf/app.ini"} \
-                    actions generate-runner-token)"
-
-                  umask 077
-                  printf 'TOKEN=%s\n' "$token" > ${lib.escapeShellArg runnerTokenFile}.tmp
-                  mv ${lib.escapeShellArg runnerTokenFile}.tmp ${lib.escapeShellArg runnerTokenFile}
-                '';
-
-                serviceConfig = {
-                  Type = "oneshot";
-                  User = forgejo.user;
-                  Group = forgejo.group;
-                  WorkingDirectory = forgejo.stateDir;
-                  UMask = "0077";
-                };
-              };
-
-              systemd.services.gitea-runner-forge = {
-                after = [
-                  "forgejo.service"
-                  "forgejo-runner-token.service"
-                ];
-                wants = [ "forgejo.service" ];
-                requires = [ "forgejo-runner-token.service" ];
-              };
-            };
-        }
-      ];
-    };
-  };
+      (lib.mkIf (!isGuest) forgeModule)
+      (lib.mkIf (!isGuest) runnerModule)
+    ]
+  );
 }

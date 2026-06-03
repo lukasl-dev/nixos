@@ -11,6 +11,22 @@ let
 
   isGuest = factorio.mode == "guest";
   stateDir = "/var/lib/private/factorio";
+
+  serverSettings = "galaxy/lukasl-dev/factorio/serverSettings";
+
+  module = {
+    services.factorio = {
+      enable = true;
+      package = pkgs.unstable.factorio-headless;
+
+      openFirewall = true;
+      admins = [ "argsvl" ];
+
+      extraSettingsFile = age.secrets.${serverSettings}.path;
+    };
+
+    networking.firewall.allowedUDPPorts = lib.mkIf isGuest [ factorio.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -35,55 +51,43 @@ in
     };
   };
 
-  config = lib.mkMerge (
-    let
-      serverSettings = "galaxy/lukasl-dev/factorio/serverSettings";
-    in
-    [
-      {
-        age.secrets.${serverSettings} = {
-          rekeyFile = ../../../secrets/galaxy/lukasl-dev/factorio/serverSettings.age;
-          mode = "0444";
-        };
-      }
+  config = lib.mkMerge [
+    {
+      age.secrets.${serverSettings} = {
+        rekeyFile = ../../../secrets/galaxy/lukasl-dev/factorio/serverSettings.age;
+        mode = "0444";
+      };
+    }
 
-      (lib.mkIf factorio.enable {
-        containers.lukasl-dev.forwardPorts = lib.mkIf isGuest [
-          {
-            protocol = "udp";
-            hostPort = factorio.port;
-            containerPort = factorio.port;
-          }
-        ];
+    (lib.mkIf factorio.enable (
+      lib.mkMerge [
+        {
+          galaxy.lukasl-dev = {
+            backup.paths = [
+              (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+            ];
 
-        galaxy.lukasl-dev = {
-          backup.paths = [
-            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
-          ];
+            bindMounts = lib.mkIf isGuest [ age.secrets.${serverSettings}.path ];
 
-          bindMounts = lib.mkIf isGuest [ age.secrets.${serverSettings}.path ];
-
-          modules = [
-            {
+            modules.factorio = {
               inherit (factorio) mode;
+              inherit module;
+            };
+          };
+        }
 
-              module = {
-                services.factorio = {
-                  enable = true;
-                  package = pkgs.unstable.factorio-headless;
-
-                  openFirewall = true;
-                  admins = [ "argsvl" ];
-
-                  extraSettingsFile = age.secrets.${serverSettings}.path;
-                };
-
-                networking.firewall.allowedUDPPorts = lib.mkIf isGuest [ factorio.port ];
-              };
+        (lib.mkIf isGuest {
+          containers.lukasl-dev.forwardPorts = [
+            {
+              protocol = "udp";
+              hostPort = factorio.port;
+              containerPort = factorio.port;
             }
           ];
-        };
-      })
-    ]
-  );
+        })
+
+        (lib.mkIf (!isGuest) module)
+      ]
+    ))
+  ];
 }

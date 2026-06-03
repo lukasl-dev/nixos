@@ -11,6 +11,32 @@ let
   isGuest = books.mode == "guest";
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/audiobookshelf";
+
+  dataDir = "audiobookshelf";
+  libraryDir = "/var/lib/${dataDir}/library";
+
+  audiobooksDir = "${libraryDir}/audiobooks";
+  podcastsDir = "${libraryDir}/podcasts";
+
+  module = {
+    services.audiobookshelf = {
+      enable = true;
+      package = pkgs.unstable.audiobookshelf;
+
+      inherit dataDir;
+
+      inherit (books) port;
+      host = listenAddress;
+    };
+
+    systemd.tmpfiles.rules = [
+      "d ${libraryDir} 0755 audiobookshelf audiobookshelf - -"
+      "d ${audiobooksDir} 0755 audiobookshelf audiobookshelf - -"
+      "d ${podcastsDir} 0755 audiobookshelf audiobookshelf - -"
+    ];
+
+    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ books.port ];
+  };
 in
 {
   options.galaxy.lukasl-dev = {
@@ -35,54 +61,30 @@ in
     };
   };
 
-  config = lib.mkIf books.enable {
-    galaxy.lukasl-dev = {
-      proxy.rules = [
-        {
-          type = "https";
-          name = "books";
-          to.http = "http://${listenAddress}:${toString books.port}";
-        }
-      ];
+  config = lib.mkIf books.enable (
+    lib.mkMerge [
+      {
+        galaxy.lukasl-dev = {
+          proxy.rules = [
+            {
+              type = "https";
+              name = "books";
+              to.http = "http://${listenAddress}:${toString books.port}";
+            }
+          ];
 
-      backup.paths = [
-        (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
-      ];
+          backup.paths = [
+            (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
+          ];
 
-      modules =
-        let
-          dataDir = "audiobookshelf";
-          libraryDir = "/var/lib/${dataDir}/library";
-
-          audiobooksDir = "${libraryDir}/audiobooks";
-          podcastsDir = "${libraryDir}/podcasts";
-        in
-        [
-          {
+          modules.books = {
             inherit (books) mode;
+            inherit module;
+          };
+        };
+      }
 
-            module = {
-              services.audiobookshelf = {
-                enable = true;
-                package = pkgs.unstable.audiobookshelf;
-
-                inherit dataDir;
-
-                inherit (books) port;
-                host = listenAddress;
-              };
-
-              systemd.tmpfiles.rules = [
-                "d ${libraryDir} 0755 audiobookshelf audiobookshelf - -"
-                "d ${audiobooksDir} 0755 audiobookshelf audiobookshelf - -"
-                "d ${podcastsDir} 0755 audiobookshelf audiobookshelf - -"
-              ];
-
-              networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ books.port ];
-            };
-          }
-        ];
-    };
-
-  };
+      (lib.mkIf (!isGuest) module)
+    ]
+  );
 }
