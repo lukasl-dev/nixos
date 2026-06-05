@@ -25,7 +25,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin.url = "github:catppuccin/nix/release-25.11";
-    catppuccin-where-is-my-sddm-theme.url = "github:catppuccin/where-is-my-sddm-theme";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     ghostty.url = "github:ghostty-org/ghostty";
     winapps = {
