@@ -1,8 +1,5 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
-let
-  inherit (config.planet.networking) tailscale;
-in
 {
   options.planet.networking = {
     tailscale = {
@@ -14,16 +11,8 @@ in
   };
 
   config = {
-    services.tailscale = {
-      enable = true;
-      openFirewall = true;
-      extraUpFlags = [
-        "--ssh"
-        "--accept-dns=true"
-      ];
-      authKeyFile = tailscale.authKey;
-    };
-
-    networking.firewall.trustedInterfaces = lib.mkIf config.services.tailscale.enable [ "tailscale0" ];
+    services.tailscale.enable = lib.mkForce false;
+    systemd.services.tailscaled.enable = lib.mkForce false;
+    systemd.services.tailscaled-autoconnect.enable = lib.mkForce false;
   };
 }

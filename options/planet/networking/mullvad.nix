@@ -8,6 +8,25 @@
 let
   inherit (config.planet) display;
   inherit (config.planet.networking) mullvad;
+
+  excludeNixDaemonFromMullvad = pkgs.writeShellScript "mullvad-exclude-nix-daemon" ''
+    pid="''${MAINPID:-}"
+
+    if [ -z "$pid" ] || [ "$pid" = 0 ]; then
+      echo "warning: nix-daemon has no MAINPID to exclude from Mullvad" >&2
+      exit 1
+    fi
+
+    for _ in 1 2 3 4 5 6 7 8 9 10; do
+      if ${mullvad.package}/bin/mullvad split-tunnel add "$pid"; then
+        exit 0
+      fi
+      ${pkgs.coreutils}/bin/sleep 1
+    done
+
+    echo "warning: failed to exclude nix-daemon from Mullvad" >&2
+    exit 1
+  '';
 in
 {
   options.planet.networking = {
@@ -84,6 +103,15 @@ in
         [
           "-${mullvad.package}/bin/mullvad split-tunnel add $MAINPID"
         ];
+
+    # Route Nix downloads outside Mullvad. In multi-user Nix installs, network
+    # fetching for substituters/flake inputs is primarily performed by
+    # nix-daemon, not the interactive `nix` client process.
+    systemd.services.nix-daemon = {
+      wants = [ "mullvad-daemon.service" ];
+      after = [ "mullvad-daemon.service" ];
+      serviceConfig.ExecStartPost = lib.mkAfter [ "-${excludeNixDaemonFromMullvad}" ];
+    };
 
     # ensure mullvad uses default dns (not content-blocking dns)
     # content-blocking dns uses 100.64.0.x which conflicts with tailscale's cgnat range
