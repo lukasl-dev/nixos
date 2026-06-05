@@ -20,7 +20,6 @@
     ./feh.nix
     ./ffmpeg.nix
     ./fzf.nix
-    ./gh-dash.nix
     ./gh.nix
     ./ghostty.nix
     ./git.nix
