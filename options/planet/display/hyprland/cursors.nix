@@ -9,7 +9,7 @@ let
   inherit (config.planet.display) hyprland;
 
   cursorPackage = pkgs.catppuccin-cursors.mochaLight;
-  cursorName = "Catppuccin-Mocha-Light-Cursors";
+  cursorName = "catppuccin-mocha-light-cursors";
   cursorSize = 26;
 in
 {
@@ -22,6 +22,10 @@ in
       HYPRCURSOR_THEME = cursorName;
       HYPRCURSOR_SIZE = toString cursorSize;
     };
+
+    planet.display.hyprland.on.start = [
+      "hl.exec_cmd(${builtins.toJSON "hyprctl setcursor ${cursorName} ${toString cursorSize}"})"
+    ];
 
     planet.hm = [
       {

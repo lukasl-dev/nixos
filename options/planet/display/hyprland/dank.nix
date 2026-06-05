@@ -10,7 +10,7 @@ let
   inherit (config.planet) user;
   inherit (config.planet.display) hyprland;
 
-  cursorName = "Catppuccin-Mocha-Light-Cursors";
+  cursorName = "catppuccin-mocha-light-cursors";
   cursorSize = 26;
 
   greeterMonitorConfig = lib.concatMapStringsSep "\n" (
