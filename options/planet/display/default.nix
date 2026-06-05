@@ -9,7 +9,6 @@ in
 
     ./gtk.nix
     ./qt.nix
-    ./sddm.nix
   ];
 
   options.planet = {

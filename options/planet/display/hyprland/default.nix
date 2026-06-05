@@ -61,12 +61,29 @@ in
 
       package = inputs.hyprland.packages.${system}.hyprland.overrideAttrs (old: {
         nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.git ];
-        cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DNO_HYPRPM=ON" ];
+        cmakeFlags = (old.cmakeFlags or [ ]) ++ [
+          "-DNO_HYPRPM=ON"
+
+          # Hyprland's upstream desktop file uses `Exec=uwsm ...`, which
+          # DankGreeter currently launches without a PATH containing uwsm.  Let
+          # the NixOS UWSM module provide the session instead; it uses an
+          # absolute uwsm path.
+          "-DNO_UWSM=ON"
+        ];
       });
 
       xwayland.enable = true;
-      withUWSM = false;
+      withUWSM = true;
     };
+
+    # Hyprland 0.55 warns when launched directly instead of through its
+    # watchdog wrapper. The NixOS Hyprland module's generated UWSM session uses
+    # `/run/current-system/sw/bin/Hyprland`; override it to the wrapper.
+    programs.uwsm.waylandCompositors.hyprland.binPath = lib.mkForce "/run/current-system/sw/bin/start-hyprland";
+
+    # UWSM enables dbus-broker by default. Keep the existing dbus-daemon
+    # implementation to avoid activation failures while switching live systems.
+    services.dbus.implementation = lib.mkForce "dbus";
 
     # Add GTK portal for OpenURI, file chooser, etc.
     # Don't set xdg.portal.config - let configPackages from Hyprland handle it

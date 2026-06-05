@@ -7,10 +7,21 @@
 }:
 
 let
+  inherit (config.planet) user;
   inherit (config.planet.display) hyprland;
+
+  cursorName = "Catppuccin-Mocha-Light-Cursors";
+  cursorSize = 26;
+
+  greeterMonitorConfig = lib.concatMapStringsSep "\n" (
+    monitor: "monitor = ${monitor.output}, ${monitor.mode}, ${monitor.position}, ${toString monitor.scale}"
+  ) hyprland.monitors;
 in
 {
-  imports = [ inputs.dms.nixosModules.dank-material-shell ];
+  imports = [
+    inputs.dms.nixosModules.dank-material-shell
+    inputs.dms.nixosModules.greeter
+  ];
 
   config = lib.mkIf hyprland.enable {
     programs.dank-material-shell = {
@@ -29,6 +40,34 @@ in
       enableClipboardPaste = true;
 
       dgop.package = inputs.dgop.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+      greeter = {
+        enable = true;
+        compositor = {
+          name = "hyprland";
+          customConfig = ''
+            env = DMS_RUN_GREETER,1
+            env = XCURSOR_THEME,${cursorName}
+            env = XCURSOR_SIZE,${toString cursorSize}
+            env = HYPRCURSOR_THEME,${cursorName}
+            env = HYPRCURSOR_SIZE,${toString cursorSize}
+
+            ${greeterMonitorConfig}
+            monitor = Unknown-1, disable
+
+            cursor {
+              no_hardware_cursors = 2
+            }
+
+            misc {
+              disable_hyprland_logo = true
+            }
+
+            exec-once = hyprctl setcursor ${cursorName} ${toString cursorSize}
+          '';
+        };
+        configHome = "/home/${user.name}";
+      };
     };
 
     planet.display.hyprland.lua = [
