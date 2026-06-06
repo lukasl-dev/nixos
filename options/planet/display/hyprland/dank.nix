@@ -81,6 +81,7 @@ in
         hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("dms ipc call audio increment 3"))
         hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("dms ipc call audio decrement 3"))
         hl.bind("XF86AudioMute", hl.dsp.exec_cmd("dms ipc call audio mute"))
+        hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("dms ipc call audio micmute"))
 
         hl.bind("SUPER + I", hl.dsp.exec_cmd("dms ipc call audio micmute"))
         hl.bind("SUPER + O", hl.dsp.exec_cmd("dms ipc call audio mute"))
