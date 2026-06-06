@@ -23,6 +23,7 @@
     ./gh.nix
     ./ghostty.nix
     ./git.nix
+    ./gpu-screen-recorder.nix
     ./gpg.nix
     ./helium.nix
     ./hyperfine.nix
