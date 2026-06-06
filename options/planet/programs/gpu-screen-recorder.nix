@@ -12,7 +12,7 @@ let
 
   cfg = gpu-screen-recorder;
 
-  notify = ''${lib.getExe' pkgs.libnotify "notify-send"} --app-name gpu-screen-recorder --icon video-x-generic'';
+  notify = "${lib.getExe' pkgs.libnotify "notify-send"} --app-name gpu-screen-recorder --icon video-x-generic";
 
   control = pkgs.writeShellScriptBin "gpu-screen-recorder-control" ''
     set -euo pipefail
@@ -76,14 +76,14 @@ let
     ${notify} "Replay buffer started" "Recording ${cfg.captureTarget}; save replay with SUPER+ALT+R" || true
 
     args=(-w "${cfg.captureTarget}")
-    ${lib.optionalString (cfg.captureTarget == "portal") ''args+=(-restore-portal-session yes)''}
+    ${lib.optionalString (cfg.captureTarget == "portal") "args+=(-restore-portal-session yes)"}
 
     exec ${lib.getExe pkgs.gpu-screen-recorder} \
       "''${args[@]}" \
       -f ${toString cfg.fps} \
       -q ${cfg.quality} \
       -a "${cfg.audioDevice}" \
-      -c mkv \
+      -c mp4 \
       -r ${toString cfg.replayBufferSize} \
       -o "${cfg.replayDir}" \
       -ro "${cfg.recordDir}"
@@ -164,21 +164,19 @@ in
       replayRecorder
     ];
 
-    planet.display.hyprland.lua = lib.mkIf hyprland.enable (
-      [
-        # lua
-        ''
-          -- gpu-screen-recorder: save replay (SIGUSR1)
-          hl.bind("SUPER + ALT + R", hl.dsp.exec_cmd("${lib.getExe control} save-replay"))
+    planet.display.hyprland.lua = lib.mkIf hyprland.enable ([
+      # lua
+      ''
+        -- gpu-screen-recorder: save replay (SIGUSR1)
+        hl.bind("SUPER + ALT + R", hl.dsp.exec_cmd("${lib.getExe control} save-replay"))
 
-          -- gpu-screen-recorder: start/stop regular recording in replay mode (SIGRTMIN)
-          hl.bind("SUPER + R", hl.dsp.exec_cmd("${lib.getExe control} toggle-record"))
+        -- gpu-screen-recorder: start/stop regular recording in replay mode (SIGRTMIN)
+        hl.bind("SUPER + R", hl.dsp.exec_cmd("${lib.getExe control} toggle-record"))
 
-          -- gpu-screen-recorder: pause/unpause recording (SIGUSR2)
-          hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("${lib.getExe control} toggle-pause"))
-        ''
-      ]
-    );
+        -- gpu-screen-recorder: pause/unpause recording (SIGUSR2)
+        hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("${lib.getExe control} toggle-pause"))
+      ''
+    ]);
 
     planet.display.hyprland.autoStart = lib.mkIf (hyprland.enable && cfg.autoStartReplay) [
       (lib.getExe replayRecorder)
