@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -145,4 +145,19 @@
     })
   ];
   programs.coolercontrol.enable = true;
+
+  environment.systemPackages = [
+    # nvidia/cuda build
+    (pkgs.unstable.llama-cpp.override { cudaSupport = true; })
+
+    # provides `hf download`
+    (pkgs.python313.withPackages (ps: [
+      ps.huggingface-hub
+      ps.hf-transfer
+    ]))
+  ];
+
+  environment.sessionVariables = {
+    HF_HUB_ENABLE_HF_TRANSFER = "1";
+  };
 }

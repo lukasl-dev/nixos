@@ -52,6 +52,7 @@ in
     ./household.nix
     ./hole.nix
     ./mail.nix
+    ./net.nix
     ./notes.nix
     ./status.nix
     ./term.nix

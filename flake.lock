@@ -2348,11 +2348,11 @@
         "systems": "systems_14"
       },
       "locked": {
-        "lastModified": 1780647567,
-        "narHash": "sha256-2QuN5kAX/40C3eLrI0YHRY/Vhz6FW0RMml0Ee3a77SQ=",
+        "lastModified": 1781079628,
+        "narHash": "sha256-hwrrrD2WS5PYa4rlU2+aNqaVTlakrABtjme/AM6iNuI=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "bf14814e1f0da68186d583d94a12575a55a08c1a",
+        "rev": "3f392b014764faf4f0aaa611b6c5d082175ad81c",
         "type": "github"
       },
       "original": {
