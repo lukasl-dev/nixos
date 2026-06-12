@@ -29,6 +29,7 @@ let
         "met"
         "cast"
         "ipp"
+        "speedtestdotnet"
 
         "ecovacs"
         "gree"
