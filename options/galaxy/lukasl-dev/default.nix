@@ -49,6 +49,7 @@ in
     ./cal.nix
     ./factorio.nix
     ./forge.nix
+    ./home.nix
     ./household.nix
     ./hole.nix
     ./mail.nix

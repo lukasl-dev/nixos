@@ -11,8 +11,19 @@
   };
 
   config = {
-    services.tailscale.enable = lib.mkForce false;
-    systemd.services.tailscaled.enable = lib.mkForce false;
-    systemd.services.tailscaled-autoconnect.enable = lib.mkForce false;
+    services.tailscale = {
+      enable = true;
+      openFirewall = true;
+      extraUpFlags = [
+        "--ssh"
+        "--accept-dns=true"
+      ];
+    };
+
+    networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
+    # services.tailscale.enable = lib.mkForce false;
+    # systemd.services.tailscaled.enable = lib.mkForce false;
+    # systemd.services.tailscaled-autoconnect.enable = lib.mkForce false;
   };
 }

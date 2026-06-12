@@ -56,6 +56,7 @@ D(
   // ida
   CNAME("proxy.ida", "ida.lukasl.dev."),
   CNAME("dns", "hole.lukasl.dev."),
+  CNAME("home", "ida.lukasl.dev."),
   CNAME("hole", "ida.lukasl.dev."),
   CNAME("status", "ida.lukasl.dev."),
   CNAME("restic", "ida.lukasl.dev."),

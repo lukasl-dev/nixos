@@ -42,7 +42,21 @@ let
       # running instance and the shared profile opens half-broken.
       (add-runtime "mkdir -p ~/.local/share/jail.nix/tmp/helium")
       (rw-bind (noescape "~/.local/share/jail.nix/tmp/helium") "/tmp")
-      (persist-home "helium")
+      (add-runtime ''
+        mkdir -p \
+          ~/.local/share/jail.nix/home/helium/.cache \
+          ~/.local/share/jail.nix/home/helium/.config \
+          ~/.local/share/jail.nix/home/helium/.local/share
+      '')
+      # Let Helium open file:// URLs anywhere below the real home directory.
+      # Browser state still lives in the private jail home below
+      # ~/.local/share/jail.nix/home/helium, which is mounted back writable over
+      # the otherwise read-only host home.
+      (try-ro-bind (noescape "~") (noescape "~"))
+      (rw-bind
+        (noescape "~/.local/share/jail.nix/home/helium")
+        (noescape "~/.local/share/jail.nix/home/helium")
+      )
       (add-runtime "mkdir -p ~/Downloads")
       (rw-bind (noescape "~/Downloads") (noescape "~/Downloads"))
       (unsafe-add-raw-args ''--bind-try "$XDG_RUNTIME_DIR/doc" "$XDG_RUNTIME_DIR/doc"'')
@@ -56,9 +70,14 @@ let
         done
       '')
       (wrap-entry (_: ''
+        export XDG_CACHE_HOME="$HOME/.local/share/jail.nix/home/helium/.cache"
+        export XDG_CONFIG_HOME="$HOME/.local/share/jail.nix/home/helium/.config"
+        export XDG_DATA_HOME="$HOME/.local/share/jail.nix/home/helium/.local/share"
+
         exec ${lib.getExe' wrapped "helium"} \
           --no-sandbox \
           --disable-gpu-sandbox \
+          --user-data-dir="$XDG_CONFIG_HOME/net.imput.helium" \
           "$@"
       ''))
       (dbus {

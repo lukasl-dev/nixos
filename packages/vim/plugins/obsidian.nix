@@ -45,23 +45,23 @@
 
         disable_frontmatter = true;
 
-        mappings = {
-          gf = {
-            action = {
-              _type = "lua-inline";
-              expr = ''
-                function()
-                  return require("obsidian").util.gf_passthrough()
-                end
-              '';
-            };
-            opts = {
-              noremap = false;
-              expr = true;
-              buffer = true;
-            };
-          };
-        };
+        # mappings = {
+        #   gf = {
+        #     action = {
+        #       _type = "lua-inline";
+        #       expr = ''
+        #         function()
+        #           return require("obsidian").util.gf_passthrough()
+        #         end
+        #       '';
+        #     };
+        #     opts = {
+        #       noremap = false;
+        #       expr = true;
+        #       buffer = true;
+        #     };
+        #   };
+        # };
 
         # use render-markdown-nvim instead
         ui = {

@@ -40,6 +40,7 @@
         dataDir = "/mnt/external/restic";
       };
 
+      home.enable = true;
       hole.enable = true;
     };
   };

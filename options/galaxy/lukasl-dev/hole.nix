@@ -18,7 +18,7 @@ let
       pihole-ftl = {
         enable = true;
 
-        openFirewallDNS = true;
+        openFirewallDNS = false;
 
         settings = {
           dns = {
@@ -93,7 +93,7 @@ in
           tailscale.extraUpFlags = lib.mkForce [ "--ssh" ];
         };
 
-        networking.firewall = {
+        networking.firewall.interfaces.tailscale0 = {
           allowedTCPPorts = [ 53 ];
           allowedUDPPorts = [ 53 ];
         };
@@ -108,7 +108,10 @@ in
             {
               type = "https";
               name = "hole";
-              from.host = hole.host;
+              from = {
+                host = hole.host;
+                tailscaleOnly = true;
+              };
               to.http = "http://${listenAddress}:${toString hole.webPort}";
             }
           ];

@@ -29,7 +29,16 @@ in
           type = lib.types.port;
           default = 2222;
           readOnly = true;
-          description = "Public port for Pollux administrative SSH.";
+          description = "Port for pollux SSH.";
+        };
+      };
+
+      ida = {
+        port = lib.mkOption {
+          type = lib.types.port;
+          default = 2222;
+          readOnly = true;
+          description = "Port for ida SSH.";
         };
       };
 
@@ -93,6 +102,13 @@ in
             };
             ${ssh.pollux.host} = {
               inherit (ssh.pollux) port;
+            };
+
+            "ida" = {
+              inherit (ssh.ida) port;
+            };
+            "ida.local" = {
+              inherit (ssh.ida) port;
             };
 
             ${forge.host} = {

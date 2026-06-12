@@ -3,6 +3,11 @@
 let
   inherit (config.galaxy) proxy;
 
+  tailscaleSourceRanges = [
+    "100.64.0.0/10"
+    "fd7a:115c:a1e0::/48"
+  ];
+
   allRules = lib.flatten (
     lib.mapAttrsToList (
       domain: rules: map (rule: rule // { inherit domain; }) (lib.filter (r: r.type == "https") rules)
@@ -43,6 +48,12 @@ in
                       type = lib.types.nullOr lib.types.str;
                       default = null;
                     };
+
+                    tailscaleOnly = lib.mkOption {
+                      type = lib.types.bool;
+                      default = false;
+                      description = "Only allow clients from the Tailscale network.";
+                    };
                   };
                 };
                 default = { };
@@ -75,6 +86,7 @@ in
     let
       httpPort = 80;
       httpsPort = 443;
+      hasTailscaleOnlyRules = lib.any (rule: rule.from.tailscaleOnly) allRules;
     in
     {
       services.traefik = {
@@ -124,6 +136,9 @@ in
                     entryPoints = [ "websecure" ];
                     service = rule.name;
                   }
+                  // lib.optionalAttrs rule.from.tailscaleOnly {
+                    middlewares = [ "tailscale-only" ];
+                  }
                   // lib.optionalAttrs (rule.priority != null) {
                     inherit (rule) priority;
                   };
@@ -144,6 +159,10 @@ in
                 };
               }) allRules
             );
+
+            middlewares = lib.mkIf hasTailscaleOnlyRules {
+              tailscale-only.ipAllowList.sourceRange = tailscaleSourceRanges;
+            };
           };
         };
       };
