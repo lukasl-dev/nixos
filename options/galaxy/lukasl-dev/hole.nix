@@ -9,6 +9,7 @@ let
 
   isGuest = hole.mode == "guest";
   listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  dnsPort = 53;
 
   etcDir = "/etc/pihole";
   stateDir = "/var/lib/pihole";
@@ -51,7 +52,15 @@ let
       };
     };
 
-    networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ hole.webPort ];
+    networking.firewall = lib.mkIf isGuest {
+      # The container firewall needs to allow DNS for forwarded requests from
+      # the host. The web UI is still only reachable from the host/reverse proxy.
+      allowedTCPPorts = [
+        dnsPort
+        hole.webPort
+      ];
+      allowedUDPPorts = [ dnsPort ];
+    };
   };
 in
 {
@@ -95,9 +104,11 @@ in
           tailscale.extraUpFlags = lib.mkForce [ "--ssh" ];
         };
 
-        networking.firewall.interfaces.tailscale0 = {
-          allowedTCPPorts = [ 53 ];
-          allowedUDPPorts = [ 53 ];
+        # Make Pi-hole DNS reachable from the local network. The web interface
+        # remains behind the tailscale-only reverse proxy below.
+        networking.firewall = {
+          allowedTCPPorts = [ dnsPort ];
+          allowedUDPPorts = [ dnsPort ];
         };
 
         galaxy.lukasl-dev = {
@@ -129,13 +140,13 @@ in
         containers.lukasl-dev.forwardPorts = [
           {
             protocol = "tcp";
-            hostPort = 53;
-            containerPort = 53;
+            hostPort = dnsPort;
+            containerPort = dnsPort;
           }
           {
             protocol = "udp";
-            hostPort = 53;
-            containerPort = 53;
+            hostPort = dnsPort;
+            containerPort = dnsPort;
           }
         ];
       })

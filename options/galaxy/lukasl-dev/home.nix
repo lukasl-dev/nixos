@@ -1,15 +1,23 @@
-{ config, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (config.galaxy.lukasl-dev) addresses domain home;
 
   isGuest = home.mode == "guest";
-  listenAddress = if isGuest then addresses.local else "127.0.0.1";
+  listenAddress = if isGuest then addresses.local else "0.0.0.0";
+  proxyAddress = if isGuest then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/hass";
 
   module = {
     services.home-assistant = {
       enable = true;
+
+      package = pkgs.unstable.home-assistant;
 
       extraComponents = [
         # Components required/recommended for onboarding and a basic setup.
@@ -19,8 +27,14 @@ let
         "google_translate"
         "isal"
         "met"
-        "radio_browser"
-        "shopping_list"
+        "cast"
+        "ipp"
+
+        "ecovacs"
+        "solax"
+        "shelly"
+        "vesync"
+        "reolink"
       ];
 
       config = {
@@ -39,6 +53,8 @@ let
       };
     };
 
+    # The container firewall needs to allow Home Assistant for forwarded
+    # requests from the host.
     networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ home.port ];
   };
 in
@@ -75,6 +91,10 @@ in
   config = lib.mkIf home.enable (
     lib.mkMerge [
       {
+        # Make Home Assistant reachable directly from the local network. The
+        # home.lukasl.dev reverse-proxy route remains tailscale-only below.
+        networking.firewall.allowedTCPPorts = [ home.port ];
+
         galaxy.lukasl-dev = {
           backup.paths = [
             (if isGuest then "/var/lib/nixos-containers/lukasl-dev${stateDir}" else stateDir)
@@ -88,7 +108,7 @@ in
                 host = home.host;
                 tailscaleOnly = true;
               };
-              to.http = "http://${listenAddress}:${toString home.port}";
+              to.http = "http://${proxyAddress}:${toString home.port}";
             }
           ];
 
@@ -98,6 +118,16 @@ in
           };
         };
       }
+
+      (lib.mkIf isGuest {
+        containers.lukasl-dev.forwardPorts = [
+          {
+            protocol = "tcp";
+            hostPort = home.port;
+            containerPort = home.port;
+          }
+        ];
+      })
 
       (lib.mkIf (!isGuest) module)
     ]
