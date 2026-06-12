@@ -31,6 +31,7 @@ let
         "ipp"
 
         "ecovacs"
+        "gree"
         "solax"
         "shelly"
         "vesync"

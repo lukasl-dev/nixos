@@ -2,6 +2,8 @@
 
 let
   inherit (config.galaxy.lukasl-dev) backup;
+  externalStorageGroup = "external-storage";
+  externalStorageGid = 989;
 in
 {
   fileSystems."/mnt/external" = {
@@ -10,13 +12,17 @@ in
     options = [
       "nofail"
       "uid=0"
-      "gid=0"
-      "dmask=022"
-      "fmask=133"
+      "gid=${toString externalStorageGid}"
+      "dmask=002"
+      "fmask=113"
     ];
   };
 
-  systemd.services.restic-server = lib.mkIf backup.enable {
+  users.groups.${externalStorageGroup}.gid = externalStorageGid;
+
+  users.users.restic.extraGroups = lib.mkIf backup.enable [ externalStorageGroup ];
+
+  systemd.services.restic-rest-server = lib.mkIf backup.enable {
     after = [ "mnt-external.mount" ];
     requires = [ "mnt-external.mount" ];
   };
