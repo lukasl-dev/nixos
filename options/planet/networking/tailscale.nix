@@ -1,29 +1,30 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
+let
+  inherit (config.age) secrets;
+
+  authKey = "universe/tailscale/authKey";
+in
 {
-  options.planet.networking = {
-    tailscale = {
-      authKey = lib.mkOption {
-        type = lib.types.path;
-        description = "Filepath containing auth key";
-      };
+  age.secrets = {
+    ${authKey} = {
+      rekeyFile = ../../../secrets/universe/tailscale/authKey.age;
     };
   };
 
-  config = {
-    services.tailscale = {
-      enable = true;
-      openFirewall = true;
-      extraUpFlags = [
-        "--ssh"
-        "--accept-dns=true"
-      ];
-    };
-
-    networking.firewall.trustedInterfaces = [ "tailscale0" ];
-
-    # services.tailscale.enable = lib.mkForce false;
-    # systemd.services.tailscaled.enable = lib.mkForce false;
-    # systemd.services.tailscaled-autoconnect.enable = lib.mkForce false;
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+    authKeyFile = secrets.${authKey}.path;
+    extraUpFlags = [
+      "--ssh"
+      "--accept-dns=true"
+    ];
+    extraSetFlags = [
+      "--ssh"
+      "--accept-dns=true"
+    ];
   };
+
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
 }

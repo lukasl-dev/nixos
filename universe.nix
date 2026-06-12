@@ -37,12 +37,6 @@ let
           "token"
         ];
       };
-      tailscale = {
-        authKey = s [
-          "tailscale"
-          "authKey"
-        ];
-      };
       opencode = {
         apiKey = s [
           "opencode"
@@ -118,12 +112,6 @@ in
         key = age.secrets.${secrets.anki.key}.path;
       };
     };
-
-    networking = {
-      tailscale = {
-        authKey = age.secrets.${secrets.tailscale.authKey}.path;
-      };
-    };
   };
 
   age.secrets = {
@@ -144,7 +132,6 @@ in
     ${secrets.attic.token}.rekeyFile = ./secrets/universe/attic/token.age;
 
     # programs
-    ${secrets.tailscale.authKey}.rekeyFile = ./secrets/universe/tailscale/authKey.age;
     ${secrets.opencode.apiKey} = {
       rekeyFile = ./secrets/universe/opencode/apiKey.age;
       owner = user.name;
