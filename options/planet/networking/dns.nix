@@ -3,6 +3,10 @@
 let
   inherit (config.planet.networking) dns;
 
+  hasHostPihole =
+    (config.galaxy.lukasl-dev.hole.enable or false)
+    && (config.galaxy.lukasl-dev.hole.mode or null) == "host";
+
   fallbackDns = builtins.concatLists [
     (lib.optionals (lib.elem "cloudflare" dns.providers) [
       "1.1.1.1"
@@ -40,6 +44,13 @@ in
         default = false;
         description = "Make this machine discoverable (hostname.local).";
       };
+
+      dockerAddress = lib.mkOption {
+        type = lib.types.str;
+        default = "172.17.0.1";
+        readOnly = true;
+        description = "Host-side Docker bridge address used by containers for DNS.";
+      };
     };
   };
 
@@ -53,6 +64,13 @@ in
       resolved = {
         enable = true;
         inherit fallbackDns;
+
+        # Docker containers cannot use systemd-resolved's default 127.0.0.53
+        # stub, because that loopback address is inside the container. Expose a
+        # second stub on the host-side Docker bridge and point Docker at it.
+        extraConfig = lib.mkIf (!hasHostPihole) ''
+          DNSStubListenerExtra=${dns.dockerAddress}
+        '';
       };
 
       avahi = lib.mkIf dns.discoverable {
@@ -66,6 +84,11 @@ in
           userServices = true;
         };
       };
+    };
+
+    networking.firewall.interfaces.docker0 = {
+      allowedTCPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 ];
     };
   };
 }
