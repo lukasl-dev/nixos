@@ -18,6 +18,8 @@ let
       pihole-ftl = {
         enable = true;
 
+        privacyLevel = 1;
+
         openFirewallDNS = false;
 
         settings = {
