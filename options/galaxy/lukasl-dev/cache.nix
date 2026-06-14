@@ -87,7 +87,7 @@ in
           };
 
           garbage-collection = {
-            default-retention-period = "7 days";
+            default-retention-period = "14 days";
           };
         };
       };
