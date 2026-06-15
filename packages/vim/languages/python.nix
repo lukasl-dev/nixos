@@ -20,7 +20,7 @@
         event = [ "FileType" ];
         pattern = [ "python" ];
         desc = "Use sane Python indentation";
-        command = "setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 colorcolumn=89";
+        command = "setlocal expandtab autoindent nosmartindent shiftwidth=4 tabstop=4 softtabstop=4 colorcolumn=89";
       }
       {
         event = [ "FileType" ];

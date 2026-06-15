@@ -13,21 +13,22 @@
 
         completion.blink = false;
 
-        wiki_link_func = {
-          _type = "lua-inline";
-          expr = # lua
-            ''
-              function(opts)
-                local path = opts.path
-                path = path:gsub("%.md$", "")
-                if opts.label and opts.label ~= "" and opts.label ~= path then
-                  return string.format("[[%s|%s]]", path, opts.label)
-                else
-                  return string.format("[[%s]]", path)
-                end
-              end
-            '';
-        };
+        # TODO: fix
+        # wiki_link_func = {
+        #   _type = "lua-inline";
+        #   expr = # lua
+        #     ''
+        #       function(opts)
+        #         local path = opts.path
+        #         path = path:gsub("%.md$", "")
+        #         if opts.label and opts.label ~= "" and opts.label ~= path then
+        #           return string.format("[[%s|%s]]", path, opts.label)
+        #         else
+        #           return string.format("[[%s]]", path)
+        #         end
+        #       end
+        #     '';
+        # };
 
         daily_notes = {
           folder = "Personal/Daily";
@@ -43,7 +44,9 @@
 
         open_notes_in = "current";
 
-        disable_frontmatter = true;
+        frontmatter = {
+          enabled = false;
+        };
 
         # mappings = {
         #   gf = {
