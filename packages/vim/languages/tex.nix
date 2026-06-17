@@ -45,5 +45,14 @@ in
       ];
       vimtex_view_method = "sioyek";
     };
+
+    autocmds = [
+      {
+        event = [ "FileType" ];
+        pattern = [ "tex" "plaintex" ];
+        desc = "Keep TeX indentation simple and stop punctuation-triggered reindent";
+        command = "setlocal autoindent nosmartindent indentexpr= indentkeys=!^F";
+      }
+    ];
   };
 }
