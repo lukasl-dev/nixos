@@ -89,58 +89,7 @@ let
     hash = "sha256-egzx2BXEbyiOr0F7iuPa8f3QXjkCOvWl4V3GTsA1vyk=";
   };
 
-  pi-codex-conversion-src = pkgs.fetchFromGitHub {
-    owner = "IgorWarzocha";
-    repo = "pi-codex-conversion";
-    rev = "14be2f1274e6a6a378a5ad52cdfb9a566e0483c3";
-    hash = "sha256-uMluiB33LEOOQWy16firlH/lZ89DXBBFySs0zXhDcd8=";
-  };
-
-  pi-codex-conversion-apply-patch = pkgs.rustPlatform.buildRustPackage {
-    pname = "codex-apply-patch";
-    version = "0.0.0";
-    src = "${pi-codex-conversion-src}/vendor/apply-patch-src";
-    cargoLock.lockFile = "${pi-codex-conversion-src}/vendor/apply-patch-src/Cargo.lock";
-    doCheck = false;
-  };
-
-  pi-codex-conversion = pkgs.buildNpmPackage {
-    pname = "pi-codex-conversion";
-    version = "1.5.16";
-    src = pi-codex-conversion-src;
-    npmDepsHash = "sha256-6akkvmhM1sZtHPJb1sdMfefx8l3WJOpsWKB4wgtMo98=";
-
-    nativeBuildInputs = [ pkgs.python3 ];
-    dontNpmBuild = true;
-    makeCacheWritable = true;
-    npmFlags = [ "--legacy-peer-deps" ];
-
-    installPhase =
-      let
-        platformArch =
-          {
-            x86_64-linux = "linux-x64";
-            aarch64-linux = "linux-arm64";
-            x86_64-darwin = "darwin-x64";
-            aarch64-darwin = "darwin-arm64";
-          }
-          .${system} or (throw "Unsupported system: ${system}");
-      in
-      ''
-        runHook preInstall
-
-        mkdir -p $out
-        cp -r src bin vendor package.json tsconfig.json node_modules $out/
-        rm -rf $out/vendor/apply-patch/*
-        mkdir -p $out/vendor/apply-patch/${platformArch}
-        cp ${pi-codex-conversion-apply-patch}/bin/apply_patch $out/vendor/apply-patch/${platformArch}/apply_patch
-
-        substituteInPlace $out/bin/apply_patch \
-          --replace-fail "#!/usr/bin/env node" "#!${pkgs.nodejs}/bin/node"
-
-        runHook postInstall
-      '';
-  };
+  pi-codex-conversion = inputs.pi-codex-conversion.packages.${system}.default;
 in
 {
   imports = [ inputs.pi.nixosModules.default ];

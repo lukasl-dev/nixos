@@ -47,6 +47,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pi.url = "github:lukasl-dev/pi.nix";
+    pi-codex-conversion = {
+      url = "github:lukasl-dev/pi-codex-conversion.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     firn = {
       url = "github:lukasl-dev/firn";
       flake = false;

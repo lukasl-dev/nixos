@@ -988,7 +988,7 @@
     },
     "flake-utils_6": {
       "inputs": {
-        "systems": "systems_17"
+        "systems": "systems_18"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -1007,7 +1007,7 @@
     },
     "flake-utils_7": {
       "inputs": {
-        "systems": "systems_18"
+        "systems": "systems_19"
       },
       "locked": {
         "lastModified": 1710146030,
@@ -2348,16 +2348,37 @@
         "systems": "systems_14"
       },
       "locked": {
-        "lastModified": 1781547775,
-        "narHash": "sha256-IUR0MooM/er16zkeeb5Bqh0WGucks1ZQYOXpwfAtyQY=",
+        "lastModified": 1781803074,
+        "narHash": "sha256-evA6Q8cGuqIaoYtV0KPwyN/qipU3ulKcf9nr6Fp064Y=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "eadbb833fc65105b9609e501079affc596b9d2df",
+        "rev": "826bd3586bd7b9a3b7189c5e4a2678d892e2d50b",
         "type": "github"
       },
       "original": {
         "owner": "lukasl-dev",
         "repo": "pi.nix",
+        "type": "github"
+      }
+    },
+    "pi-codex-conversion": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems_15"
+      },
+      "locked": {
+        "lastModified": 1781816338,
+        "narHash": "sha256-J9M9yhCEMtCl7IZmmIIpRGRRA8A903u5eA/slTPX+us=",
+        "owner": "lukasl-dev",
+        "repo": "pi-codex-conversion.nix",
+        "rev": "33055196ee4f06a84b0f464658d4b5b925495127",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lukasl-dev",
+        "repo": "pi-codex-conversion.nix",
         "type": "github"
       }
     },
@@ -2434,7 +2455,7 @@
         "crane": "crane_3",
         "nixpkgs": "nixpkgs_14",
         "rust-overlay": "rust-overlay_2",
-        "systems": "systems_15"
+        "systems": "systems_16"
       },
       "locked": {
         "lastModified": 1767480275,
@@ -2490,8 +2511,9 @@
         "nvf": "nvf",
         "outofbounds": "outofbounds",
         "pi": "pi",
+        "pi-codex-conversion": "pi-codex-conversion",
         "rime": "rime",
-        "systems": "systems_16",
+        "systems": "systems_17",
         "tuwunel": "tuwunel",
         "winapps": "winapps",
         "zen-browser": "zen-browser"
@@ -2709,6 +2731,21 @@
       }
     },
     "systems_18": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_19": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
