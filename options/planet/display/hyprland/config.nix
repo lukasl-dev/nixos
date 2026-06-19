@@ -41,8 +41,8 @@ in
 
           # Only affects deliberate key holds, not switch chatter like a single
           # press producing two separate "o" events.
-          repeat_rate = 20;
-          repeat_delay = 1000;
+          repeat_rate = 25;
+          repeat_delay = 200;
         };
 
         general = {
