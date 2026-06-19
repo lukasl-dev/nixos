@@ -75,13 +75,6 @@ let
     hash = "sha256-ecS05kVnga1y+OoRoUH7/+WCrQsxgP/q/AcSWAPyO8o=";
   };
 
-  pi-openai = pkgs.fetchFromGitHub {
-    owner = "lukasl-dev";
-    repo = "pi-openai";
-    rev = "14b34130d219158762a27b460d6cc85a667a622e";
-    hash = "sha256-Ivxl8/UaEiZtqQA4uM355IVjmgzh2doTdQuXQsfxeVg=";
-  };
-
   pi-exa = pkgs.fetchFromGitHub {
     owner = "joemccann";
     repo = "pi-exa";
@@ -134,7 +127,6 @@ in
         ./extensions/opencode-free.ts
         "${pi-fff}/packages/pi-fff"
         "${pi-usage-extension}/usage-extension"
-        "${pi-openai}"
         "${pi-exa}/extensions/index.ts"
         "${pi-codex-conversion}"
       ];
