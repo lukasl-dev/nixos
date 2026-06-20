@@ -57,8 +57,8 @@
     };
     rime.url = "github:lukasl-dev/rime";
     outofbounds.url = "github:lukasl-dev/outofbounds";
-    fff-nvim = {
-      url = "github:dmtrKovalenko/fff.nvim";
+    fff = {
+      url = "github:dmtrKovalenko/fff";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lightpanda.url = "github:lukasl-dev/browser";

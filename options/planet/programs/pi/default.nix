@@ -28,7 +28,7 @@ let
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
     version = "0.7.2";
-    src = inputs.fff-nvim.outPath;
+    src = inputs.fff.outPath;
     npmDepsHash = "sha256-+uk57NmH4I3mHIdNE4xfSPilwWefni5B51jVxxS3OD0=";
     npmInstallFlags = [ "--include=optional" ];
     npmRebuildFlags = [ "--ignore-scripts" ];
@@ -40,7 +40,7 @@ let
       npm run build --workspace packages/fff-node
 
       mkdir -p packages/fff-node/bin
-      cp ${inputs.fff-nvim.packages.${system}.default}/lib/libfff_c.so packages/fff-node/bin/
+      cp ${inputs.fff.packages.${system}.default}/lib/libfff_c.so packages/fff-node/bin/
 
       runHook postBuild
     '';

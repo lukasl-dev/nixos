@@ -513,7 +513,7 @@
         "type": "github"
       }
     },
-    "fff-nvim": {
+    "fff": {
       "inputs": {
         "crane": "crane",
         "flake-utils": "flake-utils_2",
@@ -524,16 +524,16 @@
         "zig-overlay": "zig-overlay_2"
       },
       "locked": {
-        "lastModified": 1779131844,
-        "narHash": "sha256-qfAJQv+QGgWY7/7TIjsI0qHosiDrGv29oCknxTTPwNo=",
+        "lastModified": 1781806828,
+        "narHash": "sha256-LgLkS/zd8vRo2KvfkFYqGmm2aXhxeBUrXV+WvFstpzI=",
         "owner": "dmtrKovalenko",
-        "repo": "fff.nvim",
-        "rev": "ee070aaecd729665dff359bb1a15037bcc545f2b",
+        "repo": "fff",
+        "rev": "1bb76f6da6872c56ce34df8a2e33e977187be5f9",
         "type": "github"
       },
       "original": {
         "owner": "dmtrKovalenko",
-        "repo": "fff.nvim",
+        "repo": "fff",
         "type": "github"
       }
     },
@@ -2496,7 +2496,7 @@
         "catppuccin": "catppuccin",
         "dgop": "dgop",
         "dms": "dms",
-        "fff-nvim": "fff-nvim",
+        "fff": "fff",
         "firn": "firn",
         "ghostty": "ghostty",
         "home-manager": "home-manager_3",
@@ -2556,7 +2556,7 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "fff-nvim",
+          "fff",
           "nixpkgs"
         ]
       },
@@ -3132,7 +3132,7 @@
       "inputs": {
         "flake-compat": "flake-compat_3",
         "nixpkgs": [
-          "fff-nvim",
+          "fff",
           "nixpkgs"
         ],
         "systems": "systems_5"
