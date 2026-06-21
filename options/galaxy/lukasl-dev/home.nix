@@ -69,6 +69,9 @@ let
       config = {
         default_config = { };
 
+        # Keep UI-created automations in Home Assistant's mutable state dir.
+        automation = "!include automations.yaml";
+
         http = {
           server_host = listenAddress;
           server_port = home.port;
