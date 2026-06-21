@@ -54,6 +54,8 @@ in
       s = "nix-shell --run zsh -p ";
 
       ld_cc = "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib}/lib";
+
+      pdftomd = "nix run nixpkgs#bun x markit-ai";
     };
 
     programs.zsh.enable = true;

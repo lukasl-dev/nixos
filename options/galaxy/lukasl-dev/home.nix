@@ -13,6 +13,30 @@ let
   proxyAddress = if isGuest then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/hass";
 
+  greeClimateComponent = pkgs.unstable.buildHomeAssistantComponent rec {
+    owner = "RobHofmann";
+    domain = "gree";
+    version = "3.6.0";
+
+    src = pkgs.unstable.fetchFromGitHub {
+      inherit owner;
+      repo = "HomeAssistant-GreeClimateComponent";
+      rev = version;
+      hash = "sha256-L46+PRg7kxByMJ5vjNHgEx2QQSFib9H0UMW1eVayCQM=";
+    };
+
+    dependencies = with pkgs.unstable.home-assistant.python.pkgs; [
+      aiofiles
+      pycryptodome
+    ];
+
+    meta = {
+      description = "Custom Gree climate component for Home Assistant";
+      homepage = "https://github.com/RobHofmann/HomeAssistant-GreeClimateComponent";
+      license = lib.licenses.gpl3Only;
+    };
+  };
+
   module = {
     services.home-assistant = {
       enable = true;
@@ -32,11 +56,14 @@ let
         "speedtestdotnet"
 
         "ecovacs"
-        "gree"
         "solax"
         "shelly"
         "vesync"
         "reolink"
+      ];
+
+      customComponents = [
+        greeClimateComponent
       ];
 
       config = {
