@@ -7,8 +7,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "lervag";
       repo = "vimtex";
-      rev = "be9deac3a23eeb145ccf11dd09080795838496ce";
-      hash = "sha256-Tx4HQmwM2bRx2e/3vuEsKAYMcLbKYr9tELWjipehxew=";
+      rev = "df8892993c1df79b96c2d237c8a0cbcbf72131da";
+      hash = "sha256-OtQZQ1D5Je1dcXkDyUr39JmC42Uf+BVftMqk8ATDHvg=";
     };
     nvimSkipModules = [
       "vimtex.fzf-lua.init"
