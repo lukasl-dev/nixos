@@ -63,14 +63,14 @@ in
     services = {
       resolved = {
         enable = true;
-        inherit fallbackDns;
+        settings.Resolve = {
+          FallbackDNS = fallbackDns;
 
-        # Docker containers cannot use systemd-resolved's default 127.0.0.53
-        # stub, because that loopback address is inside the container. Expose a
-        # second stub on the host-side Docker bridge and point Docker at it.
-        extraConfig = lib.mkIf (!hasHostPihole) ''
-          DNSStubListenerExtra=${dns.dockerAddress}
-        '';
+          # Docker containers cannot use systemd-resolved's default 127.0.0.53
+          # stub, because that loopback address is inside the container. Expose a
+          # second stub on the host-side Docker bridge and point Docker at it.
+          DNSStubListenerExtra = lib.mkIf (!hasHostPihole) [ dns.dockerAddress ];
+        };
       };
 
       avahi = lib.mkIf dns.discoverable {

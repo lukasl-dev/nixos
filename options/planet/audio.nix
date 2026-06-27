@@ -77,11 +77,10 @@ in
 
     services.libinput.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      helvum
-      pwvucontrol
-      easyeffects
-    ];
+environment.systemPackages = with pkgs; [
+  pwvucontrol
+  easyeffects
+];
 
     planet.display.hyprland = {
       autoStart = [ "easyeffects --service-mode" ];

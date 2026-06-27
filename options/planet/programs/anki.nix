@@ -59,11 +59,13 @@ in
 
           addons = with pkgs; [ ankiAddons.anki-connect ];
 
-          sync = {
-            autoSync = true;
-            inherit (anki) url;
-            usernameFile = anki.username;
-            keyFile = anki.key;
+          profiles."User 1" = {
+            sync = {
+              autoSync = true;
+              inherit (anki) url;
+              usernameFile = anki.username;
+              keyFile = anki.key;
+            };
           };
         };
       }

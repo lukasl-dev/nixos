@@ -13,7 +13,11 @@ in
   planet.hm = [
     {
       imports = [ inputs.catppuccin.homeModules.catppuccin ];
-      inherit catppuccin;
+      catppuccin = catppuccin // {
+        # The catppuccin module still targets the renamed
+        # `programs.gemini-cli` option on 26.05.
+        gemini-cli.enable = false;
+      };
     }
   ];
 }

@@ -70,6 +70,9 @@ in
           # absolute uwsm path.
           "-DNO_UWSM=ON"
         ];
+        passthru = (old.passthru or { }) // {
+          providedSessions = [ "hyprland" ];
+        };
       });
 
       xwayland.enable = true;
@@ -79,7 +82,12 @@ in
     # Hyprland 0.55 warns when launched directly instead of through its
     # watchdog wrapper. The NixOS Hyprland module's generated UWSM session uses
     # `/run/current-system/sw/bin/Hyprland`; override it to the wrapper.
-    programs.uwsm.waylandCompositors.hyprland.binPath = lib.mkForce "/run/current-system/sw/bin/start-hyprland";
+    programs.uwsm.waylandCompositors.hyprland = {
+      prettyName = "Hyprland";
+      comment = "Hyprland compositor managed by UWSM";
+      binPath = lib.mkForce "/run/current-system/sw/bin/start-hyprland";
+    };
+    services.displayManager.defaultSession = "hyprland-uwsm";
 
     # UWSM enables dbus-broker by default. Keep the existing dbus-daemon
     # implementation to avoid activation failures while switching live systems.

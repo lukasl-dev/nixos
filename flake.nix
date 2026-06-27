@@ -2,11 +2,11 @@
   description = "lukasl-dev";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix.url = "github:ryantm/agenix";
@@ -24,7 +24,7 @@
       url = "github:hyprwm/Hyprland/v0.55.0";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    catppuccin.url = "github:catppuccin/nix/release-25.11";
+    catppuccin.url = "github:catppuccin/nix/release-26.05";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     ghostty.url = "github:ghostty-org/ghostty";
     winapps = {

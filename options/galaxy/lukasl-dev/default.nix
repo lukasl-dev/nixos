@@ -166,7 +166,7 @@ in
           ];
 
           # DNS
-          services.resolved.extraConfig = "DNSStubListenerExtra=${lukasl-dev.addresses.host}";
+          services.resolved.settings.Resolve.DNSStubListenerExtra = [ lukasl-dev.addresses.host ];
           networking.firewall.interfaces."ve-lukasl-dev" = {
             allowedUDPPorts = [ 53 ];
             allowedTCPPorts = [ 53 ];

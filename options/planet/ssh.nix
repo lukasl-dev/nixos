@@ -86,34 +86,34 @@ in
 
           enableDefaultConfig = false;
 
-          matchBlocks = {
+          settings = {
             "*" = {
-              identityFile = ssh.default.privateKey;
+              IdentityFile = ssh.default.privateKey;
             };
 
             "g0.complang.tuwien.ac.at" = {
-              identityFile = ssh."g0.complang.tuwien.ac.at".privateKey;
-              identitiesOnly = true;
+              IdentityFile = ssh."g0.complang.tuwien.ac.at".privateKey;
+              IdentitiesOnly = true;
             };
 
             "pollux" = {
-              hostname = ssh.pollux.host;
-              inherit (ssh.pollux) port;
+              HostName = ssh.pollux.host;
+              Port = ssh.pollux.port;
             };
             ${ssh.pollux.host} = {
-              inherit (ssh.pollux) port;
+              Port = ssh.pollux.port;
             };
 
             "ida" = {
-              inherit (ssh.ida) port;
+              Port = ssh.ida.port;
             };
             "ida.local" = {
-              inherit (ssh.ida) port;
+              Port = ssh.ida.port;
             };
 
             ${forge.host} = {
-              user = "forgejo";
-              port = forge.sshPort;
+              User = "forgejo";
+              Port = forge.sshPort;
             };
           };
         };

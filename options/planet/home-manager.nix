@@ -13,7 +13,7 @@ in
 
   options.planet = {
     hm = lib.mkOption {
-      type = lib.types.listOf lib.types.attrs;
+      type = lib.types.listOf lib.types.deferredModule;
       default = [ ];
       description = "A list of Home Manager module fragments to be merged together.";
     };
@@ -28,7 +28,9 @@ in
 
       users =
         let
-          module = lib.mkMerge config.planet.hm;
+          module = {
+            imports = config.planet.hm;
+          };
         in
         {
           root = module;

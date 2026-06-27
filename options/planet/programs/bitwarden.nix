@@ -41,7 +41,7 @@ in
     bitwarden = {
       enable = lib.mkOption {
         type = lib.types.bool;
-        default = display.enable;
+        default = false;
         description = "Enable bitwarden";
         example = "true";
       };

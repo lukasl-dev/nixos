@@ -13,7 +13,12 @@
   cups,
   expat,
   libxcb,
-  xorg,
+  libx11,
+  libxcomposite,
+  libxdamage,
+  libxext,
+  libxfixes,
+  libxrandr,
   libxkbcommon,
   at-spi2-core,
   libgbm,
@@ -58,12 +63,12 @@ let
     cups
     expat
     libxcb
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXrandr
+    libx11
+    libxcomposite
+    libxdamage
+    libxext
+    libxfixes
+    libxrandr
     libxkbcommon
     at-spi2-core
     libgbm

@@ -24,7 +24,7 @@ in
   config = lib.mkIf gaming.enable {
     environment.systemPackages = [
       pkgs.winetricks
-      (lib.mkIf (display.type == "wayland") pkgs.wineWowPackages.waylandFull)
+      (lib.mkIf (display.type == "wayland") pkgs.wineWow64Packages.waylandFull)
 
       pkgs.unstable.gamescope
       pkgs.unstable.gamescope-wsi

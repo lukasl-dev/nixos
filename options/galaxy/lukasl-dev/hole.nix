@@ -97,9 +97,7 @@ in
     lib.mkMerge [
       {
         services = {
-          resolved.extraConfig = lib.mkIf (!isGuest) ''
-            DNSStubListener=no
-          '';
+          resolved.settings.Resolve.DNSStubListener = lib.mkIf (!isGuest) false;
 
           tailscale.extraUpFlags = lib.mkForce [ "--ssh" ];
         };

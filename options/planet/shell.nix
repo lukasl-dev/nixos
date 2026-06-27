@@ -66,17 +66,20 @@ in
     };
 
     planet.hm = [
-      {
-        programs.zsh = {
-          enable = true;
+      (
+        { config, ... }:
+        {
+          programs.zsh = {
+            enable = true;
+            dotDir = "${config.xdg.configHome}/zsh";
 
-          shellAliases = shell.aliases;
+            shellAliases = shell.aliases;
 
-          enableCompletion = true;
-          syntaxHighlighting.enable = true;
-          autosuggestion.enable = true;
+            enableCompletion = true;
+            syntaxHighlighting.enable = true;
+            autosuggestion.enable = true;
 
-          initContent = ''
+            initContent = ''
             source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
             function zvm_after_init() {
@@ -138,14 +141,15 @@ in
 
             add-zsh-hook preexec _tmux_preexec
             add-zsh-hook precmd _tmux_precmd
-          '';
-        };
+            '';
+          };
 
-        programs.bash = {
-          enable = true;
-          shellAliases = shell.aliases;
-        };
-      }
+          programs.bash = {
+            enable = true;
+            shellAliases = shell.aliases;
+          };
+        }
+      )
     ];
   };
 }
