@@ -4,8 +4,8 @@
   imports = [ "${modulesPath}/installer/sd-card/sd-image-aarch64.nix" ];
 
   # sd-image enables a broad generic module set via hardware.enableAllHardware.
-  # This includes modules not present in linuxPackages_rpi4. Force-disable it
-  # to avoid missing-module failures during the modules-shrunk build.
+  # This includes modules not present in the Raspberry Pi vendor kernel.
+  # Force-disable it to avoid missing-module failures during modules-shrunk.
   hardware.enableAllHardware = lib.mkForce false;
 
   sdImage = {

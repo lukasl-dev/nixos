@@ -1,14 +1,18 @@
+{ inputs, ... }:
+
 {
   imports = [
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ./boot.nix
     ./hardware-configuration.nix
     ./networking.nix
+    ./sonoff.nix
     ./sd-image.nix
     ./storage.nix
   ];
 
-  # match the working pi4 example: let the initrd module closure tolerate
-  # modules that the rpi kernel does not ship (avoids shrink failures)
+  # Match the working Pi 4 example: let the initrd module closure tolerate
+  # modules that the Raspberry Pi vendor kernel does not ship.
   nixpkgs.overlays = [
     (_: super: {
       makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });

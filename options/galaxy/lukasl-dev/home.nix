@@ -60,6 +60,12 @@ let
         "shelly"
         "vesync"
         "reolink"
+
+        # Zigbee Home Automation. Besides adding the Python dependencies for
+        # ZHA, the NixOS Home Assistant module uses this component name to
+        # allow the service access to serial adapters such as SONOFF's
+        # /dev/ttyUSB* coordinator.
+        "zha"
       ];
 
       customComponents = [

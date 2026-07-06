@@ -1,5 +1,3 @@
-{ pkgs, ... }:
-
 {
   boot = {
     loader = {
@@ -19,17 +17,9 @@
       "usbhid"
       "usb_storage"
     ];
-    kernelPackages = pkgs.linuxPackages_rpi4;
   };
 
-  hardware = {
-    enableRedistributableFirmware = true;
-    firmware = [ pkgs.raspberrypiWirelessFirmware ];
-
-    deviceTree = {
-      kernelPackage = pkgs.linuxKernel.kernels.linux_rpi4;
-    };
-  };
+  hardware.enableRedistributableFirmware = true;
 
   zramSwap = {
     enable = true;

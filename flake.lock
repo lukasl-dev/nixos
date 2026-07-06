@@ -1876,6 +1876,26 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782562157,
+        "narHash": "sha256-a7+T6QSeowynwZ1ZJJbP8T8ntAytvrui8kFGJmIZt2c=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "a9cf7546a938c737b079e738de73934a13de9784",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixos-images": {
       "inputs": {
         "nixos-stable": [
@@ -2345,11 +2365,11 @@
         "systems": "systems_14"
       },
       "locked": {
-        "lastModified": 1781803074,
-        "narHash": "sha256-evA6Q8cGuqIaoYtV0KPwyN/qipU3ulKcf9nr6Fp064Y=",
+        "lastModified": 1783064273,
+        "narHash": "sha256-8u4o7iP+GlgA/nxZtFy08SXaHehD0f6SZHi2cVV2ZfI=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "826bd3586bd7b9a3b7189c5e4a2678d892e2d50b",
+        "rev": "9538c024e2fc57b764fdd0dd1db8d79b635a1f7e",
         "type": "github"
       },
       "original": {
@@ -2366,11 +2386,11 @@
         "systems": "systems_15"
       },
       "locked": {
-        "lastModified": 1781816338,
-        "narHash": "sha256-J9M9yhCEMtCl7IZmmIIpRGRRA8A903u5eA/slTPX+us=",
+        "lastModified": 1782724924,
+        "narHash": "sha256-MrTTKTG78Z3dAyNX8sSaLJUClwRilUdDOP5/oppGxGk=",
         "owner": "lukasl-dev",
         "repo": "pi-codex-conversion.nix",
-        "rev": "33055196ee4f06a84b0f464658d4b5b925495127",
+        "rev": "b0fce70305314efb35064779f2112a4d599442cd",
         "type": "github"
       },
       "original": {
@@ -2501,6 +2521,7 @@
         "jail-nix": "jail-nix",
         "lightpanda": "lightpanda",
         "nixos-anywhere": "nixos-anywhere",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_9",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "noctalia": "noctalia",
