@@ -4,6 +4,8 @@
       enable = true;
 
       setupOpts = {
+        legacy_commands = false;
+
         workspaces = [
           {
             name = "notes";
@@ -77,35 +79,35 @@
       {
         mode = "n";
         key = "<leader>ns";
-        action = ":ObsidianSearch<CR>";
+        action = ":Obsidian search<CR>";
         silent = true;
         desc = "Search notes";
       }
       {
         mode = "n";
         key = "<leader>nd";
-        action = ":ObsidianToday<CR>";
+        action = ":Obsidian today<CR>";
         silent = true;
         desc = "Daily note";
       }
       {
         mode = "n";
         key = "<leader>nt";
-        action = ":ObsidianTemplate<CR>";
+        action = ":Obsidian template<CR>";
         silent = true;
         desc = "Insert template";
       }
       {
         mode = "n";
         key = "<leader>nb";
-        action = ":ObsidianBacklinks<CR>";
+        action = ":Obsidian backlinks<CR>";
         silent = true;
         desc = "Backlinks";
       }
       {
         mode = "n";
         key = "<leader>nl";
-        action = ":ObsidianLinks<CR>";
+        action = ":Obsidian links<CR>";
         silent = true;
         desc = "Links";
       }

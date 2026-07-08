@@ -25,6 +25,7 @@
     ./git.nix
     ./gpu-screen-recorder.nix
     ./gpg.nix
+    ./handy.nix
     ./helium.nix
     ./hyperfine.nix
     ./imagemagick.nix
@@ -41,6 +42,7 @@
     ./seahorse.nix
     ./sioyek.nix
     ./speedtest.nix
+    ./taman.nix
     ./thunderbird.nix
     ./upterm.nix
     ./uxplay.nix

@@ -31,6 +31,10 @@
     catppuccin.url = "github:catppuccin/nix/release-26.05";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     ghostty.url = "github:ghostty-org/ghostty";
+    handy = {
+      url = "github:cjpais/Handy";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     winapps = {
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -150,6 +154,7 @@
         {
           helium = pkgs.callPackage ./packages/helium { };
           upterm = pkgs.callPackage ./packages/upterm { };
+          taman = pkgs.callPackage ./packages/taman { };
 
           vim =
             (nvf.lib.neovimConfiguration {

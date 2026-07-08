@@ -17,6 +17,8 @@
       "usbhid"
       "usb_storage"
     ];
+
+    zfs.forceImportRoot = false;
   };
 
   hardware.enableRedistributableFirmware = true;

@@ -22,6 +22,7 @@ let
 
           if [ -n "$source_id" ]; then
             wpctl set-default "$source_id"
+            wpctl set-mute "$source_id" 0
             wpctl set-volume "$source_id" 3.0
             exit 0
           fi

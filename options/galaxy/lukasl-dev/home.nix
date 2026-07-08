@@ -13,6 +13,9 @@ let
   proxyAddress = if isGuest then addresses.local else "127.0.0.1";
   stateDir = "/var/lib/hass";
 
+  hass = pkgs.unstable.home-assistant;
+  hassPythonPackages = hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
+
   greeClimateComponent = pkgs.unstable.buildHomeAssistantComponent rec {
     owner = "RobHofmann";
     domain = "gree";
@@ -25,7 +28,7 @@ let
       hash = "sha256-L46+PRg7kxByMJ5vjNHgEx2QQSFib9H0UMW1eVayCQM=";
     };
 
-    dependencies = with pkgs.unstable.home-assistant.python.pkgs; [
+    dependencies = with hassPythonPackages; [
       aiofiles
       pycryptodome
     ];
@@ -41,7 +44,7 @@ let
     services.home-assistant = {
       enable = true;
 
-      package = pkgs.unstable.home-assistant;
+      package = hass;
 
       extraComponents = [
         # Components required/recommended for onboarding and a basic setup.
