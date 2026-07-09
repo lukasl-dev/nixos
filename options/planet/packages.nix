@@ -17,7 +17,9 @@
     uv
     python312Packages.grip
     python312Packages.pylatexenc
-    python312Packages.debugpy
+    (python312Packages.debugpy.overridePythonAttrs (_: {
+      doCheck = false;
+    }))
     python312Packages.jupyter
     python312Packages.jupyterlab
     python312Packages.notebook
