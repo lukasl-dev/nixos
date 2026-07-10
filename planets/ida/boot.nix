@@ -23,10 +23,5 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-  };
-
   time.hardwareClockInLocalTime = false;
 }

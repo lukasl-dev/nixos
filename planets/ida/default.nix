@@ -9,6 +9,7 @@
     ./sonoff.nix
     ./sd-image.nix
     ./storage.nix
+    ./swap.nix
   ];
 
   # Match the working Pi 4 example: let the initrd module closure tolerate
