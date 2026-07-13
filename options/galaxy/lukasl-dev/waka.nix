@@ -12,8 +12,7 @@ let
   module = {
     services.wakapi = {
       enable = true;
-
-      passwordSaltFile = age.secrets.${salt}.path;
+      environmentFiles = [ "/run/wakapi/environment" ];
 
       settings = {
         server = {
@@ -28,6 +27,12 @@ let
         };
       };
     };
+
+    systemd.services.wakapi.preStart = ''
+      umask 077
+      printf 'WAKAPI_PASSWORD_SALT=' > /run/wakapi/environment
+      cat ${age.secrets.${salt}.path} >> /run/wakapi/environment
+    '';
 
     networking.firewall.allowedTCPPorts = lib.mkIf isGuest [ waka.port ];
   };
