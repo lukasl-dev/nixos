@@ -49,6 +49,7 @@ D(
   CNAME("ntfy", "pollux.lukasl.dev."),
   CNAME("pdf", "pollux.lukasl.dev."),
   CNAME("peers", "pollux.lukasl.dev."),
+  CNAME("*.peers", "peers.lukasl.dev."),
   CNAME("waka", "pollux.lukasl.dev."),
   CNAME("yam", "pollux.lukasl.dev."),
   CNAME("rspamd", "pollux.lukasl.dev."),

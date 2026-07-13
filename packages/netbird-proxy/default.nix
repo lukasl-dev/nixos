@@ -5,7 +5,7 @@
 }:
 
 buildGoModule (finalAttrs: {
-  pname = "netbird-server";
+  pname = "netbird-proxy";
   version = "0.74.4";
 
   src = fetchFromGitHub {
@@ -17,27 +17,25 @@ buildGoModule (finalAttrs: {
 
   vendorHash = "sha256-z/2+LUBocWQ06EfdJ4nujr4vb1e2zjmlufsGgGWN0ak=";
 
-  subPackages = [ "combined" ];
+  subPackages = [ "proxy/cmd/proxy" ];
 
   ldflags = [
     "-s"
     "-w"
-    "-X github.com/netbirdio/netbird/version.version=${finalAttrs.version}"
-    "-X main.builtBy=nix"
+    "-X github.com/netbirdio/netbird/proxy/cmd/proxy/cmd.Version=${finalAttrs.version}"
   ];
 
-  # Upstream tests need network access and external services.
   doCheck = false;
 
   postInstall = ''
-    mv $out/bin/combined $out/bin/netbird-server
+    mv "$out/bin/proxy" "$out/bin/netbird-proxy"
   '';
 
   meta = {
     homepage = "https://netbird.io";
     changelog = "https://github.com/netbirdio/netbird/releases/tag/v${finalAttrs.version}";
-    description = "Combined NetBird self-hosted server (management, signal, relay, and STUN)";
+    description = "NetBird reverse proxy for public and mesh-private services";
     license = lib.licenses.bsd3;
-    mainProgram = "netbird-server";
+    mainProgram = "netbird-proxy";
   };
 })

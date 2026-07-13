@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (config.galaxy) domain proxy;
+  inherit (config.galaxy) domain peers proxy;
 
   tailscaleSourceRanges = [
     "100.64.0.0/10"
@@ -42,6 +42,15 @@ in
                   default = false;
                   description = "Only allow clients from the Tailscale network.";
                 };
+
+                private = lib.mkOption {
+                  type = lib.types.bool;
+                  default = false;
+                  description = ''
+                    Expose this route only on the loopback NetBird proxy entrypoint.
+                    Its private hostname is <rule name>.${peers.host}.
+                  '';
+                };
               };
             };
             default = { };
@@ -67,6 +76,7 @@ in
       httpPort = 80;
       httpsPort = 443;
       hasTailscaleOnlyRules = lib.any (rule: rule.from.tailscaleOnly) rules;
+      hasPrivateRules = lib.any (rule: rule.from.private) rules;
     in
     {
       services.traefik = {
@@ -93,6 +103,9 @@ in
                 idleTimeout = "600s";
               };
             };
+          }
+          // lib.optionalAttrs hasPrivateRules {
+            netbirdPrivate.address = "127.0.0.1:8444";
           };
         };
 
@@ -101,7 +114,13 @@ in
             map (
               rule:
               let
-                host = if rule.from.host != null then rule.from.host else "${rule.name}.${domain}";
+                host =
+                  if rule.from.private then
+                    "${rule.name}.${peers.host}"
+                  else if rule.from.host != null then
+                    rule.from.host
+                  else
+                    "${rule.name}.${domain}";
                 matchers = [
                   "Host(`${host}`)"
                 ]
@@ -112,7 +131,7 @@ in
                 inherit (rule) name;
                 value = {
                   rule = lib.concatStringsSep " && " matchers;
-                  entryPoints = [ "websecure" ];
+                  entryPoints = [ (if rule.from.private then "netbirdPrivate" else "websecure") ];
                   service = rule.name;
                 }
                 // lib.optionalAttrs rule.from.tailscaleOnly {
@@ -142,6 +161,11 @@ in
       };
 
       users.users.traefik.extraGroups = [ "acme" ];
+
+      assertions = map (rule: {
+        assertion = !(rule.from.private && rule.from.tailscaleOnly);
+        message = "Proxy rule ${rule.name} cannot be both private and tailscaleOnly.";
+      }) rules;
 
       networking.firewall.allowedTCPPorts = [
         httpPort

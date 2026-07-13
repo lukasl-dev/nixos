@@ -13,6 +13,12 @@ let
   runtimeConfig = "/run/netbird-server/config.json";
   publicUrl = "https://${peers.host}";
 
+  proxyStateDir = "/var/lib/netbird-proxy";
+  proxyTokenFile = "${stateDir}/proxy-token";
+  proxyListenPort = 8443;
+  proxyHealthPort = 9080;
+  proxyWireGuardPort = 51821;
+
   baseConfig = pkgs.writeText "netbird-server-config.json" (builtins.toJSON {
     server = {
       listenAddress = "${listenAddress}:${toString peers.port}";
@@ -214,15 +220,28 @@ in
 
   config = lib.mkIf peers.enable {
     users = {
-      groups.netbird = { };
-      users.netbird = {
-        isSystemUser = true;
-        group = "netbird";
-        home = stateDir;
+      groups = {
+        netbird = { };
+        netbird-proxy = { };
+      };
+      users = {
+        netbird = {
+          isSystemUser = true;
+          group = "netbird";
+          home = stateDir;
+        };
+        netbird-proxy = {
+          isSystemUser = true;
+          group = "netbird-proxy";
+          home = proxyStateDir;
+        };
       };
     };
 
-    environment.systemPackages = [ pkgs.netbird-server ];
+    environment.systemPackages = [
+      pkgs.netbird-proxy
+      pkgs.netbird-server
+    ];
 
     systemd.services.netbird-server = {
       description = "NetBird combined self-hosted server";
@@ -274,6 +293,108 @@ in
       };
     };
 
+    systemd.services.netbird-proxy-token = {
+      description = "Create the NetBird management-wide proxy token";
+      requires = [ "netbird-server.service" ];
+      after = [ "netbird-server.service" ];
+
+      script = ''
+        set -euo pipefail
+
+        if [[ -s ${proxyTokenFile} ]]; then
+          exit 0
+        fi
+
+        for _ in $(seq 1 60); do
+          if ${lib.getExe pkgs.curl} --fail --silent \
+            http://${listenAddress}:${toString peers.healthcheckPort}/health >/dev/null; then
+            break
+          fi
+          sleep 1
+        done
+
+        output="$(${lib.getExe pkgs.netbird-server} token create \
+          --name galaxy-proxy \
+          --config ${runtimeConfig})"
+        token="$(printf '%s\n' "$output" | ${lib.getExe pkgs.gawk} '$1 == "Token:" { print $2 }')"
+        test -n "$token"
+
+        umask 077
+        printf '%s' "$token" > ${proxyTokenFile}.tmp
+        mv ${proxyTokenFile}.tmp ${proxyTokenFile}
+      '';
+
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        User = "netbird";
+        Group = "netbird";
+        StateDirectory = "netbird";
+      };
+    };
+
+    systemd.services.netbird-proxy = {
+      description = "NetBird mesh-aware reverse proxy";
+      documentation = [ "https://docs.netbird.io/manage/reverse-proxy" ];
+      wantedBy = [ "multi-user.target" ];
+      requires = [
+        "netbird-server.service"
+        "netbird-proxy-token.service"
+      ];
+      after = [
+        "network-online.target"
+        "netbird-server.service"
+        "netbird-proxy-token.service"
+      ];
+      wants = [ "network-online.target" ];
+
+      environment = {
+        NB_PROXY_MANAGEMENT_ADDRESS = publicUrl;
+        NB_PROXY_ADDRESS = "${listenAddress}:${toString proxyListenPort}";
+        NB_PROXY_DOMAIN = peers.host;
+        NB_PROXY_CERTIFICATE_DIRECTORY = "${proxyStateDir}/certs";
+        NB_PROXY_ACME_CERTIFICATES = "true";
+        NB_PROXY_ACME_CHALLENGE_TYPE = "tls-alpn-01";
+        NB_PROXY_HEALTH_ADDRESS = "${listenAddress}:${toString proxyHealthPort}";
+        NB_PROXY_FORWARDED_PROTO = "https";
+        NB_PROXY_PROXY_PROTOCOL = "true";
+        NB_PROXY_TRUSTED_PROXIES = "127.0.0.1/32,::1/128";
+        NB_PROXY_PRIVATE = "true";
+        NB_PROXY_REQUIRE_SUBDOMAIN = "true";
+        NB_PROXY_WG_PORT = toString proxyWireGuardPort;
+        NB_PROXY_LOG_LEVEL = peers.logLevel;
+      };
+
+      script = ''
+        export NB_PROXY_TOKEN="$(cat "$CREDENTIALS_DIRECTORY/proxy-token")"
+        exec ${lib.getExe pkgs.netbird-proxy}
+      '';
+
+      serviceConfig = {
+        User = "netbird-proxy";
+        Group = "netbird-proxy";
+        StateDirectory = "netbird-proxy";
+        StateDirectoryMode = "0750";
+        WorkingDirectory = proxyStateDir;
+        LoadCredential = "proxy-token:${proxyTokenFile}";
+        Restart = "on-failure";
+        RestartSec = "5s";
+
+        NoNewPrivileges = true;
+        PrivateTmp = true;
+        ProtectHome = true;
+        ProtectSystem = "strict";
+        ProtectKernelTunables = true;
+        ProtectKernelModules = true;
+        ProtectControlGroups = true;
+        RestrictAddressFamilies = [
+          "AF_INET"
+          "AF_INET6"
+          "AF_UNIX"
+        ];
+      };
+    };
+
     services.nginx = {
       enable = true;
       virtualHosts."netbird-dashboard-${peers.host}" = {
@@ -288,10 +409,37 @@ in
       };
     };
 
-    networking.firewall.allowedUDPPorts = [ peers.stunPort ];
+    services.traefik = {
+      staticConfigOptions.entryPoints.websecure.allowACMEByPass = true;
+
+      dynamicConfigOptions.tcp = {
+        routers.netbird-proxy = {
+          rule = "HostSNIRegexp(`^.+\\.${lib.escapeRegex peers.host}$`)";
+          entryPoints = [ "websecure" ];
+          service = "netbird-proxy";
+          priority = 1000;
+          tls.passthrough = true;
+        };
+
+        services.netbird-proxy.loadBalancer = {
+          servers = [ { address = "${listenAddress}:${toString proxyListenPort}"; } ];
+          serversTransport = "netbird-proxy-proxy-protocol";
+        };
+
+        serversTransports.netbird-proxy-proxy-protocol.proxyProtocol.version = 2;
+      };
+    };
+
+    networking.firewall.allowedUDPPorts = [
+      peers.stunPort
+      proxyWireGuardPort
+    ];
 
     galaxy = {
-      backup.paths = [ stateDir ];
+      backup.paths = [
+        stateDir
+        proxyStateDir
+      ];
       proxy.rules = [
         (grpcRule "netbird-grpc-signal" "/signalexchange.SignalExchange/")
         (grpcRule "netbird-grpc-management" "/management.ManagementService/")
