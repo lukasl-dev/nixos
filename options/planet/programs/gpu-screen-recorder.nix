@@ -157,6 +157,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    programs.gpu-screen-recorder = {
+      enable = true;
+    };
+
     environment.systemPackages = [
       pkgs.gpu-screen-recorder
       pkgs.libnotify
@@ -164,7 +168,7 @@ in
       replayRecorder
     ];
 
-    planet.display.hyprland.lua = lib.mkIf hyprland.enable ([
+    planet.display.hyprland.lua = lib.mkIf hyprland.enable [
       # lua
       ''
         -- gpu-screen-recorder: save replay (SIGUSR1)
@@ -176,7 +180,7 @@ in
         -- gpu-screen-recorder: pause/unpause recording (SIGUSR2)
         hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("${lib.getExe control} toggle-pause"))
       ''
-    ]);
+    ];
 
     planet.display.hyprland.autoStart = lib.mkIf (hyprland.enable && cfg.autoStartReplay) [
       (lib.getExe replayRecorder)
