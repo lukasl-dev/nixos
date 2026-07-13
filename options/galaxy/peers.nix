@@ -36,7 +36,13 @@ let
         cliRedirectURIs = [ "http://localhost:53000/" ];
       };
 
-      reverseProxy.trustedHTTPProxiesCount = 1;
+      reverseProxy = {
+        trustedHTTPProxiesCount = 1;
+        trustedPeers = [
+          "127.0.0.1/32"
+          "::1/128"
+        ];
+      };
 
       store = {
         engine = "sqlite";
@@ -91,6 +97,14 @@ let
     NETBIRD_GOOGLE_TAG_MANAGER_ID = "";
     NETBIRD_HOTJAR_TRACK_ID = "";
     NETBIRD_WASM_PATH = "";
+    NETBIRD_AUTH_SERVICE_URL = "";
+    NETBIRD_LICENSED = false;
+    NETBIRD_CLOUD = false;
+    NETBIRD_HUBSPOT_PORTAL_ID = "";
+    NETBIRD_HUBSPOT_SIGNUP_FORM_ID = "";
+    NETBIRD_HUBSPOT_ONBOARDING_FORM_ID = "";
+    NETBIRD_HUBSPOT_SURVEY_FORM_ID = "";
+    NETBIRD_ANALYTICS_EXCLUDED_EMAILS = "";
   };
 
   toStringEnv = value: if lib.isBool value then lib.boolToString value else toString value;
@@ -100,7 +114,9 @@ let
       {
         nativeBuildInputs = [ pkgs.gettext ];
         env = (lib.mapAttrs (_: toStringEnv) dashboardSettings) // {
-          ENV_STR = lib.concatStringsSep " " (map (name: "$${name}") (lib.attrNames dashboardSettings));
+          ENV_STR = lib.concatStringsSep " " (
+            map (name: "${"$"}${name}") (lib.attrNames dashboardSettings)
+          );
         };
       }
       ''
@@ -116,7 +132,7 @@ let
           cp "$file" "$file.copy"
           envsubst "$ENV_STR" < "$file.copy" > "$file"
           rm "$file.copy"
-        done < <(grep -R -l 'AUTH_SUPPORTED_SCOPES\|NETBIRD_MGMT_API_ENDPOINT\|AUTH_AUTHORITY' build || true)
+        done < <(grep -R -I -l '\$[A-Z][A-Z0-9_]*' build || true)
 
         cp -R build "$out"
       '';

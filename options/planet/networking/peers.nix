@@ -9,6 +9,10 @@ let
   cfg = config.planet.networking.peers;
   client = config.services.netbird.clients.peers;
   clientCommand = lib.getExe client.wrapper;
+  managementUrlConfig = {
+    Scheme = "https";
+    Host = lib.removePrefix "https://" cfg.managementUrl;
+  };
 in
 {
   options.planet.networking.peers = {
@@ -32,6 +36,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion =
+          lib.hasPrefix "https://" cfg.managementUrl
+          && builtins.match "https://[^/]+" cfg.managementUrl != null;
+        message = "planet.networking.peers.managementUrl must be an HTTPS origin without a path.";
+      }
+    ];
+
     services.netbird = {
       package = pkgs.unstable.netbird;
       ui.package = pkgs.unstable.netbird-ui;
@@ -48,9 +61,11 @@ in
           NB_ADMIN_URL = cfg.managementUrl;
         };
 
+        # NetBird 0.73 stores net/url.URL values as JSON objects. Defining
+        # these here also migrates configuration written by older clients.
         config = {
-          ManagementURL = cfg.managementUrl;
-          AdminURL = cfg.managementUrl;
+          ManagementURL = managementUrlConfig;
+          AdminURL = managementUrlConfig;
         };
       };
     };
