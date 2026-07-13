@@ -2497,11 +2497,11 @@
         "systems": "systems_16"
       },
       "locked": {
-        "lastModified": 1783944896,
-        "narHash": "sha256-278rkbXIWqYI2A0pZg+ZmoG8utNjWzEj68JTqDyTztY=",
+        "lastModified": 1783973319,
+        "narHash": "sha256-jgpZ42zBLQLS4IzE3dKag9m3uYj1iMQZXLNyPjgty/U=",
         "owner": "lukasl-dev",
         "repo": "pi-codex-conversion.nix",
-        "rev": "7b7276fc49035e67d1a6d7320a67f5bf149f3e26",
+        "rev": "979b7f2d9232f118643ca0bf3bec4225093e4d3d",
         "type": "github"
       },
       "original": {
