@@ -55,9 +55,11 @@ let
     with open(source, "r", encoding="utf-8") as f:
         config = json.load(f)
 
+
     def read_secret(path):
         with open(path, "r", encoding="utf-8") as f:
             return f.read().strip()
+
 
     server = config["server"]
     server["authSecret"] = read_secret(auth_secret_file)
