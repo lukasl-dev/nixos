@@ -6,7 +6,7 @@
 
 let
   inherit (config.planet) ssh user;
-  inherit (config.galaxy.lukasl-dev) forge;
+  inherit (config.galaxy) forge;
 in
 {
   options.planet = {

@@ -16,5 +16,5 @@ forge-diff from to:
 agenix:
     sudo agenix generate -a
     sudo chown -R lukas:users .git secrets
-    agenix rekey -a
+    sudo agenix rekey -a
     sudo chown -R lukas:users .git secrets

@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  inherit (config.galaxy.lukasl-dev) backup;
+  inherit (config.galaxy) backup;
   externalStorageGroup = "external-storage";
   externalStorageGid = 989;
 in

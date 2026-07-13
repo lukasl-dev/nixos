@@ -3,9 +3,7 @@
 let
   inherit (config.planet.networking) dns;
 
-  hasHostPihole =
-    (config.galaxy.lukasl-dev.hole.enable or false)
-    && (config.galaxy.lukasl-dev.hole.mode or null) == "host";
+  hasHostPihole = config.galaxy.hole.enable or false;
 
   fallbackDns = builtins.concatLists [
     (lib.optionals (lib.elem "cloudflare" dns.providers) [

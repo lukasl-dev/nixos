@@ -61,14 +61,5 @@ in
       #   ];
       # };
     };
-
-    nat = {
-      enable = true;
-      externalInterface = "ens18";
-      internalInterfaces = [
-        "ve-lukasl-dev"
-        "ve-onyx.md"
-      ];
-    };
   };
 }

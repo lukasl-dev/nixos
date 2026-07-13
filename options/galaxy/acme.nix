@@ -1,36 +1,30 @@
 { config, lib, ... }:
 
 let
-  inherit (config.galaxy) acme proxy;
+  inherit (config) age;
+  inherit (config.galaxy) acme domain proxy;
+
+  cfEmail = "galaxy/acme/cf_email";
+  cfApiKey = "galaxy/acme/cf_global_api_key";
+  cfEnv = "galaxy/acme/env";
 
   proxyHosts = lib.unique (
-    lib.flatten (
-      lib.mapAttrsToList (
-        domain: rules:
-        map (rule: {
-          host = if rule.from.host != null then rule.from.host else "${rule.name}.${domain}";
-          inherit domain;
-        }) rules
-      ) proxy.rules
-    )
+    map (rule: if rule.from.host != null then rule.from.host else "${rule.name}.${domain}") proxy.rules
   );
-
-  extraHosts = lib.unique (
-    lib.flatten (
-      lib.mapAttrsToList (domain: cfg: map (host: { inherit host domain; }) cfg.hosts) acme.domains
-    )
-  );
-
-  allHosts = proxyHosts ++ extraHosts;
-
-  acmeServices = map ({ host, ... }: "acme-${host}.service") proxyHosts;
+  allHosts = lib.unique (proxyHosts ++ lib.attrNames acme.extraCertificates);
+  acmeServices = map (host: "acme-${host}.service") proxyHosts;
 in
 {
   options.galaxy.acme = {
-    enable = lib.mkEnableOption "Manage ACME certificates for all proxy rules";
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to manage ACME certificates for galaxy services.";
+    };
 
     email = lib.mkOption {
       type = lib.types.str;
+      default = "contact@lukasl.dev";
       description = "Contact email for ACME.";
     };
 
@@ -46,65 +40,88 @@ in
       description = "DNS resolver for ACME challenges.";
     };
 
-    domains = lib.mkOption {
+    environmentFile = lib.mkOption {
+      type = lib.types.path;
+      description = "Environment file containing DNS provider credentials.";
+    };
+
+    extraCertificates = lib.mkOption {
       type = lib.types.attrsOf (
         lib.types.submodule {
-          options = {
-            environmentFile = lib.mkOption {
-              type = lib.types.path;
-              description = "Path to the environment file with DNS provider credentials.";
-            };
-
-            hosts = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = "Additional hosts needing certificates (e.g. mail, not routed through traefik).";
-            };
-
-            reloadServices = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              default = [ ];
-              description = "Extra services to reload on certificate renewal for this domain.";
-            };
+          options.reloadServices = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            description = "Services to reload when this certificate is renewed.";
           };
         }
       );
       default = { };
-      description = "Per-domain ACME configuration.";
+      description = "Certificates needed by services not routed through the reverse proxy.";
     };
   };
 
-  config = lib.mkIf acme.enable {
-    security.acme = {
-      acceptTerms = true;
-      defaults = {
-        inherit (acme) email dnsProvider dnsResolver;
-      };
-      certs = lib.listToAttrs (
-        map (
-          { host, domain }:
-          {
-            name = host;
-            value = {
-              reloadServices = [ "traefik.service" ] ++ acme.domains.${domain}.reloadServices;
-              inherit (acme.domains.${domain}) environmentFile;
-            };
-          }
-        ) allHosts
-      );
-    };
+  config = lib.mkMerge [
+    {
+      age.secrets = {
+        ${cfEmail} = {
+          rekeyFile = ../../secrets/galaxy/acme/cf_email.age;
+          intermediary = true;
+        };
 
-    services.traefik.dynamicConfigOptions.tls.certificates = map (
-      { host, ... }:
-      {
+        ${cfApiKey} = {
+          rekeyFile = ../../secrets/galaxy/acme/cf_api_key.age;
+          intermediary = true;
+        };
+
+        ${cfEnv} = {
+          rekeyFile = ../../secrets/galaxy/acme/env.age;
+          generator = {
+            dependencies = {
+              cf_email = age.secrets.${cfEmail};
+              cf_api_key = age.secrets.${cfApiKey};
+            };
+            script =
+              { decrypt, deps, ... }:
+              # bash
+              ''
+                cf_email="$(${decrypt} "${deps.cf_email.file}")"
+                cf_api_key="$(${decrypt} "${deps.cf_api_key.file}")"
+
+                cat <<EOF
+                CLOUDFLARE_EMAIL=$cf_email
+                CLOUDFLARE_API_KEY=$cf_api_key
+                EOF
+              '';
+          };
+        };
+      };
+
+      galaxy.acme.environmentFile = age.secrets.${cfEnv}.path;
+    }
+
+    (lib.mkIf acme.enable {
+      security.acme = {
+        acceptTerms = true;
+        defaults = {
+          inherit (acme) email dnsProvider dnsResolver;
+        };
+        certs = lib.genAttrs allHosts (host: {
+          inherit (acme) environmentFile;
+          reloadServices =
+            lib.optional (lib.elem host proxyHosts) "traefik.service"
+            ++ (acme.extraCertificates.${host}.reloadServices or [ ]);
+        });
+      };
+
+      services.traefik.dynamicConfigOptions.tls.certificates = map (host: {
         certFile = "/var/lib/acme/${host}/fullchain.pem";
         keyFile = "/var/lib/acme/${host}/key.pem";
-      }
-    ) proxyHosts;
+      }) proxyHosts;
 
-    systemd.services.traefik = {
-      wants = acmeServices;
-      after = acmeServices;
-    };
-  };
+      systemd.services.traefik = {
+        wants = acmeServices;
+        after = acmeServices;
+      };
+    })
+  ];
 }

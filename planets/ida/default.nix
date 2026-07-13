@@ -31,22 +31,12 @@
   };
 
   galaxy = {
-    acme = {
+    backup = {
       enable = true;
-      email = "contact@lukasl.dev";
+      dataDir = "/mnt/external/restic";
     };
 
-    lukasl-dev = {
-      enable = true;
-      mode = "host";
-
-      backup = {
-        enable = true;
-        dataDir = "/mnt/external/restic";
-      };
-
-      home.enable = true;
-      hole.enable = true;
-    };
+    home.enable = true;
+    hole.enable = true;
   };
 }
