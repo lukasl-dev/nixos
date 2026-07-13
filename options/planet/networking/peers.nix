@@ -9,6 +9,7 @@ let
   cfg = config.planet.networking.peers;
   client = config.services.netbird.clients.peers;
   clientCommand = lib.getExe client.wrapper;
+  setupKey = "galaxy/peers/setupKey";
   managementUrlConfig = {
     Scheme = "https";
     Host = lib.removePrefix "https://" cfg.managementUrl;
@@ -36,6 +37,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    age.secrets.${setupKey}.rekeyFile = ../../../secrets/galaxy/peers/setupKey.age;
+
+    planet.networking.peers.setupKeyFile = config.age.secrets.${setupKey}.path;
+
     assertions = [
       {
         assertion =
