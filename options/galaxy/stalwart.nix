@@ -66,6 +66,9 @@ in
       stalwart = {
         requires = [ "stalwart-admin-password.service" ];
         after = [ "stalwart-admin-password.service" ];
+        restartTriggers = [
+          (pkgs.writeText "stalwart-credentials-version" "1")
+        ];
       };
 
       stalwart-admin-password = {
@@ -75,9 +78,16 @@ in
         script = ''
           set -euo pipefail
 
-          if [[ ! -s ${lib.escapeShellArg adminPasswordFile} ]]; then
-            ${lib.getExe' pkgs.openssl "openssl"} rand -hex 32 > ${lib.escapeShellArg adminPasswordFile}
+          if [[ -s ${lib.escapeShellArg adminPasswordFile} ]]; then
+            password="$(cat ${lib.escapeShellArg adminPasswordFile})"
+          else
+            password="$(${lib.getExe' pkgs.openssl "openssl"} rand -hex 32)"
           fi
+
+          # File macros preserve trailing newlines, while password fields do
+          # not accept them. Normalize both existing and newly generated
+          # credentials to an exact string.
+          printf '%s' "$password" > ${lib.escapeShellArg adminPasswordFile}
         '';
 
         serviceConfig = {
