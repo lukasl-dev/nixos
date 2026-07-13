@@ -49,7 +49,9 @@ in
         };
 
         http = {
-          url = "https://${stalwart.host}";
+          # Stalwart parses this setting as an expression; the inner quotes
+          # make the public URL a string literal.
+          url = "'https://${stalwart.host}'";
           use-x-forwarded = true;
         };
 
