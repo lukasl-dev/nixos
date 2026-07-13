@@ -134,8 +134,8 @@ in
       themes = [ ./themes/catppuccin-mocha.json ];
 
       environment = {
-        OPENCODE_API_KEY = pi.secrets.opencode;
-        EXA_API_KEY = pi.secrets.exa;
+        OPENCODE_API_KEY.file = pi.secrets.opencode;
+        EXA_API_KEY.file = pi.secrets.exa;
       };
     };
 
