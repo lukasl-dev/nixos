@@ -55,7 +55,11 @@ let
       secrets.mailer.PASSWD = age.secrets.${mail.accounts.bot}.path;
     };
 
+    # Forgejo's built-in SSH server needs a capability in the host user
+    # namespace to bind the privileged port. The module's PrivateUsers
+    # sandbox would confine that capability to a separate user namespace.
     systemd.services.forgejo.serviceConfig = {
+      PrivateUsers = lib.mkForce false;
       AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
       CapabilityBoundingSet = lib.mkForce [ "CAP_NET_BIND_SERVICE" ];
     };
