@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   pkgs,
   lib,
   ...
@@ -15,17 +14,6 @@ let
   adminPasswordFile = "${bootstrapStateDir}/admin-password";
 in
 {
-  # The pinned stable nixpkgs predates Stalwart's collaboration support and
-  # still provides services.stalwart-mail 0.11. Use the current module so that
-  # services.stalwart can run a CalDAV/CardDAV/WebDAV-capable release.
-  disabledModules = [
-    "services/mail/stalwart-mail.nix"
-  ];
-
-  imports = [
-    "${inputs.nixpkgs-unstable}/nixos/modules/services/mail/stalwart.nix"
-  ];
-
   options.galaxy.stalwart = {
     enable = lib.mkEnableOption "Enable Stalwart collaboration server";
 
@@ -47,7 +35,6 @@ in
   config = lib.mkIf stalwart.enable {
     services.stalwart = {
       enable = true;
-      package = pkgs.unstable.stalwart;
       stateVersion = "26.05";
 
       credentials.admin-password = adminPasswordFile;
@@ -77,12 +64,6 @@ in
       stalwart = {
         requires = [ "stalwart-admin-password.service" ];
         after = [ "stalwart-admin-password.service" ];
-
-        # The newer Stalwart module uses the newer scalar ExecStartPre syntax.
-        # Keep it compatible with the pinned NixOS systemd module.
-        serviceConfig.ExecStartPre = lib.mkForce [
-          "${lib.getExe' pkgs.coreutils "mkdir"} -p ${stateDir}/db"
-        ];
       };
 
       stalwart-admin-password = {
