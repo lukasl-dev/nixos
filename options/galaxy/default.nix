@@ -19,10 +19,10 @@
     ./home.nix
     ./household.nix
     ./mail.nix
-    ./net.nix
     ./notes.nix
+    ./peers.nix
     ./status.nix
-    # ./stalwart.nix
+    ./stalwart.nix
     ./term.nix
     ./vault.nix
     ./waka.nix

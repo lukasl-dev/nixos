@@ -1,6 +1,5 @@
 {
   imports = [
-    ./foreign
     ./galaxy
     ./planet
   ];

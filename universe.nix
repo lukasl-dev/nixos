@@ -85,6 +85,8 @@ in
       token = age.secrets.${secrets.attic.token}.path;
     };
 
+    networking.peers.enable = true;
+
     programs = {
       git = {
         user = {

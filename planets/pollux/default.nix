@@ -29,7 +29,7 @@
     mail.enable = true;
     matrix.enable = true;
     notes.enable = true;
-    stalwart.enable = true;
+    peers.enable = true;
     term.enable = true;
     vault.enable = true;
     waka.enable = true;
