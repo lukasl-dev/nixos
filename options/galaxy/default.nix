@@ -22,7 +22,7 @@
     ./net.nix
     ./notes.nix
     ./status.nix
-    ./stalwart.nix
+    # ./stalwart.nix
     ./term.nix
     ./vault.nix
     ./waka.nix
