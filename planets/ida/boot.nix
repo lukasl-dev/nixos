@@ -9,14 +9,10 @@
     };
 
     kernelParams = [
-      "console=ttyS1,115200n8"
+      "console=serial0,115200n8"
       "console=tty1"
     ];
-    initrd.availableKernelModules = [
-      "xhci_pci"
-      "usbhid"
-      "usb_storage"
-    ];
+    initrd.allowMissingModules = true;
 
     zfs.forceImportRoot = false;
   };

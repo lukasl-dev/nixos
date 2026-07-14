@@ -20,7 +20,11 @@ let
 
         settings = {
           dns = {
-            listeningMode = "ALL";
+            # NetBird serves its private peer zone on another loopback
+            # address on port 53. Bind Pi-hole to its actual LAN interface so
+            # both resolvers can coexist.
+            interface = "wlan0";
+            listeningMode = "BIND";
             upstreams = [
               "1.1.1.1"
               "1.0.0.1"

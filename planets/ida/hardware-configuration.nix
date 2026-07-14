@@ -21,11 +21,6 @@
     fsType = "ext4";
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/FIRMWARE";
-    fsType = "vfat";
-  };
-
   swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;

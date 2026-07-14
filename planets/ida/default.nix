@@ -12,18 +12,10 @@
     ./swap.nix
   ];
 
-  # Match the working Pi 4 example: let the initrd module closure tolerate
-  # modules that the Raspberry Pi vendor kernel does not ship.
-  nixpkgs.overlays = [
-    (_: super: {
-      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
-    })
-  ];
-
   planet = {
     name = "ida";
     timeZone = "Europe/Vienna";
-    stateVersion = "25.05";
+    stateVersion = "26.05";
 
     sudo.password = false;
 
