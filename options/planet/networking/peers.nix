@@ -61,6 +61,14 @@ in
         autoStart = true;
         openFirewall = true;
 
+        # Make the DNS listener deterministic. Since this is a privileged
+        # port, the NixOS NetBird module also grants CAP_NET_BIND_SERVICE to
+        # the hardened service when this option is set.
+        dns-resolver = {
+          address = "127.0.0.153";
+          port = 53;
+        };
+
         environment = {
           NB_MANAGEMENT_URL = cfg.managementUrl;
           NB_ADMIN_URL = cfg.managementUrl;
