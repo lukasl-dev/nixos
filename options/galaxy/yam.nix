@@ -54,7 +54,11 @@ let
     systemd = {
       tmpfiles.rules = [
         "d ${stateDir} 0750 root root -"
-        "d ${redisDir} 0750 root root -"
+        # redis:8-alpine runs as the in-container `redis` user (uid 999, gid 1000).
+        # The data dir must be writable by that user, otherwise background RDB
+        # snapshotting fails with "Permission denied" and Redis refuses all writes
+        # (the MISCONF error that breaks Celery / Yamtrack searches).
+        "d ${redisDir} 0750 999 1000 -"
       ];
 
       services.create-yamtrack-network = {

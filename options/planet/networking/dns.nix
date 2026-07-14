@@ -84,9 +84,19 @@ in
       };
     };
 
-    networking.firewall.interfaces.docker0 = {
-      allowedTCPPorts = [ 53 ];
-      allowedUDPPorts = [ 53 ];
+    networking.firewall = {
+      interfaces.docker0 = {
+        allowedTCPPorts = [ 53 ];
+        allowedUDPPorts = [ 53 ];
+      };
+
+      # Docker's embedded DNS forwards queries from user-defined networks to
+      # the resolver on docker0. Those packets enter the host through the
+      # corresponding br-* interface, not docker0 itself.
+      extraInputRules = ''
+        iifname "br-*" tcp dport 53 accept
+        iifname "br-*" udp dport 53 accept
+      '';
     };
   };
 }
