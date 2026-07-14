@@ -74,7 +74,10 @@ in
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
         AllowUsers = null;
-        UseDns = true;
+        # Reverse lookups of NetBird addresses can delay authentication while
+        # the peer DNS resolver is unavailable. SSH authentication does not
+        # rely on the client hostname, so avoid that lookup entirely.
+        UseDns = false;
         PermitRootLogin = "yes";
       };
     };
@@ -109,6 +112,11 @@ in
             };
             "ida.local" = {
               Port = ssh.ida.port;
+            };
+
+            "*.peers.internal" = {
+              User = user.name;
+              Port = 2222;
             };
 
             ${forge.host} = {
