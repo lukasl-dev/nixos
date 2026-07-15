@@ -63,10 +63,10 @@ let
         "vesync"
         "reolink"
 
-        # Zigbee Home Automation. Besides adding the Python dependencies for
-        # ZHA, the NixOS Home Assistant module uses this component name to
-        # allow the service access to serial adapters such as SONOFF's
-        # /dev/ttyUSB* coordinator.
+        # Zigbee Home Automation for the SONOFF Dongle Max (EFR32MG24), using
+        # either its Ethernet/TCP endpoint or its USB serial connection. The
+        # NixOS module also grants Home Assistant serial-device access when
+        # this component is enabled.
         "zha"
       ];
 
