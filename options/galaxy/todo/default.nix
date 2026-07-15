@@ -13,7 +13,7 @@ in
 
     port = lib.mkOption {
       type = lib.types.port;
-      default = 8081;
+      default = 18080;
       readOnly = true;
       description = "Port for the Super Productivity web app.";
     };
