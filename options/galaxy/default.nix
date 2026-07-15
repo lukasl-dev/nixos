@@ -5,7 +5,9 @@
     ./acme.nix
     ./proxy.nix
 
+    ./forge
     ./matrix
+    ./todo
 
     ./anki.nix
     ./backup.nix
@@ -24,7 +26,6 @@
     ./status.nix
     ./stalwart.nix
     ./term.nix
-    ./todo.nix
     ./vault.nix
     ./waka.nix
     ./www.nix

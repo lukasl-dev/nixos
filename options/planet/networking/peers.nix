@@ -13,12 +13,9 @@ let
   clientCommand = lib.getExe client.wrapper;
 
   setupKey = "galaxy/peers/setupKey";
+
   managementHost = "peers.${config.planet.domain}:443";
   managementUrl = "https://${managementHost}";
-  managementUrlConfig = {
-    Scheme = "https";
-    Host = managementHost;
-  };
 in
 {
   options.planet.networking.peers.enable = lib.mkEnableOption "the NetBird peer client";
@@ -39,10 +36,17 @@ in
         dns-resolver.address = "127.0.0.153";
 
         # NetBird 0.73 serializes net/url.URL values as JSON objects.
-        config = {
-          ManagementURL = managementUrlConfig;
-          AdminURL = managementUrlConfig;
-        };
+        config =
+          let
+            managementUrlConfig = {
+              Scheme = "https";
+              Host = managementHost;
+            };
+          in
+          {
+            ManagementURL = managementUrlConfig;
+            AdminURL = managementUrlConfig;
+          };
       };
     };
 

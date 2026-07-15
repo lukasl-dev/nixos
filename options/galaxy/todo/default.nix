@@ -6,6 +6,8 @@ let
   listenAddress = "127.0.0.1";
 in
 {
+  imports = [ ./sync.nix ];
+
   options.galaxy.todo = {
     enable = lib.mkEnableOption "Enable Super Productivity";
 
