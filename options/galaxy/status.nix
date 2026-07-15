@@ -4,18 +4,8 @@ let
   inherit (config.galaxy) domain status;
 
   listenAddress = "127.0.0.1";
+
   stateDir = "/var/lib/private/uptime-kuma";
-
-  module = {
-    services.uptime-kuma = {
-      enable = true;
-      settings = {
-        HOST = listenAddress;
-        PORT = toString status.port;
-      };
-    };
-
-  };
 in
 {
   options.galaxy = {
@@ -40,7 +30,16 @@ in
 
   config = lib.mkIf status.enable (
     lib.mkMerge [
-      module
+      {
+        services.uptime-kuma = {
+          enable = true;
+          settings = {
+            HOST = listenAddress;
+            PORT = toString status.port;
+          };
+        };
+      }
+
       {
         galaxy = {
           backup.paths = [ stateDir ];

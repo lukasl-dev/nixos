@@ -8,49 +8,6 @@ let
 
   etcDir = "/etc/pihole";
   stateDir = "/var/lib/pihole";
-
-  module = {
-    services = {
-      pihole-ftl = {
-        enable = true;
-
-        privacyLevel = 1;
-
-        openFirewallDNS = false;
-
-        settings = {
-          dns = {
-            # NetBird serves its private peer zone on another loopback
-            # address on port 53. Bind Pi-hole to its actual LAN interface so
-            # both resolvers can coexist.
-            interface = "wlan0";
-            listeningMode = "BIND";
-            upstreams = [
-              "1.1.1.1"
-              "1.0.0.1"
-              "8.8.8.8"
-              "8.8.4.4"
-            ];
-          };
-        };
-
-        lists = [
-          {
-            url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
-            type = "block";
-            enabled = true;
-            description = "hagezi blocklist";
-          }
-        ];
-      };
-
-      pihole-web = {
-        enable = true;
-        hostName = hole.host;
-        ports = [ hole.webPort ];
-      };
-    };
-  };
 in
 {
   options.galaxy = {
@@ -75,9 +32,47 @@ in
 
   config = lib.mkIf hole.enable (
     lib.mkMerge [
-      module
       {
         services = {
+          pihole-ftl = {
+            enable = true;
+
+            privacyLevel = 1;
+
+            openFirewallDNS = false;
+
+            settings = {
+              dns = {
+                # NetBird serves its private peer zone on another loopback
+                # address on port 53. Bind Pi-hole to its actual LAN interface so
+                # both resolvers can coexist.
+                interface = "wlan0";
+                listeningMode = "BIND";
+                upstreams = [
+                  "1.1.1.1"
+                  "1.0.0.1"
+                  "8.8.8.8"
+                  "8.8.4.4"
+                ];
+              };
+            };
+
+            lists = [
+              {
+                url = "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt";
+                type = "block";
+                enabled = true;
+                description = "hagezi blocklist";
+              }
+            ];
+          };
+
+          pihole-web = {
+            enable = true;
+            hostName = hole.host;
+            ports = [ hole.webPort ];
+          };
+
           resolved.settings.Resolve.DNSStubListener = false;
           tailscale.extraUpFlags = lib.mkForce [ "--ssh" ];
         };
@@ -96,11 +91,11 @@ in
           ];
           proxy.rules = [
             {
-          name = "hole";
-          from = {
-            host = hole.host;
-            meshOnly = true;
-          };
+              name = "hole";
+              from = {
+                inherit (hole) host;
+                meshOnly = true;
+              };
               to.http = "http://${listenAddress}:${toString hole.webPort}";
             }
           ];

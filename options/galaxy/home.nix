@@ -38,60 +38,6 @@ let
       license = lib.licenses.gpl3Only;
     };
   };
-
-  module = {
-    services.home-assistant = {
-      enable = true;
-
-      package = hass;
-
-      extraComponents = [
-        # Components required/recommended for onboarding and a basic setup.
-        "analytics"
-        "default_config"
-        "esphome"
-        "google_translate"
-        "isal"
-        "met"
-        "cast"
-        "ipp"
-        "speedtestdotnet"
-
-        "ecovacs"
-        "solax"
-        "shelly"
-        "vesync"
-        "reolink"
-
-        # Zigbee Home Automation for the SONOFF Dongle Max (EFR32MG24), using
-        # either its Ethernet/TCP endpoint or its USB serial connection. The
-        # NixOS module also grants Home Assistant serial-device access when
-        # this component is enabled.
-        "zha"
-      ];
-
-      customComponents = [
-        greeClimateComponent
-      ];
-
-      config = {
-        default_config = { };
-
-        # Keep UI-created automations in Home Assistant's mutable state dir.
-        automation = "!include automations.yaml";
-
-        http = {
-          server_host = listenAddress;
-          server_port = home.port;
-          use_x_forwarded_for = true;
-          trusted_proxies = [
-            "127.0.0.1"
-            "::1"
-          ];
-        };
-      };
-    };
-  };
 in
 {
   options.galaxy = {
@@ -116,7 +62,55 @@ in
 
   config = lib.mkIf home.enable (
     lib.mkMerge [
-      module
+      {
+        services.home-assistant = {
+          enable = true;
+
+          package = hass;
+
+          extraComponents = [
+            "analytics"
+            "default_config"
+            "esphome"
+            "google_translate"
+            "isal"
+            "met"
+            "cast"
+            "ipp"
+            "speedtestdotnet"
+
+            "ecovacs"
+            "solax"
+            "shelly"
+            "vesync"
+            "reolink"
+
+            "zha"
+          ];
+
+          customComponents = [
+            greeClimateComponent
+          ];
+
+          config = {
+            default_config = { };
+
+            # keep ui-created automations in home assistant's mutable state dir
+            automation = "!include automations.yaml";
+
+            http = {
+              server_host = listenAddress;
+              server_port = home.port;
+              use_x_forwarded_for = true;
+              trusted_proxies = [
+                "127.0.0.1"
+                "::1"
+              ];
+            };
+          };
+        };
+      }
+
       {
         # Make Home Assistant reachable directly from the local network. The
         # home.lukasl.dev reverse-proxy route remains mesh-only below.
@@ -126,11 +120,11 @@ in
           backup.paths = [ stateDir ];
           proxy.rules = [
             {
-            name = "home";
-            from = {
-              host = home.host;
-              meshOnly = true;
-            };
+              name = "home";
+              from = {
+                inherit (home) host;
+                meshOnly = true;
+              };
               to.http = "http://${proxyAddress}:${toString home.port}";
             }
           ];

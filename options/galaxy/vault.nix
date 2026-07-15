@@ -18,48 +18,6 @@ let
 
   rsaKey = "galaxy/vault/rsaKey";
   env = "galaxy/vault/env";
-
-  module = {
-    services.vaultwarden = {
-      enable = true;
-
-      package = pkgs.unstable.vaultwarden;
-
-      config = {
-        ROCKET_ADDRESS = listenAddress;
-        ROCKET_PORT = vault.port;
-        RSA_KEY_FILENAME = "/var/lib/vaultwarden/rsa_key";
-
-        DOMAIN = "https://vault.${domain}";
-        SIGNUPS_ALLOWED = false;
-      };
-
-      environmentFile = age.secrets.${env}.path;
-    };
-
-    systemd.services.vaultwarden.serviceConfig.ExecStartPre = [
-      ''
-        +${pkgs.writeShellScript "vaultwarden-install-rsa-key" ''
-          set -euo pipefail
-
-          source=${lib.escapeShellArg age.secrets.${rsaKey}.path}
-          target=/var/lib/vaultwarden/rsa_key.pem
-
-          if [ -L "$target" ]; then
-            rm -f "$target"
-          fi
-
-          if ! cmp -s "$source" "$target"; then
-            install -D -o vaultwarden -g vaultwarden -m 0600 "$source" "$target"
-          else
-            chown vaultwarden:vaultwarden "$target"
-            chmod 0600 "$target"
-          fi
-        ''}
-      ''
-    ];
-
-  };
 in
 {
   options.galaxy = {
@@ -109,7 +67,47 @@ in
 
     (lib.mkIf vault.enable (
       lib.mkMerge [
-        module
+        {
+          services.vaultwarden = {
+            enable = true;
+
+            package = pkgs.unstable.vaultwarden;
+
+            config = {
+              ROCKET_ADDRESS = listenAddress;
+              ROCKET_PORT = vault.port;
+              RSA_KEY_FILENAME = "/var/lib/vaultwarden/rsa_key";
+
+              DOMAIN = "https://vault.${domain}";
+              SIGNUPS_ALLOWED = false;
+            };
+
+            environmentFile = age.secrets.${env}.path;
+          };
+
+          systemd.services.vaultwarden.serviceConfig.ExecStartPre = [
+            ''
+              +${pkgs.writeShellScript "vaultwarden-install-rsa-key" ''
+                set -euo pipefail
+
+                source=${lib.escapeShellArg age.secrets.${rsaKey}.path}
+                target=/var/lib/vaultwarden/rsa_key.pem
+
+                if [ -L "$target" ]; then
+                  rm -f "$target"
+                fi
+
+                if ! cmp -s "$source" "$target"; then
+                  install -D -o vaultwarden -g vaultwarden -m 0600 "$source" "$target"
+                else
+                  chown vaultwarden:vaultwarden "$target"
+                  chmod 0600 "$target"
+                fi
+              ''}
+            ''
+          ];
+        }
+
         {
           galaxy = {
             proxy.rules = [

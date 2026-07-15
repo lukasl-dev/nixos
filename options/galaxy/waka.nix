@@ -6,28 +6,9 @@ let
 
   listenAddress = "127.0.0.1";
   stateDir = "/var/lib/private/wakapi";
+
   salt = "galaxy/waka/salt";
   env = "galaxy/waka/env";
-
-  module = {
-    services.wakapi = {
-      enable = true;
-      environmentFiles = [ age.secrets.${env}.path ];
-
-      settings = {
-        server = {
-          public_url = "https://waka.${domain}";
-          listen_ipv4 = listenAddress;
-          inherit (waka) port;
-        };
-
-        security = {
-          insecure_cookies = false;
-          allow_signup = false;
-        };
-      };
-    };
-  };
 in
 {
   options.galaxy = {
@@ -68,7 +49,26 @@ in
 
     (lib.mkIf waka.enable (
       lib.mkMerge [
-        module
+        {
+          services.wakapi = {
+            enable = true;
+            environmentFiles = [ age.secrets.${env}.path ];
+
+            settings = {
+              server = {
+                public_url = "https://waka.${domain}";
+                listen_ipv4 = listenAddress;
+                inherit (waka) port;
+              };
+
+              security = {
+                insecure_cookies = false;
+                allow_signup = false;
+              };
+            };
+          };
+        }
+
         {
           galaxy = {
             proxy.rules = [

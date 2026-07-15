@@ -19,7 +19,6 @@ D(
 
   // pollux
   CNAME("anki", "pollux.lukasl.dev."),
-  CNAME("box", "pollux.lukasl.dev."),
   CNAME("books", "pollux.lukasl.dev."),
   CNAME("blog", "pollux.lukasl.dev."),
   CNAME("cache", "pollux.lukasl.dev."),

@@ -12,19 +12,6 @@ let
   stateDir = "/var/lib/private/factorio";
 
   serverSettings = "galaxy/factorio/serverSettings";
-
-  module = {
-    services.factorio = {
-      enable = true;
-      package = pkgs.unstable.factorio-headless;
-
-      openFirewall = true;
-      admins = [ "argsvl" ];
-
-      extraSettingsFile = age.secrets.${serverSettings}.path;
-    };
-
-  };
 in
 {
   options.galaxy = {
@@ -50,7 +37,18 @@ in
 
     (lib.mkIf factorio.enable (
       lib.mkMerge [
-        module
+        {
+          services.factorio = {
+            enable = true;
+            package = pkgs.unstable.factorio-headless;
+
+            openFirewall = true;
+            admins = [ "argsvl" ];
+
+            extraSettingsFile = age.secrets.${serverSettings}.path;
+          };
+        }
+
         {
           galaxy.backup.paths = [ stateDir ];
         }

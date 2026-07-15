@@ -12,15 +12,6 @@ let
   token = "galaxy/backup/token";
   htpasswd = "galaxy/backup/htpasswd";
   env = "galaxy/backup/env";
-
-  module = {
-    services.restic.server = {
-      enable = true;
-      inherit (backup) dataDir;
-      listenAddress = "${listenAddress}:${toString backup.port}";
-      htpasswd-file = age.secrets.${htpasswd}.path;
-    };
-  };
 in
 {
   options.galaxy = {
@@ -122,7 +113,15 @@ in
 
     (lib.mkIf (backup.enable && backup.dataDir != null) (
       lib.mkMerge [
-        module
+        {
+          services.restic.server = {
+            enable = true;
+            inherit (backup) dataDir;
+            listenAddress = "${listenAddress}:${toString backup.port}";
+            htpasswd-file = age.secrets.${htpasswd}.path;
+          };
+        }
+
         {
           galaxy.proxy.rules = [
             {

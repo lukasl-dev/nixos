@@ -5,6 +5,7 @@ let
   inherit (config.galaxy) cal;
 
   listenAddress = "127.0.0.1";
+
   stateDir = "/var/lib/radicale";
 in
 {

@@ -4,21 +4,8 @@ let
   inherit (config.galaxy) box;
 
   listenAddress = "127.0.0.1";
+
   stateDir = "/var/lib/homebox";
-
-  module = {
-    services.homebox = {
-      enable = true;
-
-      settings = {
-        HBOX_WEB_PORT = toString box.port;
-        HBOX_WEB_HOST = listenAddress;
-        HBOX_OPTIONS_ALLOW_REGISTRATION = "false";
-        HBOX_OPTIONS_GITHUB_RELEASE_CHECK = "false";
-      };
-    };
-
-  };
 in
 {
   options.galaxy = {
@@ -36,7 +23,19 @@ in
 
   config = lib.mkIf box.enable (
     lib.mkMerge [
-      module
+      {
+        services.homebox = {
+          enable = true;
+
+          settings = {
+            HBOX_WEB_PORT = toString box.port;
+            HBOX_WEB_HOST = listenAddress;
+            HBOX_OPTIONS_ALLOW_REGISTRATION = "false";
+            HBOX_OPTIONS_GITHUB_RELEASE_CHECK = "false";
+          };
+        };
+      }
+
       {
         galaxy = {
           proxy.rules = [

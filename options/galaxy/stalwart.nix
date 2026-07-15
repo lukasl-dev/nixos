@@ -9,6 +9,7 @@ let
   inherit (config.galaxy) domain stalwart;
 
   listenAddress = "127.0.0.1";
+
   stateDir = "/var/lib/stalwart";
   bootstrapStateDir = "/var/lib/stalwart-bootstrap";
   adminPasswordFile = "${bootstrapStateDir}/admin-password";

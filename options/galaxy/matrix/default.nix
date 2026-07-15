@@ -16,39 +16,6 @@ let
   stateDir = "/var/lib/private/tuwunel";
 
   registrationToken = "galaxy/matrix/registrationToken";
-
-  module = {
-    services.matrix-tuwunel = {
-      enable = true;
-      package = inputs.tuwunel.packages.${system}.default;
-      settings = {
-        global = {
-          server_name = domain;
-          address = [ listenAddress ];
-          port = [ matrix.port ];
-
-          allow_registration = true;
-          registration_token_file = age.secrets.${registrationToken}.path;
-
-          turn_uris = [
-            "turn:${matrix.turn.host}?transport=udp"
-            "turn:${matrix.turn.host}?transport=tcp"
-            "turns:${matrix.turn.host}?transport=tcp"
-          ];
-          turn_secret_file = age.secrets.${matrix.turn.secret}.path;
-
-          well_known = {
-            client = "https://matrix.${domain}";
-            server = "matrix.${domain}:443";
-          };
-
-          url_preview_domain_contains_allowlist = [ "*" ];
-          url_preview_check_root_domain = true;
-        };
-      };
-    };
-
-  };
 in
 {
   imports = [ ./turn.nix ];
@@ -78,7 +45,39 @@ in
 
     (lib.mkIf matrix.enable (
       lib.mkMerge [
-        module
+        {
+          services.matrix-tuwunel = {
+            enable = true;
+            package = inputs.tuwunel.packages.${system}.default;
+            settings = {
+              global = {
+                server_name = domain;
+                address = [ listenAddress ];
+                port = [ matrix.port ];
+
+                allow_registration = true;
+                registration_token_file = age.secrets.${registrationToken}.path;
+
+                turn_uris = [
+                  "turn:${matrix.turn.host}?transport=udp"
+                  "turn:${matrix.turn.host}?transport=tcp"
+                  "turns:${matrix.turn.host}?transport=tcp"
+                ];
+                turn_secret_file = age.secrets.${matrix.turn.secret}.path;
+
+                well_known = {
+                  client = "https://matrix.${domain}";
+                  server = "matrix.${domain}:443";
+                };
+
+                url_preview_domain_contains_allowlist = [ "*" ];
+                url_preview_check_root_domain = true;
+              };
+            };
+          };
+
+        }
+
         {
           galaxy = {
             proxy.rules = [

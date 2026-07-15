@@ -4,23 +4,6 @@ let
   inherit (config.galaxy) domain www;
 
   listenAddress = "127.0.0.1";
-
-  module = {
-    services.nginx = {
-      enable = true;
-
-      virtualHosts.${domain} = {
-        listen = [
-          {
-            addr = listenAddress;
-            inherit (www) port;
-          }
-        ];
-        inherit (www) root;
-      };
-    };
-
-  };
 in
 {
   options.galaxy = {
@@ -45,7 +28,22 @@ in
 
   config = lib.mkIf www.enable (
     lib.mkMerge [
-      module
+      {
+        services.nginx = {
+          enable = true;
+
+          virtualHosts.${domain} = {
+            listen = [
+              {
+                addr = listenAddress;
+                inherit (www) port;
+              }
+            ];
+            inherit (www) root;
+          };
+        };
+      }
+
       {
         galaxy = {
           proxy.rules = [

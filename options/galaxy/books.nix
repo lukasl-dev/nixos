@@ -16,25 +16,6 @@ let
 
   audiobooksDir = "${libraryDir}/audiobooks";
   podcastsDir = "${libraryDir}/podcasts";
-
-  module = {
-    services.audiobookshelf = {
-      enable = true;
-      package = pkgs.unstable.audiobookshelf;
-
-      inherit dataDir;
-
-      inherit (books) port;
-      host = listenAddress;
-    };
-
-    systemd.tmpfiles.rules = [
-      "d ${libraryDir} 0755 audiobookshelf audiobookshelf - -"
-      "d ${audiobooksDir} 0755 audiobookshelf audiobookshelf - -"
-      "d ${podcastsDir} 0755 audiobookshelf audiobookshelf - -"
-    ];
-
-  };
 in
 {
   options.galaxy = {
@@ -52,7 +33,24 @@ in
 
   config = lib.mkIf books.enable (
     lib.mkMerge [
-      module
+      {
+        services.audiobookshelf = {
+          enable = true;
+          package = pkgs.unstable.audiobookshelf;
+
+          inherit dataDir;
+
+          inherit (books) port;
+          host = listenAddress;
+        };
+
+        systemd.tmpfiles.rules = [
+          "d ${libraryDir} 0755 audiobookshelf audiobookshelf - -"
+          "d ${audiobooksDir} 0755 audiobookshelf audiobookshelf - -"
+          "d ${podcastsDir} 0755 audiobookshelf audiobookshelf - -"
+        ];
+      }
+
       {
         galaxy = {
           proxy.rules = [

@@ -5,10 +5,11 @@ let
   inherit (config.galaxy) domain mail;
   inherit (config.services) go-autoconfig;
 
+  hostname = "mail.${domain}";
+
   rspamdPassword = "galaxy/mail/rspamd/password";
   rspamdWorkerController = "galaxy/mail/rspamd/workerController";
 
-  hostname = "mail.${domain}";
   acmeDir = "/var/lib/acme/${hostname}";
 in
 {

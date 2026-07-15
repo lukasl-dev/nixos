@@ -4,25 +4,8 @@ let
   inherit (config.galaxy) domain household;
 
   listenAddress = "127.0.0.1";
+
   stateDir = "/var/lib/grocy";
-
-  module = {
-    services = {
-      grocy = {
-        enable = true;
-        hostName = household.host;
-        nginx.enableSSL = false;
-      };
-
-      nginx.virtualHosts.${household.host}.listen = [
-        {
-          addr = listenAddress;
-          inherit (household) port;
-        }
-      ];
-    };
-
-  };
 in
 {
   options.galaxy = {
@@ -47,7 +30,23 @@ in
 
   config = lib.mkIf household.enable (
     lib.mkMerge [
-      module
+      {
+        services = {
+          grocy = {
+            enable = true;
+            hostName = household.host;
+            nginx.enableSSL = false;
+          };
+
+          nginx.virtualHosts.${household.host}.listen = [
+            {
+              addr = listenAddress;
+              inherit (household) port;
+            }
+          ];
+        };
+      }
+
       {
         galaxy = {
           proxy.rules = [

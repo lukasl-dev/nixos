@@ -4,26 +4,11 @@ let
   inherit (config) age;
   inherit (config.galaxy) anki;
 
-  password = "galaxy/anki/password";
   listenAddress = "127.0.0.1";
+
+  password = "galaxy/anki/password";
+
   stateDir = "/var/lib/private/anki-sync-server";
-
-  module = {
-    services.anki-sync-server = {
-      enable = true;
-
-      address = listenAddress;
-      inherit (anki) port;
-
-      users = [
-        {
-          username = "lukas";
-          passwordFile = age.secrets.${password}.path;
-        }
-      ];
-    };
-
-  };
 in
 {
   options.galaxy = {
@@ -46,7 +31,22 @@ in
 
     (lib.mkIf anki.enable (
       lib.mkMerge [
-        module
+        {
+          services.anki-sync-server = {
+            enable = true;
+
+            address = listenAddress;
+            inherit (anki) port;
+
+            users = [
+              {
+                username = "lukas";
+                passwordFile = age.secrets.${password}.path;
+              }
+            ];
+          };
+        }
+
         {
           galaxy = {
             proxy.rules = [
