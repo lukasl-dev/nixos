@@ -140,6 +140,7 @@ in
                 RUN_MIGRATIONS_ON_STARTUP = "true";
                 PUBLIC_URL = "https://${sync.host}";
                 CORS_ORIGINS = "https://todo.${domain}";
+                ALLOWED_EMAILS = "*@${domain}";
                 SMTP_HOST = mail.host;
                 SMTP_PORT = "587";
                 SMTP_SECURE = "false";
