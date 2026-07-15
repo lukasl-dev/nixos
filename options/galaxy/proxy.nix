@@ -63,6 +63,12 @@ in
             default = null;
           };
 
+          compress = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = "Compress responses served by this route.";
+          };
+
           to.http = lib.mkOption {
             type = lib.types.str;
           };
@@ -79,6 +85,7 @@ in
       httpsPort = 443;
       hasMeshOnlyRules = lib.any (rule: rule.from.meshOnly) rules;
       hasPrivateRules = lib.any (rule: rule.from.private) rules;
+      hasCompressedRules = lib.any (rule: rule.compress) rules;
     in
     {
       services.traefik = {
@@ -128,6 +135,7 @@ in
                 ]
                 ++ lib.optional (rule.from.path != null) "Path(`${rule.from.path}`)"
                 ++ lib.optional (rule.from.pathPrefix != null) "PathPrefix(`${rule.from.pathPrefix}`)";
+                middlewares = lib.optional rule.from.meshOnly "mesh-only" ++ lib.optional rule.compress "compress";
               in
               {
                 inherit (rule) name;
@@ -136,8 +144,8 @@ in
                   entryPoints = [ (if rule.from.private then "netbirdPrivate" else "websecure") ];
                   service = rule.name;
                 }
-                // lib.optionalAttrs rule.from.meshOnly {
-                  middlewares = [ "mesh-only" ];
+                // lib.optionalAttrs (middlewares != [ ]) {
+                  inherit middlewares;
                 }
                 // lib.optionalAttrs (rule.priority != null) {
                   inherit (rule) priority;
@@ -156,9 +164,11 @@ in
             }) rules
           );
 
-          middlewares = lib.mkIf hasMeshOnlyRules {
-            mesh-only.ipAllowList.sourceRange = meshSourceRanges;
-          };
+          middlewares =
+            lib.optionalAttrs hasMeshOnlyRules {
+              mesh-only.ipAllowList.sourceRange = meshSourceRanges;
+            }
+            // lib.optionalAttrs hasCompressedRules { compress.compress = { }; };
         };
       };
 

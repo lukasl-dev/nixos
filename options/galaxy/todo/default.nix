@@ -28,6 +28,7 @@ in
     galaxy.proxy.rules = [
       {
         name = "todo";
+        compress = true;
         to.http = "http://${listenAddress}:${toString todo.port}";
       }
     ];

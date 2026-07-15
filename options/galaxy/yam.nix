@@ -15,6 +15,9 @@ let
   redisDir = "/var/lib/yamtrack-redis";
   httpPort = "${listenAddress}:${toString yam.port}:8000";
 
+  yamtrackUid = 1000;
+  yamtrackGid = 1000;
+
   secret = "galaxy/yam/secret";
   env = "galaxy/yam/env";
 
@@ -30,6 +33,8 @@ let
           ports = [ httpPort ];
           environment = {
             TZ = "Europe/Berlin";
+            PUID = toString yamtrackUid;
+            PGID = toString yamtrackGid;
             REDIS_URL = "redis://yamtrack-redis:6379";
             URLS = "https://yam.${domain}";
             REGISTRATION = "False";
@@ -53,7 +58,9 @@ let
 
     systemd = {
       tmpfiles.rules = [
-        "d ${stateDir} 0750 root root -"
+        # Yamtrack runs Gunicorn and Celery as this user. SQLite needs write
+        # access to both its database file and the containing directory.
+        "d ${stateDir} 0750 ${toString yamtrackUid} ${toString yamtrackGid} -"
         # redis:8-alpine runs as the in-container `redis` user (uid 999, gid 1000).
         # The data dir must be writable by that user, otherwise background RDB
         # snapshotting fails with "Permission denied" and Redis refuses all writes

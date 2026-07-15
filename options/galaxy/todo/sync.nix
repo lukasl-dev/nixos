@@ -52,7 +52,9 @@ in
 
     image = lib.mkOption {
       type = lib.types.str;
-      default = "ghcr.io/super-productivity/supersync:latest";
+      # The official image is private. This public image is built unchanged
+      # from the corresponding official Super Productivity release source.
+      default = "ghcr.io/warreth/super-sync-server:v18.14.0@sha256:78a8e7f47e1e475e8265a6feb505082fc364a8d507492c8478325043ccb7945e";
       description = "OCI image used for the SuperSync server.";
     };
   };
@@ -239,6 +241,7 @@ in
             path = [ pkgs.docker ];
             serviceConfig = {
               Type = "oneshot";
+              RemainAfterExit = true;
             };
             script = ''
               for attempt in $(seq 1 60); do
