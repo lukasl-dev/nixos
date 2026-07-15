@@ -16,7 +16,6 @@
     ./cache.nix
     ./cal.nix
     ./factorio.nix
-    ./forge.nix
     ./hole.nix
     ./home.nix
     ./household.nix
