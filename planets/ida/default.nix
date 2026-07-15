@@ -6,7 +6,6 @@
     ./boot.nix
     ./hardware-configuration.nix
     ./networking.nix
-    ./sonoff.nix
     ./sd-image.nix
     # ./storage.nix
     ./swap.nix
