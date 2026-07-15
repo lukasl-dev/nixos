@@ -3,7 +3,9 @@
 let
   inherit (config.galaxy) domain peers proxy;
 
-  tailscaleSourceRanges = [
+  meshSourceRanges = [
+    # Tailscale and the current NetBird network both use addresses from the
+    # shared carrier-grade NAT range. Keep Tailscale IPv6 during migration.
     "100.64.0.0/10"
     "fd7a:115c:a1e0::/48"
   ];
@@ -37,10 +39,10 @@ in
                   default = null;
                 };
 
-                tailscaleOnly = lib.mkOption {
+                meshOnly = lib.mkOption {
                   type = lib.types.bool;
                   default = false;
-                  description = "Only allow clients from the Tailscale network.";
+                  description = "Only allow clients from the private mesh networks.";
                 };
 
                 private = lib.mkOption {
@@ -75,7 +77,7 @@ in
     let
       httpPort = 80;
       httpsPort = 443;
-      hasTailscaleOnlyRules = lib.any (rule: rule.from.tailscaleOnly) rules;
+      hasMeshOnlyRules = lib.any (rule: rule.from.meshOnly) rules;
       hasPrivateRules = lib.any (rule: rule.from.private) rules;
     in
     {
@@ -134,8 +136,8 @@ in
                   entryPoints = [ (if rule.from.private then "netbirdPrivate" else "websecure") ];
                   service = rule.name;
                 }
-                // lib.optionalAttrs rule.from.tailscaleOnly {
-                  middlewares = [ "tailscale-only" ];
+                // lib.optionalAttrs rule.from.meshOnly {
+                  middlewares = [ "mesh-only" ];
                 }
                 // lib.optionalAttrs (rule.priority != null) {
                   inherit (rule) priority;
@@ -154,8 +156,8 @@ in
             }) rules
           );
 
-          middlewares = lib.mkIf hasTailscaleOnlyRules {
-            tailscale-only.ipAllowList.sourceRange = tailscaleSourceRanges;
+          middlewares = lib.mkIf hasMeshOnlyRules {
+            mesh-only.ipAllowList.sourceRange = meshSourceRanges;
           };
         };
       };
@@ -163,8 +165,8 @@ in
       users.users.traefik.extraGroups = [ "acme" ];
 
       assertions = map (rule: {
-        assertion = !(rule.from.private && rule.from.tailscaleOnly);
-        message = "Proxy rule ${rule.name} cannot be both private and tailscaleOnly.";
+        assertion = !(rule.from.private && rule.from.meshOnly);
+        message = "Proxy rule ${rule.name} cannot be both private and meshOnly.";
       }) rules;
 
       networking.firewall.allowedTCPPorts = [

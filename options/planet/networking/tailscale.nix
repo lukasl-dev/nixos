@@ -19,10 +19,12 @@ in
     extraUpFlags = [
       "--ssh"
       "--accept-dns=true"
+      "--netfilter-mode=off"
     ];
     extraSetFlags = [
       "--ssh"
       "--accept-dns=true"
+      "--netfilter-mode=off"
     ];
   };
 

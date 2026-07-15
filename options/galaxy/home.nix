@@ -119,18 +119,18 @@ in
       module
       {
         # Make Home Assistant reachable directly from the local network. The
-        # home.lukasl.dev reverse-proxy route remains tailscale-only below.
+        # home.lukasl.dev reverse-proxy route remains mesh-only below.
         networking.firewall.allowedTCPPorts = [ home.port ];
 
         galaxy = {
           backup.paths = [ stateDir ];
           proxy.rules = [
             {
-              name = "home";
-              from = {
-                host = home.host;
-                tailscaleOnly = true;
-              };
+            name = "home";
+            from = {
+              host = home.host;
+              meshOnly = true;
+            };
               to.http = "http://${proxyAddress}:${toString home.port}";
             }
           ];

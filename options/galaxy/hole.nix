@@ -83,7 +83,7 @@ in
         };
 
         # Make Pi-hole DNS reachable from the local network. The web interface
-        # remains behind the tailscale-only reverse proxy below.
+        # remains behind the mesh-only reverse proxy below.
         networking.firewall = {
           allowedTCPPorts = [ dnsPort ];
           allowedUDPPorts = [ dnsPort ];
@@ -96,11 +96,11 @@ in
           ];
           proxy.rules = [
             {
-              name = "hole";
-              from = {
-                host = hole.host;
-                tailscaleOnly = true;
-              };
+          name = "hole";
+          from = {
+            host = hole.host;
+            meshOnly = true;
+          };
               to.http = "http://${listenAddress}:${toString hole.webPort}";
             }
           ];
