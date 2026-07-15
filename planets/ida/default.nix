@@ -8,7 +8,7 @@
     ./networking.nix
     ./sonoff.nix
     ./sd-image.nix
-    ./storage.nix
+    # ./storage.nix
     ./swap.nix
   ];
 
@@ -23,10 +23,10 @@
   };
 
   galaxy = {
-    backup = {
-      enable = true;
-      dataDir = "/mnt/external/restic";
-    };
+    # backup = {
+    #   enable = true;
+    #   dataDir = "/mnt/external/restic";
+    # };
 
     home.enable = true;
     hole.enable = true;

@@ -36,6 +36,9 @@ in
     };
     ${secretsConf} = {
       rekeyFile = ../../secrets/planets/ida/wireless/secrets.conf.age;
+      owner = "wpa_supplicant";
+      group = "wpa_supplicant";
+      mode = "0400";
       generator = {
         dependencies = {
           password = age.secrets.${password};
