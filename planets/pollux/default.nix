@@ -31,6 +31,7 @@
     notes.enable = true;
     peers.enable = true;
     term.enable = true;
+    todo.enable = true;
     vault.enable = true;
     waka.enable = true;
     www.enable = true;

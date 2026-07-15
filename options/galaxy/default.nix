@@ -24,6 +24,7 @@
     ./status.nix
     ./stalwart.nix
     ./term.nix
+    ./todo.nix
     ./vault.nix
     ./waka.nix
     ./www.nix
