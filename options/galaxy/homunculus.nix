@@ -40,6 +40,8 @@ let
       network
       (rw-bind stateDir stateDir)
       (add-pkg-deps [
+        pkgs.agent-browser
+        pkgs.chromium
         pkgs.curl
         pkgs.diffutils
         pkgs.exiftool
@@ -111,6 +113,11 @@ in
           package = jailedHermes;
 
           settings = {
+            toolsets = [
+              "hermes-cli"
+              "browser"
+            ];
+            browser.engine = "chrome";
             model = {
               provider = "opencode-go";
               default = "deepseek-v4-flash";
@@ -120,6 +127,8 @@ in
           };
 
           environment = {
+            AGENT_BROWSER_ARGS = "--no-sandbox,--disable-dev-shm-usage";
+            AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
             MATRIX_HOMESERVER = "https://matrix.${domain}";
             MATRIX_USER_ID = "@homunculus:${domain}";
             MATRIX_ALLOWED_USERS = "@${user.name}:${domain}";
