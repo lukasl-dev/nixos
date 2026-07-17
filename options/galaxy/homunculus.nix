@@ -31,7 +31,31 @@ let
     [
       network
       (rw-bind stateDir stateDir)
-      (add-pkg-deps [ hermesLcm ])
+      (add-pkg-deps [
+        pkgs.curl
+        pkgs.diffutils
+        pkgs.exiftool
+        pkgs.fd
+        pkgs.file
+        pkgs.findutils
+        pkgs.gawk
+        pkgs.gnugrep
+        pkgs.gnused
+        pkgs.gnutar
+        pkgs.gzip
+        hermesLcm
+        pkgs.git
+        pkgs.imagemagick
+        pkgs.jpegoptim
+        pkgs.jq
+        pkgs.libwebp
+        pkgs.oxipng
+        pkgs.patch
+        pkgs.pngquant
+        pkgs.poppler-utils
+        pkgs.unzip
+        pkgs.zip
+      ])
     ]
   );
 in
