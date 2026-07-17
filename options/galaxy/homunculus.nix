@@ -16,6 +16,7 @@ let
   stateDir = "/var/lib/hermes";
 
   opencodeApiKey = "universe/opencode/apiKey";
+  hassToken = "galaxy/hass/token";
   matrixAccount = "galaxy/matrix/accounts/homunculus";
   matrixEnvironment = "galaxy/homunculus/matrixEnvironment";
 
@@ -81,6 +82,11 @@ in
     lib.mkMerge [
       {
         age.secrets = {
+          ${hassToken} = {
+            rekeyFile = ../../secrets/galaxy/hass/token.age;
+            intermediary = true;
+          };
+
           ${matrixAccount} = {
             rekeyFile = ../../secrets/galaxy/matrix/accounts/homunculus.age;
             intermediary = true;
@@ -91,14 +97,17 @@ in
             generator = {
               dependencies = {
                 account = age.secrets.${matrixAccount};
+                hass = age.secrets.${hassToken};
                 opencode = age.secrets.${opencodeApiKey};
               };
               script =
                 { decrypt, deps, ... }:
                 ''
                   password="$(${decrypt} "${deps.account.file}")"
+                  hass_token="$(${decrypt} "${deps.hass.file}")"
                   opencode_api_key="$(${decrypt} "${deps.opencode.file}")"
                   printf 'MATRIX_PASSWORD=%s\n' "$password"
+                  printf 'HASS_TOKEN=%s\n' "$hass_token"
                   printf 'OPENCODE_GO_API_KEY=%s\n' "$opencode_api_key"
                 '';
             };
@@ -129,6 +138,7 @@ in
           environment = {
             AGENT_BROWSER_ARGS = "--no-sandbox,--disable-dev-shm-usage";
             AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
+            HASS_URL = "https://home.${domain}";
             MATRIX_HOMESERVER = "https://matrix.${domain}";
             MATRIX_USER_ID = "@homunculus:${domain}";
             MATRIX_ALLOWED_USERS = "@${user.name}:${domain}";
@@ -138,9 +148,10 @@ in
           };
           environmentFiles = [ age.secrets.${matrixEnvironment}.path ];
 
-          extraDependencyGroups = lib.mkMerge [
-            [ "voice" ]
-            (lib.mkIf matrix.enable [ "matrix" ])
+          extraDependencyGroups = [
+            "homeassistant"
+            "voice"
+            "matrix"
           ];
           extraPlugins = [ hermesLcm ];
         };
