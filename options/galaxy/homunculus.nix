@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }:
 
@@ -58,9 +59,13 @@ in
           enable = true;
           addToSystemPackages = true;
 
-          settings.model = {
-            provider = "opencode-go";
-            default = "deepseek-v4-flash";
+          settings = {
+            model = {
+              provider = "opencode-go";
+              default = "deepseek-v4-flash";
+            };
+            plugins.enabled = [ "hermes-lcm" ];
+            context.engine = "lcm";
           };
 
           environment = {
@@ -74,9 +79,18 @@ in
           environmentFiles = [ age.secrets.${matrixEnvironment}.path ];
 
           extraDependencyGroups = [ "matrix" ];
+          extraPlugins = [
+            (pkgs.fetchFromGitHub {
+              owner = "stephenschoettler";
+              repo = "hermes-lcm";
+              rev = "v0.19.0";
+              hash = "sha256-B80HCn3BT+M1B8THMm3Ph5tpimTB68yIVkBfPaV4X40=";
+            })
+          ];
 
           container = {
             enable = true;
+            image = "nixos/nix:latest";
             hostUsers = [ user.name ];
           };
         };
