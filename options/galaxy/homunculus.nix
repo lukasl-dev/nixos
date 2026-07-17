@@ -129,7 +129,10 @@ in
           };
           environmentFiles = [ age.secrets.${matrixEnvironment}.path ];
 
-          extraDependencyGroups = lib.mkIf matrix.enable [ "matrix" ];
+          extraDependencyGroups = lib.mkMerge [
+            [ "voice" ]
+            (lib.mkIf matrix.enable [ "matrix" ])
+          ];
           extraPlugins = [ hermesLcm ];
         };
 
