@@ -36,12 +36,18 @@ let
     '';
   };
 
+  plannSkills = pkgs.runCommand "hermes-plann-skills" { } ''
+    mkdir -p "$out/plann"
+    cp ${../planet/programs/pi/skills/plann/SKILL.md} "$out/plann/SKILL.md"
+  '';
+
   jailedHermes = jail "hermes" inputs.hermes-agent.packages.${system}.default (
     with jail.combinators;
     [
       network
       (rw-bind stateDir stateDir)
       (ro-bind plann.configFile plann.configFile)
+      (ro-bind plannSkills plannSkills)
       (add-pkg-deps [
         pkgs.agent-browser
         pkgs.chromium
@@ -136,6 +142,7 @@ in
             };
             plugins.enabled = [ "hermes-lcm" ];
             context.engine = "lcm";
+            skills.external_dirs = [ plannSkills ];
           };
 
           environment = {

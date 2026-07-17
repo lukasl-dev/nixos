@@ -112,6 +112,7 @@ in
         ./skills/github
         ./skills/lightpanda
         ./skills/obsidian
+        ./skills/plann
         ./skills/tikzjax
         ./skills/zig
 
