@@ -102,17 +102,6 @@ in
 
         users.users.${user.name}.extraGroups = [ config.services.hermes-agent.group ];
 
-        systemd.services.hermes-agent.serviceConfig = {
-          CapabilityBoundingSet = "";
-          LockPersonality = true;
-          PrivateDevices = true;
-          ProtectControlGroups = true;
-          ProtectKernelModules = true;
-          ProtectKernelTunables = true;
-          RestrictRealtime = true;
-          SystemCallArchitectures = "native";
-        };
-
         galaxy.backup.paths = [ stateDir ];
       }
     ]
