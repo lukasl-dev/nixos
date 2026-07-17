@@ -18,6 +18,7 @@
     ./factorio.nix
     ./hole.nix
     ./home.nix
+    ./homunculus.nix
     ./household.nix
     ./mail.nix
     ./notes.nix

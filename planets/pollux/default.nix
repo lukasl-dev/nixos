@@ -26,6 +26,7 @@
       runner.enable = true;
     };
     household.enable = true;
+    homunculus.enable = true;
     mail.enable = true;
     matrix.enable = true;
     notes.enable = true;

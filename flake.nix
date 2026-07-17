@@ -70,6 +70,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lightpanda.url = "github:lukasl-dev/browser";
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     nixos-anywhere = {
       url = "github:nix-community/nixos-anywhere";
       inputs.nixpkgs.follows = "nixpkgs";
