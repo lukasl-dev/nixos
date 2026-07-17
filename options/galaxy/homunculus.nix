@@ -26,6 +26,14 @@ let
     hash = "sha256-B80HCn3BT+M1B8THMm3Ph5tpimTB68yIVkBfPaV4X40=";
   };
 
+  pdfToMarkdown = pkgs.writeShellApplication {
+    name = "pdftomd";
+    runtimeInputs = [ pkgs.bun ];
+    text = ''
+      exec bun x markit-ai "$@"
+    '';
+  };
+
   jailedHermes = jail "hermes" inputs.hermes-agent.packages.${system}.default (
     with jail.combinators;
     [
@@ -51,6 +59,7 @@ let
         pkgs.libwebp
         pkgs.oxipng
         pkgs.patch
+        pdfToMarkdown
         pkgs.pngquant
         pkgs.poppler-utils
         pkgs.unzip
