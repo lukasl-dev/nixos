@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  jail,
   lib,
   pkgs,
   ...
@@ -8,15 +9,31 @@
 
 let
   inherit (config) age;
-  inherit (config.galaxy) homunculus;
-  inherit (config.galaxy) domain;
+  inherit (config.galaxy) domain matrix homunculus;
   inherit (config.planet) user;
+  inherit (pkgs.stdenv.hostPlatform) system;
 
   stateDir = "/var/lib/hermes";
 
   opencodeApiKey = "universe/opencode/apiKey";
   matrixAccount = "galaxy/matrix/accounts/homunculus";
   matrixEnvironment = "galaxy/homunculus/matrixEnvironment";
+
+  hermesLcm = pkgs.fetchFromGitHub {
+    owner = "stephenschoettler";
+    repo = "hermes-lcm";
+    rev = "v0.19.0";
+    hash = "sha256-B80HCn3BT+M1B8THMm3Ph5tpimTB68yIVkBfPaV4X40=";
+  };
+
+  jailedHermes = jail "hermes" inputs.hermes-agent.packages.${system}.default (
+    with jail.combinators;
+    [
+      network
+      (rw-bind stateDir stateDir)
+      (add-pkg-deps [ hermesLcm ])
+    ]
+  );
 in
 {
   imports = [ inputs.hermes-agent.nixosModules.default ];
@@ -58,6 +75,7 @@ in
         services.hermes-agent = {
           enable = true;
           addToSystemPackages = true;
+          package = jailedHermes;
 
           settings = {
             model = {
@@ -78,21 +96,21 @@ in
           };
           environmentFiles = [ age.secrets.${matrixEnvironment}.path ];
 
-          extraDependencyGroups = [ "matrix" ];
-          extraPlugins = [
-            (pkgs.fetchFromGitHub {
-              owner = "stephenschoettler";
-              repo = "hermes-lcm";
-              rev = "v0.19.0";
-              hash = "sha256-B80HCn3BT+M1B8THMm3Ph5tpimTB68yIVkBfPaV4X40=";
-            })
-          ];
+          extraDependencyGroups = lib.mkIf matrix.enable [ "matrix" ];
+          extraPlugins = [ hermesLcm ];
+        };
 
-          container = {
-            enable = true;
-            image = "nixos/nix:latest";
-            hostUsers = [ user.name ];
-          };
+        users.users.${user.name}.extraGroups = [ config.services.hermes-agent.group ];
+
+        systemd.services.hermes-agent.serviceConfig = {
+          CapabilityBoundingSet = "";
+          LockPersonality = true;
+          PrivateDevices = true;
+          ProtectControlGroups = true;
+          ProtectKernelModules = true;
+          ProtectKernelTunables = true;
+          RestrictRealtime = true;
+          SystemCallArchitectures = "native";
         };
 
         galaxy.backup.paths = [ stateDir ];
