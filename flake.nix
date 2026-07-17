@@ -157,6 +157,7 @@
         in
         {
           helium = pkgs.callPackage ./packages/helium { };
+          plann = pkgs.plann;
           upterm = pkgs.callPackage ./packages/upterm { };
           taman = pkgs.callPackage ./packages/taman { };
 

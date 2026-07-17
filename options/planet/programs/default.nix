@@ -37,6 +37,7 @@
     ./nvim.nix
     ./obsidian.nix
     ./perf.nix
+    ./plann.nix
     ./poppler-utils.nix
     ./ripgrep.nix
     ./seahorse.nix

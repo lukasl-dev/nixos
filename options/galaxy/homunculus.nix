@@ -11,6 +11,7 @@ let
   inherit (config) age;
   inherit (config.galaxy) domain matrix homunculus;
   inherit (config.planet) user;
+  inherit (config.planet.programs) plann;
   inherit (pkgs.stdenv.hostPlatform) system;
 
   stateDir = "/var/lib/hermes";
@@ -40,6 +41,7 @@ let
     [
       network
       (rw-bind stateDir stateDir)
+      (ro-bind plann.configFile plann.configFile)
       (add-pkg-deps [
         pkgs.agent-browser
         pkgs.chromium
@@ -63,6 +65,7 @@ let
         pkgs.oxipng
         pkgs.patch
         pdfToMarkdown
+        plann.package
         pkgs.pngquant
         pkgs.poppler-utils
         pkgs.unzip
@@ -156,7 +159,10 @@ in
           extraPlugins = [ hermesLcm ];
         };
 
-        users.users.${user.name}.extraGroups = [ config.services.hermes-agent.group ];
+        users.users = {
+          ${user.name}.extraGroups = [ config.services.hermes-agent.group ];
+          ${config.services.hermes-agent.user}.extraGroups = [ "plann" ];
+        };
 
         galaxy.backup.paths = [ stateDir ];
       }

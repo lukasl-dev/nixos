@@ -10,6 +10,7 @@ rec {
     netbird-server = final.callPackage ../packages/netbird-server {
       buildGoModule = final.unstable.buildGoModule;
     };
+    plann = final.callPackage ../packages/plann { };
   };
 
   default = lib.composeManyExtensions [
