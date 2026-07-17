@@ -18,7 +18,10 @@ let
   registrationToken = "galaxy/matrix/registrationToken";
 in
 {
-  imports = [ ./turn.nix ];
+  imports = [
+    ./turn.nix
+    ./whatsapp.nix
+  ];
 
   options.galaxy = {
     matrix = {
