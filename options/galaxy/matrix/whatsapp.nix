@@ -16,6 +16,7 @@ let
   stateDir = "/var/lib/mautrix-whatsapp";
   appserviceDir = "${stateDir}/appservices";
   registrationFile = "${stateDir}/whatsapp-registration.yaml";
+  registrationConfigFile = "${stateDir}/registration-config.yaml";
 
   pickleKey = "galaxy/matrix/whatsapp/pickleKey";
   environment = "galaxy/matrix/whatsapp/environment";
@@ -61,6 +62,8 @@ in
         environmentFile = age.secrets.${environment}.path;
 
         settings = {
+          network.history_sync.max_initial_conversations = 0;
+
           homeserver = {
             address = "http://${listenAddress}:${toString matrix.port}";
             inherit domain;
@@ -107,9 +110,10 @@ in
         script = # bash
           ''
             if [[ ! -s '${registrationFile}' ]]; then
+              install -m 0600 '${registrationConfig}' '${registrationConfigFile}'
               ${lib.getExe mautrix-whatsapp.package} \
                 --generate-registration \
-                --config='${registrationConfig}' \
+                --config='${registrationConfigFile}' \
                 --registration='${registrationFile}'
             fi
 
