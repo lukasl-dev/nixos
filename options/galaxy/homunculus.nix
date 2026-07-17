@@ -46,7 +46,7 @@ in
                   password="$(${decrypt} "${deps.account.file}")"
                   opencode_api_key="$(${decrypt} "${deps.opencode.file}")"
                   printf 'MATRIX_PASSWORD=%s\n' "$password"
-                  printf 'OPENAI_API_KEY=%s\n' "$opencode_api_key"
+                  printf 'OPENCODE_GO_API_KEY=%s\n' "$opencode_api_key"
                 '';
             };
           };
@@ -59,8 +59,8 @@ in
           addToSystemPackages = true;
 
           settings.model = {
+            provider = "opencode-go";
             default = "deepseek-v4-flash";
-            base_url = "https://opencode.ai/zen/go/v1";
           };
 
           environment = {
