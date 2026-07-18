@@ -26,8 +26,9 @@ in
     let
       username = "lukas";
 
-      password = "galaxy/cal/password";
+      lukasPassword = "galaxy/cal/accounts/lukas";
       htpasswd = "galaxy/cal/htpasswd";
+      marioPassword = "galaxy/cal/accounts/mario";
 
       module = {
         services.radicale = {
@@ -70,8 +71,14 @@ in
     [
       {
         age.secrets = {
-          ${password} = {
-            rekeyFile = ../../secrets/galaxy/cal/password.age;
+          ${lukasPassword} = {
+            rekeyFile = ../../secrets/galaxy/cal/accounts/lukas.age;
+            generator.script = "alnum";
+            intermediary = true;
+          };
+
+          ${marioPassword} = {
+            rekeyFile = ../../secrets/galaxy/cal/accounts/mario.age;
             generator.script = "alnum";
             intermediary = true;
           };
@@ -81,7 +88,8 @@ in
             mode = "0444";
             generator = {
               dependencies = {
-                password = config.age.secrets.${password};
+                lukasPassword = config.age.secrets.${lukasPassword};
+                marioPassword = config.age.secrets.${marioPassword};
               };
               script =
                 {
@@ -94,9 +102,10 @@ in
                   htpasswd = lib.getExe' pkgs.apacheHttpd "htpasswd";
                 in
                 ''
-                  password="$(${decrypt} "${deps.password.file}")"
-                  hash="$(printf '%s\n' "$password" | ${htpasswd} -niBC 10 ${username} | cut -d: -f2-)"
-                  printf '%s:%s\n' ${username} "$hash"
+                  ${decrypt} "${deps.lukasPassword.file}" \
+                    | ${htpasswd} -niBC 10 ${username}
+                  ${decrypt} "${deps.marioPassword.file}" \
+                    | ${htpasswd} -niBC 10 mario
                 '';
             };
           };

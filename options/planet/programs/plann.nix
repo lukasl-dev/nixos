@@ -10,7 +10,7 @@ let
   inherit (config.galaxy) domain;
   inherit (config.planet) user;
 
-  password = "galaxy/cal/password";
+  password = "galaxy/cal/accounts/lukas";
   configFile = "galaxy/cal/plann";
 
   package = pkgs.symlinkJoin {
