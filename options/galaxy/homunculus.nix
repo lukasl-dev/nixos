@@ -207,6 +207,10 @@ in
           ${config.services.hermes-agent.user}.extraGroups = [ "plann" ];
         };
 
+        systemd.services.hermes-agent.restartTriggers = [
+          age.secrets.${environment}.rekeyFile
+        ];
+
         galaxy.backup.paths = [ stateDir ];
       }
     ]
