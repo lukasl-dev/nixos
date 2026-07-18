@@ -18,7 +18,7 @@ let
 
   opencodeApiKey = "universe/opencode/apiKey";
   discordToken = "galaxy/homunculus/discord/token";
-  environmentSecret = "galaxy/homunculus/env";
+  environment = "galaxy/homunculus/env";
   hassToken = "galaxy/hass/token";
   matrixAccount = "galaxy/matrix/accounts/homunculus";
 
@@ -109,7 +109,7 @@ in
             intermediary = true;
           };
 
-          ${environmentSecret} = {
+          ${environment} = {
             rekeyFile = ../../secrets/galaxy/homunculus/env.age;
             generator = {
               dependencies = {
@@ -191,7 +191,7 @@ in
             MATRIX_E2EE_MODE = "required";
             MATRIX_SESSION_SCOPE = "room";
           };
-          environmentFiles = [ age.secrets.${environmentSecret}.path ];
+          environmentFiles = [ age.secrets.${environment}.path ];
 
           extraDependencyGroups = [
             "homeassistant"
