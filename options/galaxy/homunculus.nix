@@ -55,6 +55,7 @@ let
         pkgs.diffutils
         pkgs.exiftool
         pkgs.fd
+        pkgs.ffmpeg-headless
         pkgs.file
         pkgs.findutils
         pkgs.gawk
@@ -75,6 +76,7 @@ let
         pkgs.pngquant
         pkgs.poppler-utils
         pkgs.unzip
+        pkgs.yt-dlp
         pkgs.zip
       ])
     ]
