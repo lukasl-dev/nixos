@@ -15,6 +15,7 @@ let
   inherit (pkgs.stdenv.hostPlatform) system;
 
   stateDir = "/var/lib/hermes";
+  soulFile = ./SOUL.md;
 
   opencodeApiKey = "universe/opencode/apiKey";
   discordToken = "galaxy/homunculus/discord/token";
@@ -39,7 +40,7 @@ let
 
   plannSkills = pkgs.runCommand "hermes-plann-skills" { } ''
     mkdir -p "$out/plann"
-    cp ${../planet/programs/pi/skills/plann/SKILL.md} "$out/plann/SKILL.md"
+    cp ${../../planet/programs/pi/skills/plann/SKILL.md} "$out/plann/SKILL.md"
   '';
 
   jailedHermes = jail "hermes" inputs.hermes-agent.packages.${system}.default (
@@ -95,22 +96,22 @@ in
       {
         age.secrets = {
           ${discordToken} = {
-            rekeyFile = ../../secrets/galaxy/homunculus/discord/token.age;
+            rekeyFile = ../../../secrets/galaxy/homunculus/discord/token.age;
             intermediary = true;
           };
 
           ${hassToken} = {
-            rekeyFile = ../../secrets/galaxy/hass/token.age;
+            rekeyFile = ../../../secrets/galaxy/hass/token.age;
             intermediary = true;
           };
 
           ${matrixAccount} = {
-            rekeyFile = ../../secrets/galaxy/matrix/accounts/homunculus.age;
+            rekeyFile = ../../../secrets/galaxy/matrix/accounts/homunculus.age;
             intermediary = true;
           };
 
           ${environment} = {
-            rekeyFile = ../../secrets/galaxy/homunculus/env.age;
+            rekeyFile = ../../../secrets/galaxy/homunculus/env.age;
             generator = {
               dependencies = {
                 account = age.secrets.${matrixAccount};
@@ -209,7 +210,13 @@ in
 
         systemd.services.hermes-agent.restartTriggers = [
           age.secrets.${environment}.rekeyFile
+          soulFile
         ];
+
+        system.activationScripts."hermes-agent-soul" = lib.stringAfter [ "hermes-agent-setup" ] ''
+          install -o ${config.services.hermes-agent.user} -g ${config.services.hermes-agent.group} -m 0640 \
+            ${soulFile} ${stateDir}/.hermes/SOUL.md
+        '';
 
         galaxy.backup.paths = [ stateDir ];
       }

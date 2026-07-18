@@ -6,6 +6,7 @@
     ./proxy.nix
 
     ./forge
+    ./homunculus
     ./matrix
     ./todo
 
@@ -18,7 +19,6 @@
     ./factorio.nix
     ./hole.nix
     ./home.nix
-    ./homunculus.nix
     ./household.nix
     ./mail.nix
     ./notes.nix
