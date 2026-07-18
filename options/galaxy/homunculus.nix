@@ -18,9 +18,9 @@ let
 
   opencodeApiKey = "universe/opencode/apiKey";
   discordToken = "galaxy/homunculus/discord/token";
+  environmentSecret = "galaxy/homunculus/env";
   hassToken = "galaxy/hass/token";
   matrixAccount = "galaxy/matrix/accounts/homunculus";
-  matrixEnvironment = "galaxy/homunculus/matrixEnvironment";
 
   hermesLcm = pkgs.fetchFromGitHub {
     owner = "stephenschoettler";
@@ -109,8 +109,8 @@ in
             intermediary = true;
           };
 
-          ${matrixEnvironment} = {
-            rekeyFile = ../../secrets/galaxy/homunculus/matrixEnvironment.age;
+          ${environmentSecret} = {
+            rekeyFile = ../../secrets/galaxy/homunculus/env.age;
             generator = {
               dependencies = {
                 account = age.secrets.${matrixAccount};
@@ -191,7 +191,7 @@ in
             MATRIX_E2EE_MODE = "required";
             MATRIX_SESSION_SCOPE = "room";
           };
-          environmentFiles = [ age.secrets.${matrixEnvironment}.path ];
+          environmentFiles = [ age.secrets.${environmentSecret}.path ];
 
           extraDependencyGroups = [
             "homeassistant"
