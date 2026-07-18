@@ -9,6 +9,7 @@
     ./bat.nix
     ./bitwarden.nix
     ./btop.nix
+    ./calendar.nix
     ./delta.nix
     ./difftastic.nix
     ./direnv.nix
