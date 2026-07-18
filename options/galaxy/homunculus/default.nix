@@ -213,10 +213,12 @@ in
           soulFile
         ];
 
-        system.activationScripts."hermes-agent-soul" = lib.stringAfter [ "hermes-agent-setup" ] ''
-          install -o ${config.services.hermes-agent.user} -g ${config.services.hermes-agent.group} -m 0640 \
-            ${soulFile} ${stateDir}/.hermes/SOUL.md
-        '';
+        system.activationScripts."hermes-agent-soul" =
+          lib.stringAfter [ "hermes-agent-setup" ] # bash
+            ''
+              install -o ${config.services.hermes-agent.user} -g ${config.services.hermes-agent.group} -m 0640 \
+                ${soulFile} ${stateDir}/.hermes/SOUL.md
+            '';
 
         galaxy.backup.paths = [ stateDir ];
       }
