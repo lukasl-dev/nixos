@@ -17,6 +17,7 @@ let
   stateDir = "/var/lib/hermes";
 
   opencodeApiKey = "universe/opencode/apiKey";
+  discordToken = "galaxy/homunculus/discord/token";
   hassToken = "galaxy/hass/token";
   matrixAccount = "galaxy/matrix/accounts/homunculus";
   matrixEnvironment = "galaxy/homunculus/matrixEnvironment";
@@ -93,6 +94,11 @@ in
     lib.mkMerge [
       {
         age.secrets = {
+          ${discordToken} = {
+            rekeyFile = ../../secrets/galaxy/homunculus/discord/token.age;
+            intermediary = true;
+          };
+
           ${hassToken} = {
             rekeyFile = ../../secrets/galaxy/hass/token.age;
             intermediary = true;
@@ -108,6 +114,7 @@ in
             generator = {
               dependencies = {
                 account = age.secrets.${matrixAccount};
+                discord = age.secrets.${discordToken};
                 hass = age.secrets.${hassToken};
                 opencode = age.secrets.${opencodeApiKey};
               };
@@ -115,9 +122,11 @@ in
                 { decrypt, deps, ... }:
                 ''
                   password="$(${decrypt} "${deps.account.file}")"
+                  discord_token="$(${decrypt} "${deps.discord.file}")"
                   hass_token="$(${decrypt} "${deps.hass.file}")"
                   opencode_api_key="$(${decrypt} "${deps.opencode.file}")"
                   printf 'MATRIX_PASSWORD=%s\n' "$password"
+                  printf 'DISCORD_BOT_TOKEN=%s\n' "$discord_token"
                   printf 'HASS_TOKEN=%s\n' "$hass_token"
                   printf 'OPENCODE_GO_API_KEY=%s\n' "$opencode_api_key"
                 '';
@@ -173,6 +182,7 @@ in
           environment = {
             AGENT_BROWSER_ARGS = "--no-sandbox,--disable-dev-shm-usage";
             AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
+            DISCORD_ALLOWED_USERS = "370883999528124416";
             HASS_URL = "https://home.${domain}";
             MATRIX_HOMESERVER = "https://matrix.${domain}";
             MATRIX_USER_ID = "@homunculus:${domain}";
@@ -185,6 +195,7 @@ in
 
           extraDependencyGroups = [
             "homeassistant"
+            "messaging"
             "voice"
             "matrix"
           ];
