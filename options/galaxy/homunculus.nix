@@ -141,6 +141,29 @@ in
             model = {
               provider = "opencode-go";
               default = "deepseek-v4-flash";
+              persist_switch_by_default = false;
+            };
+            model_aliases = {
+              flash = {
+                provider = "opencode-go";
+                model = "deepseek-v4-flash";
+              };
+              luna = {
+                provider = "openai-codex";
+                model = "gpt-5.6-luna";
+              };
+              terra = {
+                provider = "openai-codex";
+                model = "gpt-5.6-terra";
+              };
+              sol = {
+                provider = "openai-codex";
+                model = "gpt-5.6-sol";
+              };
+            };
+            delegation = {
+              provider = "openai-codex";
+              model = "gpt-5.6-sol";
             };
             plugins.enabled = [ "hermes-lcm" ];
             context.engine = "lcm";
