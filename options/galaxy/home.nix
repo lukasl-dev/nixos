@@ -102,6 +102,8 @@ in
             "cast"
             "ipp"
             "speedtestdotnet"
+            "forecast_solar"
+            "pi_hole"
 
             "ecovacs"
             "solax"
