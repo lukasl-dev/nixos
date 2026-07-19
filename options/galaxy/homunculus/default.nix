@@ -54,6 +54,7 @@ let
         pkgs.agent-browser
         pkgs.chromium
         pkgs.curl
+        pkgs.ddgr
         pkgs.diffutils
         pkgs.exiftool
         pkgs.fd
