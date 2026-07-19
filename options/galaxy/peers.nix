@@ -38,6 +38,9 @@ let
     RestrictAddressFamilies = [
       "AF_INET"
       "AF_INET6"
+      # The embedded NetBird client discovers interfaces and routes through
+      # rtnetlink before establishing its userspace WireGuard tunnel.
+      "AF_NETLINK"
       "AF_UNIX"
     ];
   };
