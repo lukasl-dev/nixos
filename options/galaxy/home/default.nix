@@ -132,7 +132,12 @@ in
               trusted_proxies = [
                 "127.0.0.1"
                 "::1"
+                # netbird-proxy reaches peer targets through the mesh and
+                # forwards the original client address.
+                "100.64.0.0/10"
               ];
+              ip_ban_enabled = true;
+              login_attempts_threshold = 5;
             };
 
             template = [
@@ -185,7 +190,8 @@ in
 
       {
         # Make Home Assistant reachable directly from the local network. The
-        # home.lukasl.dev reverse-proxy route remains mesh-only below.
+        # route below remains a mesh-only fallback; public traffic is carried
+        # from Pollux to this port by NetBird's reverse proxy.
         networking.firewall.allowedTCPPorts = [ home.port ];
 
         galaxy = {

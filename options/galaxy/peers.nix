@@ -355,7 +355,11 @@ in
 
         dynamicConfigOptions.tcp = {
           routers.netbird-proxy = {
-            rule = "HostSNIRegexp(`^.+\\.${lib.escapeRegex peers.host}$`)";
+            rule = lib.concatStringsSep " || " [
+              "HostSNIRegexp(`^.+\\.${lib.escapeRegex peers.host}$`)"
+              # Registered in NetBird as a bare custom domain.
+              "HostSNI(`home.${domain}`)"
+            ];
             entryPoints = [ "websecure" ];
             service = "netbird-proxy";
             priority = 1000;
