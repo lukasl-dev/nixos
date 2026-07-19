@@ -43,6 +43,22 @@ let
     cp ${../../planet/programs/pi/skills/plann/SKILL.md} "$out/plann/SKILL.md"
   '';
 
+  scientificPython = pkgs.python3.withPackages (
+    pythonPackages: with pythonPackages; [
+      beautifulsoup4
+      lxml
+      matplotlib
+      numpy
+      openpyxl
+      pandas
+      scikit-learn
+      scipy
+      seaborn
+      statsmodels
+      sympy
+    ]
+  );
+
   jailedHermes = jail "hermes" inputs.hermes-agent.packages.${system}.default (
     with jail.combinators;
     [
@@ -52,35 +68,48 @@ let
       (ro-bind plannSkills plannSkills)
       (add-pkg-deps [
         pkgs.agent-browser
+        pkgs.bzip2
         pkgs.chromium
         pkgs.curl
         pkgs.ddgr
         pkgs.diffutils
+        pkgs.duckdb
         pkgs.exiftool
         pkgs.fd
         pkgs.ffmpeg-headless
         pkgs.file
         pkgs.findutils
         pkgs.gawk
+        pkgs.git
         pkgs.gnugrep
         pkgs.gnused
         pkgs.gnutar
+        pkgs.graphviz
         pkgs.gzip
         hermesLcm
-        pkgs.git
         pkgs.imagemagick
         pkgs.jpegoptim
         pkgs.jq
         pkgs.libwebp
         pkgs.oxipng
+        pkgs.p7zip
+        pkgs.pandoc
         pkgs.patch
         pdfToMarkdown
         plann.package
         pkgs.pngquant
         pkgs.poppler-utils
+        pkgs.ripgrep
+        scientificPython
+        pkgs.sqlite
+        pkgs.tesseract
+        pkgs.texlive.combined.scheme-medium
         pkgs.unzip
+        pkgs.xz
+        pkgs.yq-go
         pkgs.yt-dlp
         pkgs.zip
+        pkgs.zstd
       ])
     ]
   );
