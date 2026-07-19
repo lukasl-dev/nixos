@@ -134,6 +134,51 @@ in
                 "::1"
               ];
             };
+
+            template = [
+              {
+                sensor = [
+                  {
+                    name = "Total PV Power";
+                    unique_id = "solax_total_pv_power";
+                    unit_of_measurement = "W";
+                    device_class = "power";
+                    state_class = "measurement";
+                    availability = ''
+                      {{ is_number(states('sensor.solax_pv1_power'))
+                         and is_number(states('sensor.solax_pv2_power'))
+                         and is_number(states('sensor.solax_pv3_power')) }}
+                    '';
+                    state = ''
+                      {% set pv1 = states('sensor.solax_pv1_power') %}
+                      {% set pv2 = states('sensor.solax_pv2_power') %}
+                      {% set pv3 = states('sensor.solax_pv3_power') %}
+                      {% if is_number(pv1) and is_number(pv2) and is_number(pv3) %}
+                        {{ (pv1 | float) + (pv2 | float) + (pv3 | float) }}
+                      {% endif %}
+                    '';
+                  }
+                  {
+                    name = "Total Battery Power";
+                    unique_id = "solax_total_battery_power";
+                    unit_of_measurement = "W";
+                    device_class = "power";
+                    state_class = "measurement";
+                    availability = ''
+                      {{ is_number(states('sensor.solax_battery_1_power'))
+                         and is_number(states('sensor.solax_battery_2_power')) }}
+                    '';
+                    state = ''
+                      {% set battery1 = states('sensor.solax_battery_1_power') %}
+                      {% set battery2 = states('sensor.solax_battery_2_power') %}
+                      {% if is_number(battery1) and is_number(battery2) %}
+                        {{ (battery1 | float) + (battery2 | float) }}
+                      {% endif %}
+                    '';
+                  }
+                ];
+              }
+            ];
           };
         };
       }
