@@ -12,5 +12,7 @@
     - [ ] Replace wrapper-style overrides with `makeWrapper`/launcher derivations where possible
     - [ ] Keep upstream package derivations cacheable
     - [ ] Rebuild one host and confirm cache hits improve
-- [ ] Replace woodpecker with forgejo actions for simplicity
+- [ ] Replace netbird with declarative wireguard
+- [ ] Users for homunculus
+- [ ] Get rid of universe.nix
 
