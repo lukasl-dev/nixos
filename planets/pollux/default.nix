@@ -18,7 +18,6 @@
     anki.enable = true;
     cache.enable = true;
     books.enable = true;
-    box.enable = true;
     cal.enable = true;
     factorio.enable = true;
     forge = {
