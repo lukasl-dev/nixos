@@ -1,6 +1,7 @@
 { config, lib, ... }:
 
 let
+  inherit (config.age) secrets;
   inherit (config.planet) user;
 in
 {
@@ -8,21 +9,22 @@ in
     user = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "";
         description = "Username of the user.";
+        default = "lukas";
         example = "lukas";
       };
 
       password = lib.mkOption {
-        type = lib.types.path;
-        description = "Public SSH key file path. Path values are copied to the Nix store.";
-        example = lib.literalExpression "./id_ed25519.pub";
+        type = lib.types.str;
+        description = "Name of the hashed password secret.";
+        default = "universe/user/password";
+        example = "universe/user/password";
       };
 
       description = lib.mkOption {
         type = lib.types.str;
         description = "The description of the user, usually the full name.";
-        default = "";
+        default = "Lukas Leeb";
         example = "Lukas Leeb";
       };
     };
@@ -36,9 +38,13 @@ in
       }
     ];
 
+    age.secrets = {
+      ${user.password}.rekeyFile = ../../secrets/universe/user/password.age;
+    };
+
     users.users = {
       root = {
-        hashedPasswordFile = user.password;
+        hashedPasswordFile = secrets.${user.password}.path;
       };
 
       "${user.name}" = {
@@ -52,7 +58,7 @@ in
           "libvirt"
           "kvm"
         ];
-        hashedPasswordFile = user.password;
+        hashedPasswordFile = secrets.${user.password}.path;
       };
     };
   };

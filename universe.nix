@@ -9,12 +9,6 @@ let
       s = sub: builtins.concatStringsSep "/" ([ "universe" ] ++ sub);
     in
     {
-      user = {
-        password = s [
-          "user"
-          "password"
-        ];
-      };
       ssh = {
         default = {
           privateKey = s [
@@ -65,12 +59,6 @@ in
   planet = {
     domain = "lukasl.dev";
 
-    user = {
-      name = "lukas";
-      password = age.secrets.${secrets.user.password}.path;
-      description = "Lukas Leeb";
-    };
-
     ssh = {
       default = {
         publicKey = builtins.readFile ./id_ed25519.pub;
@@ -117,9 +105,6 @@ in
   };
 
   age.secrets = {
-    # user
-    ${secrets.user.password}.rekeyFile = ./secrets/universe/user/password.age;
-
     # ssh
     ${secrets.ssh.default.privateKey} = {
       rekeyFile = ./secrets/universe/ssh/default/privateKey.age;

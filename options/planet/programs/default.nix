@@ -28,6 +28,7 @@
     ./gpg.nix
     ./handy.nix
     ./helium.nix
+    ./herdr.nix
     ./hyperfine.nix
     ./imagemagick.nix
     ./jj.nix
