@@ -110,6 +110,7 @@ in
             "shelly"
             "vesync"
             "reolink"
+            "tuya"
 
             "zha"
           ];
