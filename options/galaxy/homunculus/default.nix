@@ -180,7 +180,7 @@ in
             browser.engine = "chrome";
             model = {
               provider = "opencode-go";
-              default = "deepseek-v4-flash";
+              default = "deepseek-v4-pro";
               persist_switch_by_default = false;
             };
             model_aliases = {
