@@ -7,10 +7,7 @@
 
     hardware = {
       bluetooth.enable = true;
-      nvidia = {
-        enable = true;
-        cuda = true;
-      };
+      nvidia.enable = true;
     };
 
     gaming = {
