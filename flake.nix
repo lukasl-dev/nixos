@@ -79,12 +79,22 @@
           planetKeygen = pkgs.callPackage ./scripts/planet-keygen.nix {
             agenix-rekey = config.agenix-rekey.package;
           };
+          travellerKeygen = pkgs.callPackage ./scripts/traveller-keygen.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
         in
         {
-          apps.planet-keygen = {
-            type = "app";
-            program = pkgs.lib.getExe planetKeygen;
-            meta.description = "Generate a planet's SSH identity";
+          apps = {
+            planet-keygen = {
+              type = "app";
+              program = pkgs.lib.getExe planetKeygen;
+              meta.description = "Generate a planet's SSH identity";
+            };
+            traveller-keygen = {
+              type = "app";
+              program = pkgs.lib.getExe travellerKeygen;
+              meta.description = "Generate a traveller's SSH identity";
+            };
           };
 
           formatter = pkgs.writeShellScriptBin "nixfmt" ''
@@ -96,12 +106,14 @@
               packages = [
                 config.agenix-rekey.package
                 planetKeygen
+                travellerKeygen
               ];
             };
           };
 
           packages = {
             planet-keygen = planetKeygen;
+            traveller-keygen = travellerKeygen;
 
             vim =
               let
