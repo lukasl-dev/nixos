@@ -103,18 +103,17 @@
       flake.nixosConfigurations =
         let
           atlas = import ./atlas { inherit inputs; };
-          evalPlanet = atlas.planets.eval;
         in
         {
-          vega = evalPlanet {
+          vega = atlas.planets.eval {
             planet = ./planets/vega;
           };
 
-          pollux = evalPlanet {
+          pollux = atlas.planets.eval {
             planet = ./planets/pollux;
           };
 
-          ida = evalPlanet {
+          ida = atlas.planets.eval {
             system = "aarch64-linux";
             planet = ./planets/ida;
           };
