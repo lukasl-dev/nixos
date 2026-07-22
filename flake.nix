@@ -2,216 +2,122 @@
   description = "lukasl-dev";
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager.url = "github:nix-community/home-manager";
+
+    hjem.follows = "hjem-rum/hjem";
+    hjem-rum = {
+      url = "github:snugnug/hjem-rum";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    systems.url = "github:nix-systems/default";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
     agenix.url = "github:ryantm/agenix";
     agenix-rekey = {
       url = "github:oddlama/agenix-rekey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix-shell.url = "github:aciceri/agenix-shell";
+
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
-    nvf = {
-      url = "github:notashelf/nvf";
-      # url = "github:notashelf/nvf?ref=v0.8";
-      # inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.55.0";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+
     catppuccin.url = "github:catppuccin/nix/release-26.05";
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    ghostty.url = "github:ghostty-org/ghostty";
-    handy = {
-      url = "github:cjpais/Handy";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    herdr = {
-      url = "github:ogulcancelik/herdr";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    winapps = {
-      url = "github:winapps-org/winapps";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    tuwunel.url = "github:matrix-construct/tuwunel";
-    capTUre.url = "github:lukasl-dev/capTUre";
-    nur.url = "github:nix-community/NUR";
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dgop = {
-      url = "github:AvengeMedia/dgop";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    nvf.url = "github:notashelf/nvf";
+
+    fff.url = "github:dmtrKovalenko/fff";
+
     pi.url = "github:lukasl-dev/pi.nix";
-    pi-codex-conversion = {
-      url = "github:lukasl-dev/pi-codex-conversion.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    pi-codex-conversion.url = "github:lukasl-dev/pi-codex-conversion.nix";
     firn = {
       url = "github:lukasl-dev/firn";
       flake = false;
     };
-    rime.url = "github:lukasl-dev/rime";
-    outofbounds.url = "github:lukasl-dev/outofbounds";
-    fff = {
-      url = "github:dmtrKovalenko/fff";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    lightpanda.url = "github:lukasl-dev/browser";
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    nixos-anywhere = {
-      url = "github:nix-community/nixos-anywhere";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    hermes-agent.url = "github:NousResearch/hermes-agent";
+
+    tuwunel.url = "github:matrix-construct/tuwunel";
+
+    hyprland.url = "github:hyprwm/Hyprland/v0.55.0";
+
+    dms.url = "github:AvengeMedia/DankMaterialShell/stable";
+    dgop.url = "github:AvengeMedia/dgop";
+
+    ghostty.url = "github:ghostty-org/ghostty";
+
+    handy.url = "github:cjpais/Handy";
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      systems,
-      nvf,
-      jail-nix,
-      ...
-    }@inputs:
-    let
-      defaultSystem = "x86_64-linux";
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.home-manager.flakeModules.home-manager
 
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
+        inputs.agenix-rekey.flakeModule
+        inputs.agenix-shell.flakeModules.default
+      ];
 
-      overlays = import ./overlays {
-        inherit inputs;
-        lib = nixpkgs.lib;
-      };
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
 
-      pkgsFor =
-        system:
-        import nixpkgs {
-          inherit system;
-          overlays = [ overlays.default ];
-          config.allowUnfree = true;
-        };
-
-      mkNixosSystem =
+      perSystem =
         {
-          system ? defaultSystem,
-          module,
+          config,
+          self',
+          inputs',
+          pkgs,
+          system,
+          ...
         }:
-        let
-          baseModules = [
-            ./options
-            ./universe.nix
-            { nixpkgs.overlays = [ overlays.default ]; }
-          ];
-          extraModules = [ module ];
+        {
+          formatter = pkgs.writeShellScriptBin "nixfmt" ''
+            exec ${pkgs.lib.getExe pkgs.nixfmt} --width 80 "$@"
+          '';
 
-          pkgs = pkgsFor system;
-          jail = jail-nix.lib.init pkgs;
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit self inputs jail;
+          devShells = {
+            default = pkgs.mkShell {
+              packages = [ config.agenix-rekey.package ];
+            };
           };
-          modules = baseModules ++ extraModules;
+
+          packages = {
+            vim =
+              let
+                built = inputs.nvf.lib.neovimConfiguration {
+                  inherit pkgs;
+                  modules = [ ./packages/vim ];
+                };
+              in
+              built.neovim;
+          };
         };
-    in
-    {
-      inherit overlays;
 
-      agenix-rekey = inputs.agenix-rekey.configure {
-        userFlake = self;
-        inherit (self) nixosConfigurations;
-        darwinConfigurations = { };
-      };
-
-      nixosConfigurations = {
-        vega = mkNixosSystem { module = ./planets/vega; };
-        pollux = mkNixosSystem { module = ./planets/pollux; };
-        ida = mkNixosSystem {
-          system = "aarch64-linux";
-          module = ./planets/ida;
-        };
-      };
-
-      packages = forEachSystem (
-        system:
+      flake.nixosConfigurations =
         let
-          pkgs = pkgsFor system;
+          atlas = import ./atlas { inherit inputs; };
+          evalPlanet = atlas.planets.eval;
         in
         {
-          helium = pkgs.callPackage ./packages/helium { };
-          plann = pkgs.plann;
-          upterm = pkgs.callPackage ./packages/upterm { };
-          taman = pkgs.callPackage ./packages/taman { };
-
-          vim =
-            (nvf.lib.neovimConfiguration {
-              inherit pkgs;
-              modules = [ ./packages/vim ];
-              extraSpecialArgs = {
-                rinputs = inputs;
-              };
-            }).neovim;
-        }
-      );
-
-      devShells = forEachSystem (
-        system:
-        let
-          pkgs = pkgsFor system;
-        in
-        {
-          default = pkgs.mkShell {
-            packages =
-              with pkgs;
-              [
-                just
-                jq
-              ]
-              ++ [
-                inputs.agenix-rekey.packages.${system}.default
-                inputs.nixos-anywhere.packages.${system}.default
-                pkgs.nh
-              ]
-              ++ (import ./packages/scripts { inherit pkgs; });
-
-            shellHook = ''
-              repo_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || printf '%s\n' "$PWD")
-              bash ${./options/planet/programs/pi/extensions/setup-node-modules.sh} \
-                "$repo_root" \
-                ${inputs.pi.packages.${system}.coding-agent}
-            '';
+          vega = evalPlanet {
+            planet = ./planets/vega;
           };
-        }
-      );
 
-      formatter = forEachSystem (
-        system:
-        let
-          pkgs = pkgsFor system;
-        in
-        pkgs.nixfmt
-      );
+          pollux = evalPlanet {
+            planet = ./planets/pollux;
+          };
+
+          ida = evalPlanet {
+            system = "aarch64-linux";
+            planet = ./planets/ida;
+          };
+        };
     };
 }

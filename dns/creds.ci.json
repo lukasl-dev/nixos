@@ -1,8 +1,0 @@
-{
-  "cloudflare": {
-    "TYPE": "CLOUDFLAREAPI",
-    "accountid": "$CLOUDFLARE_API_ACCOUNT_ID",
-    "apikey": "$CLOUDFLARE_API_KEY",
-    "apiuser": "$CLOUDFLARE_API_USER"
-  }
-}

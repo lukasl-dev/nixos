@@ -1,3 +1,0 @@
-{
-  vim.git.enable = true;
-}
