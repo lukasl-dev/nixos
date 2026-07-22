@@ -37,6 +37,8 @@
       flake = false;
     };
 
+    herdr.url = "github:ogulcancelik/herdr";
+
     hermes-agent.url = "github:NousResearch/hermes-agent";
 
     tuwunel.url = "github:matrix-construct/tuwunel";
