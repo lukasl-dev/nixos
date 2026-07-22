@@ -8,12 +8,10 @@ let
   inherit (config) planet;
 in
 {
-  options.planet = {
-    ssh = {
-      ports = lib.mkOption {
-        type = lib.types.listOf lib.types.port;
-        default = [ 22 ];
-      };
+  options.planet.ssh = {
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 22;
     };
   };
 
@@ -31,6 +29,6 @@ in
       };
     };
 
-    networking.firewall.allowedTCPPorts = planet.ssh.ports;
+    networking.firewall.allowedTCPPorts = [ planet.ssh.port ];
   };
 }

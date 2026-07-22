@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  atlas,
+  ...
+}:
 
 let
   inherit (config) age traveller;

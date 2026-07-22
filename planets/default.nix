@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  atlas,
+  ...
+}:
 
 let
   inherit (config) planet;
@@ -6,8 +11,17 @@ in
 {
   imports = [
     ./age.nix
+    ./containers.nix
+    ./desktop.nix
+    ./dns.nix
+    ./firewall.nix
+    ./fonts.nix
     ./hjem.nix
+    ./keys.nix
+    ./nix.nix
+    ./sound.nix
     ./ssh.nix
+    ./sudo.nix
     ./time.nix
     ./travellers.nix
   ];
@@ -15,7 +29,15 @@ in
   options.planet = {
     name = lib.mkOption {
       type = lib.types.str;
-      example = "vega";
+    };
+
+    domain = lib.mkOption {
+      type = lib.types.str;
+      default = atlas.domain;
+    };
+
+    stateVersion = lib.mkOption {
+      type = lib.types.str;
     };
 
     modules = lib.mkOption {
@@ -25,6 +47,26 @@ in
   };
 
   config = {
-    networking.hostName = planet.name;
+    networking = {
+      inherit (planet) domain;
+      hostName = planet.name;
+    };
+
+    system.stateVersion = planet.stateVersion;
+
+    i18n = {
+      defaultLocale = "en_GB.UTF-8";
+      extraLocaleSettings = {
+        LC_ADDRESS = "en_GB.UTF-8";
+        LC_IDENTIFICATION = "en_GB.UTF-8";
+        LC_MEASUREMENT = "en_GB.UTF-8";
+        LC_MONETARY = "en_GB.UTF-8";
+        LC_NAME = "en_GB.UTF-8";
+        LC_NUMERIC = "en_GB.UTF-8";
+        LC_PAPER = "en_GB.UTF-8";
+        LC_TELEPHONE = "en_GB.UTF-8";
+        LC_TIME = "en_GB.UTF-8";
+      };
+    };
   };
 }

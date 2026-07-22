@@ -1,7 +1,4 @@
-# Nix
 result
 *.qcow2
-.scratchpad/
-.opencode/
 .direnv/
-options/planet/programs/pi/extensions/node_modules/
+node_modules/

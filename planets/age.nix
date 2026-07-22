@@ -3,7 +3,6 @@
 let
   inherit (config) planet;
 in
-
 {
   imports = [
     inputs.agenix.nixosModules.default
@@ -15,6 +14,7 @@ in
 
     rekey = {
       masterIdentities = [ "/etc/agenix/identity" ];
+      hostPubkey = planet.keys.public;
       storageMode = "local";
       localStorageDir = ../. + "/secrets/_/${planet.name}";
     };
