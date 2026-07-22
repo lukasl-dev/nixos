@@ -17,7 +17,7 @@ in
   config.traveller.modules = [
     {
       age.secrets.${traveller.keys.private} = {
-        rekeyFile = ../. + "/secrets/${traveller.keys.private}.age";
+        rekeyFile = ../.. + "/secrets/${traveller.keys.private}.age";
         owner = traveller.user.name;
         generator.script = "ssh-ed25519";
       };

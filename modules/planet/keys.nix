@@ -26,7 +26,7 @@ in
   config.planet.modules = [
     {
       age.secrets.${planet.keys.private} = {
-        rekeyFile = ../. + "/secrets/${planet.keys.private}.age";
+        rekeyFile = ../.. + "/secrets/${planet.keys.private}.age";
         generator.script = "ssh-ed25519";
       };
     }

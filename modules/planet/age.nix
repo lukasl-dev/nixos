@@ -16,7 +16,7 @@ in
       masterIdentities = [ "/etc/agenix/identity" ];
       hostPubkey = planet.keys.public;
       storageMode = "local";
-      localStorageDir = ../. + "/secrets/_/${planet.name}";
+      localStorageDir = ../.. + "/secrets/_/${planet.name}";
     };
   };
 }

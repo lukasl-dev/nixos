@@ -6,7 +6,7 @@
     (lib.evalModules {
       specialArgs = { inherit atlas; };
       modules = [
-        ../travellers
+        ../modules/traveller
         traveller
       ];
     }).config.traveller;

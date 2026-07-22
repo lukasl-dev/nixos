@@ -17,7 +17,7 @@
           inherit atlas inputs;
         };
         modules = [
-          ../planets
+          ../modules/planet
           planet
           {
             planet.name = builtins.baseNameOf (toString planet);

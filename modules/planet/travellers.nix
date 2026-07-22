@@ -68,7 +68,8 @@ in
       ++ [
         {
           users.users.${traveller.user.name}.extraGroups = lib.unique (
-            assignment.groups ++ lib.optionals (assignment ? role) planet.roles.${assignment.role}.groups
+            assignment.groups
+            ++ lib.optionals (assignment ? role) planet.roles.${assignment.role}.groups
           );
         }
       ]

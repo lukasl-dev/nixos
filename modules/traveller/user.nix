@@ -39,7 +39,7 @@ in
       in
       {
         age.secrets.${traveller.user.password} = {
-          rekeyFile = ../. + "/secrets/${traveller.user.password}.age";
+          rekeyFile = ../.. + "/secrets/${traveller.user.password}.age";
         };
 
         users.users.${traveller.user.name} = {
