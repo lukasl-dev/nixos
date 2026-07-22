@@ -7,8 +7,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
-
     hjem.follows = "hjem-rum/hjem";
     hjem-rum = {
       url = "github:snugnug/hjem-rum";
@@ -57,8 +55,6 @@
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        inputs.home-manager.flakeModules.home-manager
-
         inputs.agenix-rekey.flakeModule
         inputs.agenix-shell.flakeModules.default
       ];
@@ -79,18 +75,34 @@
           system,
           ...
         }:
+        let
+          planetKeygen = pkgs.callPackage ./scripts/planet-keygen.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
+        in
         {
+          apps.planet-keygen = {
+            type = "app";
+            program = pkgs.lib.getExe planetKeygen;
+            meta.description = "Generate a planet's SSH identity";
+          };
+
           formatter = pkgs.writeShellScriptBin "nixfmt" ''
             exec ${pkgs.lib.getExe pkgs.nixfmt} --width 80 "$@"
           '';
 
           devShells = {
             default = pkgs.mkShell {
-              packages = [ config.agenix-rekey.package ];
+              packages = [
+                config.agenix-rekey.package
+                planetKeygen
+              ];
             };
           };
 
           packages = {
+            planet-keygen = planetKeygen;
+
             vim =
               let
                 built = inputs.nvf.lib.neovimConfiguration {

@@ -1,33 +1,37 @@
 {
   config,
   lib,
-  atlas,
   ...
 }:
 
 let
   inherit (config) planet;
+
+  keys = ../.. + "/secrets/planets/${planet.name}/keys";
+  public = keys + "/public.pub";
 in
 {
   options.planet.keys = {
     private = lib.mkOption {
       type = lib.types.str;
-      default = atlas.secrets.planet [
-        "keys"
-        "private"
-      ];
+      default = "planets/${planet.name}/keys/private";
+      readOnly = true;
+      internal = true;
     };
 
     public = lib.mkOption {
-      type = lib.types.str;
+      type = with lib.types; nullOr str;
+      default = if builtins.pathExists public then builtins.readFile public else null;
+      readOnly = true;
+      internal = true;
     };
   };
 
   config.planet.modules = [
     {
       age.secrets.${planet.keys.private} = {
-        rekeyFile = ../.. + "/secrets/${planet.keys.private}.age";
-        generator.script = "ssh-ed25519";
+        rekeyFile = keys + "/private.age";
+        generator.script = "unixverse-ssh-ed25519";
       };
     }
   ];

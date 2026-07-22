@@ -23,6 +23,7 @@ in
       default = atlas.secrets.universe [
         "travellers"
         traveller.name
+        "user"
         "password"
       ];
       readOnly = true;

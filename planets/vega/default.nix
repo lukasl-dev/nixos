@@ -1,4 +1,12 @@
 {
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    limine = {
+      enable = true;
+      efiInstallAsRemovable = true;
+    };
+  };
+
   planet = {
     name = "vega";
     stateVersion = "25.05";
@@ -9,6 +17,8 @@
       bluetooth.enable = true;
       nvidia.enable = true;
     };
+
+    desktop.enable = true;
 
     gaming = {
       enable = true;
