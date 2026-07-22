@@ -14,11 +14,12 @@ in
     ./gaming
     ./hardware
     ./networking
+    ./programs
     ./services
     ./virtualisation
 
     ./age.nix
-    ./desktop
+    ./catppuccin.nix
     ./hjem.nix
     ./keys.nix
     ./nix.nix
