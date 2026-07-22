@@ -4,7 +4,7 @@ let
   inherit (config) planet;
 in
 {
-  options.planet.containers = {
+  options.planet.virtualisation.containers = {
     dns = lib.mkOption {
       type = lib.types.str;
       default = "172.17.0.1";
@@ -17,19 +17,19 @@ in
     virtualisation = {
       docker = {
         enable = true;
-        daemon.settings.dns = [ planet.containers.dns ];
+        daemon.settings.dns = [ planet.virtualisation.containers.dns ];
 
         rootless = {
           enable = true;
           setSocketVariable = true;
-          daemon.settings.dns = [ planet.containers.dns ];
+          daemon.settings.dns = [ planet.virtualisation.containers.dns ];
         };
       };
       oci-containers.backend = "docker";
     };
 
     services.resolved.settings.Resolve.DNSStubListenerExtra = [
-      planet.containers.dns
+      planet.virtualisation.containers.dns
     ];
 
     networking.firewall = {

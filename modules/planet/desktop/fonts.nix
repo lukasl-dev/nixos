@@ -9,7 +9,7 @@ let
   inherit (config) planet;
 in
 {
-  options.planet.fonts = lib.mkOption {
+  options.planet.desktop.fonts = lib.mkOption {
     type = with lib.types; listOf path;
     default = [ ];
     example = lib.literalExpression "[ pkgs.dejavu_fonts ]";
@@ -29,7 +29,7 @@ in
           helvetica-neue-lt-std
           geist-font
         ]
-        ++ planet.fonts;
+        ++ planet.desktop.fonts;
     };
   };
 }

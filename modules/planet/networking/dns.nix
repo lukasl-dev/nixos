@@ -4,7 +4,7 @@ let
   inherit (config) planet;
 in
 {
-  options.planet.dns = {
+  options.planet.networking.dns = {
     discoverable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -26,11 +26,13 @@ in
             "8.8.8.8"
             "8.8.4.4"
           ];
-          DNSStubListenerExtra = [ planet.containers.dns ];
+          DNSStubListenerExtra = [
+            planet.virtualisation.containers.dns
+          ];
         };
       };
 
-      avahi = lib.mkIf planet.dns.discoverable {
+      avahi = lib.mkIf planet.networking.dns.discoverable {
         enable = true;
         nssmdns4 = true;
         openFirewall = true;

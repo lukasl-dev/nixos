@@ -10,17 +10,19 @@ let
 in
 {
   imports = [
+    ./desktop
+    ./gaming
+    ./hardware
+    ./networking
+    ./services
+    ./virtualisation
+
     ./age.nix
-    ./containers.nix
-    ./desktop.nix
-    ./dns.nix
-    ./firewall.nix
-    ./fonts.nix
+    ./desktop
     ./hjem.nix
     ./keys.nix
     ./nix.nix
     ./sound.nix
-    ./ssh.nix
     ./sudo.nix
     ./time.nix
     ./travellers.nix

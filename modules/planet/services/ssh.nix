@@ -8,7 +8,7 @@ let
   inherit (config) planet;
 in
 {
-  options.planet.ssh = {
+  options.planet.services.ssh = {
     port = lib.mkOption {
       type = lib.types.port;
       default = 22;
@@ -18,7 +18,7 @@ in
   config = {
     services.openssh = {
       enable = true;
-      inherit (planet.ssh) ports;
+      ports = [ planet.services.ssh.port ];
 
       settings = {
         PasswordAuthentication = false;
@@ -29,6 +29,6 @@ in
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ planet.ssh.port ];
+    networking.firewall.allowedTCPPorts = [ planet.services.ssh.port ];
   };
 }

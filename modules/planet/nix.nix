@@ -33,10 +33,7 @@ in
     };
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    cudaSupport = config.hardware.nvidia.modesetting.enable;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     nix-prefetch-github
