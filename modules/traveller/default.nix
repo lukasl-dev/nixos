@@ -3,6 +3,7 @@
 {
   imports = [
     ./git.nix
+    ./jujutsu.nix
     ./keys.nix
     ./ssh.nix
     ./user.nix
