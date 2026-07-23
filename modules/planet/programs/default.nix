@@ -5,6 +5,7 @@
     ./appimage.nix
     ./bat.nix
     ./btop.nix
+    ./calendar.nix
     ./direnv.nix
     ./eza.nix
     ./fastfetch.nix
