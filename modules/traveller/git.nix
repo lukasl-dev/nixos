@@ -18,12 +18,33 @@ in
     (
       { config, pkgs, ... }:
 
+      let
+        yaml = pkgs.formats.yaml { };
+      in
       {
         hjem.users.${traveller.user.name} = {
           packages = with pkgs; [
+            gh
+            gh-dash
             git-lfs
             git-filter-repo
           ];
+
+          xdg = {
+            config.files = {
+              "gh/config.yml".source = yaml.generate "gh-config.yml" {
+                version = "1";
+              };
+              "gh-dash/config.yml".source = yaml.generate "gh-dash-config.yml" { };
+            };
+
+            data.files."gh/extensions".source = pkgs.linkFarm "gh-extensions" [
+              {
+                name = pkgs.gh-dash.pname;
+                path = "${pkgs.gh-dash}/bin";
+              }
+            ];
+          };
 
           rum.programs.git = {
             enable = true;
@@ -40,6 +61,11 @@ in
 
               github.user = traveller.github.user;
 
+              credential = {
+                "https://github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
+                "https://gist.github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
+              };
+
               color.ui = true;
               core.editor = "nvim";
 
@@ -48,7 +74,7 @@ in
 
               init.defaultBranch = "main";
 
-              # TODO: change to /etc/nixos
+              # TODO: change to /etc
               safe.directory = "~/nixos";
 
               alias = {

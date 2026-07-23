@@ -9,6 +9,7 @@
     ./eza.nix
     ./fastfetch.nix
     ./ffmpeg.nix
+    ./gpg.nix
     ./herdr.nix
     ./hyperfine.nix
     ./imagemagick.nix

@@ -2171,11 +2171,11 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1784443395,
-        "narHash": "sha256-2lzUIQmuII9ArYPnalw7r7KZncx1Rd9BAs03Rrbfh3k=",
+        "lastModified": 1784769694,
+        "narHash": "sha256-3kURAdYyiNxB+jTOrgJ5OLhe73vXXJNOjd4wWCABvsU=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "ad0e9ee08260b1cb4506bf77e782c250ed35527c",
+        "rev": "3f97ab609322d3d57025bc6c334aab665d96d477",
         "type": "github"
       },
       "original": {
@@ -2190,11 +2190,11 @@
         "systems": "systems_8"
       },
       "locked": {
-        "lastModified": 1784356521,
-        "narHash": "sha256-z7/66JqbVm9YJfXHlYlkE2gIw3ex7gfsbK6Tv54npZE=",
+        "lastModified": 1784704927,
+        "narHash": "sha256-VxyBEHFAGOIOWr1JWnwxZ1Ah3fBQ3EXTDzWOzd6EKi4=",
         "owner": "lukasl-dev",
         "repo": "pi-codex-conversion.nix",
-        "rev": "94702c744599d85319951ec770aed4188cd3f78a",
+        "rev": "ae15d77a5c8ffa07e8db921943b5b30b560ca70e",
         "type": "github"
       },
       "original": {
