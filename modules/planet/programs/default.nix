@@ -17,6 +17,7 @@
     ./mpv.nix
     ./perf.nix
     ./poppler-utils.nix
+    ./ripgrep.nix
     ./sioyek.nix
     ./speedtest.nix
     ./thunderbird.nix
