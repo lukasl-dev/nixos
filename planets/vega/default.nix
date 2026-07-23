@@ -20,6 +20,10 @@
 
     desktop.enable = true;
 
+    networking.dns.discoverable = true;
+
+    programs.uxplay.enable = true;
+
     gaming = {
       enable = true;
       minecraft.enable = true;

@@ -1,0 +1,3 @@
+{
+  pi.coding-agent = { };
+}
