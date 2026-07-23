@@ -163,7 +163,8 @@ in
               };
             }) rules
           );
-
+        }
+        // lib.optionalAttrs (hasMeshOnlyRules || hasCompressedRules) {
           middlewares =
             lib.optionalAttrs hasMeshOnlyRules {
               mesh-only.ipAllowList.sourceRange = meshSourceRanges;
