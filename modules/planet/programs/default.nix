@@ -20,6 +20,7 @@
     ./perf.nix
     ./poppler-utils.nix
     ./ripgrep.nix
+    ./seahorse.nix
     ./sioyek.nix
     ./speedtest.nix
     ./thunderbird.nix
