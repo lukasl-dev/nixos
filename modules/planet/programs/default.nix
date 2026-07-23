@@ -15,6 +15,7 @@
     ./mpv.nix
     ./perf.nix
     ./poppler-utils.nix
+    ./sioyek.nix
     ./speedtest.nix
     ./uxplay.nix
     ./yazi.nix

@@ -9,11 +9,7 @@
 let
   inherit (config) planet;
 
-  pdf = "sioyek.desktop";
-
   defaultApplications = {
-    "application/pdf" = pdf;
-
     "image/png" = "feh.desktop";
     "image/jpeg" = "feh.desktop";
     "image/jpg" = "feh.desktop";
