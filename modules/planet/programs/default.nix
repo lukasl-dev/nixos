@@ -1,5 +1,7 @@
 {
   imports = [
+    ./helium
+
     ./appimage.nix
     ./bat.nix
     ./btop.nix

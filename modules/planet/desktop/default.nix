@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./fonts.nix ];
+  imports = [
+    ./fonts.nix
+    ./xdg.nix
+  ];
 
   options.planet.desktop = {
     enable = lib.mkOption {

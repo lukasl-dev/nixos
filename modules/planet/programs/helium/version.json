@@ -1,0 +1,13 @@
+{
+  "version": "0.14.4.1",
+  "releases": {
+    "x86_64-linux": {
+      "arch": "x86_64",
+      "hash": "sha256-JBrXfwBc9gughP9tIRN6kD8pX4OQickyBV0tF+kDdmI="
+    },
+    "aarch64-linux": {
+      "arch": "arm64",
+      "hash": "sha256-lRwfW3fPqmO35IN0AowLjN//p9AVKQmwwTDexhI7iHM="
+    }
+  }
+}
