@@ -19,6 +19,7 @@
     ./poppler-utils.nix
     ./sioyek.nix
     ./speedtest.nix
+    ./thunderbird.nix
     ./uxplay.nix
     ./yazi.nix
     ./yt-dlp.nix
