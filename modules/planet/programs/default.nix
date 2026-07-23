@@ -7,6 +7,7 @@
     ./btop.nix
     ./calendar.nix
     ./direnv.nix
+    ./element.nix
     ./eza.nix
     ./fastfetch.nix
     ./ffmpeg.nix
