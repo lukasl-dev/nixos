@@ -13,6 +13,18 @@
 
     modules = [ ./hardware-configuration.nix ];
 
+    steward = {
+      traveller = ../../travellers/prime;
+      groups = [
+        "networkmanager"
+        "wheel"
+        "docker"
+        "libvirtd"
+        "libvirt"
+        "kvm"
+      ];
+    };
+
     hardware = {
       bluetooth.enable = true;
       nvidia.enable = true;
@@ -34,18 +46,6 @@
     services = {
       flatpak.enable = true;
       printing.enable = true;
-    };
-
-    steward = {
-      traveller = ../../travellers/prime;
-      groups = [
-        "networkmanager"
-        "wheel"
-        "docker"
-        "libvirtd"
-        "libvirt"
-        "kvm"
-      ];
     };
   };
 }

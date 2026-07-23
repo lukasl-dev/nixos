@@ -13,6 +13,7 @@ in
     ./desktop
     ./gaming
     ./hardware
+    ./hosting
     ./networking
     ./programs
     ./services
