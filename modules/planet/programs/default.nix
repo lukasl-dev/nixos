@@ -26,6 +26,7 @@
     ./sioyek.nix
     ./speedtest.nix
     ./thunderbird.nix
+    ./tmux.nix
     ./uxplay.nix
     ./yazi.nix
     ./yt-dlp.nix
