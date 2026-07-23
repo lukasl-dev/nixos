@@ -14,7 +14,9 @@
     ./herdr.nix
     ./hyperfine.nix
     ./imagemagick.nix
+    ./localsend.nix
     ./mpv.nix
+    ./obsidian.nix
     ./perf.nix
     ./poppler-utils.nix
     ./ripgrep.nix
