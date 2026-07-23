@@ -24,6 +24,7 @@ in
       {
         hjem.users.${traveller.user.name} = {
           packages = with pkgs; [
+            difftastic
             gh
             gh-dash
             git-lfs
@@ -48,6 +49,8 @@ in
 
           rum.programs.git = {
             enable = true;
+
+            integrations.difftastic.enable = true;
 
             settings = {
               user = {
