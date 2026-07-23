@@ -21,7 +21,7 @@ in
 {
   programs.tmux = {
     enable = true;
-    plugins = [ catppuccin.sources.tmux ];
+    plugins = [ pkgs.tmuxPlugins.catppuccin ];
 
     extraConfigBeforePlugins = ''
       set -g @catppuccin_flavor ${lib.escapeShellArg catppuccin.flavor}

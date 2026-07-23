@@ -18,6 +18,7 @@
     ./imagemagick.nix
     ./localsend.nix
     ./mpv.nix
+    ./nh.nix
     ./obsidian.nix
     ./perf.nix
     ./poppler-utils.nix
