@@ -22,6 +22,7 @@
     ./obsidian.nix
     ./perf.nix
     ./poppler-utils.nix
+    ./python.nix
     ./ripgrep.nix
     ./seahorse.nix
     ./sioyek.nix
