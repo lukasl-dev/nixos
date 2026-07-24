@@ -18,6 +18,7 @@ in
   imports = [
     ./autostart.nix
     ./config.nix
+    ./mesa.nix
     ./monitors.nix
     ./polkit.nix
   ];
@@ -32,11 +33,15 @@ in
     hjem.users = atlas.travellers.forEach planet (
       traveller:
       let
-        hyprlandConfig = lib.recursiveUpdate planet.desktop.hyprland.config traveller.desktop.hyprland.config;
+        planetConfig = planet.desktop.hyprland.config;
+        travellerConfig = traveller.desktop.hyprland.config;
+        hyprlandConfig = lib.recursiveUpdate planetConfig travellerConfig;
 
         merged = lib.concatStringsSep "\n\n" (
           lib.filter (lua: lua != "") [
-            (lib.optionalString (hyprlandConfig != { }) "hl.config(${toLua hyprlandConfig})")
+            (lib.optionalString (
+              hyprlandConfig != { }
+            ) "hl.config(${toLua hyprlandConfig})")
             planet.desktop.hyprland.lua
             traveller.desktop.hyprland.lua
           ]
