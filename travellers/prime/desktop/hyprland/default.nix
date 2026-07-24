@@ -1,3 +1,6 @@
 {
-  imports = [ ./bind.nix ];
+  imports = [
+    ./animations.nix
+    ./bind.nix
+  ];
 }
