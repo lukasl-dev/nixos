@@ -14,5 +14,15 @@
       type = lib.types.bool;
       default = false;
     };
+
+    autoStart = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      example = [
+        "firefox"
+        "vesktop"
+      ];
+      description = "Planet commands to execute when the desktop starts.";
+    };
   };
 }

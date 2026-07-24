@@ -1,6 +1,7 @@
 {
   imports = [
     ./dns.nix
+    ./mullvad.nix
   ];
 
   networking = {

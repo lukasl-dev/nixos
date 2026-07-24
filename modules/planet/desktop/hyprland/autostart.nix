@@ -2,7 +2,7 @@
 
 let
   inherit (config) planet;
-  inherit (planet.desktop) hyprland;
+  inherit (planet) desktop;
 
   toLua = lib.generators.toLua { };
 
@@ -17,17 +17,7 @@ let
     '';
 in
 {
-  options.planet.desktop.hyprland.autoStart = lib.mkOption {
-    type = lib.types.listOf lib.types.str;
-    default = [ ];
-    example = [
-      "firefox"
-      "vesktop"
-    ];
-    description = "Planet commands to execute when Hyprland starts.";
-  };
-
-  config = lib.mkIf (planet.desktop.enable && hyprland.autoStart != [ ]) {
-    planet.desktop.hyprland.lua = render hyprland.autoStart;
+  config = lib.mkIf (desktop.enable && desktop.autoStart != [ ]) {
+    planet.desktop.hyprland.lua = render desktop.autoStart;
   };
 }

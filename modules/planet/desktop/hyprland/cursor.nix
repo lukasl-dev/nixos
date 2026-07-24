@@ -53,7 +53,7 @@ in
       };
     };
 
-    planet.desktop.hyprland.autoStart = [
+    planet.desktop.autoStart = [
       "${hyprctl} setcursor ${cursor.name} ${toString cursor.size}"
     ];
 
