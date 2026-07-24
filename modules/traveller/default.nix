@@ -6,6 +6,7 @@
     ./git.nix
     ./jujutsu.nix
     ./keys.nix
+    ./shell.nix
     ./ssh.nix
     ./user.nix
   ];

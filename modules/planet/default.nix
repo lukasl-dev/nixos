@@ -24,6 +24,7 @@ in
     ./hjem.nix
     ./keys.nix
     ./nix.nix
+    ./shell.nix
     ./sound.nix
     ./sudo.nix
     ./time.nix
