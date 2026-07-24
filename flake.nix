@@ -1,13 +1,17 @@
 {
   description = "lukasl-dev";
 
+  nixConfig = {
+    extra-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
+    extra-trusted-public-keys = [
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
     systems.url = "github:nix-systems/default";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -132,6 +136,7 @@
           inherit system;
           specialArgs = {
             inherit self inputs jail;
+            inherit (inputs) nixos-raspberrypi;
           };
           modules = baseModules ++ extraModules;
         };

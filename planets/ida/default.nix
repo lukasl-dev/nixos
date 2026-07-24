@@ -1,12 +1,8 @@
-{ inputs, ... }:
-
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    ./boot.nix
     ./hardware-configuration.nix
     ./networking.nix
-    ./sd-image.nix
+    ./rpi.nix
     # ./storage.nix
     ./swap.nix
   ];
