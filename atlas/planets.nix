@@ -20,6 +20,7 @@
           ../modules/planet
           planet
           {
+            nixpkgs.overlays = [ atlas.overlays.default ];
             planet.name = builtins.baseNameOf (toString planet);
           }
         ];

@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./desktop
     ./git.nix
     ./jujutsu.nix
     ./keys.nix

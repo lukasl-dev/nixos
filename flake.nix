@@ -6,6 +6,10 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hjem.follows = "hjem-rum/hjem";
     hjem-rum = {
@@ -52,7 +56,21 @@
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
+    inputs@{
+      flake-parts,
+      nixpkgs,
+      ...
+    }:
+    let
+      overlays = import ./overlays {
+        inherit inputs;
+        inherit (nixpkgs) lib;
+      };
+
+      atlas = import ./atlas {
+        inherit inputs overlays;
+      };
+    in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.agenix-rekey.flakeModule
@@ -84,6 +102,12 @@
           };
         in
         {
+          _module.args.pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ overlays.default ];
+            config.allowUnfree = true;
+          };
+
           apps = {
             planet-keygen = {
               type = "app";
@@ -123,11 +147,10 @@
           };
         };
 
-      flake.nixosConfigurations =
-        let
-          atlas = import ./atlas { inherit inputs; };
-        in
-        {
+      flake = {
+        inherit overlays;
+
+        nixosConfigurations = {
           vega = atlas.planets.eval {
             planet = ./planets/vega;
           };
@@ -145,5 +168,6 @@
             planet = ./planets/ida;
           };
         };
+      };
     };
 }

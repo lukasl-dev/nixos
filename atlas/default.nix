@@ -1,7 +1,9 @@
-{ inputs }:
+{ inputs, overlays }:
 
 let
   atlas = {
+    inherit overlays;
+
     domain = "lukasl.dev";
 
     planets = import ./planets.nix {

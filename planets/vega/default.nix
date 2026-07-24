@@ -27,7 +27,23 @@
       nvidia.enable = true;
     };
 
-    desktop.enable = true;
+    desktop = {
+      enable = true;
+
+      hyprland.monitors = {
+        "DP-1" = {
+          mode = "1920x1080@239.96";
+          position = "0x0";
+          scale = 1;
+        };
+
+        "HDMI-A-1" = {
+          mode = "1920x1080@74.973";
+          position = "1920x0";
+          scale = 1;
+        };
+      };
+    };
 
     networking.dns.discoverable = true;
 

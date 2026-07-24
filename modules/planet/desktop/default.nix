@@ -1,13 +1,11 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, ... }:
 
 {
   imports = [
     ./fonts.nix
+    ./gtk.nix
+    ./hyprland
+    ./qt.nix
     ./xdg.nix
   ];
 
@@ -15,15 +13,6 @@
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-    };
-  };
-
-  config = lib.mkIf config.planet.desktop.enable {
-    # TODO: delete once hyprland is set up
-    xdg.portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-      config.common.default = [ "gtk" ];
     };
   };
 }
