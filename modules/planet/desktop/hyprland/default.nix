@@ -12,9 +12,12 @@ let
   inherit (pkgs.stdenv.hostPlatform) system;
 
   lua = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.lua5_5;
+  toLua = lib.generators.toLua { };
 in
 {
   imports = [
+    ./autostart.nix
+    ./config.nix
     ./monitors.nix
     ./polkit.nix
   ];
@@ -29,8 +32,11 @@ in
     hjem.users = atlas.travellers.forEach planet (
       traveller:
       let
+        hyprlandConfig = lib.recursiveUpdate planet.desktop.hyprland.config traveller.desktop.hyprland.config;
+
         merged = lib.concatStringsSep "\n\n" (
           lib.filter (lua: lua != "") [
+            (lib.optionalString (hyprlandConfig != { }) "hl.config(${toLua hyprlandConfig})")
             planet.desktop.hyprland.lua
             traveller.desktop.hyprland.lua
           ]
@@ -39,7 +45,7 @@ in
         checked =
           let
             key = "hyprland-${planet.name}-${traveller.name}";
-            source = pkgs.writeText "${key}.lua" (merged traveller);
+            source = pkgs.writeText "${key}.lua" merged;
             name = "${key}-config.lua";
           in
           pkgs.runCommand name { } ''

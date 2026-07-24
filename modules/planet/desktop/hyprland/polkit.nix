@@ -7,7 +7,6 @@
 
 let
   inherit (config) planet;
-  agent = pkgs.hyprpolkitagent;
 in
 {
   config = lib.mkIf planet.desktop.enable {
@@ -23,7 +22,7 @@ in
         unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
 
         serviceConfig = {
-          ExecStart = "${agent}/libexec/hyprpolkitagent";
+          ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
           Slice = "session.slice";
           TimeoutStopSec = "5s";
           Restart = "on-failure";

@@ -1,6 +1,11 @@
 { lib, ... }:
 
 {
+  imports = [
+    ./autostart.nix
+    ./config.nix
+  ];
+
   options.traveller.desktop.hyprland.lua = lib.mkOption {
     type = lib.types.lines;
     default = "";
