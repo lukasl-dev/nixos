@@ -25,5 +25,9 @@
 
     git.user = "lukasl-dev";
     github.user = git.user;
+
+    programs = {
+      waka.enable = true;
+    };
   };
 }

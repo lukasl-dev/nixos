@@ -6,6 +6,11 @@ let
 
     domain = "lukasl.dev";
 
+    hosting = import ./hosting.nix {
+      inherit atlas inputs;
+      inherit (inputs.nixpkgs) lib;
+    };
+
     planets = import ./planets.nix {
       inherit atlas inputs;
       inherit (inputs.nixpkgs) lib;

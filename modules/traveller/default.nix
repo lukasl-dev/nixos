@@ -3,6 +3,7 @@
 {
   imports = [
     ./desktop
+    ./programs
     ./git.nix
     ./jujutsu.nix
     ./keys.nix
