@@ -14,6 +14,7 @@
     ./ffmpeg.nix
     ./fzf.nix
     ./gpg.nix
+    ./ghostty.nix
     ./handy.nix
     ./herdr.nix
     ./hyperfine.nix

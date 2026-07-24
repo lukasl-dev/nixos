@@ -78,6 +78,12 @@
         end)
       end
 
+      hl.bind("SUPER + T", hl.dsp.exec_cmd("ghostty"))
+      hl.bind(
+        "SUPER + SHIFT + T",
+        hl.dsp.exec_cmd("ghostty --command=zsh")
+      )
+
       hl.bind(
         "SUPER + S",
         hl.dsp.exec_cmd("screenshot-region")
