@@ -18,6 +18,7 @@ in
   imports = [
     ./autostart.nix
     ./config.nix
+    ./cursor.nix
     ./mesa.nix
     ./monitors.nix
     ./polkit.nix
