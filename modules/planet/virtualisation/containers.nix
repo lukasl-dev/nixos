@@ -46,5 +46,14 @@ in
         iifname "br-*" udp dport 53 accept
       '';
     };
+
+    planet =
+      let
+        group = "docker";
+      in
+      {
+        steward.groups = [ group ];
+        roles.operator.groups = [ group ];
+      };
   };
 }
