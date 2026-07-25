@@ -7,6 +7,7 @@
     ./cal.nix
     ./forge.nix
     ./home
+    ./homunculus
     ./household.nix
     ./mail.nix
     ./notes.nix

@@ -1,14 +1,14 @@
 {
-  hassPythonPackages,
+  pythonPackages,
   lib,
   pkgs,
 }:
 
 [
   (import ./gree.nix {
-    inherit hassPythonPackages lib pkgs;
+    inherit pythonPackages lib pkgs;
   })
   (import ./tplink-deco.nix {
-    inherit hassPythonPackages lib pkgs;
+    inherit pythonPackages lib pkgs;
   })
 ]

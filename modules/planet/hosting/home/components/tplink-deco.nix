@@ -1,5 +1,5 @@
 {
-  hassPythonPackages,
+  pythonPackages,
   lib,
   pkgs,
 }:
@@ -16,7 +16,7 @@ pkgs.unstable.buildHomeAssistantComponent rec {
     hash = "sha256-AeEWKGIRwiro6J0ShrlJ4MnVl0Oxmi5KYav0RWLh6xo=";
   };
 
-  dependencies = with hassPythonPackages; [
+  dependencies = with pythonPackages; [
     pycryptodome
   ];
 

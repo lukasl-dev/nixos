@@ -79,9 +79,31 @@
         inherit (nixpkgs) lib;
       };
 
+      pkgsFor =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ overlays.default ];
+          config.allowUnfree = true;
+        };
+
+      jailFor = system: inputs.jail-nix.lib.init (pkgsFor system);
+
       atlas = import ./atlas {
         inherit inputs overlays;
       };
+
+      evalPlanet =
+        {
+          system ? "x86_64-linux",
+          planet,
+        }:
+        atlas.planets.eval {
+          inherit planet system;
+          specialArgs = {
+            jail = jailFor system;
+          };
+        };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
@@ -114,11 +136,7 @@
           };
         in
         {
-          _module.args.pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ overlays.default ];
-            config.allowUnfree = true;
-          };
+          _module.args.pkgs = pkgsFor system;
 
           apps = {
             planet-keygen = {
@@ -193,19 +211,19 @@
         inherit overlays;
 
         nixosConfigurations = {
-          vega = atlas.planets.eval {
+          vega = evalPlanet {
             planet = ./planets/vega;
           };
 
-          pollux = atlas.planets.eval {
+          pollux = evalPlanet {
             planet = ./planets/pollux;
           };
 
-          mizar = atlas.planets.eval {
+          mizar = evalPlanet {
             planet = ./planets/mizar;
           };
 
-          ida = atlas.planets.eval {
+          ida = evalPlanet {
             system = "aarch64-linux";
             planet = ./planets/ida;
           };

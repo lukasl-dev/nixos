@@ -16,7 +16,7 @@ let
   stateDir = "/var/lib/hass";
 
   hass = pkgs.unstable.home-assistant;
-  hassPythonPackages = hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
+  pythonPackages = hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
 in
 {
   options.planet.hosting.home.enable = lib.mkEnableOption "Home Assistant";
@@ -51,7 +51,7 @@ in
       ];
 
       customComponents = import ./components {
-        inherit hassPythonPackages lib pkgs;
+        inherit pythonPackages lib pkgs;
       };
 
       config = {

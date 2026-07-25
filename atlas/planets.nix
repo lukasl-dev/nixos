@@ -9,13 +9,15 @@
     {
       system ? "x86_64-linux",
       planet,
+      specialArgs ? { },
     }:
     let
       evaluated = lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit atlas inputs;
-        };
+        }
+        // specialArgs;
         modules = [
           ../modules/planet
           planet

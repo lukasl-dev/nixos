@@ -9,7 +9,6 @@ let
   inherit (config) traveller;
 
   opencodeApiKey = atlas.secrets.universe [
-    "pi"
     "opencode"
     "apiKey"
   ];
