@@ -8,11 +8,12 @@
 }:
 
 let
-  inherit (config) planet;
+  inherit (config) catppuccin planet;
   inherit (planet.programs) ghostty;
   inherit (pkgs.stdenv.hostPlatform) system;
 
   package = inputs.ghostty.packages.${system}.default;
+  theme = "catppuccin-${catppuccin.flavor}";
 in
 {
   options.planet.programs.ghostty.enable = lib.mkEnableOption "Ghostty" // {
@@ -39,12 +40,17 @@ in
         fi
       '';
 
+      xdg.config.files."ghostty/themes/${theme}".source =
+        "${catppuccin.sources.ghostty}/${theme}.conf";
+
       rum.programs = {
         ghostty = {
           enable = true;
           package = null;
 
           settings = {
+            theme = "light:${theme},dark:${theme}";
+
             window-decoration = false;
             window-padding-x = 8;
             window-padding-y = 8;
