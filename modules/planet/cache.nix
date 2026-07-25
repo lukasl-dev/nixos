@@ -9,8 +9,8 @@
 let
   inherit (config) age planet;
 
+  inherit (atlas.hosting.cache) host;
   cache = "universe";
-  host = "cache.${planet.domain}";
   endpoint = "https://${host}";
   publicKey = "universe:w0jdMOE2LZ74t2WSja4jKaMBPzai2aVM/VuBzszi0BQ=";
 
