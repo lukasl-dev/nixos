@@ -190,9 +190,9 @@
             planet = ./planets/pollux;
           };
 
-          # mizar = atlas.planets.eval {
-          #   planet = ./planets/mizar;
-          # };
+          mizar = atlas.planets.eval {
+            planet = ./planets/mizar;
+          };
 
           ida = atlas.planets.eval {
             system = "aarch64-linux";
