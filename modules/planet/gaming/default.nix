@@ -5,6 +5,12 @@
   ...
 }:
 
+let
+  dxvk = pkgs.symlinkJoin {
+    name = "dxvk-${pkgs.dxvk.version}";
+    paths = [ pkgs.dxvk.out ];
+  };
+in
 {
   imports = [
     ./gamemode.nix
@@ -19,6 +25,6 @@
   options.planet.gaming.enable = lib.mkEnableOption "gaming support";
 
   config.environment.systemPackages = lib.mkIf config.planet.gaming.enable [
-    pkgs.dxvk
+    dxvk
   ];
 }
