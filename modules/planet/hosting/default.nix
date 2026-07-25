@@ -7,6 +7,7 @@
     ./cal.nix
     ./household.nix
     ./mail.nix
+    ./notes.nix
     ./proxy.nix
 
     ./waka.nix
