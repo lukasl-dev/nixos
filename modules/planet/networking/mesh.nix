@@ -2,6 +2,7 @@
   atlas,
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -42,6 +43,18 @@ in
     age.secrets.${private} = {
       rekeyFile = ../../../secrets/planets + "/${planet.name}/mesh/private.age";
       generator.script = "unixverse-wireguard";
+    };
+
+    planet.steward.groups = [ "wireguard" ];
+
+    users.groups.wireguard = { };
+
+    security.wrappers.wg = {
+      source = lib.getExe pkgs.wireguard-tools;
+      owner = "root";
+      group = "wireguard";
+      permissions = "u+rx,g+rx,o-rwx";
+      capabilities = "cap_net_admin+ep";
     };
 
     networking = {
