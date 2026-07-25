@@ -1,17 +1,15 @@
 {
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    limine = {
-      enable = true;
-      efiInstallAsRemovable = true;
-    };
-  };
-
   planet = {
     name = "vega";
     stateVersion = "25.05";
 
-    modules = [ ./hardware-configuration.nix ];
+    modules = [
+      ./audio.nix
+      ./boot.nix
+      ./hardware-configuration.nix
+      ./nvidia.nix
+      ./oom.nix
+    ];
 
     steward = {
       traveller = ../../travellers/prime;
@@ -45,9 +43,13 @@
       };
     };
 
-    networking.dns.discoverable = true;
+    networking = {
+      dns.discoverable = true;
+    };
 
-    programs.uxplay.enable = true;
+    programs = {
+      uxplay.enable = true;
+    };
 
     gaming = {
       enable = true;

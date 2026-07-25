@@ -47,13 +47,6 @@ in
       '';
     };
 
-    planet =
-      let
-        group = "docker";
-      in
-      {
-        steward.groups = [ group ];
-        roles.operator.groups = [ group ];
-      };
+    planet.roles.operator.groups = [ "docker" ];
   };
 }

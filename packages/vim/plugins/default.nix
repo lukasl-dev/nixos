@@ -1,0 +1,27 @@
+{
+  imports = [
+    ./blink-cmp.nix
+    ./cellular-automaton.nix
+    ./diffview-nvim.nix
+    ./fff.nix
+    ./fidget-nvim.nix
+    ./fugitive.nix
+    ./gitsigns.nix
+    ./harpoon.nix
+    ./indent-blankline.nix
+    ./lean.nix
+    ./neogit.nix
+    ./nvim-autopairs.nix
+    ./nvim-web-devicons.nix
+    ./oil.nix
+    ./otter-nvim.nix
+    ./precognition.nix
+    ./surround.nix
+    ./telescope.nix
+    ./todo-comments.nix
+    ./trouble.nix
+    ./vim-tptp.nix
+    ./wakatime.nix
+    ./whichKey.nix
+  ];
+}

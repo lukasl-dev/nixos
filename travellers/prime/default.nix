@@ -1,7 +1,11 @@
 { atlas, ... }:
 
 {
-  imports = [ ./desktop ];
+  imports = [
+    ./desktop
+
+    ./shell.nix
+  ];
 
   traveller = rec {
     name = "prime";

@@ -27,6 +27,13 @@ let
 
   eval = assignment: atlas.travellers.eval assignment.traveller;
   steward = eval planet.steward;
+  stewardPassword = steward.user.password;
+
+  roleGroups = rec {
+    visitor = planet.roles.visitor.groups;
+    resident = visitor ++ planet.roles.resident.groups;
+    operator = resident ++ planet.roles.operator.groups;
+  };
 in
 {
   options.planet = {
@@ -63,13 +70,13 @@ in
       assignment:
       let
         traveller = eval assignment;
+        role = if assignment ? role then assignment.role else "operator";
       in
       traveller.modules
       ++ [
         {
           users.users.${traveller.user.name}.extraGroups = lib.unique (
-            assignment.groups
-            ++ lib.optionals (assignment ? role) planet.roles.${assignment.role}.groups
+            assignment.groups ++ roleGroups.${role}
           );
         }
       ]
@@ -80,7 +87,7 @@ in
 
         {
           users.users.root = {
-            hashedPasswordFile = config.age.secrets.${steward.user.password}.path;
+            hashedPasswordFile = config.age.secrets.${stewardPassword}.path;
             openssh.authorizedKeys.keys = [ steward.keys.public ];
           };
         }

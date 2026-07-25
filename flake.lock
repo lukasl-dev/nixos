@@ -1592,6 +1592,23 @@
         "type": "sourcehut"
       }
     },
+    "lean-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769889953,
+        "narHash": "sha256-yfEEfzx8V00tAPc9q1Zqmd5JklfVHVDXqNpjo525i68=",
+        "owner": "Julian",
+        "repo": "lean.nvim",
+        "rev": "904dcc2787effac5e0394a46e78499b2c094a3df",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Julian",
+        "repo": "lean.nvim",
+        "rev": "904dcc2787effac5e0394a46e78499b2c094a3df",
+        "type": "github"
+      }
+    },
     "liburing": {
       "flake": false,
       "locked": {
@@ -2380,13 +2397,16 @@
         "hjem-rum": "hjem-rum",
         "hyprland": "hyprland",
         "jail-nix": "jail-nix",
+        "lean-nvim": "lean-nvim",
         "nixpkgs": "nixpkgs_12",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "nvf": "nvf",
         "pi": "pi",
         "pi-codex-conversion": "pi-codex-conversion",
-        "tuwunel": "tuwunel"
+        "tuwunel": "tuwunel",
+        "vim-tptp": "vim-tptp",
+        "vimtex": "vimtex"
       }
     },
     "rust-analyzer-src": {
@@ -2745,6 +2765,40 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "vim-tptp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1494579155,
+        "narHash": "sha256-pIRIOpB0gkBHOxCmoqPjpsfZphDdZdDvKsfj91qbbGk=",
+        "owner": "c-cube",
+        "repo": "vim-tptp",
+        "rev": "c8a010e8d1bbc7e0341346f6b8611d0f3849aaff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "c-cube",
+        "repo": "vim-tptp",
+        "rev": "c8a010e8d1bbc7e0341346f6b8611d0f3849aaff",
+        "type": "github"
+      }
+    },
+    "vimtex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781992910,
+        "narHash": "sha256-OtQZQ1D5Je1dcXkDyUr39JmC42Uf+BVftMqk8ATDHvg=",
+        "owner": "lervag",
+        "repo": "vimtex",
+        "rev": "df8892993c1df79b96c2d237c8a0cbcbf72131da",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lervag",
+        "repo": "vimtex",
+        "rev": "df8892993c1df79b96c2d237c8a0cbcbf72131da",
         "type": "github"
       }
     },

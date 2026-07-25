@@ -29,6 +29,18 @@
     catppuccin.url = "github:catppuccin/nix/release-26.05";
 
     nvf.url = "github:notashelf/nvf";
+    lean-nvim = {
+      url = "github:Julian/lean.nvim/904dcc2787effac5e0394a46e78499b2c094a3df";
+      flake = false;
+    };
+    vim-tptp = {
+      url = "github:c-cube/vim-tptp/c8a010e8d1bbc7e0341346f6b8611d0f3849aaff";
+      flake = false;
+    };
+    vimtex = {
+      url = "github:lervag/vimtex/df8892993c1df79b96c2d237c8a0cbcbf72131da";
+      flake = false;
+    };
 
     fff.url = "github:dmtrKovalenko/fff";
 
@@ -140,7 +152,17 @@
               let
                 built = inputs.nvf.lib.neovimConfiguration {
                   inherit pkgs;
-                  modules = [ ./packages/vim ];
+                  modules = [
+                    ./packages/vim
+                    {
+                      _module.args = {
+                        fff = inputs'.fff.packages.fff-nvim;
+                        lean = inputs.lean-nvim;
+                        tptp = inputs.vim-tptp;
+                        vimtex = inputs.vimtex;
+                      };
+                    }
+                  ];
                 };
               in
               built.neovim;

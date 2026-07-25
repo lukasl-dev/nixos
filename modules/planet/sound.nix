@@ -79,6 +79,8 @@ in
       easyeffects
     ];
 
-    # TODO: autostart easyeffects
+    planet.desktop.autoStart = lib.optionals planet.desktop.enable [
+      "${lib.getExe pkgs.easyeffects} --service-mode"
+    ];
   };
 }

@@ -9,6 +9,7 @@
     ./direnv.nix
     ./discord.nix
     ./element.nix
+    ./espanso.nix
     ./eza.nix
     ./fastfetch.nix
     ./ffmpeg.nix
@@ -22,6 +23,7 @@
     ./localsend.nix
     ./mpv.nix
     ./nh.nix
+    ./nvim.nix
     ./obsidian.nix
     ./oh-my-posh
     ./perf.nix
