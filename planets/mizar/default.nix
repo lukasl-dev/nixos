@@ -16,5 +16,7 @@
     networking = {
       dns.discoverable = true;
     };
+
+    hosting.home.enable = true;
   };
 }

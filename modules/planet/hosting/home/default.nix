@@ -15,7 +15,15 @@ let
   port = 8123;
   stateDir = "/var/lib/hass";
 
-  hass = pkgs.unstable.home-assistant;
+  hass = pkgs.unstable.home-assistant.override {
+    packageOverrides = _final: previous: {
+      # The paho-mqtt test suite is currently broken under Python 3.14.
+      # https://github.com/NixOS/nixpkgs/issues/542586
+      paho-mqtt = previous.paho-mqtt.overridePythonAttrs {
+        doCheck = false;
+      };
+    };
+  };
   pythonPackages =
     hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
 in

@@ -23,7 +23,6 @@
     networking.dns.discoverable = true;
 
     hosting = {
-      home.enable = true;
       hole.enable = true;
     };
   };

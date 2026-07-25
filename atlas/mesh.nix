@@ -20,7 +20,7 @@ in
   proxies = {
     home = {
       inherit (atlas.hosting.home) host;
-      node = "ida";
+      node = "mizar";
       port = 8123;
     };
 
