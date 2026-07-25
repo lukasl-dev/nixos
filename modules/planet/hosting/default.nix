@@ -9,6 +9,7 @@
     ./forge.nix
     ./home
     ./homunculus
+    ./hole.nix
     ./household.nix
     ./mail.nix
     ./matrix

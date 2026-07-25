@@ -18,12 +18,16 @@ in
   };
 
   proxies = {
-    # HTTP services hosted on mesh nodes can be published by the router:
-    #
-    # home = {
-    #   host = atlas.hosting.home.host;
-    #   node = "mizar";
-    #   port = 8123;
-    # };
+    home = {
+      inherit (atlas.hosting.home) host;
+      node = "ida";
+      port = 8123;
+    };
+
+    hole = {
+      inherit (atlas.hosting.hole) host;
+      node = "ida";
+      port = 2718;
+    };
   };
 }

@@ -16,7 +16,8 @@ let
   stateDir = "/var/lib/hass";
 
   hass = pkgs.unstable.home-assistant;
-  pythonPackages = hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
+  pythonPackages =
+    hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
 in
 {
   options.planet.hosting.home.enable = lib.mkEnableOption "Home Assistant";
@@ -65,6 +66,7 @@ in
           trusted_proxies = [
             "127.0.0.1"
             "::1"
+            atlas.mesh.subnet
           ];
           ip_ban_enabled = true;
           login_attempts_threshold = 5;

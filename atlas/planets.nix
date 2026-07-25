@@ -16,6 +16,7 @@
         inherit system;
         specialArgs = {
           inherit atlas inputs;
+          inherit (inputs) nixos-raspberrypi;
         }
         // specialArgs;
         modules = [

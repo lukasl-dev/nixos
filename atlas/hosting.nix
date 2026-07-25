@@ -10,6 +10,7 @@
   forge.host = "forge.${atlas.domain}";
   home.host = "home.${atlas.domain}";
   household.host = "household.${atlas.domain}";
+  hole.host = "hole.${atlas.domain}";
   mail.host = "mail.${atlas.domain}";
   matrix.host = "matrix.${atlas.domain}";
   notes.host = "notes.${atlas.domain}";

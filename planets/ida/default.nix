@@ -3,15 +3,28 @@
     name = "ida";
     stateVersion = "26.05";
 
-    modules = [ ./hardware-configuration.nix ];
+    modules = [
+      ./hardware-configuration.nix
+      ./networking.nix
+      ./rpi.nix
+      ./swap.nix
+      {
+        security.sudo.wheelNeedsPassword = false;
+      }
+    ];
 
     steward = {
       traveller = ../../travellers/prime;
-      groups = [
-        "libvirtd"
-        "libvirt"
-        "kvm"
-      ];
+      groups = [ "kvm" ];
+    };
+
+    time.zone = "Europe/Vienna";
+
+    networking.dns.discoverable = true;
+
+    hosting = {
+      home.enable = true;
+      hole.enable = true;
     };
   };
 }
