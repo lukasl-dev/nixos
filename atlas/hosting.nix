@@ -11,8 +11,10 @@
   home.host = "home.${atlas.domain}";
   household.host = "household.${atlas.domain}";
   mail.host = "mail.${atlas.domain}";
+  matrix.host = "matrix.${atlas.domain}";
   notes.host = "notes.${atlas.domain}";
   rspamd.host = "rspamd.${atlas.domain}";
+  turn.host = "turn.${atlas.domain}";
   vault.host = "vault.${atlas.domain}";
   waka.host = "waka.${atlas.domain}";
   www.host = atlas.domain;

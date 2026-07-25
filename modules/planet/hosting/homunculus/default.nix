@@ -18,7 +18,8 @@ let
 
   stateDir = "/var/lib/hermes";
   soulFile = ./SOUL.md;
-  hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  hermesAgent =
+    inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   opencodeApiKey = atlas.secrets.universe [
     "opencode"
@@ -215,7 +216,7 @@ in
         AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
         DISCORD_ALLOWED_USERS = "370883999528124416";
         HASS_URL = "https://${atlas.hosting.home.host}";
-        MATRIX_HOMESERVER = "https://matrix.${domain}";
+        MATRIX_HOMESERVER = "https://${atlas.hosting.matrix.host}";
         MATRIX_USER_ID = "@homunculus:${domain}";
         MATRIX_ALLOWED_USERS = "@${stewardName}:${domain}";
         MATRIX_DEVICE_ID = "HOMUNCULUS";
@@ -244,14 +245,16 @@ in
       soulFile
     ];
 
-    system.activationScripts.hermes-agent-soul = lib.stringAfter [ "hermes-agent-setup" ] ''
-      install \
-        -o ${config.services.hermes-agent.user} \
-        -g ${config.services.hermes-agent.group} \
-        -m 0640 \
-        ${soulFile} \
-        ${stateDir}/.hermes/SOUL.md
-    '';
+    system.activationScripts.hermes-agent-soul =
+      lib.stringAfter [ "hermes-agent-setup" ]
+        ''
+          install \
+            -o ${config.services.hermes-agent.user} \
+            -g ${config.services.hermes-agent.group} \
+            -m 0640 \
+            ${soulFile} \
+            ${stateDir}/.hermes/SOUL.md
+        '';
 
     planet.backup.dirs = [ stateDir ];
   };

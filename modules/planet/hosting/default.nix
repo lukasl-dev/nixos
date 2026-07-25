@@ -10,6 +10,7 @@
     ./homunculus
     ./household.nix
     ./mail.nix
+    ./matrix
     ./notes.nix
     ./proxy.nix
     ./vault.nix
