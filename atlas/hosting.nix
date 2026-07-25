@@ -8,6 +8,7 @@
   cal.host = "cal.${atlas.domain}";
   cache.host = "cache.${atlas.domain}";
   forge.host = "forge.${atlas.domain}";
+  home.host = "home.${atlas.domain}";
   household.host = "household.${atlas.domain}";
   mail.host = "mail.${atlas.domain}";
   notes.host = "notes.${atlas.domain}";

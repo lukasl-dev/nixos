@@ -6,6 +6,7 @@
     ./books.nix
     ./cal.nix
     ./forge.nix
+    ./home
     ./household.nix
     ./mail.nix
     ./notes.nix
