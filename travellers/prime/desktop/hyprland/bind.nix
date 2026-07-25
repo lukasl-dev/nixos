@@ -83,6 +83,7 @@
         "SUPER + SHIFT + T",
         hl.dsp.exec_cmd("ghostty --command=zsh")
       )
+      hl.bind("SUPER + B", hl.dsp.exec_cmd("helium"))
 
       hl.bind(
         "SUPER + S",

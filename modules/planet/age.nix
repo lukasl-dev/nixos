@@ -39,7 +39,7 @@ in
     identityPaths = [ "/etc/agenix/identity" ];
 
     rekey = {
-      masterIdentities = [ "/etc/agenix/identity" ];
+      masterIdentities = [ "/etc/agenix/master" ];
       storageMode = "local";
       localStorageDir = ../.. + "/secrets/_/${planet.name}";
     }

@@ -6,7 +6,7 @@ import ./keygen.nix {
   command = "traveller-keygen";
   entity = "traveller";
   entityRoot = "travellers";
-  privateRoot = "secrets/universe/travellers";
-  publicRoot = "travellers";
-  publicRelative = "id_ed25519.pub";
+  privateRoot = "secrets/travellers";
+  publicRoot = "secrets/travellers";
+  publicRelative = "keys/public.pub";
 }

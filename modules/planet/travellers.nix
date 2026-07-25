@@ -88,7 +88,9 @@ in
         {
           users.users.root = {
             hashedPasswordFile = config.age.secrets.${stewardPassword}.path;
-            openssh.authorizedKeys.keys = [ steward.keys.public ];
+            openssh.authorizedKeys.keys = lib.optional (
+              steward.keys.public != null
+            ) steward.keys.public;
           };
         }
       )
