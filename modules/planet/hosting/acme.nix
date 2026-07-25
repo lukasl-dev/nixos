@@ -7,6 +7,7 @@
 
 let
   inherit (config) age;
+  inherit (config.planet) domain;
   inherit (config.planet.hosting) proxy;
 
   secret =
@@ -60,7 +61,7 @@ in
     security.acme = {
       acceptTerms = true;
       defaults = {
-        email = "contact@${atlas.domain}";
+        email = "contact@${domain}";
         dnsProvider = "cloudflare";
         dnsResolver = "1.1.1.1:53";
         environmentFile = age.secrets.${cfEnv}.path;
