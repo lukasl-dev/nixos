@@ -37,6 +37,7 @@
       homunculus.enable = true;
       mail.enable = true;
       matrix.enable = true;
+      mesh.enable = true;
       notes.enable = true;
       vault.enable = true;
       waka.enable = true;

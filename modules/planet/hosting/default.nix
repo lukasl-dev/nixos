@@ -12,6 +12,7 @@
     ./household.nix
     ./mail.nix
     ./matrix
+    ./mesh.nix
     ./notes.nix
     ./proxy.nix
     ./vault.nix

@@ -17,6 +17,13 @@ D(
   A("pollux", "185.245.61.227"),
   CNAME("ida", "ida.llama-court.ts.net."),
 
+  // mesh
+  CNAME("mesh", "pollux.lukasl.dev."),
+  A("pollux.mesh", "10.89.0.1"),
+  A("vega.mesh", "10.89.0.2"),
+  A("ida.mesh", "10.89.0.3"),
+  A("mizar.mesh", "10.89.0.4"),
+
   // pollux
   CNAME("anki", "pollux.lukasl.dev."),
   CNAME("books", "pollux.lukasl.dev."),

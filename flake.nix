@@ -53,7 +53,7 @@
 
     herdr.url = "github:ogulcancelik/herdr";
 
-    hermes-agent.url = "github:NousResearch/hermes-agent";
+    hermes-agent.url = "github:NousResearch/hermes-agent/v2026.7.20";
 
     tuwunel.url = "github:matrix-construct/tuwunel";
 
@@ -131,6 +131,9 @@
           planetKeygen = pkgs.callPackage ./scripts/planet-keygen.nix {
             agenix-rekey = config.agenix-rekey.package;
           };
+          meshKeygen = pkgs.callPackage ./scripts/mesh-keygen.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
           travellerKeygen = pkgs.callPackage ./scripts/traveller-keygen.nix {
             agenix-rekey = config.agenix-rekey.package;
           };
@@ -139,6 +142,11 @@
           _module.args.pkgs = pkgsFor system;
 
           apps = {
+            mesh-keygen = {
+              type = "app";
+              program = pkgs.lib.getExe meshKeygen;
+              meta.description = "Generate a planet's WireGuard mesh identity";
+            };
             planet-keygen = {
               type = "app";
               program = pkgs.lib.getExe planetKeygen;
@@ -159,6 +167,7 @@
             default = pkgs.mkShell {
               packages = [
                 config.agenix-rekey.package
+                meshKeygen
                 planetKeygen
                 travellerKeygen
               ];

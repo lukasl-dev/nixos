@@ -1,6 +1,7 @@
 {
   imports = [
     ./dns.nix
+    ./mesh.nix
     ./mullvad.nix
   ];
 

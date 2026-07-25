@@ -36,6 +36,15 @@ in
         ${pkgs.coreutils}/bin/cat "$directory/private"
       '';
 
+    generators.unixverse-wireguard =
+      {
+        pkgs,
+        ...
+      }:
+      ''
+        ${pkgs.wireguard-tools}/bin/wg genkey
+      '';
+
     identityPaths = [ "/etc/agenix/identity" ];
 
     rekey = {

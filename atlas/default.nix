@@ -11,6 +11,10 @@ let
       inherit (inputs.nixpkgs) lib;
     };
 
+    mesh = import ./mesh.nix {
+      inherit atlas;
+    };
+
     planets = import ./planets.nix {
       inherit atlas inputs;
       inherit (inputs.nixpkgs) lib;
