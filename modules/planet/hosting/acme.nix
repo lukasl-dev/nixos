@@ -20,9 +20,7 @@ let
   cfApiKey = secret "cf_api_key";
   cfEnv = secret "env";
 
-  hosts = lib.unique (
-    lib.mapAttrsToList (_: rule: rule.ingress.host) proxy.rules
-  );
+  hosts = lib.unique (lib.mapAttrsToList (_: rule: rule.ingress.host) proxy.rules);
 in
 {
   config = lib.mkIf proxy.enable {
@@ -62,7 +60,7 @@ in
     security.acme = {
       acceptTerms = true;
       defaults = {
-        email = "contact@lukasl.dev";
+        email = "contact@${atlas.domain}";
         dnsProvider = "cloudflare";
         dnsResolver = "1.1.1.1:53";
         environmentFile = age.secrets.${cfEnv}.path;
