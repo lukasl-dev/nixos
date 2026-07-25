@@ -49,10 +49,10 @@ D(
   CNAME("term", "pollux.lukasl.dev."),
 
   // ida
-  CNAME("dns", "hole.lukasl.dev."),
+  CNAME("dns", "ida.mesh.lukasl.dev."),
   CNAME("home", "pollux.lukasl.dev."),
   CNAME("*.home", "pollux.lukasl.dev."),
-  A("hole", "10.89.0.3"),
+  CNAME("hole", "pollux.lukasl.dev."),
   CNAME("status", "ida.lukasl.dev."),
   CNAME("backup", "ida.lukasl.dev."),
 
