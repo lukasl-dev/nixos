@@ -4,6 +4,7 @@
     ./anki.nix
     ./backup.nix
     ./books.nix
+    ./cache.nix
     ./cal.nix
     ./forge.nix
     ./home
