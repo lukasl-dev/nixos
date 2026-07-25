@@ -9,7 +9,7 @@
     ./mail.nix
     ./notes.nix
     ./proxy.nix
-
+    ./vault.nix
     ./waka.nix
   ];
 }
