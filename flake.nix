@@ -152,7 +152,18 @@
               let
                 built = inputs.pi.lib.mkCodingAgent {
                   inherit pkgs;
-                  modules = [ ./packages/pi ];
+                  modules = [
+                    ./packages/pi
+                    {
+                      _module.args = {
+                        fff = {
+                          package = inputs'.fff.packages.default;
+                          source = inputs.fff.outPath;
+                        };
+                        pi-codex-conversion = inputs'.pi-codex-conversion.packages.default;
+                      };
+                    }
+                  ];
                 };
               in
               built.package;

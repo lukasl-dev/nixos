@@ -9,7 +9,7 @@ let
   pi-fff = pkgs.buildNpmPackage {
     pname = "pi-fff";
     version = "0.7.2";
-    src = fff.outPath;
+    src = fff.source;
     npmDepsHash = "sha256-+uk57NmH4I3mHIdNE4xfSPilwWefni5B51jVxxS3OD0=";
     npmInstallFlags = [ "--include=optional" ];
     npmRebuildFlags = [ "--ignore-scripts" ];
@@ -21,7 +21,7 @@ let
       npm run build --workspace packages/fff-node
 
       mkdir -p packages/fff-node/bin
-      cp ${fff.packages.${system}.default}/lib/libfff_c.so packages/fff-node/bin/
+      cp ${fff.package}/lib/libfff_c.so packages/fff-node/bin/
 
       runHook postBuild
     '';
@@ -62,8 +62,6 @@ let
     rev = "efbfd05100547ed435f94d4bba1e77919cf9e681";
     hash = "sha256-egzx2BXEbyiOr0F7iuPa8f3QXjkCOvWl4V3GTsA1vyk=";
   };
-
-  pi-codex-conversion = pi-codex-conversion.packages.${system}.default;
 in
 {
   pi.coding-agent = {
@@ -79,6 +77,8 @@ in
     ];
 
     extensions = [
+      ./extensions/wakatime.ts
+      ./extensions/opencode-free.ts
       "${pi-fff}/packages/pi-fff"
       "${pi-usage-extension}/usage-extension"
       "${pi-exa}/extensions/index.ts"
