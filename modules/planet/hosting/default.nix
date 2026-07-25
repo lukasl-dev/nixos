@@ -5,6 +5,7 @@
     ./backup.nix
     ./books.nix
     ./cal.nix
+    ./household.nix
     ./proxy.nix
 
     ./waka.nix
