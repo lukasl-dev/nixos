@@ -7,10 +7,13 @@
   books.host = "books.${atlas.domain}";
   cal.host = "cal.${atlas.domain}";
   cache.host = "cache.${atlas.domain}";
+  forge.host = "forge.${atlas.domain}";
   household.host = "household.${atlas.domain}";
   mail.host = "mail.${atlas.domain}";
   notes.host = "notes.${atlas.domain}";
   rspamd.host = "rspamd.${atlas.domain}";
   vault.host = "vault.${atlas.domain}";
   waka.host = "waka.${atlas.domain}";
+  www.host = atlas.domain;
+  yam.host = "yam.${atlas.domain}";
 }
