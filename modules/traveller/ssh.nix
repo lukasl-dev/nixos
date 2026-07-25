@@ -3,12 +3,10 @@
 let
   inherit (config) traveller;
 
+  publicKeyPath = ../../secrets + "/travellers/${traveller.name}/keys/public.pub";
   primePublicPath = ../../secrets/travellers/prime/keys/public.pub;
   primePublic =
-    if builtins.pathExists primePublicPath then
-      builtins.readFile primePublicPath
-    else
-      null;
+    if builtins.pathExists primePublicPath then builtins.readFile primePublicPath else null;
 in
 {
   config.traveller.modules = [
@@ -17,7 +15,15 @@ in
 
       lib.mkIf (traveller.keys.public != null) {
         hjem.users.${traveller.user.name}.files = {
-          ".ssh/id_ed25519.pub".text = traveller.keys.public;
+          ".ssh/id_ed25519" = {
+            source = config.age.secrets.${traveller.keys.private}.path;
+            clobber = true;
+          };
+
+          ".ssh/id_ed25519.pub" = {
+            source = publicKeyPath;
+            clobber = true;
+          };
 
           ".ssh/config".text = ''
             Host *

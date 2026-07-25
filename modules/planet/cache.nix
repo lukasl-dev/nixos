@@ -7,12 +7,9 @@
 }:
 
 let
-  inherit (config) age planet;
+  inherit (config) age;
 
   inherit (atlas.hosting.cache) host;
-  cache = "universe";
-  endpoint = "https://${host}";
-  publicKey = "universe:w0jdMOE2LZ74t2WSja4jKaMBPzai2aVM/VuBzszi0BQ=";
 
   token = atlas.secrets.universe [
     "attic"
@@ -59,8 +56,10 @@ in
   environment.systemPackages = [ pkgs.unstable.attic-client ];
 
   nix.settings = {
-    extra-substituters = [ "${endpoint}/${cache}" ];
-    extra-trusted-public-keys = [ publicKey ];
+    extra-substituters = [ "https://${host}/universe" ];
+    extra-trusted-public-keys = [
+      "universe:w0jdMOE2LZ74t2WSja4jKaMBPzai2aVM/VuBzszi0BQ="
+    ];
     netrc-file = age.secrets.${netrc}.path;
   };
 }
