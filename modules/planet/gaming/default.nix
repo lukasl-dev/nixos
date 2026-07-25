@@ -1,4 +1,9 @@
-{ lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -12,4 +17,8 @@
   ];
 
   options.planet.gaming.enable = lib.mkEnableOption "gaming support";
+
+  config.environment.systemPackages = lib.mkIf config.planet.gaming.enable [
+    pkgs.dxvk
+  ];
 }

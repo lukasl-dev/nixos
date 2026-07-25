@@ -28,6 +28,8 @@ in
   };
 
   config = {
+    environment.localBinInPath = true;
+
     programs.zsh = {
       enable = true;
       enableCompletion = true;
