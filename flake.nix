@@ -139,6 +139,9 @@
           planetKeygen = pkgs.callPackage ./scripts/planet-keygen.nix {
             agenix-rekey = config.agenix-rekey.package;
           };
+          planetInstallIdentity = pkgs.callPackage ./scripts/planet-install-identity.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
           meshKeygen = pkgs.callPackage ./scripts/mesh-keygen.nix {
             agenix-rekey = config.agenix-rekey.package;
           };
@@ -160,6 +163,11 @@
               program = pkgs.lib.getExe planetKeygen;
               meta.description = "Generate a planet's SSH identity";
             };
+            planet-install-identity = {
+              type = "app";
+              program = pkgs.lib.getExe planetInstallIdentity;
+              meta.description = "Install a planet's deployment identity";
+            };
             traveller-keygen = {
               type = "app";
               program = pkgs.lib.getExe travellerKeygen;
@@ -176,6 +184,7 @@
               packages = [
                 config.agenix-rekey.package
                 meshKeygen
+                planetInstallIdentity
                 planetKeygen
                 travellerKeygen
               ];
