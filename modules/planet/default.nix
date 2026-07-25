@@ -20,6 +20,7 @@ in
     ./virtualisation
 
     ./age.nix
+    ./backup.nix
     ./cache.nix
     ./catppuccin.nix
     ./hjem.nix
