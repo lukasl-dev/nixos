@@ -148,6 +148,15 @@
           };
 
           packages = {
+            pi =
+              let
+                built = inputs.pi.lib.mkCodingAgent {
+                  inherit pkgs;
+                  modules = [ ./packages/pi ];
+                };
+              in
+              built.package;
+
             vim =
               let
                 built = inputs.nvf.lib.neovimConfiguration {
@@ -159,7 +168,7 @@
                         fff = inputs'.fff.packages.fff-nvim;
                         lean = inputs.lean-nvim;
                         tptp = inputs.vim-tptp;
-                        vimtex = inputs.vimtex;
+                        inherit (inputs) vimtex;
                       };
                     }
                   ];

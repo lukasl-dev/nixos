@@ -31,6 +31,7 @@
     github.user = git.user;
 
     programs = {
+      pi.enable = true;
       waka.enable = true;
     };
   };

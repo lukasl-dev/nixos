@@ -1,3 +1,6 @@
 {
-  imports = [ ./waka.nix ];
+  imports = [
+    ./pi.nix
+    ./waka.nix
+  ];
 }
