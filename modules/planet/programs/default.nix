@@ -23,6 +23,7 @@
     ./mpv.nix
     ./nh.nix
     ./obsidian.nix
+    ./oh-my-posh
     ./perf.nix
     ./poppler-utils.nix
     ./python.nix
