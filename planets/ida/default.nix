@@ -1,29 +1,29 @@
 {
-  imports = [
-    ./hardware-configuration.nix
-    ./networking.nix
-    ./rpi.nix
-    # ./storage.nix
-    ./swap.nix
-  ];
-
   planet = {
     name = "ida";
-    timeZone = "Europe/Vienna";
     stateVersion = "26.05";
 
-    sudo.password = false;
+    modules = [
+      ./hardware-configuration.nix
+      ./networking.nix
+      ./rpi.nix
+      ./swap.nix
+      {
+        security.sudo.wheelNeedsPassword = false;
+      }
+    ];
+
+    steward = {
+      traveller = ../../travellers/prime;
+      groups = [ "kvm" ];
+    };
+
+    time.zone = "Europe/Vienna";
 
     networking.dns.discoverable = true;
-  };
 
-  galaxy = {
-    # backup = {
-    #   enable = true;
-    #   dataDir = "/mnt/external/restic";
-    # };
-
-    home.enable = true;
-    hole.enable = true;
+    hosting = {
+      hole.enable = true;
+    };
   };
 }

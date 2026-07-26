@@ -1,0 +1,24 @@
+{
+  imports = [
+    ./acme.nix
+    ./anki.nix
+    ./backup.nix
+    ./books.nix
+    ./cache.nix
+    ./cal.nix
+    ./forge.nix
+    ./home
+    ./homunculus
+    ./hole.nix
+    ./household.nix
+    ./mail.nix
+    ./matrix
+    ./mesh.nix
+    ./notes.nix
+    ./proxy.nix
+    ./vault.nix
+    ./waka.nix
+    ./www.nix
+    ./yam.nix
+  ];
+}

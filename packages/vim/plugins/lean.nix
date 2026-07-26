@@ -1,15 +1,10 @@
-{ pkgs, ... }:
+{ lean, pkgs, ... }:
 
 let
   package = pkgs.vimUtils.buildVimPlugin {
     name = "lean.nvim";
     pname = "lean.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "Julian";
-      repo = "lean.nvim";
-      rev = "904dcc2787effac5e0394a46e78499b2c094a3df";
-      hash = "sha256-yfEEfzx8V00tAPc9q1Zqmd5JklfVHVDXqNpjo525i68=";
-    };
+    src = lean;
     nvimSkipModules = [
       "proofwidgets.expr_presentation"
       "proofwidgets.make_edit_link"

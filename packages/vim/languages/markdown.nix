@@ -1,12 +1,10 @@
-{ pkgs, lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   vim = {
     languages.markdown = {
       enable = true;
-      extensions = {
-        render-markdown-nvim.enable = true;
-      };
+      extensions.render-markdown-nvim.enable = true;
     };
 
     extraPackages = [ pkgs.markdown-oxide ];
@@ -28,6 +26,5 @@
         ];
       };
     };
-
   };
 }

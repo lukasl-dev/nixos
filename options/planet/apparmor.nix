@@ -1,3 +1,0 @@
-{
-  security.apparmor.enable = true;
-}

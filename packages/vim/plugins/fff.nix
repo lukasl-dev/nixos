@@ -1,8 +1,8 @@
-{ pkgs, rinputs, ... }:
+{ fff, ... }:
 
 {
   vim.extraPlugins."fff.nvim" = {
-    package = rinputs.fff.packages.${pkgs.stdenv.hostPlatform.system}.fff-nvim;
+    package = fff;
     setup = # lua
       ''
         require("fff").setup {
@@ -44,7 +44,9 @@
       action = # lua
         ''
           function()
-            require("fff").live_grep({ grep = { modes = { "fuzzy", "plain" } } })
+            require("fff").live_grep({
+              grep = { modes = { "fuzzy", "plain" } },
+            })
           end
         '';
       desc = "Live grep [FFF]";

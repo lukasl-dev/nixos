@@ -1,15 +1,15 @@
-{ pkgs, ... }:
+{
+  lib,
+  pkgs,
+  vimtex,
+  ...
+}:
 
 let
   package = pkgs.vimUtils.buildVimPlugin {
     name = "vimtex";
     pname = "vimtex";
-    src = pkgs.fetchFromGitHub {
-      owner = "lervag";
-      repo = "vimtex";
-      rev = "df8892993c1df79b96c2d237c8a0cbcbf72131da";
-      hash = "sha256-OtQZQ1D5Je1dcXkDyUr39JmC42Uf+BVftMqk8ATDHvg=";
-    };
+    src = vimtex;
     nvimSkipModules = [
       "vimtex.fzf-lua.init"
       "vimtex.snacks.init"
@@ -18,6 +18,10 @@ let
 in
 {
   vim = {
+    treesitter.grammars = [
+      pkgs.vimPlugins.nvim-treesitter.grammarPlugins.latex
+    ];
+
     extraPackages = [
       (pkgs.symlinkJoin {
         name = "sioyek";
@@ -32,7 +36,10 @@ in
 
     lazy.plugins."vimtex" = {
       inherit package;
-      ft = [ "tex" "plaintex" ];
+      ft = [
+        "tex"
+        "plaintex"
+      ];
     };
 
     globals = {
@@ -49,9 +56,18 @@ in
     autocmds = [
       {
         event = [ "FileType" ];
-        pattern = [ "tex" "plaintex" ];
-        desc = "Keep TeX indentation simple and stop punctuation-triggered reindent";
-        command = "setlocal autoindent nosmartindent indentexpr= indentkeys=!^F";
+        pattern = [
+          "tex"
+          "plaintex"
+        ];
+        desc = lib.concatStrings [
+          "Keep TeX indentation simple and stop "
+          "punctuation-triggered reindent"
+        ];
+        command = lib.concatStrings [
+          "setlocal autoindent nosmartindent "
+          "indentexpr= indentkeys=!^F"
+        ];
       }
     ];
   };

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ lib, pkgs, ... }:
 
 let
   script = pkgs.writeShellApplication {
@@ -12,13 +12,14 @@ let
     ];
     text = # bash
       ''
-        set -eu
-
         for _ in $(seq 1 20); do
-          source_id="$(wpctl status -n \
-            | grep 'HiFi__Mic2__source' \
-            | head -n1 \
-            | sed -E 's/^[^0-9]*([0-9]+)\..*/\1/')"
+          source_id="$(
+            wpctl status -n \
+              | grep 'HiFi__Mic2__source' \
+              | head -n1 \
+              | sed -E 's/^[^0-9]*([0-9]+)\..*/\1/' \
+              || true
+          )"
 
           if [ -n "$source_id" ]; then
             wpctl set-default "$source_id"
@@ -40,21 +41,22 @@ in
 
   systemd.user.services.vega-fix-audio-volume = {
     description = "Set Scarlett Mic2 as default source with boosted volume";
-    after = [
-      "graphical-session.target"
-      "pipewire.service"
-      "wireplumber.service"
-    ];
+    wantedBy = [ "graphical-session.target" ];
     wants = [
       "graphical-session.target"
       "pipewire.service"
       "wireplumber.service"
     ];
+    after = [
+      "graphical-session.target"
+      "pipewire.service"
+      "wireplumber.service"
+    ];
     partOf = [ "graphical-session.target" ];
+
     serviceConfig = {
       Type = "oneshot";
       ExecStart = lib.getExe script;
     };
-    wantedBy = [ "graphical-session.target" ];
   };
 }

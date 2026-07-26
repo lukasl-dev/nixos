@@ -2,10 +2,16 @@
 
 let
   jdtls-lombok = pkgs.writeShellScriptBin "jdtls" ''
-    exec ${pkgs.jdt-language-server}/bin/jdtls --jvm-arg=-javaagent:${pkgs.lombok}/share/java/lombok.jar "$@"
+    exec ${pkgs.jdt-language-server}/bin/jdtls \
+      --jvm-arg=-javaagent:${pkgs.lombok}/share/java/lombok.jar \
+      "$@"
   '';
 in
 {
+  vim.treesitter.grammars = [
+    pkgs.vimPlugins.nvim-treesitter.grammarPlugins.java
+  ];
+
   # vim = {
   #   extraPackages = with pkgs; [ google-java-format ];
   #
@@ -22,6 +28,8 @@ in
   #       ''
   #   );
   #
-  #   formatter.conform-nvim.setupOpts.formatters_by_ft.java = [ "google-java-format" ];
+  #   formatter.conform-nvim.setupOpts.formatters_by_ft.java = [
+  #     "google-java-format"
+  #   ];
   # };
 }

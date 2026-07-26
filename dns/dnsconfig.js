@@ -15,7 +15,14 @@ D(
 
   // hosts
   A("pollux", "185.245.61.227"),
-  CNAME("ida", "ida.llama-court.ts.net."),
+  CNAME("ida", "ida.mesh.lukasl.dev."),
+
+  // mesh
+  CNAME("mesh", "pollux.lukasl.dev."),
+  A("pollux.mesh", "10.89.0.1"),
+  A("vega.mesh", "10.89.0.2"),
+  A("ida.mesh", "10.89.0.3"),
+  A("mizar.mesh", "10.89.0.4"),
 
   // pollux
   CNAME("anki", "pollux.lukasl.dev."),
@@ -35,8 +42,6 @@ D(
   CNAME("meet", "pollux.lukasl.dev."),
   CNAME("turn", "pollux.lukasl.dev."),
   CNAME("fin", "pollux.lukasl.dev."),
-  CNAME("peers", "pollux.lukasl.dev."),
-  CNAME("*.peers", "peers.lukasl.dev."),
   CNAME("waka", "pollux.lukasl.dev."),
   CNAME("yam", "pollux.lukasl.dev."),
   CNAME("rspamd", "pollux.lukasl.dev."),
@@ -44,15 +49,12 @@ D(
   CNAME("term", "pollux.lukasl.dev."),
 
   // ida
-  CNAME("dns", "hole.lukasl.dev."),
-  CNAME("home", "peers.lukasl.dev."),
-  CNAME("*.home", "peers.lukasl.dev."),
-  A("hole", "100.101.127.90"),
+  CNAME("dns", "ida.mesh.lukasl.dev."),
+  CNAME("home", "pollux.lukasl.dev."),
+  CNAME("*.home", "pollux.lukasl.dev."),
+  CNAME("hole", "pollux.lukasl.dev."),
   CNAME("status", "ida.lukasl.dev."),
   CNAME("backup", "ida.lukasl.dev."),
-
-  // iconolatry
-  CNAME("icons", "cname.vercel-dns.com."),
 
   // mail
   A("mail", "185.245.61.227"),

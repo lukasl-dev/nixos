@@ -9,103 +9,82 @@
   };
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
-    systems.url = "github:nix-systems/default";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
+    nur = {
+      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hjem.follows = "hjem-rum/hjem";
+    hjem-rum = {
+      url = "github:snugnug/hjem-rum";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix.url = "github:ryantm/agenix";
     agenix-rekey = {
       url = "github:oddlama/agenix-rekey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix-shell.url = "github:aciceri/agenix-shell";
+
     jail-nix.url = "sourcehut:~alexdavid/jail.nix";
-    nvf = {
-      url = "github:notashelf/nvf";
-      # url = "github:notashelf/nvf?ref=v0.8";
-      # inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.55.0";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+
     catppuccin.url = "github:catppuccin/nix/release-26.05";
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    ghostty.url = "github:ghostty-org/ghostty";
-    handy = {
-      url = "github:cjpais/Handy";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    nvf.url = "github:notashelf/nvf";
+    lean-nvim = {
+      url = "github:Julian/lean.nvim/904dcc2787effac5e0394a46e78499b2c094a3df";
+      flake = false;
     };
-    herdr = {
-      url = "github:ogulcancelik/herdr";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    vim-tptp = {
+      url = "github:c-cube/vim-tptp/c8a010e8d1bbc7e0341346f6b8611d0f3849aaff";
+      flake = false;
     };
-    winapps = {
-      url = "github:winapps-org/winapps";
-      inputs.nixpkgs.follows = "nixpkgs";
+    vimtex = {
+      url = "github:lervag/vimtex/df8892993c1df79b96c2d237c8a0cbcbf72131da";
+      flake = false;
     };
-    tuwunel.url = "github:matrix-construct/tuwunel";
-    capTUre.url = "github:lukasl-dev/capTUre";
-    nur.url = "github:nix-community/NUR";
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dgop = {
-      url = "github:AvengeMedia/dgop";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    fff.url = "github:dmtrKovalenko/fff";
+
     pi.url = "github:lukasl-dev/pi.nix";
-    pi-codex-conversion = {
-      url = "github:lukasl-dev/pi-codex-conversion.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    pi-codex-conversion.url = "github:lukasl-dev/pi-codex-conversion.nix";
     firn = {
       url = "github:lukasl-dev/firn";
       flake = false;
     };
-    rime.url = "github:lukasl-dev/rime";
-    outofbounds.url = "github:lukasl-dev/outofbounds";
-    fff = {
-      url = "github:dmtrKovalenko/fff";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    lightpanda.url = "github:lukasl-dev/browser";
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    nixos-anywhere = {
-      url = "github:nix-community/nixos-anywhere";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    herdr.url = "github:ogulcancelik/herdr";
+
+    hermes-agent.url = "github:NousResearch/hermes-agent/v2026.7.20";
+
+    tuwunel.url = "github:matrix-construct/tuwunel";
+
+    hyprland.url = "github:hyprwm/Hyprland/v0.55.0";
+
+    dms.url = "github:AvengeMedia/DankMaterialShell/stable";
+    dgop.url = "github:AvengeMedia/dgop";
+
+    ghostty.url = "github:ghostty-org/ghostty";
+
+    handy.url = "github:cjpais/Handy";
   };
 
   outputs =
-    {
-      self,
+    inputs@{
+      flake-parts,
       nixpkgs,
-      nixpkgs-unstable,
-      systems,
-      nvf,
-      jail-nix,
       ...
-    }@inputs:
+    }:
     let
-      defaultSystem = "x86_64-linux";
-
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
-
       overlays = import ./overlays {
         inherit inputs;
-        lib = nixpkgs.lib;
+        inherit (nixpkgs) lib;
       };
 
       pkgsFor =
@@ -116,107 +95,165 @@
           config.allowUnfree = true;
         };
 
-      mkNixosSystem =
-        {
-          system ? defaultSystem,
-          module,
-        }:
-        let
-          baseModules = [
-            ./options
-            ./universe.nix
-            { nixpkgs.overlays = [ overlays.default ]; }
-          ];
-          extraModules = [ module ];
+      jailFor = system: inputs.jail-nix.lib.init (pkgsFor system);
 
-          pkgs = pkgsFor system;
-          jail = jail-nix.lib.init pkgs;
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit system;
+      atlas = import ./atlas {
+        inherit inputs overlays;
+      };
+
+      evalPlanet =
+        {
+          system ? "x86_64-linux",
+          planet,
+        }:
+        atlas.planets.eval {
+          inherit planet system;
           specialArgs = {
-            inherit self inputs jail;
-            inherit (inputs) nixos-raspberrypi;
+            jail = jailFor system;
           };
-          modules = baseModules ++ extraModules;
         };
     in
-    {
-      inherit overlays;
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.agenix-rekey.flakeModule
+        inputs.agenix-shell.flakeModules.default
+      ];
 
-      agenix-rekey = inputs.agenix-rekey.configure {
-        userFlake = self;
-        inherit (self) nixosConfigurations;
-        darwinConfigurations = { };
-      };
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
 
-      nixosConfigurations = {
-        vega = mkNixosSystem { module = ./planets/vega; };
-        pollux = mkNixosSystem { module = ./planets/pollux; };
-        ida = mkNixosSystem {
-          system = "aarch64-linux";
-          module = ./planets/ida;
+      perSystem =
+        {
+          config,
+          self',
+          inputs',
+          pkgs,
+          system,
+          ...
+        }:
+        let
+          planetKeygen = pkgs.callPackage ./scripts/planet-keygen.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
+          planetInstallIdentity = pkgs.callPackage ./scripts/planet-install-identity.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
+          meshKeygen = pkgs.callPackage ./scripts/mesh-keygen.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
+          travellerKeygen = pkgs.callPackage ./scripts/traveller-keygen.nix {
+            agenix-rekey = config.agenix-rekey.package;
+          };
+        in
+        {
+          _module.args.pkgs = pkgsFor system;
+
+          apps = {
+            mesh-keygen = {
+              type = "app";
+              program = pkgs.lib.getExe meshKeygen;
+              meta.description = "Generate a planet's WireGuard mesh identity";
+            };
+            planet-keygen = {
+              type = "app";
+              program = pkgs.lib.getExe planetKeygen;
+              meta.description = "Generate a planet's SSH identity";
+            };
+            planet-install-identity = {
+              type = "app";
+              program = pkgs.lib.getExe planetInstallIdentity;
+              meta.description = "Install a planet's deployment identity";
+            };
+            traveller-keygen = {
+              type = "app";
+              program = pkgs.lib.getExe travellerKeygen;
+              meta.description = "Generate a traveller's SSH identity";
+            };
+          };
+
+          formatter = pkgs.writeShellScriptBin "nixfmt" ''
+            exec ${pkgs.lib.getExe pkgs.nixfmt} --width 80 "$@"
+          '';
+
+          devShells = {
+            default = pkgs.mkShell {
+              packages = [
+                config.agenix-rekey.package
+                meshKeygen
+                planetInstallIdentity
+                planetKeygen
+                travellerKeygen
+              ];
+            };
+          };
+
+          packages = {
+            pi =
+              let
+                built = inputs.pi.lib.mkCodingAgent {
+                  inherit pkgs;
+                  modules = [
+                    ./packages/pi
+                    {
+                      _module.args = {
+                        fff = {
+                          package = inputs'.fff.packages.default;
+                          source = inputs.fff.outPath;
+                        };
+                        pi-codex-conversion = inputs'.pi-codex-conversion.packages.default;
+                      };
+                    }
+                  ];
+                };
+              in
+              built.package;
+
+            vim =
+              let
+                built = inputs.nvf.lib.neovimConfiguration {
+                  inherit pkgs;
+                  modules = [
+                    ./packages/vim
+                    {
+                      _module.args = {
+                        fff = inputs'.fff.packages.fff-nvim;
+                        lean = inputs.lean-nvim;
+                        tptp = inputs.vim-tptp;
+                        inherit (inputs) vimtex;
+                      };
+                    }
+                  ];
+                };
+              in
+              built.neovim;
+          };
+        };
+
+      flake = {
+        inherit overlays;
+
+        nixosConfigurations = {
+          vega = evalPlanet {
+            planet = ./planets/vega;
+          };
+
+          pollux = evalPlanet {
+            planet = ./planets/pollux;
+          };
+
+          mizar = evalPlanet {
+            planet = ./planets/mizar;
+          };
+
+          ida = evalPlanet {
+            system = "aarch64-linux";
+            planet = ./planets/ida;
+          };
         };
       };
-
-      packages = forEachSystem (
-        system:
-        let
-          pkgs = pkgsFor system;
-        in
-        {
-          helium = pkgs.callPackage ./packages/helium { };
-          plann = pkgs.plann;
-          upterm = pkgs.callPackage ./packages/upterm { };
-          taman = pkgs.callPackage ./packages/taman { };
-
-          vim =
-            (nvf.lib.neovimConfiguration {
-              inherit pkgs;
-              modules = [ ./packages/vim ];
-              extraSpecialArgs = {
-                rinputs = inputs;
-              };
-            }).neovim;
-        }
-      );
-
-      devShells = forEachSystem (
-        system:
-        let
-          pkgs = pkgsFor system;
-        in
-        {
-          default = pkgs.mkShell {
-            packages =
-              with pkgs;
-              [
-                just
-                jq
-              ]
-              ++ [
-                inputs.agenix-rekey.packages.${system}.default
-                inputs.nixos-anywhere.packages.${system}.default
-                pkgs.nh
-              ]
-              ++ (import ./packages/scripts { inherit pkgs; });
-
-            shellHook = ''
-              repo_root=$(git -C "$PWD" rev-parse --show-toplevel 2>/dev/null || printf '%s\n' "$PWD")
-              bash ${./options/planet/programs/pi/extensions/setup-node-modules.sh} \
-                "$repo_root" \
-                ${inputs.pi.packages.${system}.coding-agent}
-            '';
-          };
-        }
-      );
-
-      formatter = forEachSystem (
-        system:
-        let
-          pkgs = pkgsFor system;
-        in
-        pkgs.nixfmt
-      );
     };
 }

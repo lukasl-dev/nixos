@@ -1,21 +1,16 @@
 { inputs, lib }:
 
 rec {
-  nur = import ./nur.nix { inherit inputs; };
-  unstable = import ./unstable.nix { inherit inputs; };
-  local = final: _prev: {
-    netbird-proxy = final.callPackage ../packages/netbird-proxy {
-      buildGoModule = final.unstable.buildGoModule;
+  unstable = final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      inherit (final.stdenv.hostPlatform) system;
+      inherit (final) config;
     };
-    netbird-server = final.callPackage ../packages/netbird-server {
-      buildGoModule = final.unstable.buildGoModule;
-    };
-    plann = final.callPackage ../packages/plann { };
   };
+  nur = inputs.nur.overlays.default;
 
   default = lib.composeManyExtensions [
     nur
     unstable
-    local
   ];
 }

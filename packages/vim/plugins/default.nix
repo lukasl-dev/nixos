@@ -1,9 +1,7 @@
 {
   imports = [
-    ./avante.nix
     ./blink-cmp.nix
     ./cellular-automaton.nix
-    ./copilot.nix
     ./diffview-nvim.nix
     ./fff.nix
     ./fidget-nvim.nix
@@ -15,7 +13,6 @@
     ./neogit.nix
     ./nvim-autopairs.nix
     ./nvim-web-devicons.nix
-    ./obsidian.nix
     ./oil.nix
     ./otter-nvim.nix
     ./precognition.nix

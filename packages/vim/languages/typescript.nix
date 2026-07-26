@@ -3,6 +3,9 @@
 {
   vim = {
     languages.typescript.enable = true;
+    treesitter.grammars = [
+      pkgs.vimPlugins.nvim-treesitter.grammarPlugins.tsx
+    ];
 
     extraPackages = [ pkgs.biome ];
 

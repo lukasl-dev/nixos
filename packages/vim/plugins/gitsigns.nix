@@ -1,5 +1,3 @@
 {
-  vim.git.gitsigns = {
-    enable = true;
-  };
+  vim.git.gitsigns.enable = true;
 }

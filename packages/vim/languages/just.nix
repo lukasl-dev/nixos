@@ -1,3 +1,10 @@
+{ pkgs, ... }:
+
 {
-  vim.formatter.conform-nvim.setupOpts.formatters_by_ft.just = [ "just" ];
+  vim = {
+    treesitter.grammars = [
+      pkgs.vimPlugins.nvim-treesitter.grammarPlugins.just
+    ];
+    formatter.conform-nvim.setupOpts.formatters_by_ft.just = [ "just" ];
+  };
 }

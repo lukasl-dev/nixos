@@ -1,0 +1,44 @@
+{
+  imports = [
+    ./helium
+
+    ./appimage.nix
+    ./bat.nix
+    ./btop.nix
+    ./calendar.nix
+    ./direnv.nix
+    ./discord.nix
+    ./element.nix
+    ./espanso.nix
+    ./eza.nix
+    ./fastfetch.nix
+    ./ffmpeg.nix
+    ./fzf.nix
+    ./gpg.nix
+    ./ghostty.nix
+    ./handy.nix
+    ./herdr.nix
+    ./hyperfine.nix
+    ./imagemagick.nix
+    ./localsend.nix
+    ./mpv.nix
+    ./nh.nix
+    ./nvim.nix
+    ./obsidian.nix
+    ./oh-my-posh
+    ./perf.nix
+    ./poppler-utils.nix
+    ./python.nix
+    ./ripgrep.nix
+    ./seahorse.nix
+    ./sioyek.nix
+    ./speedtest.nix
+    ./thunderbird.nix
+    ./tmux.nix
+    ./uxplay.nix
+    ./yazi.nix
+    ./yt-dlp.nix
+    ./zip.nix
+    ./zoxide.nix
+  ];
+}

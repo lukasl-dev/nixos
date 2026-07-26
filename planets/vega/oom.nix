@@ -1,6 +1,19 @@
+{ lib, ... }:
+
+let
+  prefer = lib.concatStrings [
+    "^(chrome|chromium|firefox|electron|code|node|python[0-9.]*|"
+    "java|nix|llama.*|ollama|cc1plus|clang.*|rustc|cargo|zig|"
+    "ld|ld\\.lld|mold)$"
+  ];
+
+  avoid = lib.concatStrings [
+    "^(systemd|sshd|dbus|NetworkManager|Hyprland|waybar|"
+    "nix-daemon)$"
+  ];
+in
 {
-  # keep the desktop responsive under memory pressure: use compressed ram
-  # first, then a real swapfile as slower backup capacity
+  # Use compressed RAM first, then a real swapfile as slower backup capacity.
   zramSwap = {
     enable = true;
     algorithm = "zstd";
@@ -10,18 +23,15 @@
   swapDevices = [
     {
       device = "/swapfile";
-      size = 32 * 1024; # MiB = 32 GiB
+      size = 32 * 1024;
     }
   ];
 
   boot.kernel.sysctl = {
-    # prefer compressed ram swap for desktop memory pressure, and avoid
-    # costly swap readahead from zram
     "vm.swappiness" = 180;
     "vm.page-cluster" = 0;
   };
 
-  # kill runaway user processes before the whole machine locks up
   services.earlyoom = {
     enable = true;
     enableNotifications = true;
@@ -29,14 +39,13 @@
     freeSwapThreshold = 10;
     extraArgs = [
       "--prefer"
-      "^(chrome|chromium|firefox|electron|code|node|python[0-9.]*|java|nix|llama.*|ollama|cc1plus|clang.*|rustc|cargo|zig|ld|ld\\.lld|mold)$"
 
+      prefer
       "--avoid"
-      "^(systemd|sshd|dbus|NetworkManager|Hyprland|waybar|nix-daemon)$"
+      avoid
     ];
   };
 
-  # start after swap is activated so earlyoom sees the zram/swapfile totals at
-  # startup and does not briefly operate as if the machine had no swap
+  # Ensure EarlyOOM sees both swap tiers when it starts.
   systemd.services.earlyoom.after = [ "swap.target" ];
 }

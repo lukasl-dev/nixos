@@ -5,17 +5,13 @@
   imports = [
     ./languages
     ./plugins
-    ./filetypes.nix
 
     ./clipboard.nix
+    ./filetypes.nix
     ./git.nix
     ./mappings.nix
     ./options.nix
     ./perf.nix
     ./theme.nix
   ];
-
-  vim = {
-    utility.nix-develop.enable = true;
-  };
 }

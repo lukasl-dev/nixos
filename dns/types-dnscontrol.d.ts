@@ -5,38 +5,37 @@
 // WARNING: These type definitions are experimental and subject to change in future releases.
 
 interface Domain {
-    name: string;
-    subdomain: string;
-    registrar: unknown;
-    meta: Record<string, unknown>;
-    records: DNSRecord[];
-    dnsProviders: Record<string, unknown>;
-    defaultTTL: number;
-    nameservers: unknown[];
-    ignored_names: unknown[];
-    ignored_targets: unknown[];
-    [key: string]: unknown;
+  name: string;
+  subdomain: string;
+  registrar: unknown;
+  meta: Record<string, unknown>;
+  records: DNSRecord[];
+  dnsProviders: Record<string, unknown>;
+  defaultTTL: number;
+  nameservers: unknown[];
+  ignored_names: unknown[];
+  ignored_targets: unknown[];
+  [key: string]: unknown;
 }
 
 interface DNSRecord {
-    type: string;
-    meta: Record<string, unknown>;
-    ttl: number;
+  type: string;
+  meta: Record<string, unknown>;
+  ttl: number;
 }
 
 type DomainModifier =
-    | ((domain: Domain) => void)
-    | Partial<Domain>
-    | DomainModifier[];
+  | ((domain: Domain) => void)
+  | Partial<Domain>
+  | DomainModifier[];
 
 type RecordModifier =
-    | ((record: DNSRecord) => void)
-    | Partial<DNSRecord['meta']>;
+  | ((record: DNSRecord) => void)
+  | Partial<DNSRecord["meta"]>;
 
 type Duration =
-    | `${number}${'s' | 'm' | 'h' | 'd' | 'w' | 'n' | 'y' | ''}`
-    | number /* seconds */;
-
+  | `${number}${"s" | "m" | "h" | "d" | "w" | "n" | "y" | ""}`
+  | number /* seconds */;
 
 /**
  * `FETCH` is a wrapper for the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). This allows dynamically setting DNS records based on an external data source, e.g. the API of your cloud provider.
@@ -73,45 +72,37 @@ type Duration =
  * ```
  */
 declare function FETCH(
-    url: string,
-    init?: {
-        method?:
-            | 'GET'
-            | 'POST'
-            | 'PUT'
-            | 'PATCH'
-            | 'DELETE'
-            | 'HEAD'
-            | 'OPTIONS';
-        headers?: { [key: string]: string | string[] };
-        // Ignored by the underlying code
-        // redirect: 'follow' | 'error' | 'manual';
-        body?: string;
-    }
+  url: string,
+  init?: {
+    method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
+    headers?: { [key: string]: string | string[] };
+    // Ignored by the underlying code
+    // redirect: 'follow' | 'error' | 'manual';
+    body?: string;
+  },
 ): Promise<FetchResponse>;
 
 interface FetchResponse {
-    readonly bodyUsed: boolean;
-    readonly headers: ResponseHeaders;
-    readonly ok: boolean;
-    readonly status: number;
-    readonly statusText: string;
-    readonly type: string;
+  readonly bodyUsed: boolean;
+  readonly headers: ResponseHeaders;
+  readonly ok: boolean;
+  readonly status: number;
+  readonly statusText: string;
+  readonly type: string;
 
-    text(): Promise<string>;
-    json(): Promise<any>;
+  text(): Promise<string>;
+  json(): Promise<any>;
 }
 
 interface ResponseHeaders {
-    get(name: string): string | undefined;
-    getAll(name: string): string[];
-    has(name: string): boolean;
+  get(name: string): string | undefined;
+  getAll(name: string): string[];
+  has(name: string): boolean;
 
-    append(name: string, value: string): void;
-    delete(name: string): void;
-    set(name: string, value: string): void;
+  append(name: string, value: string): void;
+  delete(name: string): void;
+  set(name: string, value: string): void;
 }
-
 
 declare function require(name: `${string}.json`): any;
 declare function require(name: `${string}.json5`): any;
@@ -181,7 +172,6 @@ declare const END: DomainModifier & RecordModifier;
  */
 declare const DISABLE_REPEATED_DOMAIN_CHECK: RecordModifier;
 
-
 /**
  * A adds an A record To a domain. The name should be the relative label for the record. Use `@` for the domain apex.
  *
@@ -200,7 +190,11 @@ declare const DISABLE_REPEATED_DOMAIN_CHECK: RecordModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/a
  */
-declare function A(name: string, address: string | number, ...modifiers: RecordModifier[]): DomainModifier;
+declare function A(
+  name: string,
+  address: string | number,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * AAAA adds an AAAA record To a domain. The name should be the relative label for the record. Use `@` for the domain apex.
@@ -222,7 +216,11 @@ declare function A(name: string, address: string | number, ...modifiers: RecordM
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/aaaa
  */
-declare function AAAA(name: string, address: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function AAAA(
+  name: string,
+  address: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * AKAMAICDN is a proprietary record type that is used to configure [Zone Apex Mapping](https://www.akamai.com/blog/security/edge-dns--zone-apex-mapping---dnssec).
@@ -230,7 +228,11 @@ declare function AAAA(name: string, address: string, ...modifiers: RecordModifie
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/akamai-edge-dns/akamaicdn
  */
-declare function AKAMAICDN(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function AKAMAICDN(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * ALIAS is a virtual record type that points a record at another record. It is analogous to a CNAME, but is usually resolved at request-time and served as an A record. Unlike CNAMEs, ALIAS records can be used at the zone apex (`@`)
@@ -249,7 +251,11 @@ declare function AKAMAICDN(name: string, target: string, ...modifiers: RecordMod
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/alias
  */
-declare function ALIAS(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function ALIAS(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `AUTODNSSEC_OFF` tells the provider to disable AutoDNSSEC. It takes no
@@ -341,7 +347,12 @@ declare const AUTODNSSEC_ON: DomainModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/azure-dns/azure_alias
  */
-declare function AZURE_ALIAS(name: string, type: "A" | "AAAA" | "CNAME", target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function AZURE_ALIAS(
+  name: string,
+  type: "A" | "AAAA" | "CNAME",
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `CAA()` adds a CAA record to a domain. The name should be the relative label for the record. Use `@` for the domain apex.
@@ -372,7 +383,12 @@ declare function AZURE_ALIAS(name: string, type: "A" | "AAAA" | "CNAME", target:
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/caa
  */
-declare function CAA(name: string, tag: "issue" | "issuewild" | "iodef", value: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function CAA(
+  name: string,
+  tag: "issue" | "issuewild" | "iodef",
+  value: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * DNSControl contains a `CAA_BUILDER` which can be used to simply create
@@ -473,7 +489,16 @@ declare function CAA(name: string, tag: "issue" | "issuewild" | "iodef", value: 
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/caa_builder
  */
-declare function CAA_BUILDER(opts: { label?: string; iodef: string; iodef_critical?: boolean; issue: string[]|string; issue_critical?: boolean; issuewild: string[]|string; issuewild_critical?: boolean; ttl?: Duration }): DomainModifier;
+declare function CAA_BUILDER(opts: {
+  label?: string;
+  iodef: string;
+  iodef_critical?: boolean;
+  issue: string[] | string;
+  issue_critical?: boolean;
+  issuewild: string[] | string;
+  issuewild_critical?: boolean;
+  ttl?: Duration;
+}): DomainModifier;
 
 /**
  * WARNING: Cloudflare is removing this feature and replacing it with a new
@@ -509,7 +534,11 @@ declare function CAA_BUILDER(opts: { label?: string; iodef: string; iodef_critic
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/cloudflare-dns/cf_redirect
  */
-declare function CF_REDIRECT(source: string, destination: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function CF_REDIRECT(
+  source: string,
+  destination: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `CF_SINGLE_REDIRECT` is a Cloudflare-specific feature for creating HTTP redirects.  301, 302, 303, 307, 308 are supported.
@@ -539,7 +568,13 @@ declare function CF_REDIRECT(source: string, destination: string, ...modifiers: 
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/cloudflare-dns/cf_single_redirect
  */
-declare function CF_SINGLE_REDIRECT(name: string, code: number, when: string, then: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function CF_SINGLE_REDIRECT(
+  name: string,
+  code: number,
+  when: string,
+  then: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * WARNING: Cloudflare is removing this feature and replacing it with a new
@@ -568,7 +603,11 @@ declare function CF_SINGLE_REDIRECT(name: string, code: number, when: string, th
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/cloudflare-dns/cf_temp_redirect
  */
-declare function CF_TEMP_REDIRECT(source: string, destination: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function CF_TEMP_REDIRECT(
+  source: string,
+  destination: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `CF_WORKER_ROUTE` uses the [Cloudflare Workers](https://developers.cloudflare.com/workers/)
@@ -594,14 +633,21 @@ declare function CF_TEMP_REDIRECT(source: string, destination: string, ...modifi
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/cloudflare-dns/cf_worker_route
  */
-declare function CF_WORKER_ROUTE(pattern: string, script: string): DomainModifier;
+declare function CF_WORKER_ROUTE(
+  pattern: string,
+  script: string,
+): DomainModifier;
 
 /**
  * Documentation needed.
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/cloudns/cloudns_wr
  */
-declare function CLOUDNS_WR(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function CLOUDNS_WR(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * CNAME adds a CNAME record to the domain. The name should be the relative label for the domain.
@@ -619,7 +665,11 @@ declare function CLOUDNS_WR(name: string, target: string, ...modifiers: RecordMo
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/cname
  */
-declare function CNAME(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function CNAME(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `D` adds a new Domain for DNSControl to manage. The first two arguments are required: the domain name (fully qualified `example.com` without a trailing dot), and the
@@ -707,7 +757,11 @@ declare function CNAME(name: string, target: string, ...modifiers: RecordModifie
  *
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/d
  */
-declare function D(name: string, registrar: string, ...modifiers: DomainModifier[]): void;
+declare function D(
+  name: string,
+  registrar: string,
+  ...modifiers: DomainModifier[]
+): void;
 
 /**
  * `DEFAULTS` allows you to declare a set of default arguments to apply to all subsequent domains. Subsequent calls to [`D`](D.md) will have these
@@ -758,7 +812,11 @@ declare function DEFAULTS(...modifiers: DomainModifier[]): void;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/dhcid
  */
-declare function DHCID(name: string, digest: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function DHCID(
+  name: string,
+  digest: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `DISABLE_IGNORE_SAFETY_CHECK()` disables the safety check. Normally it is an
@@ -879,7 +937,21 @@ declare const DISABLE_IGNORE_SAFETY_CHECK: DomainModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/dmarc_builder
  */
-declare function DMARC_BUILDER(opts: { label?: string; version?: string; policy: 'none' | 'quarantine' | 'reject'; subdomainPolicy?: 'none' | 'quarantine' | 'reject'; alignmentSPF?: 'strict' | 's' | 'relaxed' | 'r'; alignmentDKIM?: 'strict' | 's' | 'relaxed' | 'r'; percent?: number; rua?: string[]; ruf?: string[]; failureOptions?: { SPF: boolean, DKIM: boolean } | string; failureFormat?: string; reportInterval?: Duration; ttl?: Duration }): DomainModifier;
+declare function DMARC_BUILDER(opts: {
+  label?: string;
+  version?: string;
+  policy: "none" | "quarantine" | "reject";
+  subdomainPolicy?: "none" | "quarantine" | "reject";
+  alignmentSPF?: "strict" | "s" | "relaxed" | "r";
+  alignmentDKIM?: "strict" | "s" | "relaxed" | "r";
+  percent?: number;
+  rua?: string[];
+  ruf?: string[];
+  failureOptions?: { SPF: boolean; DKIM: boolean } | string;
+  failureFormat?: string;
+  reportInterval?: Duration;
+  ttl?: Duration;
+}): DomainModifier;
 
 /**
  * DNAME adds a DNAME record to the domain.
@@ -894,7 +966,11 @@ declare function DMARC_BUILDER(opts: { label?: string; version?: string; policy:
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/dname
  */
-declare function DNAME(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function DNAME(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * DNSKEY adds a DNSKEY record to the domain.
@@ -915,7 +991,14 @@ declare function DNAME(name: string, target: string, ...modifiers: RecordModifie
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/dnskey
  */
-declare function DNSKEY(name: string, flags: number, protocol: number, algorithm: number, publicKey: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function DNSKEY(
+  name: string,
+  flags: number,
+  protocol: number,
+  algorithm: number,
+  publicKey: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `DOMAIN_ELSEWHERE()` is a helper macro that lets you easily indicate that
@@ -948,7 +1031,11 @@ declare function DNSKEY(name: string, flags: number, protocol: number, algorithm
  *
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/domain_elsewhere
  */
-declare function DOMAIN_ELSEWHERE(name: string, registrar: string, nameserver_names: string[]): void;
+declare function DOMAIN_ELSEWHERE(
+  name: string,
+  registrar: string,
+  nameserver_names: string[],
+): void;
 
 /**
  * `DOMAIN_ELSEWHERE_AUTO()` is similar to `DOMAIN_ELSEWHERE()` but instead of
@@ -982,7 +1069,12 @@ declare function DOMAIN_ELSEWHERE(name: string, registrar: string, nameserver_na
  *
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/domain_elsewhere_auto
  */
-declare function DOMAIN_ELSEWHERE_AUTO(name: string, domain: string, registrar: string, dnsProvider: string): void;
+declare function DOMAIN_ELSEWHERE_AUTO(
+  name: string,
+  domain: string,
+  registrar: string,
+  dnsProvider: string,
+): void;
 
 /**
  * DS adds a DS record to the domain.
@@ -1003,7 +1095,14 @@ declare function DOMAIN_ELSEWHERE_AUTO(name: string, domain: string, registrar: 
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/ds
  */
-declare function DS(name: string, keytag: number, algorithm: number, digesttype: number, digest: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function DS(
+  name: string,
+  keytag: number,
+  algorithm: number,
+  digesttype: number,
+  digest: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `D_EXTEND` adds records (and metadata) to a domain previously defined
@@ -1139,7 +1238,11 @@ declare function DnsProvider(name: string, nsCount?: number): DomainModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/frame
  */
-declare function FRAME(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function FRAME(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `HASH` hashes `value` using the hashing algorithm given in `algorithm`
@@ -1168,7 +1271,10 @@ declare function FRAME(name: string, target: string, ...modifiers: RecordModifie
  *
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/hash
  */
-declare function HASH(algorithm: "SHA1" | "SHA256" | "SHA512", value: string): string;
+declare function HASH(
+  algorithm: "SHA1" | "SHA256" | "SHA512",
+  value: string,
+): string;
 
 /**
  * HTTPS adds an HTTPS record to a domain. The name should be the relative label for the record. Use `@` for the domain apex. The HTTPS record is a special form of the SVCB resource record.
@@ -1188,7 +1294,13 @@ declare function HASH(algorithm: "SHA1" | "SHA256" | "SHA512", value: string): s
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/https
  */
-declare function HTTPS(name: string, priority: number, target: string, params: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function HTTPS(
+  name: string,
+  priority: number,
+  target: string,
+  params: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `IGNORE()` makes it possible for DNSControl to share management of a domain
@@ -1501,7 +1613,11 @@ declare function HTTPS(name: string, priority: number, target: string, params: s
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/ignore
  */
-declare function IGNORE(labelSpec: string, typeSpec?: string, targetSpec?: string): DomainModifier;
+declare function IGNORE(
+  labelSpec: string,
+  typeSpec?: string,
+  targetSpec?: string,
+): DomainModifier;
 
 /**
  * `IGNORE_NAME(a)` is the same as `IGNORE(a, "*", "*")`.
@@ -1658,7 +1774,18 @@ declare function IP(ip: string): number;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/loc
  */
-declare function LOC(deg1: number, min1: number, sec1: number, deg2: number, min2: number, sec2: number, altitude: number, size: number, horizontal_precision: number, vertical_precision: number): DomainModifier;
+declare function LOC(
+  deg1: number,
+  min1: number,
+  sec1: number,
+  deg2: number,
+  min2: number,
+  sec2: number,
+  altitude: number,
+  size: number,
+  horizontal_precision: number,
+  vertical_precision: number,
+): DomainModifier;
 
 /**
  * `LOC_BUILDER_DD({})` actually takes an object with the following properties:
@@ -1716,7 +1843,13 @@ declare function LOC(deg1: number, min1: number, sec1: number, deg2: number, min
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/loc_builder_dd
  */
-declare function LOC_BUILDER_DD(opts: { label?: string; x: number; y: number; alt?: number; ttl?: Duration }): DomainModifier;
+declare function LOC_BUILDER_DD(opts: {
+  label?: string;
+  x: number;
+  y: number;
+  alt?: number;
+  ttl?: Duration;
+}): DomainModifier;
 
 /**
  * `LOC_BUILDER_DMM({})` actually takes an object with the following properties:
@@ -1757,7 +1890,12 @@ declare function LOC_BUILDER_DD(opts: { label?: string; x: number; y: number; al
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/loc_builder_dmm_str
  */
-declare function LOC_BUILDER_DMM_STR(opts: { label?: string; str: string; alt?: number; ttl?: Duration }): DomainModifier;
+declare function LOC_BUILDER_DMM_STR(opts: {
+  label?: string;
+  str: string;
+  alt?: number;
+  ttl?: Duration;
+}): DomainModifier;
 
 /**
  * `LOC_BUILDER_DMS_STR({})` actually takes an object with the following properties:
@@ -1799,7 +1937,12 @@ declare function LOC_BUILDER_DMM_STR(opts: { label?: string; str: string; alt?: 
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/loc_builder_dms_str
  */
-declare function LOC_BUILDER_DMS_STR(opts: { label?: string; str: string; alt?: number; ttl?: Duration }): DomainModifier;
+declare function LOC_BUILDER_DMS_STR(opts: {
+  label?: string;
+  str: string;
+  alt?: number;
+  ttl?: Duration;
+}): DomainModifier;
 
 /**
  * `LOC_BUILDER_STR({})` actually takes an object with the following: properties.
@@ -1846,7 +1989,12 @@ declare function LOC_BUILDER_DMS_STR(opts: { label?: string; str: string; alt?: 
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/loc_builder_str
  */
-declare function LOC_BUILDER_STR(opts: { label?: string; str: string; alt?: number; ttl?: Duration }): DomainModifier;
+declare function LOC_BUILDER_STR(opts: {
+  label?: string;
+  str: string;
+  alt?: number;
+  ttl?: Duration;
+}): DomainModifier;
 
 /**
  * DNSControl offers a `M365_BUILDER` which can be used to simply set up Microsoft 365 for a domain in an opinionated way.
@@ -1899,7 +2047,16 @@ declare function LOC_BUILDER_STR(opts: { label?: string; str: string; alt?: numb
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/m365_builder
  */
-declare function M365_BUILDER(opts: { label?: string; mx?: boolean; autodiscover?: boolean; dkim?: boolean; skypeForBusiness?: boolean; mdm?: boolean; domainGUID?: string; initialDomain?: string }): DomainModifier;
+declare function M365_BUILDER(opts: {
+  label?: string;
+  mx?: boolean;
+  autodiscover?: boolean;
+  dkim?: boolean;
+  skypeForBusiness?: boolean;
+  mdm?: boolean;
+  domainGUID?: string;
+  initialDomain?: string;
+}): DomainModifier;
 
 /**
  * MX adds an MX record to the domain.
@@ -1917,7 +2074,12 @@ declare function M365_BUILDER(opts: { label?: string; mx?: boolean; autodiscover
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/mx
  */
-declare function MX(name: string, priority: number, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function MX(
+  name: string,
+  priority: number,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `NAMESERVER()` instructs DNSControl to inform the domain's registrar where to find this zone.
@@ -1999,7 +2161,10 @@ declare function MX(name: string, priority: number, target: string, ...modifiers
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/nameserver
  */
-declare function NAMESERVER(name: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function NAMESERVER(
+  name: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * NAMESERVER_TTL sets the TTL on the domain apex NS RRs defined by [`NAMESERVER`](NAMESERVER.md).
@@ -2222,7 +2387,15 @@ declare function NAMESERVER_TTL(ttl: Duration): DomainModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/naptr
  */
-declare function NAPTR(subdomain: string, order: number, preference: number, terminalflag: string, service: string, regexp: string, target: string): DomainModifier;
+declare function NAPTR(
+  subdomain: string,
+  order: number,
+  preference: number,
+  terminalflag: string,
+  service: string,
+  regexp: string,
+  target: string,
+): DomainModifier;
 
 /**
  * `NO_PURGE` indicates that existing records should not be deleted from a domain.
@@ -2297,7 +2470,11 @@ declare const NO_PURGE: DomainModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/ns
  */
-declare function NS(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function NS(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * NewDnsProvider activates a DNS Service Provider (DSP) specified in `creds.json`.
@@ -2336,7 +2513,11 @@ declare function NS(name: string, target: string, ...modifiers: RecordModifier[]
  *
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/newdnsprovider
  */
-declare function NewDnsProvider(name: string, type?: string, meta?: object): string;
+declare function NewDnsProvider(
+  name: string,
+  type?: string,
+  meta?: object,
+): string;
 
 /**
  * NewRegistrar activates a Registrar Provider specified in `creds.json`.
@@ -2375,7 +2556,11 @@ declare function NewDnsProvider(name: string, type?: string, meta?: object): str
  *
  * @see https://docs.dnscontrol.org/language-reference/top-level-functions/newregistrar
  */
-declare function NewRegistrar(name: string, type?: string, meta?: object): string;
+declare function NewRegistrar(
+  name: string,
+  type?: string,
+  meta?: object,
+): string;
 
 /**
  * `PANIC` terminates the script and therefore DNSControl with an exit code of 1. This should be used if your script cannot gather enough information to generate records, for example when a HTTP request failed.
@@ -2407,7 +2592,11 @@ declare function PANIC(message: string): never;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific//porkbun_urlfwd
  */
-declare function PORKBUN_URLFWD(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function PORKBUN_URLFWD(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * PTR adds a PTR record to the domain.
@@ -2515,7 +2704,11 @@ declare function PORKBUN_URLFWD(name: string, target: string, ...modifiers: Reco
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/ptr
  */
-declare function PTR(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function PTR(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `PURGE` is the default setting for all domains.  Therefore `PURGE` is
@@ -2598,7 +2791,12 @@ declare const PURGE: DomainModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/service-provider-specific/amazon-route-53/r53_alias
  */
-declare function R53_ALIAS(name: string, target: string, zone_idModifier: DomainModifier & RecordModifier, evaluatetargethealthModifier: RecordModifier): DomainModifier;
+declare function R53_ALIAS(
+  name: string,
+  target: string,
+  zone_idModifier: DomainModifier & RecordModifier,
+  evaluatetargethealthModifier: RecordModifier,
+): DomainModifier;
 
 /**
  * `R53_EVALUATE_TARGET_HEALTH` lets you enable target health evaluation for a [`R53_ALIAS()`](../domain-modifiers/R53_ALIAS.md) record. Omitting `R53_EVALUATE_TARGET_HEALTH()` from `R53_ALIAS()` set the behavior to false.
@@ -2749,7 +2947,16 @@ declare function REVCOMPAT(rfc: string): string;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/soa
  */
-declare function SOA(name: string, ns: string, mbox: string, refresh: number, retry: number, expire: number, minttl: number, ...modifiers: RecordModifier[]): DomainModifier;
+declare function SOA(
+  name: string,
+  ns: string,
+  mbox: string,
+  refresh: number,
+  retry: number,
+  expire: number,
+  minttl: number,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * DNSControl can optimize the SPF settings on a domain by flattening
@@ -3034,7 +3241,16 @@ declare function SOA(name: string, ns: string, mbox: string, refresh: number, re
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/spf_builder
  */
-declare function SPF_BUILDER(opts: { label?: string; overflow?: string; overhead1?: string; raw?: string; ttl?: Duration; txtMaxSize?: number; parts: string[]; flatten?: string[] }): DomainModifier;
+declare function SPF_BUILDER(opts: {
+  label?: string;
+  overflow?: string;
+  overhead1?: string;
+  raw?: string;
+  ttl?: Duration;
+  txtMaxSize?: number;
+  parts: string[];
+  flatten?: string[];
+}): DomainModifier;
 
 /**
  * `SRV` adds a `SRV` record to a domain. The name should be the relative label for the record.
@@ -3052,7 +3268,14 @@ declare function SPF_BUILDER(opts: { label?: string; overflow?: string; overhead
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/srv
  */
-declare function SRV(name: string, priority: number, weight: number, port: number, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function SRV(
+  name: string,
+  priority: number,
+  weight: number,
+  port: number,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `SSHFP` contains a fingerprint of a SSH server which can be validated before SSH clients are establishing the connection.
@@ -3085,7 +3308,13 @@ declare function SRV(name: string, priority: number, weight: number, port: numbe
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/sshfp
  */
-declare function SSHFP(name: string, algorithm: 0 | 1 | 2 | 3 | 4, type: 0 | 1 | 2, value: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function SSHFP(
+  name: string,
+  algorithm: 0 | 1 | 2 | 3 | 4,
+  type: 0 | 1 | 2,
+  value: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * SVCB adds an SVCB record to a domain. The name should be the relative label for the record. Use `@` for the domain apex.
@@ -3104,7 +3333,13 @@ declare function SSHFP(name: string, algorithm: 0 | 1 | 2 | 3 | 4, type: 0 | 1 |
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/svcb
  */
-declare function SVCB(name: string, priority: number, target: string, params: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function SVCB(
+  name: string,
+  priority: number,
+  target: string,
+  params: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `TLSA` adds a `TLSA` record to a domain. The name should be the relative label for the record.
@@ -3122,7 +3357,14 @@ declare function SVCB(name: string, priority: number, target: string, params: st
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/tlsa
  */
-declare function TLSA(name: string, usage: number, selector: number, type: number, certificate: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function TLSA(
+  name: string,
+  usage: number,
+  selector: number,
+  type: number,
+  certificate: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * TTL sets the TTL for a single record only. This will take precedence
@@ -3257,21 +3499,32 @@ declare function TTL(ttl: Duration): RecordModifier;
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/txt
  */
-declare function TXT(name: string, contents: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function TXT(
+  name: string,
+  contents: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * Documentation needed.
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/url
  */
-declare function URL(name: string, target: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function URL(
+  name: string,
+  target: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * Documentation needed.
  *
  * @see https://docs.dnscontrol.org/language-reference/domain-modifiers/url301
  */
-declare function URL301(name: string, ...modifiers: RecordModifier[]): DomainModifier;
+declare function URL301(
+  name: string,
+  ...modifiers: RecordModifier[]
+): DomainModifier;
 
 /**
  * `getConfiguredDomains` getConfiguredDomains is a helper function that returns the domain names

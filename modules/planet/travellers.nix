@@ -1,0 +1,98 @@
+{
+  config,
+  lib,
+  atlas,
+  ...
+}:
+
+let
+  inherit (config) planet;
+
+  roles = [
+    "visitor"
+    "resident"
+    "operator"
+  ];
+
+  assignmentOptions = {
+    traveller = lib.mkOption {
+      type = lib.types.path;
+    };
+
+    groups = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
+  };
+
+  eval = assignment: atlas.travellers.eval assignment.traveller;
+  steward = eval planet.steward;
+  stewardPassword = steward.user.password;
+
+  roleGroups = rec {
+    visitor = planet.roles.visitor.groups;
+    resident = visitor ++ planet.roles.resident.groups;
+    operator = resident ++ planet.roles.operator.groups;
+  };
+in
+{
+  options.planet = {
+    roles = lib.genAttrs roles (_: {
+      groups = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+      };
+    });
+
+    steward = lib.mkOption {
+      type = lib.types.submodule {
+        options = assignmentOptions;
+      };
+    };
+
+    travellers = lib.mkOption {
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = assignmentOptions // {
+            role = lib.mkOption {
+              type = lib.types.enum roles;
+              default = "visitor";
+            };
+          };
+        }
+      );
+      default = [ ];
+    };
+  };
+
+  config.planet.modules =
+    lib.concatMap (
+      assignment:
+      let
+        traveller = eval assignment;
+        role = if assignment ? role then assignment.role else "operator";
+      in
+      traveller.modules
+      ++ [
+        {
+          users.users.${traveller.user.name}.extraGroups = lib.unique (
+            assignment.groups ++ roleGroups.${role}
+          );
+        }
+      ]
+    ) ([ planet.steward ] ++ planet.travellers)
+    ++ [
+      (
+        { config, ... }:
+
+        {
+          users.users.root = {
+            hashedPasswordFile = config.age.secrets.${stewardPassword}.path;
+            openssh.authorizedKeys.keys = lib.optional (
+              steward.keys.public != null
+            ) steward.keys.public;
+          };
+        }
+      )
+    ];
+}

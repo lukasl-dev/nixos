@@ -25,7 +25,6 @@
 
     conceallevel = 2;
 
-    # disable auto-folding in markdown files
     foldenable = false;
     foldmethod = "manual";
     foldlevel = 99;
