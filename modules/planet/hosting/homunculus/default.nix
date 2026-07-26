@@ -250,6 +250,10 @@ in
             provider = "openai-codex";
             model = "gpt-5.6-sol";
           };
+          qwen = {
+            provider = "opencode-go";
+            model = "qwen3.7-plus";
+          };
         };
         delegation = {
           provider = "openai-codex";
