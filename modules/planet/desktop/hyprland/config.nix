@@ -80,6 +80,7 @@
       misc = {
         force_default_wallpaper = 0;
         mouse_move_enables_dpms = false;
+        on_focus_under_fullscreen = 0;
         vrr = 2;
         enable_anr_dialog = false;
         disable_hyprland_guiutils_check = true;

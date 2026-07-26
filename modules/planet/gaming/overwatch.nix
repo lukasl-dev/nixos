@@ -20,8 +20,7 @@ in
           confine_pointer = true,
           focus_on_activate = true,
 
-          -- Prevent Overwatch/XWayland from changing Hyprland's
-          -- fullscreen or maximised window state.
+          -- Ignore fullscreen state changes requested by Overwatch itself.
           suppress_event = "fullscreen maximize fullscreenoutput",
         })
       '';
