@@ -182,7 +182,7 @@ in
         browser.engine = "chrome";
         model = {
           provider = "opencode-go";
-          default = "qwen3.7-plus";
+          default = "hy3";
           persist_switch_by_default = false;
         };
         auxiliary = {
