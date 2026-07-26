@@ -16,6 +16,7 @@ in
     ./gamemode.nix
     ./gamescope.nix
     ./minecraft.nix
+    ./overwatch.nix
     ./proton.nix
     ./r2modman.nix
     ./steam.nix
