@@ -7,6 +7,9 @@
       ./boot.nix
       ./hardware-configuration.nix
       ./networking.nix
+      {
+        security.sudo.wheelNeedsPassword = false;
+      }
     ];
 
     steward = {
