@@ -182,8 +182,56 @@ in
         browser.engine = "chrome";
         model = {
           provider = "opencode-go";
-          default = "deepseek-v4-pro";
+          default = "qwen3.7-plus";
           persist_switch_by_default = false;
+        };
+        auxiliary = {
+          title_generation = {
+            enabled = true;
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 30;
+          };
+          compression = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 120;
+          };
+          web_extract = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 360;
+          };
+          approval = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 30;
+          };
+          skills_hub = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 30;
+          };
+          mcp = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 30;
+          };
+          triage_specifier = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 120;
+          };
+          kanban_decomposer = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 120;
+          };
+          profile_describer = {
+            provider = "opencode-go";
+            model = "deepseek-v4-flash";
+            timeout = 30;
+          };
         };
         model_aliases = {
           flash = {
