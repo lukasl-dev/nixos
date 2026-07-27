@@ -7,6 +7,8 @@
 }:
 
 let
+  inherit (config) age;
+  inherit (config.planet) domain;
   inherit (config.planet.hosting) home;
   inherit (atlas.hosting.home) host;
 
@@ -26,11 +28,23 @@ let
   };
   pythonPackages =
     hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
+
+  matrixPassword = atlas.secrets.universe [
+    "hass"
+    "matrix"
+  ];
 in
 {
   options.planet.hosting.home.enable = lib.mkEnableOption "Home Assistant";
 
   config = lib.mkIf home.enable {
+    age.secrets.${matrixPassword} = {
+      rekeyFile = ../../../.. + "/secrets/${matrixPassword}.age";
+      owner = "hass";
+      group = "hass";
+      mode = "0400";
+    };
+
     services.home-assistant = {
       enable = true;
       package = hass;
@@ -42,6 +56,7 @@ in
         "esphome"
         "google_translate"
         "isal"
+        "matrix"
         "met"
         "cast"
         "ipp"
@@ -66,6 +81,13 @@ in
       config = {
         default_config = { };
         automation = "!include automations.yaml";
+
+        matrix = {
+          homeserver = "https://${atlas.hosting.matrix.host}";
+          username = "@home:${domain}";
+          password = "!include ${age.secrets.${matrixPassword}.path}";
+          rooms = [ "!tC8V4rUjFO45Bs97U2:${domain}" ];
+        };
 
         http = {
           server_host = listenAddress;
