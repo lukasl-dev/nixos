@@ -26,8 +26,7 @@ let
       };
     };
   };
-  pythonPackages =
-    hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
+  pythonPackages = hass.python3Packages or (hass.python.pkgs or hass.passthru.python.pkgs);
 
   matrixPassword = atlas.secrets.universe [
     "hass"
@@ -86,7 +85,7 @@ in
           homeserver = "https://${atlas.hosting.matrix.host}";
           username = "@home:${domain}";
           password = "!include ${age.secrets.${matrixPassword}.path}";
-          rooms = [ "!tC8V4rUjFO45Bs97U2:${domain}" ];
+          rooms = [ "#hass:${domain}" ];
         };
 
         http = {
