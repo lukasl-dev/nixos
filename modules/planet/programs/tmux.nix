@@ -9,12 +9,10 @@ let
   inherit (config) catppuccin;
 
   windowStatus =
-    "#[fg=#{@thm_crust},bg=#{@thm_overlay_2}] #I "
-    + "#[fg=#{@thm_fg},bg=#{@thm_surface_0}] #W ";
+    "#[fg=#{@thm_crust},bg=#{@thm_overlay_2}] #I " + "#[fg=#{@thm_fg},bg=#{@thm_surface_0}] #W ";
 
   currentStatus =
-    "#[fg=#{@thm_crust},bg=#{@thm_mauve}] #I "
-    + "#[fg=#{@thm_fg},bg=#{@thm_surface_1}] #W ";
+    "#[fg=#{@thm_crust},bg=#{@thm_mauve}] #I " + "#[fg=#{@thm_fg},bg=#{@thm_surface_1}] #W ";
 
   wlCopy = lib.getExe' pkgs.wl-clipboard "wl-copy";
 in
@@ -36,8 +34,8 @@ in
       set -g window-status-format ${lib.escapeShellArg windowStatus}
       set -g window-status-current-format ${lib.escapeShellArg currentStatus}
 
-      set-window-option -g automatic-rename off
-      set-window-option -g allow-rename off
+      # set-window-option -g automatic-rename off
+      # set-window-option -g allow-rename off
       set -g allow-set-title off
 
       set -s escape-time 0

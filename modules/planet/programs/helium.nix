@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   atlas,
@@ -10,23 +11,7 @@ let
   inherit (config) planet;
   inherit (planet.programs) helium;
 
-  unwrapped = pkgs.callPackage ./package.nix { };
-  wrapped = pkgs.symlinkJoin {
-    name = "helium";
-    paths = [ unwrapped ];
-    nativeBuildInputs = [ pkgs.makeWrapper ];
-
-    postBuild = ''
-      rm "$out/bin/helium"
-      makeWrapper ${lib.getExe unwrapped} "$out/bin/helium" \
-        --suffix LD_LIBRARY_PATH : \
-          ${lib.escapeShellArg (lib.makeLibraryPath unwrapped.runtimeLibs)} \
-        --add-flags "--ozone-platform=wayland" \
-        --add-flags "--enable-features=WaylandLinuxDrmSyncobj"
-    '';
-
-    inherit (unwrapped) meta;
-  };
+  package = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   options.planet.programs.helium = {
@@ -39,8 +24,8 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = wrapped;
-      description = "Wrapped Helium browser package.";
+      default = package;
+      description = "Helium browser package.";
     };
   };
 

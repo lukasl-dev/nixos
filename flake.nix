@@ -73,6 +73,8 @@
     ghostty.url = "github:ghostty-org/ghostty";
 
     handy.url = "github:cjpais/Handy";
+
+    helium.url = "github:schembriaiden/helium-browser-nix-flake";
   };
 
   outputs =
