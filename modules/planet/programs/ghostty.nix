@@ -55,7 +55,7 @@ in
             window-padding-x = 8;
             window-padding-y = 8;
 
-            command = "tmux attach-session || tmux new-session";
+            command = "herdr";
 
             confirm-close-surface = false;
             app-notifications = false;

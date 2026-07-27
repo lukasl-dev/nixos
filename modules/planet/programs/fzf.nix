@@ -39,7 +39,6 @@ in
 
   environment.variables = {
     FZF_DEFAULT_OPTS = "--color ${colorOptions}";
-    FZF_TMUX = "1";
     FZF_CTRL_R_OPTS = lib.concatStringsSep " " [
       "--preview 'echo {} | ${lib.getExe pkgs.bat} -l sh --color=always --plain'"
       "--preview-window down:3:wrap"
@@ -47,5 +46,8 @@ in
       "--color header:italic"
       "--header 'Press CTRL-/ to toggle preview'"
     ];
+  }
+  // lib.optionalAttrs config.programs.tmux.enable {
+    FZF_TMUX = "1";
   };
 }
