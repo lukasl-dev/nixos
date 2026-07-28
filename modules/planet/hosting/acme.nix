@@ -21,10 +21,12 @@ let
   cfApiKey = secret "cf_api_key";
   cfEnv = secret "env";
 
-  hosts = lib.unique (lib.mapAttrsToList (_: rule: rule.ingress.host) proxy.rules);
+  hosts = lib.unique (
+    lib.mapAttrsToList (_: rule: rule.ingress.host) proxy.rules
+  );
 in
 {
-  config = lib.mkIf proxy.enable {
+  config = lib.mkIf (proxy.enable && !proxy.local) {
     age.secrets = {
       ${cfEmail} = {
         rekeyFile = ../../.. + "/secrets/${cfEmail}.age";

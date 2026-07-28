@@ -6,7 +6,6 @@
     modules = [
       ./boot.nix
       ./hardware-configuration.nix
-      ./media.nix
       ./networking.nix
       {
         security.sudo.wheelNeedsPassword = false;
@@ -18,11 +17,14 @@
       groups = [ "kvm" ];
     };
 
-    networking = {
-      dns.discoverable = true;
-    };
+    networking.dns.discoverable = true;
 
     hosting = {
+      proxy = {
+        enable = true;
+        local = true;
+      };
+
       hole.enable = true;
       home.enable = true;
       media.enable = true;
