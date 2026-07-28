@@ -19,7 +19,10 @@ in
       interfaces = [ "wlp4s0" ];
       secretsFile = age.secrets.${secrets}.path;
 
-      networks.Leeb.pskRaw = "ext:psk";
+      networks.Leeb = {
+        bssid = "1E:5F:67:4C:BE:E1";
+        pskRaw = "ext:psk";
+      };
     };
 
     interfaces = {
