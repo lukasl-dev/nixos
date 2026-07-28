@@ -32,6 +32,7 @@ in
     services.jellyfin = {
       enable = true;
       inherit dataDir;
+      openFirewall = true;
     };
 
     users = {
