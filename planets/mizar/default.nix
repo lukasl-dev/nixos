@@ -6,6 +6,7 @@
     modules = [
       ./boot.nix
       ./hardware-configuration.nix
+      ./media.nix
       ./networking.nix
       {
         security.sudo.wheelNeedsPassword = false;
@@ -22,6 +23,7 @@
     };
 
     hosting = {
+      hole.enable = true;
       home.enable = true;
       media.enable = true;
     };
