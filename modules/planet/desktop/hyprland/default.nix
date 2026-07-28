@@ -24,6 +24,7 @@ in
     ./config.nix
     ./cursor.nix
     ./dank.nix
+    ./keyboard-debounce.nix
     ./mesa.nix
     ./monitors.nix
     ./polkit.nix

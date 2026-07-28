@@ -21,6 +21,9 @@
       dns.discoverable = true;
     };
 
-    hosting.home.enable = true;
+    hosting = {
+      home.enable = true;
+      media.enable = true;
+    };
   };
 }

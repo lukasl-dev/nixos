@@ -24,6 +24,12 @@ in
       port = 8123;
     };
 
+    media = {
+      inherit (atlas.hosting.media) host;
+      node = "mizar";
+      port = 8096;
+    };
+
     hole = {
       inherit (atlas.hosting.hole) host;
       node = "ida";

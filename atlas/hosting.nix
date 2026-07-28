@@ -13,6 +13,7 @@
   hole.host = "hole.${atlas.domain}";
   mail.host = "mail.${atlas.domain}";
   matrix.host = "matrix.${atlas.domain}";
+  media.host = "media.${atlas.domain}";
   notes.host = "notes.${atlas.domain}";
   rspamd.host = "rspamd.${atlas.domain}";
   turn.host = "turn.${atlas.domain}";

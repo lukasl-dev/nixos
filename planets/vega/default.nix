@@ -28,6 +28,16 @@
     desktop = {
       enable = true;
 
+      hyprland.keyboardDebounce = {
+        enable = true;
+        devices = [
+          "/dev/input/by-id/usb-MoErgo_Glove80_Left_moergo.com:GLV80-79A1B31B22F37483-event-kbd"
+        ];
+        deviceNames = [ "Glove80 Keyboard" ];
+        keys = [ "KEY_O" ];
+        thresholdMs = 30;
+      };
+
       hyprland.monitors = {
         "DP-1" = {
           mode = "1920x1080@239.96";

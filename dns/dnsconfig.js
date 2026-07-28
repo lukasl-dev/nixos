@@ -39,6 +39,7 @@ D(
   CNAME("todo", "pollux.lukasl.dev."),
   CNAME("sync.todo", "pollux.lukasl.dev."),
   CNAME("matrix", "pollux.lukasl.dev."),
+  CNAME("media", "pollux.lukasl.dev."),
   CNAME("meet", "pollux.lukasl.dev."),
   CNAME("turn", "pollux.lukasl.dev."),
   CNAME("fin", "pollux.lukasl.dev."),
