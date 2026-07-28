@@ -44,6 +44,8 @@ in
     ]
     ++ map (dir: "d ${dir} 2750 ${steward.user.name} media - -") libraryDirs;
 
+    systemd.services.jellyfin.serviceConfig.SupplementaryGroups = [ "media" ];
+
     planet = {
       backup.dirs = [ dataDir ];
       steward.groups = [ "media" ];
