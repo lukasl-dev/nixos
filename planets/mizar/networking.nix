@@ -20,8 +20,10 @@ in
       secretsFile = age.secrets.${secrets}.path;
 
       networks.Leeb = {
-        bssid = "1E:5F:67:4C:BE:E1";
         pskRaw = "ext:psk";
+        extraConfig = ''
+          freq_list=5180 5200 5220 5240 5260 5280 5300 5320 5500 5520 5540 5560 5580 5600 5620 5640 5660 5680 5700
+        '';
       };
     };
 
