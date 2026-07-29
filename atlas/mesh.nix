@@ -29,11 +29,5 @@ in
       node = "mizar";
       port = 8096;
     };
-
-    hole = {
-      inherit (atlas.hosting.hole) host;
-      node = "ida";
-      port = 2718;
-    };
   };
 }
