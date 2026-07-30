@@ -9,7 +9,8 @@ let
   inherit (config) planet;
   inherit (planet.networking) mullvad;
 
-  package = pkgs.unstable.mullvad-vpn;
+  daemonPackage = pkgs.unstable.mullvad;
+  guiPackage = pkgs.unstable.mullvad-vpn;
 in
 {
   options.planet.networking.mullvad = {
@@ -22,15 +23,16 @@ in
   config = lib.mkIf mullvad.enable {
     services.mullvad-vpn = {
       enable = true;
-      inherit package;
+      package = daemonPackage;
     };
 
     environment.systemPackages = lib.optionals planet.desktop.enable [
+      guiPackage
       pkgs.unstable.mullvad-browser
     ];
 
     planet = {
-      desktop.autoStart = [ (lib.getExe package) ];
+      desktop.autoStart = [ (lib.getExe guiPackage) ];
 
       shell.aliases.novpn = "mullvad-exclude";
     };
@@ -49,7 +51,7 @@ in
                 fi
 
                 for _ in {1..10}; do
-              if ${package}/bin/mullvad split-tunnel add "$pid"; then
+              if ${daemonPackage}/bin/mullvad split-tunnel add "$pid"; then
                     exit 0
                   fi
 
