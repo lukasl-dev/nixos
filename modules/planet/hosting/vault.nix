@@ -73,6 +73,7 @@ in
     services.vaultwarden = {
       enable = true;
       environmentFile = age.secrets.${env}.path;
+      package = pkgs.unstable.vaultwarden;
 
       config = {
         ROCKET_ADDRESS = listenAddress;
