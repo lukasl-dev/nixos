@@ -6,6 +6,7 @@
     ./books.nix
     ./cache.nix
     ./cal.nix
+    ./fit.nix
     ./forge.nix
     ./home
     ./homunculus

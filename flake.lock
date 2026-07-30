@@ -1166,6 +1166,23 @@
         "type": "github"
       }
     },
+    "herdr-navigator": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785328887,
+        "narHash": "sha256-DOmk/5VE1C63+tGOA+3H2vRioxveEVh+ob+yFd+W4R4=",
+        "owner": "thanhdat77",
+        "repo": "herdr-navigator",
+        "rev": "ccacb217bccd509bd99c49c80fadd09f5cc3e354",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thanhdat77",
+        "ref": "v0.3.4",
+        "repo": "herdr-navigator",
+        "type": "github"
+      }
+    },
     "hermes-agent": {
       "inputs": {
         "flake-parts": "flake-parts_5",
@@ -2538,6 +2555,7 @@
         "handy": "handy",
         "helium": "helium",
         "herdr": "herdr",
+        "herdr-navigator": "herdr-navigator",
         "hermes-agent": "hermes-agent",
         "hjem": [
           "hjem-rum",

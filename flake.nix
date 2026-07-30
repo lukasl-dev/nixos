@@ -60,6 +60,10 @@
     };
 
     herdr.url = "github:ogulcancelik/herdr";
+    herdr-navigator = {
+      url = "github:thanhdat77/herdr-navigator/v0.3.4";
+      flake = false;
+    };
 
     hermes-agent.url = "github:NousResearch/hermes-agent/v2026.7.20";
 
