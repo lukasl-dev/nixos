@@ -68,6 +68,15 @@ let
       inherit name rule;
     })
   ) proxy.rules;
+
+  homeArpaRouters = lib.mapAttrs' (
+    name: rule:
+    lib.nameValuePair "local-home-arpa-${name}" (routerFor {
+      entryPoint = "web";
+      host = "${name}.${planet.name}.home.arpa";
+      inherit name rule;
+    })
+  ) proxy.rules;
 in
 {
   options.planet.hosting.proxy = {
@@ -156,7 +165,7 @@ in
       dynamicConfigOptions.http = {
         routers =
           lib.optionalAttrs (!proxy.local) (publicRouters // redirectRouters)
-          // lib.optionalAttrs proxy.local localRouters;
+          // lib.optionalAttrs proxy.local (localRouters // homeArpaRouters);
 
         services = lib.mapAttrs (_: rule: {
           loadBalancer = {
