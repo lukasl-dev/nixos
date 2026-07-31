@@ -48,13 +48,18 @@ in
         ports = [ webPort ];
       };
 
-      resolved.settings.Resolve.DNSStubListener = false;
+      resolved.settings.Resolve = {
+        DNSStubListener = false;
+        DNSStubListenerExtra = lib.mkForce [ ];
+      };
     };
 
     networking.firewall = {
       allowedTCPPorts = [ dnsPort ];
       allowedUDPPorts = [ dnsPort ];
     };
+
+    systemd.services.pihole-ftl.after = [ "systemd-resolved.service" ];
 
     planet.backup.dirs = [
       "/etc/pihole"
