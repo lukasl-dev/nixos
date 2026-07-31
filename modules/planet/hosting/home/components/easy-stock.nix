@@ -13,7 +13,7 @@ pkgs.unstable.buildHomeAssistantComponent rec {
     inherit owner;
     repo = "ha-easy-stock";
     rev = "e2565a81e872aa9ed0dc593d0c5e473573828927";
-    hash = "sha256-Pqva1L6c4GapvLXNnhjBTkJlPsNjv/F/DdQLQvMmd0I=";
+    hash = "sha256-DAbOfF1sIXawFykUwZpaictqbYRh2DJ3q6SWMJWdUNI=";
   };
 
   dependencies = [ ];
