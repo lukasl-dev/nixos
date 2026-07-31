@@ -18,8 +18,7 @@ let
 
   stateDir = "/var/lib/hermes";
   soulFile = ./SOUL.md;
-  hermesAgent =
-    inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   opencodeApiKey = atlas.secrets.universe [
     "opencode"
@@ -150,6 +149,10 @@ in
             pkgs.yt-dlp
             pkgs.zip
             pkgs.zstd
+            pkgs.csound
+            pkgs.fluidsynth
+            pkgs.soundfont-fluid
+            pkgs.sox
             (pkgs.writeShellApplication {
               name = "pdftomd";
               runtimeInputs = [ pkgs.bun ];
@@ -162,6 +165,7 @@ in
                 beautifulsoup4
                 lxml
                 matplotlib
+                mido
                 numpy
                 openpyxl
                 pandas
@@ -300,16 +304,14 @@ in
       soulFile
     ];
 
-    system.activationScripts.hermes-agent-soul =
-      lib.stringAfter [ "hermes-agent-setup" ]
-        ''
-          install \
-            -o ${config.services.hermes-agent.user} \
-            -g ${config.services.hermes-agent.group} \
-            -m 0640 \
-            ${soulFile} \
-            ${stateDir}/.hermes/SOUL.md
-        '';
+    system.activationScripts.hermes-agent-soul = lib.stringAfter [ "hermes-agent-setup" ] ''
+      install \
+        -o ${config.services.hermes-agent.user} \
+        -g ${config.services.hermes-agent.group} \
+        -m 0640 \
+        ${soulFile} \
+        ${stateDir}/.hermes/SOUL.md
+    '';
 
     planet.backup.dirs = [ stateDir ];
   };
