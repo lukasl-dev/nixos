@@ -1,6 +1,7 @@
 {
   imports = [
-    ./helium.nix
+    ./herdr
+    ./oh-my-posh
 
     ./appimage.nix
     ./bat.nix
@@ -17,7 +18,7 @@
     ./gpg.nix
     ./ghostty.nix
     ./handy.nix
-    ./herdr.nix
+    ./helium.nix
     ./hyperfine.nix
     ./imagemagick.nix
     ./localsend.nix
@@ -25,7 +26,6 @@
     ./nh.nix
     ./nvim.nix
     ./obsidian.nix
-    ./oh-my-posh
     ./perf.nix
     ./poppler-utils.nix
     ./python.nix
