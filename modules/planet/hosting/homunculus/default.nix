@@ -274,6 +274,7 @@ in
         MATRIX_DEVICE_ID = "HOMUNCULUS";
         MATRIX_E2EE_MODE = "required";
         MATRIX_SESSION_SCOPE = "room";
+        MATRIX_DM_AUTO_THREAD = "true";
       };
       environmentFiles = [ age.secrets.${environment}.path ];
 
