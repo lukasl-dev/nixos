@@ -104,9 +104,16 @@ in
       pihole-ftl-setup.script = lib.mkForce idempotentPiholeSetupScript;
     };
 
-    planet.backup.dirs = [
-      "/etc/pihole"
-      "/var/lib/pihole"
-    ];
+    planet = {
+      backup.dirs = [
+        "/etc/pihole"
+        "/var/lib/pihole"
+      ];
+
+      hosting.proxy.rules.hole = {
+        ingress.host = host;
+        upstream.http.url = "http://127.0.0.1:${toString webPort}";
+      };
+    };
   };
 }
