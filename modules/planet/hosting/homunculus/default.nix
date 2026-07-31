@@ -132,6 +132,7 @@ in
             pkgs.jpegoptim
             pkgs.jq
             pkgs.libwebp
+            pkgs.nix-prefetch-github
             pkgs.oxipng
             pkgs.p7zip
             pkgs.pandoc

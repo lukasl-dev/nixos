@@ -11,4 +11,7 @@
   (import ./tplink-deco.nix {
     inherit pythonPackages lib pkgs;
   })
+  (import ./easy-stock.nix {
+    inherit pythonPackages lib pkgs;
+  })
 ]
