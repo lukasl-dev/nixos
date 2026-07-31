@@ -16,7 +16,7 @@ pkgs.unstable.buildHomeAssistantComponent rec {
     hash = "sha256-Pqva1L6c4GapvLXNnhjBTkJlPsNjv/F/DdQLQvMmd0I=";
   };
 
-  dependencies = with pythonPackages [ ];
+  dependencies = [ ];
 
   meta = {
     description = "Easy Stock — Yahoo Finance stock/ETF/crypto tracker with sparkline Lovelace card";
