@@ -18,7 +18,23 @@ let
 
   stateDir = "/var/lib/hermes";
   soulFile = ./SOUL.md;
-  hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  honchoConfig = pkgs.writeText "hermes-honcho.json" (
+    builtins.toJSON {
+      defaultHost = "hermes";
+      hosts.hermes = {
+        enabled = true;
+        workspace = "homunculus";
+        peerName = "lukas";
+        aiPeer = "homunculus";
+        pinUserPeer = true;
+        sessionStrategy = "per-directory";
+      };
+    }
+  );
+
+  hermesAgent =
+    inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   opencodeApiKey = atlas.secrets.universe [
     "opencode"
@@ -311,17 +327,27 @@ in
 
     systemd.services.hermes-agent.restartTriggers = [
       age.secrets.${environment}.rekeyFile
+      honchoConfig
       soulFile
     ];
 
-    system.activationScripts.hermes-agent-soul = lib.stringAfter [ "hermes-agent-setup" ] ''
-      install \
-        -o ${config.services.hermes-agent.user} \
-        -g ${config.services.hermes-agent.group} \
-        -m 0640 \
-        ${soulFile} \
-        ${stateDir}/.hermes/SOUL.md
-    '';
+    system.activationScripts.hermes-agent-static-config =
+      lib.stringAfter [ "hermes-agent-setup" ]
+        ''
+          install \
+            -o ${config.services.hermes-agent.user} \
+            -g ${config.services.hermes-agent.group} \
+            -m 0640 \
+            ${soulFile} \
+            ${stateDir}/.hermes/SOUL.md
+
+          install \
+            -o root \
+            -g ${config.services.hermes-agent.group} \
+            -m 0440 \
+            ${honchoConfig} \
+            ${stateDir}/.hermes/honcho.json
+        '';
 
     planet.backup.dirs = [ stateDir ];
   };

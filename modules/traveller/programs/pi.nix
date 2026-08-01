@@ -49,8 +49,8 @@ in
                   EXA_API_KEY.file = age.secrets.${exaApiKey}.path;
                   HONCHO_API_KEY.file = age.secrets.${honchoApiKey}.path;
                   HONCHO_URL.value = "https://${atlas.hosting.mem.host}";
-                  HONCHO_WORKSPACE_ID.value = "pi";
-                  HONCHO_AI_PEER.value = "pi";
+                  HONCHO_WORKSPACE_ID.value = "homunculus";
+                  HONCHO_AI_PEER.value = "homunculus";
                   HONCHO_PEER_NAME.value = traveller.user.name;
                   HONCHO_SESSION_STRATEGY.value = "repo";
                 };

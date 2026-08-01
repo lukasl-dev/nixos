@@ -155,7 +155,7 @@ in
 
       ${piToken} = {
         rekeyFile = ../../.. + "/secrets/${piToken}.age";
-        generator = jwtGenerator { workspace = "pi"; };
+        generator = jwtGenerator { workspace = "homunculus"; };
       };
 
       ${databaseEnvironment} = {
