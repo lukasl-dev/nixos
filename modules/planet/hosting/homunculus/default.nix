@@ -18,8 +18,7 @@ let
 
   stateDir = "/var/lib/hermes";
   soulFile = ./SOUL.md;
-  hermesAgent =
-    inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   opencodeApiKey = atlas.secrets.universe [
     "opencode"
@@ -199,54 +198,54 @@ in
           default = "hy3";
           persist_switch_by_default = false;
         };
-        auxiliary = {
-          title_generation = {
-            enabled = true;
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 30;
-          };
-          compression = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 120;
-          };
-          web_extract = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 360;
-          };
-          approval = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 30;
-          };
-          skills_hub = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 30;
-          };
-          mcp = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 30;
-          };
-          triage_specifier = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 120;
-          };
-          kanban_decomposer = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 120;
-          };
-          profile_describer = {
-            provider = "opencode-go";
-            model = "deepseek-v4-flash";
-            timeout = 30;
-          };
-        };
+        # auxiliary = {
+        #   title_generation = {
+        #     enabled = true;
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 30;
+        #   };
+        #   compression = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 120;
+        #   };
+        #   web_extract = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 360;
+        #   };
+        #   approval = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 30;
+        #   };
+        #   skills_hub = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 30;
+        #   };
+        #   mcp = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 30;
+        #   };
+        #   triage_specifier = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 120;
+        #   };
+        #   kanban_decomposer = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 120;
+        #   };
+        #   profile_describer = {
+        #     provider = "opencode-go";
+        #     model = "deepseek-v4-flash";
+        #     timeout = 30;
+        #   };
+        # };
         model_aliases = {
           flash = {
             provider = "opencode-go";
@@ -315,16 +314,14 @@ in
       soulFile
     ];
 
-    system.activationScripts.hermes-agent-soul =
-      lib.stringAfter [ "hermes-agent-setup" ]
-        ''
-          install \
-            -o ${config.services.hermes-agent.user} \
-            -g ${config.services.hermes-agent.group} \
-            -m 0640 \
-            ${soulFile} \
-            ${stateDir}/.hermes/SOUL.md
-        '';
+    system.activationScripts.hermes-agent-soul = lib.stringAfter [ "hermes-agent-setup" ] ''
+      install \
+        -o ${config.services.hermes-agent.user} \
+        -g ${config.services.hermes-agent.group} \
+        -m 0640 \
+        ${soulFile} \
+        ${stateDir}/.hermes/SOUL.md
+    '';
 
     planet.backup.dirs = [ stateDir ];
   };

@@ -54,6 +54,10 @@ let
     "mem"
     "admin-token"
   ];
+  piToken = atlas.secrets.universe [
+    "mem"
+    "pi-token"
+  ];
   databaseEnvironment = atlas.secrets.universe [
     "mem"
     "database-environment"
@@ -80,6 +84,49 @@ let
     "deriver"
     "ollama"
   ];
+
+  jwtGenerator =
+    {
+      admin ? false,
+      workspace ? null,
+    }:
+    {
+      dependencies.jwt = age.secrets.${jwtSecret};
+      script =
+        {
+          decrypt,
+          deps,
+          pkgs,
+          ...
+        }:
+        ''
+          jwt_secret="$(${decrypt} "${deps.jwt.file}")"
+          JWT_SECRET="$jwt_secret" ${lib.getExe pkgs.python3} <<'PY'
+          import base64
+          import hashlib
+          import hmac
+          import json
+          import os
+
+          def encode(value):
+              data = json.dumps(value, separators=(",", ":")).encode()
+              return base64.urlsafe_b64encode(data).rstrip(b"=").decode()
+
+          header = encode({"alg": "HS256", "typ": "JWT"})
+          payload = encode({"t": "", "ad": ${if admin then "True" else "False"}${
+            lib.optionalString (workspace != null) ", \"w\": ${builtins.toJSON workspace}"
+          }})
+          message = f"{header}.{payload}"
+          signature = hmac.new(
+              os.environ["JWT_SECRET"].encode(),
+              message.encode(),
+              hashlib.sha256,
+          ).digest()
+          encoded_signature = base64.urlsafe_b64encode(signature).rstrip(b"=").decode()
+          print(f"{message}.{encoded_signature}")
+          PY
+        '';
+    };
 in
 {
   options.planet.hosting.mem.enable = lib.mkEnableOption "Honcho memory server";
@@ -101,41 +148,14 @@ in
       ${adminToken} = {
         rekeyFile = ../../.. + "/secrets/${adminToken}.age";
         intermediary = true;
-        generator = {
-          dependencies.jwt = age.secrets.${jwtSecret};
-          script =
-            {
-              decrypt,
-              deps,
-              pkgs,
-              ...
-            }:
-            ''
-              jwt_secret="$(${decrypt} "${deps.jwt.file}")"
-              JWT_SECRET="$jwt_secret" ${lib.getExe pkgs.python3} <<'PY'
-              import base64
-              import hashlib
-              import hmac
-              import json
-              import os
-
-              def encode(value):
-                  data = json.dumps(value, separators=(",", ":")).encode()
-                  return base64.urlsafe_b64encode(data).rstrip(b"=").decode()
-
-              header = encode({"alg": "HS256", "typ": "JWT"})
-              payload = encode({"t": "", "ad": True})
-              message = f"{header}.{payload}"
-              signature = hmac.new(
-                  os.environ["JWT_SECRET"].encode(),
-                  message.encode(),
-                  hashlib.sha256,
-              ).digest()
-              encoded_signature = base64.urlsafe_b64encode(signature).rstrip(b"=").decode()
-              print(f"{message}.{encoded_signature}")
-              PY
-            '';
+        generator = jwtGenerator {
+          admin = true;
         };
+      };
+
+      ${piToken} = {
+        rekeyFile = ../../.. + "/secrets/${piToken}.age";
+        generator = jwtGenerator { workspace = "pi"; };
       };
 
       ${databaseEnvironment} = {

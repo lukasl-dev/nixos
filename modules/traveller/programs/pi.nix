@@ -17,6 +17,10 @@ let
     "exa"
     "apiKey"
   ];
+  honchoApiKey = atlas.secrets.universe [
+    "mem"
+    "pi-token"
+  ];
 in
 {
   options.traveller.programs.pi.enable = lib.mkEnableOption "the Pi coding agent";
@@ -43,6 +47,12 @@ in
                 environment = {
                   OPENCODE_API_KEY.file = age.secrets.${opencodeApiKey}.path;
                   EXA_API_KEY.file = age.secrets.${exaApiKey}.path;
+                  HONCHO_API_KEY.file = age.secrets.${honchoApiKey}.path;
+                  HONCHO_URL.value = "https://${atlas.hosting.mem.host}";
+                  HONCHO_WORKSPACE_ID.value = "pi";
+                  HONCHO_AI_PEER.value = "pi";
+                  HONCHO_PEER_NAME.value = traveller.user.name;
+                  HONCHO_SESSION_STRATEGY.value = "repo";
                 };
               };
             }
@@ -59,6 +69,12 @@ in
 
           ${exaApiKey} = {
             rekeyFile = ../../../secrets + "/${exaApiKey}.age";
+            owner = traveller.user.name;
+            mode = "0400";
+          };
+
+          ${honchoApiKey} = {
+            rekeyFile = ../../../secrets + "/${honchoApiKey}.age";
             owner = traveller.user.name;
             mode = "0400";
           };
