@@ -34,6 +34,7 @@
       cal.enable = true;
       forge.enable = true;
       household.enable = true;
+      homunculus.enable = true;
       mail.enable = true;
       matrix.enable = true;
       mesh.enable = true;
