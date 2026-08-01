@@ -27,6 +27,7 @@
 
       hole.enable = true;
       home.enable = true;
+      homunculus.enable = true;
       media.enable = true;
     };
   };
