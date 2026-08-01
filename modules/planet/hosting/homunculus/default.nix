@@ -18,7 +18,8 @@ let
 
   stateDir = "/var/lib/hermes";
   soulFile = ./SOUL.md;
-  hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  hermesAgent =
+    inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   opencodeApiKey = atlas.secrets.universe [
     "opencode"
@@ -41,6 +42,10 @@ let
     "matrix"
     "accounts"
     "homunculus"
+  ];
+  honchoApiKey = atlas.secrets.universe [
+    "mem"
+    "admin-token"
   ];
 
   hermesLcm = pkgs.fetchFromGitHub {
@@ -80,6 +85,7 @@ in
             account = age.secrets.${matrixAccount};
             discord = age.secrets.${discordToken};
             hass = age.secrets.${hassToken};
+            honcho = age.secrets.${honchoApiKey};
             opencode = age.secrets.${opencodeApiKey};
           };
           script =
@@ -88,10 +94,12 @@ in
               password="$(${decrypt} "${deps.account.file}")"
               discord_token="$(${decrypt} "${deps.discord.file}")"
               hass_token="$(${decrypt} "${deps.hass.file}")"
+              honcho_api_key="$(${decrypt} "${deps.honcho.file}")"
               opencode_api_key="$(${decrypt} "${deps.opencode.file}")"
               printf 'MATRIX_PASSWORD=%s\n' "$password"
               printf 'DISCORD_BOT_TOKEN=%s\n' "$discord_token"
               printf 'HASS_TOKEN=%s\n' "$hass_token"
+              printf 'HONCHO_API_KEY=%s\n' "$honcho_api_key"
               printf 'OPENCODE_GO_API_KEY=%s\n' "$opencode_api_key"
             '';
         };
@@ -267,6 +275,7 @@ in
         };
         plugins.enabled = [ "hermes-lcm" ];
         context.engine = "lcm";
+        memory.provider = "honcho";
       };
 
       environment = {
@@ -274,6 +283,7 @@ in
         AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
         DISCORD_ALLOWED_USERS = "370883999528124416";
         HASS_URL = "https://${atlas.hosting.home.host}";
+        HONCHO_BASE_URL = "https://${atlas.hosting.mem.host}";
         MATRIX_HOMESERVER = "https://${atlas.hosting.matrix.host}";
         MATRIX_USER_ID = "@homunculus:${domain}";
         MATRIX_ALLOWED_USERS = "@${stewardName}:${domain}";
@@ -289,6 +299,7 @@ in
         "messaging"
         "voice"
         "matrix"
+        "honcho"
       ];
       extraPlugins = [ hermesLcm ];
     };
@@ -304,14 +315,16 @@ in
       soulFile
     ];
 
-    system.activationScripts.hermes-agent-soul = lib.stringAfter [ "hermes-agent-setup" ] ''
-      install \
-        -o ${config.services.hermes-agent.user} \
-        -g ${config.services.hermes-agent.group} \
-        -m 0640 \
-        ${soulFile} \
-        ${stateDir}/.hermes/SOUL.md
-    '';
+    system.activationScripts.hermes-agent-soul =
+      lib.stringAfter [ "hermes-agent-setup" ]
+        ''
+          install \
+            -o ${config.services.hermes-agent.user} \
+            -g ${config.services.hermes-agent.group} \
+            -m 0640 \
+            ${soulFile} \
+            ${stateDir}/.hermes/SOUL.md
+        '';
 
     planet.backup.dirs = [ stateDir ];
   };

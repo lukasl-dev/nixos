@@ -15,6 +15,7 @@
   mail.host = "mail.${atlas.domain}";
   matrix.host = "matrix.${atlas.domain}";
   media.host = "media.${atlas.domain}";
+  mem.host = "mem.${atlas.domain}";
   notes.host = "notes.${atlas.domain}";
   rspamd.host = "rspamd.${atlas.domain}";
   turn.host = "turn.${atlas.domain}";

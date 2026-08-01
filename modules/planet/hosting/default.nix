@@ -15,6 +15,7 @@
     ./mail.nix
     ./matrix
     ./media.nix
+    ./mem.nix
     ./mesh.nix
     ./notes.nix
     ./proxy.nix
